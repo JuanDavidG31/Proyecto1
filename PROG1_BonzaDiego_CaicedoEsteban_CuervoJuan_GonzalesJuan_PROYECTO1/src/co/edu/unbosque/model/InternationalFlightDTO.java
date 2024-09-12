@@ -15,15 +15,15 @@ public class InternationalFlightDTO extends Flight {
 	}
 
 	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, boolean isTurboProp, boolean isTurbine) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight);
+			int departureTime, int arrivalTime, int fuelWeight,String id, boolean isTurboProp, boolean isTurbine) {
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id);
 		this.isTurboProp = isTurboProp;
 		this.isTurbine = isTurbine;
 	}
 
 	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight);
+			int departureTime, int arrivalTime, int fuelWeight, String id) {
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id);
 		// TODO Auto-generated constructor stub
 	}
 

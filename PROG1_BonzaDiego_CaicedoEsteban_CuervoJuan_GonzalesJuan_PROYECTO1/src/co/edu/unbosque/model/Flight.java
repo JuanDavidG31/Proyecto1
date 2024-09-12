@@ -1,7 +1,7 @@
 package co.edu.unbosque.model;
 
 public abstract class Flight {
-	
+
 	private String companyName;
 	private int passengersNumber;
 	private String nameCaptain;
@@ -9,13 +9,14 @@ public abstract class Flight {
 	private int departureTime;
 	private int arrivalTime;
 	private int fuelWeight;
-	
+	private String id;
+
 	public Flight() {
-	
+
 	}
 
 	public Flight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight) {
+			int departureTime, int arrivalTime, int fuelWeight, String id) {
 		super();
 		this.companyName = companyName;
 		this.passengersNumber = passengersNumber;
@@ -24,6 +25,7 @@ public abstract class Flight {
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 		this.fuelWeight = fuelWeight;
+		this.id = id;
 	}
 
 	public String getCompanyName() {
@@ -82,11 +84,19 @@ public abstract class Flight {
 		this.fuelWeight = fuelWeight;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "Fly [companyName=" + companyName + ", passengersNumber=" + passengersNumber + ", nameCaptain="
 				+ nameCaptain + ", nameSecondCommand=" + nameSecondCommand + ", departureTime=" + departureTime
 				+ ", arrivalTime=" + arrivalTime + ", fuelWeight=" + fuelWeight + "]";
 	}
-	
+
 }
