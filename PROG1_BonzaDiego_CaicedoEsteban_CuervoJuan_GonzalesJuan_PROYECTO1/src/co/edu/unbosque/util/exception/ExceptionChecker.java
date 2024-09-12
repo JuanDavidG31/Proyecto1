@@ -11,7 +11,7 @@ public class ExceptionChecker {
 		}
 	}
 
-	public static void IdentificationNotValidNumber(String number) throws FlightNumberException {
+	public static void IdentificationFlightNotValidNumber(String number) throws FlightNumberException {
 		Pattern p = Pattern.compile("[^0-9]"); 
 		Matcher m = p.matcher(number);
 		if (m.find()) {
