@@ -84,9 +84,9 @@ public abstract class Flight {
 
 	@Override
 	public String toString() {
-		return "Fly [companyName=" + companyName + ", passengersNumber=" + passengersNumber + ", nameCaptain="
-				+ nameCaptain + ", nameSecondCommand=" + nameSecondCommand + ", departureTime=" + departureTime
-				+ ", arrivalTime=" + arrivalTime + ", fuelWeight=" + fuelWeight + "]";
+		return "Company Name :" + companyName + " \n Passengers Number : " + passengersNumber + " \n Name Captain : "
+				+ nameCaptain + " \n Name Second Command :" + nameSecondCommand + " \n Departure Time :" + departureTime
+				+ " \n Arrival Time :" + arrivalTime + " \n Fuel Weight :" + fuelWeight + "";
 	}
 	
 }

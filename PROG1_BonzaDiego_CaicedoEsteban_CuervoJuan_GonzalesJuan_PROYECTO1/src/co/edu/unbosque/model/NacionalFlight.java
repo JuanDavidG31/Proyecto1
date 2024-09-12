@@ -34,7 +34,7 @@ public class NacionalFlight extends Flight {
 
 	@Override
 	public String toString() {
-		return super.toString() + "VueloNacional [isVisa=" + isVisa + "]";
+		return super.toString() + "Is Visa :" + isVisa + "";
 	}
 
 }
