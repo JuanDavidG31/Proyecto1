@@ -12,6 +12,9 @@ public class Controller {
 		System.out.println("Mi rama");
 	}
 	public void run() {
+		System.out.println("Hola Prueba");
+
 		System.out.println("hola");
+
 	}
 }
