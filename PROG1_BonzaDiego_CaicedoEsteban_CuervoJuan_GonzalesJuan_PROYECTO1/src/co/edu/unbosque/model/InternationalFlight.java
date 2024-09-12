@@ -45,7 +45,7 @@ public class InternationalFlight extends Flight {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Is TurboProp :" + isTurboProp + " \n Is Turbine :" + isTurbine + "";
+		return super.toString() + " \n Is TurboProp :" + isTurboProp + " \n Is Turbine :" + isTurbine + "";
 	}
 
 }
