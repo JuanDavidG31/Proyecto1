@@ -34,6 +34,6 @@ public class NacionalFlightDTO extends Flight {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "VueloNacional [isVisa=" + isVisa + "]";
+		return super.toString() + "\n Is Visa :" + isVisa + "";
 	}
 }
