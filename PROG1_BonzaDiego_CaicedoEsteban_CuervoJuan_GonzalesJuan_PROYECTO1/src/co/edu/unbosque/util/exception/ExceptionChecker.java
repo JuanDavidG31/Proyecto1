@@ -1,6 +1,5 @@
 package co.edu.unbosque.util.exception;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,33 +11,29 @@ public class ExceptionChecker {
 		}
 	}
 
-	public static void IdentificationNotValidNumber(int number) throws IdentificationNotValidException {
+	public static void IdentificationNotValidNumber(String number) throws FlightNumberException {
 		Pattern p = Pattern.compile("[^0-9]"); 
-		Matcher m = p.matcher(Integer.toString(number));
+		Matcher m = p.matcher(number);
 		if (m.find()) {
-			throw new IdentificationNotValidException();
+			throw new FlightNumberException();
 		}
 	}
 
 	public static void NameNotValid(String nombre) throws NameNotValidException {
-		Pattern p = Pattern.compile("[^a-zA-Z 6]"); 
+		Pattern p = Pattern.compile("[^a-zA-Z ]"); 
 		Matcher m = p.matcher(nombre);
 		if (m.find()) {
 			throw new NameNotValidException();
 		}
 	}
-	
-	public static void NotValidOddNumber(int numero) throws NotValidOddNumberException {
-		if(numero%2 == 0) {
-			throw new NotValidOddNumberException();
+	public static void PassengersNotValidNumber(String number) throws PassengersNumberException {
+		Pattern p = Pattern.compile("[^0-9]"); 
+		Matcher m = p.matcher(number);
+		if (m.find()) {
+			throw new PassengersNumberException();
 		}
 	}
 	
-	public static void NotValidEvenNumber(int numero) throws NotValidEvenNumberException {
-		if(numero%2 != 0) {
-			throw new NotValidEvenNumberException();
-		}
-	}
 
 
 }
