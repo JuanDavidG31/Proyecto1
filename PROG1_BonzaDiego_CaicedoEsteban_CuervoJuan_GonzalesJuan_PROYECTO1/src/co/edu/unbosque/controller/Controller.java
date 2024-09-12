@@ -9,8 +9,12 @@ public class Controller {
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
+		System.out.println("Mi rama");
 	}
 	public void run() {
 		System.out.println("Hola Prueba");
+
+		System.out.println("hola");
+
 	}
 }
