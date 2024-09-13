@@ -11,6 +11,11 @@ public class Controller {
 		vf = new ViewFacade();
 	}
 	public void run() {
+
 		System.out.println("ff");
+
+		System.out.println("l");
+
+
 	}
 }
