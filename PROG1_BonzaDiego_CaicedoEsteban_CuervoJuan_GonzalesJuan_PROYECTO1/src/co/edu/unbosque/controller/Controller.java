@@ -13,6 +13,10 @@ public class Controller implements ActionListener{
 	private ModelFacade mf = new ModelFacade();
 	private ViewFacade vf= new ViewFacade();
 	public Controller() {
+
+  	mf = new ModelFacade();
+		vf = new ViewFacade();
+  
 		vf.getPi().setVisible(true);
 		vf.getMa().getPanelBuscar().setVisible(false);
 		vf.getMa().getPanelCentral().setVisible(false);
@@ -46,5 +50,11 @@ public class Controller implements ActionListener{
 		default:
 			break;
 		}
+
+	
+	}
+	public void run() {
+
+
 	}
 }
