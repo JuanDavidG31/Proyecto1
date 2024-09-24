@@ -7,7 +7,7 @@ import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 
-public class DataMapper {
+public class DataMapper  {
 
 	// International Flight
 

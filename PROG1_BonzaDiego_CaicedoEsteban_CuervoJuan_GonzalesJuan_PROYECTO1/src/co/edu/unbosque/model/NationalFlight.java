@@ -1,6 +1,13 @@
 package co.edu.unbosque.model;
 
-public class NationalFlight extends Flight {
+import java.io.Serializable;
+
+public class NationalFlight extends Flight implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isVisa;
 
 	public NationalFlight() {

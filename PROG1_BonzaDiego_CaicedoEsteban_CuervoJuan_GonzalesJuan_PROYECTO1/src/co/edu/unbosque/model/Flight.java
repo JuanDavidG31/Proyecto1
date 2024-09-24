@@ -1,7 +1,14 @@
 package co.edu.unbosque.model;
 
-public abstract class Flight {
+import java.io.Serializable;
 
+public abstract class Flight implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String companyName;
 	private int passengersNumber;
 	private String nameCaptain;

@@ -1,6 +1,13 @@
 package co.edu.unbosque.model;
 
-public class NationalFlightDTO extends Flight {
+import java.io.Serializable;
+
+public class NationalFlightDTO extends Flight implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isVisa;
 
 	public NationalFlightDTO() {

@@ -1,6 +1,13 @@
 package co.edu.unbosque.model;
 
-public class InternationalFlightDTO extends Flight {
+import java.io.Serializable;
+
+public class InternationalFlightDTO extends Flight implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isTurboProp;
 	private boolean isTurbine;
 
