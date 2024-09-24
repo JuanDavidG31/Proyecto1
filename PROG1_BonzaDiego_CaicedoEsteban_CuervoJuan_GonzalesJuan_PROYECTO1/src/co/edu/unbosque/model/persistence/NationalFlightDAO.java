@@ -63,7 +63,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 		NationalFlight found = null;
 		if (!listaNationalFlight.isEmpty()) {
 			for (NationalFlight NationalFlight : listaNationalFlight) {
-				if (NationalFlight.getId().equals(toFind.getId())) {
+				if (NationalFlight.getId() == toFind.getId()) {
 					found = NationalFlight;
 					return found;
 				} else {
@@ -127,10 +127,10 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 		if (content == null) {
 			listaNationalFlight = new ArrayList<>();
 		} else {
-			listaNationalFlight = (ArrayList<NationalFlight>)content;
-			
-			}
+			listaNationalFlight = (ArrayList<NationalFlight>) content;
+
 		}
+	}
 
 	@Override
 	public NationalFlight find2(NationalFlight toFind) {
