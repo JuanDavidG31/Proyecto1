@@ -97,7 +97,7 @@ public class Controller implements ActionListener {
 			break;
 		case "seleccionarAerolinea":
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
-
+ 
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
 
 				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
