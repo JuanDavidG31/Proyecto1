@@ -106,10 +106,6 @@ public class MenuAereolinea extends JFrame {
 		btnCambiarModo.setBounds(0, 510, 161, 55);
 		panelIzq.add(btnCambiarModo);
 
-		ImageIcon imagenCambiarModo = new ImageIcon("Images\\ModoOscurobtnClaro.png");
-		btnCambiarModo = new JButton(imagenCambiarModo);
-		btnCambiarModo.setBounds(0, 510, 161, 55);
-		panelIzq.add(btnCambiarModo);
 
 		// Botones panel Inferior
 		ImageIcon imagenGuardar = new ImageIcon("Images\\GuardarbtnClaro.png");
@@ -122,11 +118,6 @@ public class MenuAereolinea extends JFrame {
 		btnActualizar.setBounds(300, 5, 75, 75);
 		panelInferior.add(btnActualizar);
 		
-		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
-		btnEliminar = new JButton(imagenEliminar);
-		btnEliminar.setBounds(450, 5, 75, 75);
-		panelInferior.add(btnEliminar);
-
 		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		btnEliminar = new JButton(imagenEliminar);
 		btnEliminar.setBounds(450, 5, 75, 75);
