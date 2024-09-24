@@ -165,7 +165,7 @@ public class Controller implements ActionListener {
 						frist = true;
 						break second;
 					} else {
-						continue;
+						continue second;
 					}
 
 				}
@@ -185,7 +185,7 @@ public class Controller implements ActionListener {
 						second = true;
 						break tres;
 					} else {
-						continue;
+						continue tres;
 					}
 
 				}
@@ -193,7 +193,7 @@ public class Controller implements ActionListener {
 			}
 
 			if (frist == true || second == true) {
-				continue;
+				continue main;
 			} else {
 				break main;
 			}
@@ -203,8 +203,7 @@ public class Controller implements ActionListener {
 	}
 
 	public int random() {
-		int num = (int) (Math.random() * 100 + 1);
-		return num;
+		return (int) (Math.random() * 1000 + 1);
 	}
 
 }
