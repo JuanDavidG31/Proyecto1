@@ -63,7 +63,7 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 		InternationalFlight found = null;
 		if (!listaInternationalFlight.isEmpty()) {
 			for (InternationalFlight InternationalFlight : listaInternationalFlight) {
-				if (InternationalFlight.getId().equals(toFind.getId())) {
+				if (InternationalFlight.getId() == toFind.getId()) {
 					found = InternationalFlight;
 					return found;
 				} else {
@@ -138,7 +138,7 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 		InternationalFlight found = null;
 		if (!listaInternationalFlight.isEmpty()) {
 			for (InternationalFlight InternationalFlight : listaInternationalFlight) {
-				if (InternationalFlight.getId().equals(toFind.getId())) {
+				if (InternationalFlight.getArrivalDestination().equals(toFind.getArrivalDestination())) {
 					found = InternationalFlight;
 					return found;
 				} else {
@@ -149,5 +149,5 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 			return null;
 		}
 		return null;
-}
 	}
+}
