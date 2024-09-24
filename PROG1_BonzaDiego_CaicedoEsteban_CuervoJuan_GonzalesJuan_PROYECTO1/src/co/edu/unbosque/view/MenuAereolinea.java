@@ -19,10 +19,10 @@ public class MenuAereolinea extends JFrame {
 	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
 			panelInternationalFlight, panelNationalFlight;
 //private JTextArea txtaMostrar;
-	private JTextField  txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
-			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar,
+	private JTextField txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
+			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar, 
 			txtDeparturePlace, txtArrivalPlace;
-	private JLabel  lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
+	private JLabel lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
 			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
 			lblIDVueloBuscar, logo, lblDeparturePlace, lblArrivalPlace;
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine;
@@ -30,7 +30,6 @@ public class MenuAereolinea extends JFrame {
 	private JScrollPane scrollpane;
 	private final static String INT = "Internacional";
 	private final static String NAC = "Nacional";
-	private int inc;
 
 	CardLayout cardLayout = new CardLayout();
 
@@ -49,7 +48,7 @@ public class MenuAereolinea extends JFrame {
 		getPanelIzq().setVisible(true);
 		getPanelVariable().setVisible(true);
 		getPanelVuelos().setVisible(true);
-
+		
 		add(panelBuscar);
 		add(panelCentral);
 		add(panelInferior);
@@ -57,6 +56,7 @@ public class MenuAereolinea extends JFrame {
 		add(panelVariable);
 		add(panelVuelos);
 
+		
 	}
 
 	public void ventana() {
@@ -95,6 +95,7 @@ public class MenuAereolinea extends JFrame {
 		btnMostrar.setBounds(25, 275, 100, 100);
 		panelIzq.add(btnMostrar);
 
+
 		ImageIcon imagenSalir = new ImageIcon("Images\\SalirbtnClaro.png");
 		btnSalir = new JButton(imagenSalir);
 		btnSalir.setBounds(25, 400, 100, 100);
@@ -104,7 +105,6 @@ public class MenuAereolinea extends JFrame {
 		btnCambiarModo = new JButton(imagenCambiarModo);
 		btnCambiarModo.setBounds(0, 510, 161, 55);
 		panelIzq.add(btnCambiarModo);
-
 
 		// Botones panel Inferior
 		ImageIcon imagenGuardar = new ImageIcon("Images\\GuardarbtnClaro.png");
@@ -125,9 +125,7 @@ public class MenuAereolinea extends JFrame {
 		// Boton panel de busqueda
 		ImageIcon imagenBuscarCentral = new ImageIcon("Images\\BusquedabtnClaro.png");
 		btnBuscarCentral = new JButton(imagenBuscarCentral);
-
-		btnBuscarCentral.setBounds(640, 0, 140, 38);
-
+		btnBuscarCentral.setBounds(640, 5, 140, 38);
 		panelBuscar.add(btnBuscarCentral);
 	}
 
@@ -234,30 +232,25 @@ public class MenuAereolinea extends JFrame {
 		/*txtIDVueloBuscar = new JTextField();
 		txtIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIDVueloBuscar.setBounds(240, 55, 400, 40);
-
 		panelBuscar.add(txtIDVueloBuscar);*/
-
-		//panelBuscar.add(txtIDVueloBuscar);
-
+ 
 		txtArrivalPlace = new JTextField();
 		txtArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtArrivalPlace.setBounds(240, 55, 400, 40);
+		txtArrivalPlace.setBounds(180, 325, 400, 20);
 		panelCentral.add(txtArrivalPlace);
-
+		
 		txtDeparturePlace = new JTextField();
 		txtDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtDeparturePlace.setBounds(240, 55, 400, 40);
+		txtDeparturePlace.setBounds(180, 275, 400, 20);
 		panelCentral.add(txtDeparturePlace);
-
-
+		
+		
 	}
 
 	public void Combobox() {
 		aerolinea = new JComboBox<String>();
-
-		aerolinea.setBounds(180, 100, 200, 20);
-		aerolinea.setToolTipText("Seleccione la aerolinea");
-
+		aerolinea.setBounds(180, 80, 200, 20);
+		aerolinea.setToolTipText("Select company name");
 		aerolinea.addItem("");
 		aerolinea.addItem("Avianca");
 		aerolinea.addItem("Latam");
@@ -292,7 +285,6 @@ public class MenuAereolinea extends JFrame {
 
 	public void labels() {
 		logo = new JLabel();
-
 		logo.setBounds(450, 50, 100, 75);
 		panelCentral.add(logo);
 		
@@ -406,14 +398,6 @@ public class MenuAereolinea extends JFrame {
 
 	public void setBtnBuscarCentral(JButton btnBuscarCentral) {
 		this.btnBuscarCentral = btnBuscarCentral;
-	}
-
-	public int getInc() {
-		return inc;
-	}
-
-	public void setInc(int inc) {
-		this.inc = inc;
 	}
 
 	public JButton getBtnGuardar() {
@@ -780,6 +764,5 @@ public class MenuAereolinea extends JFrame {
 	
 	
 	
-
 
 }
