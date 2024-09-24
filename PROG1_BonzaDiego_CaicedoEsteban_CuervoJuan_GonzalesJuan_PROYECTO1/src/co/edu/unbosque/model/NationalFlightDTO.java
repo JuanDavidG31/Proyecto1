@@ -7,44 +7,56 @@ public class NationalFlightDTO extends Flight implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private boolean isVisa;
+
+	private boolean isTurboProp;
+	private boolean isTurbine;
 
 	public NationalFlightDTO() {
 
 	}
 
-	public NationalFlightDTO(boolean isVisa) {
+	public NationalFlightDTO(boolean isTurboProp, boolean isTurbine) {
 		super();
-		this.isVisa = isVisa;
+		this.isTurboProp = isTurboProp;
+		this.isTurbine = isTurbine;
 	}
-	
+
 	public NationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
 			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
-			String arrivalDestination, boolean isVisa) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id, departureDestination,arrivalDestination);
-		this.isVisa = isVisa;
+			String arrivalDestination, boolean isTurboProp, boolean isTurbine) {
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
+				departureDestination, arrivalDestination);
+		this.isTurboProp = isTurboProp;
+		this.isTurbine = isTurbine;
 	}
 
 	public NationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
 			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
 			String arrivalDestination) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id,departureDestination, arrivalDestination);
-		
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
+				departureDestination, arrivalDestination);
+		// TODO Auto-generated constructor stub
 	}
-	
-	public boolean isVisa() {
-		return isVisa;
+
+	public boolean isTurboProp() {
+		return isTurboProp;
 	}
-	
-	public void setVisa(boolean isVisa) {
-		this.isVisa = isVisa;
+
+	public void setTurboProp(boolean isTurboProp) {
+		this.isTurboProp = isTurboProp;
 	}
-	
+
+	public boolean isTurbine() {
+		return isTurbine;
+	}
+
+	public void setTurbine(boolean isTurbine) {
+		this.isTurbine = isTurbine;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString() + "\n Is Visa :" + isVisa + "";
+		return super.toString() + "NationalFlightDTO [isTurboProp=" + isTurboProp + ", isTurbine=" + isTurbine + "]";
 	}
+
 }

@@ -2,61 +2,50 @@ package co.edu.unbosque.model;
 
 import java.io.Serializable;
 
-public class InternationalFlightDTO extends Flight implements Serializable{
+public class InternationalFlightDTO extends Flight implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private boolean isTurboProp;
-	private boolean isTurbine;
+
+	private boolean isVisa;
 
 	public InternationalFlightDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public InternationalFlightDTO(boolean isTurboProp, boolean isTurbine) {
+	public InternationalFlightDTO(boolean isVisa) {
 		super();
-		this.isTurboProp = isTurboProp;
-		this.isTurbine = isTurbine;
+		this.isVisa = isVisa;
 	}
 
-	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
-			String arrivalDestination, boolean isTurboProp, boolean isTurbine) {
+	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain,
+			String nameSecondCommand, int departureTime, int arrivalTime, int fuelWeight, int id,
+			String departureDestination, String arrivalDestination, boolean isVisa) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
 				departureDestination, arrivalDestination);
-		this.isTurboProp = isTurboProp;
-		this.isTurbine = isTurbine;
+		this.isVisa = isVisa;
 	}
 
-	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
-			String arrivalDestination) {
+	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain,
+			String nameSecondCommand, int departureTime, int arrivalTime, int fuelWeight, int id,
+			String departureDestination, String arrivalDestination) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
 				departureDestination, arrivalDestination);
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean isTurboProp() {
-		return isTurboProp;
+	public boolean isVisa() {
+		return isVisa;
 	}
 
-	public void setTurboProp(boolean isTurboProp) {
-		this.isTurboProp = isTurboProp;
-	}
-
-	public boolean isTurbine() {
-		return isTurbine;
-	}
-
-	public void setTurbine(boolean isTurbine) {
-		this.isTurbine = isTurbine;
+	public void setVisa(boolean isVisa) {
+		this.isVisa = isVisa;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " \n Is TurboProp :" + isTurboProp + " \n Is Turbine :" + isTurbine + "";
+		return super.toString() + "InternationalFlightDTO [isVisa=" + isVisa + "]";
 	}
 
 }
