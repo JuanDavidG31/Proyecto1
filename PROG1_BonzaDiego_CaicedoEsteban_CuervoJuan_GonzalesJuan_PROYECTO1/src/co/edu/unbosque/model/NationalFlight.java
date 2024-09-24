@@ -20,16 +20,18 @@ public class NationalFlight extends Flight implements Serializable{
 	}
 
 	public NationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id, boolean isVisa) {
+			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			String arrivalDestination, boolean isVisa) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id);
+				id, departureDestination,arrivalDestination);
 		this.isVisa = isVisa;
 	}
 
 	public NationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id) {
+			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			String arrivalDestination) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id);
+				id,departureDestination, arrivalDestination);
 		
 	}
 

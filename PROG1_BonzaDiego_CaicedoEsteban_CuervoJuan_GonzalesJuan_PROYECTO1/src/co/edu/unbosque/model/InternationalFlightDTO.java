@@ -22,15 +22,19 @@ public class InternationalFlightDTO extends Flight implements Serializable{
 	}
 
 	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight,String id, boolean isTurboProp, boolean isTurbine) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id);
+			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			String arrivalDestination, boolean isTurboProp, boolean isTurbine) {
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
+				departureDestination, arrivalDestination);
 		this.isTurboProp = isTurboProp;
 		this.isTurbine = isTurbine;
 	}
 
 	public InternationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id) {
-		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id);
+			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			String arrivalDestination) {
+		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
+				departureDestination, arrivalDestination);
 		// TODO Auto-generated constructor stub
 	}
 
