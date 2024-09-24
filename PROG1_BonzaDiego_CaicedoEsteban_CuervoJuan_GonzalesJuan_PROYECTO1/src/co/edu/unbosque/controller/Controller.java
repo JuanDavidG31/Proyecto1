@@ -49,50 +49,6 @@ public class Controller implements ActionListener {
 
 		switch (e.getActionCommand()) {
 
-		case "":
-
-			ArrayList<InternationalFlightDTO> in;
-			in = new ArrayList<>();
-			in = mf.getInternational().getAll();
-			
-			int digit = 0;
-			int digit2;
-			for (int i = 0; i <= in.size(); i++) {
-				digit2 = in.get(i).getId();
-				digit = incNumReceipt();
-				if(digit == digit2) {
-					digit = incNumReceipt();
-					continue;
-				}else {
-					break;
-				}
-				
-			}
-			
-			ArrayList<NationalFlightDTO> na;
-			na = new ArrayList<>();
-			na = mf.getNational().getAll();
-
-			
-			for (int i = 0; i < na.size(); i++) {
-				digit2 = na.get(i).getId();
-				digit = incNumReceipt();
-				if(digit == digit2) {
-					digit = incNumReceipt();
-					continue;
-				}else {
-					break;
-				}
-			}
-			
-			
-			String total = String.valueOf(digit);
-			vf.getMa().setInc(digit);
-			
-			
-			
-			break;
-
 		case "btnAreolinea":
 			vf.getPi().setVisible(false);
 			vf.getMa().setVisible(true);
@@ -190,9 +146,64 @@ public class Controller implements ActionListener {
 	}
 
 	public int incNumReceipt() {
-		
-		int num = (int)(Math.random() * 100 + 1);
-		
+		int num = 0;
+		main: while (true) {
+			boolean frist = false;
+			boolean second = false;
+			num = random();
+			
+			ArrayList<InternationalFlightDTO> in;
+			in = new ArrayList<>();
+			in = mf.getInternational().getAll();
+			second: for (int i = 0; i <= in.size(); i++) {
+				
+				if(in.isEmpty()) {
+					break main;
+				}else {
+					
+					if(in.get(i).getId()==num) {
+						frist = true;
+						break second;
+					}else {
+						continue;
+					}
+	
+				}
+				
+			}
+
+			ArrayList<NationalFlightDTO> na;
+			na = new ArrayList<>();
+			na = mf.getNational().getAll();
+			tres: for (int i = 0; i <= na.size(); i++) {
+				
+				if(na.isEmpty()) {
+					break main;
+				}else {
+					
+					if(na.get(i).getId()==num) {
+						second = true;
+						break tres;
+					}else {
+						continue;
+					}
+	
+				}
+
+			}
+			
+			if(frist == true || second == true) {
+				continue;
+			}else {
+				break main;
+			}
+		}
+
+		return num;
+	}
+
+	public int random() {
+		int num = (int) (Math.random() * 100 + 1);
 		return num;
 	}
 
