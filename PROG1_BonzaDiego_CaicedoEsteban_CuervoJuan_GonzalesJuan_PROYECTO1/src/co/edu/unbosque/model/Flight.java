@@ -16,7 +16,7 @@ public abstract class Flight implements Serializable {
 	private int departureTime;
 	private int arrivalTime;
 	private int fuelWeight;
-	private String id;
+	private int id;
 	private String departureDestination;
 	private String arrivalDestination;
 
@@ -25,7 +25,7 @@ public abstract class Flight implements Serializable {
 	}
 
 	public Flight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
 			String arrivalDestination) {
 		super();
 		this.companyName = companyName;
@@ -96,11 +96,11 @@ public abstract class Flight implements Serializable {
 		this.fuelWeight = fuelWeight;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

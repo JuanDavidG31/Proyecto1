@@ -22,7 +22,7 @@ public class InternationalFlight extends Flight implements Serializable {
 	}
 
 	public InternationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
 			String arrivalDestination, boolean isTurboProp, boolean isTurbine) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
 				departureDestination, arrivalDestination);
@@ -31,7 +31,7 @@ public class InternationalFlight extends Flight implements Serializable {
 	}
 
 	public InternationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
 			String arrivalDestination) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
 				departureDestination, arrivalDestination);
