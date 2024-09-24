@@ -77,17 +77,20 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnGuardar().addActionListener(this);
 		vf.getMa().getBtnGuardar().setActionCommand("guardar");
 
-
 		vf.getMa().getBtnMostrar().addActionListener(this);
 		vf.getMa().getBtnMostrar().setActionCommand("");
 
-	
+		vf.getMa().getBtnVuelosInternac().addActionListener(this);
+		vf.getMa().getBtnVuelosInternac().setActionCommand("");
+
+		vf.getMa().getBtnVuelosNac().addActionListener(this);
+		vf.getMa().getBtnVuelosNac().setActionCommand("");
+
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
 		vf.getMa().getBtnVuelosNac().setActionCommand("nacional");
-
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -246,9 +249,6 @@ public class Controller implements ActionListener {
 				Image resizedD = delta.getImage().getScaledInstance(100, 75, Image.SCALE_REPLICATE);
 				vf.getMa().getLogo().setIcon(new ImageIcon(resizedD));
 				aerolinea = "Delta";
-			} else if (vf.getMa().getAerolinea().getSelectedItem().equals("")) {
-				vf.getMa().getLogo().setIcon(null);
-
 			}
 
 			break;
@@ -362,11 +362,4 @@ public class Controller implements ActionListener {
 		return false;
 	}
 
-	public void combustibleNacional() {
-
-	}
-
-	public void combustibleInternacional() {
-
-	}
 }
