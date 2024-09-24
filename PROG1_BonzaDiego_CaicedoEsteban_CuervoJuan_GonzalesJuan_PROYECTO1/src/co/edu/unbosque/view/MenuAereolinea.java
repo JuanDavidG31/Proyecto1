@@ -19,13 +19,14 @@ public class MenuAereolinea extends JFrame {
 	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
 			panelInternationalFlight, panelNationalFlight;
 //private JTextArea txtaMostrar;
+
 	private JTextField txtCompanyName, txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
 			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar,
 			txtDeparturePlace, txtArrivalPlace;
 	private JLabel lblNombre, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
 			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
-			lblIDVueloBuscar, logo;
-	private JComboBox<String> aerolinea;
+			lblIDVueloBuscar, logo, lblDeparturePlace, lblArrivalPlace;
+	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine;
 
 	private JScrollPane scrollpane;
 	private final static String INT = "Internacional";
@@ -99,6 +100,11 @@ public class MenuAereolinea extends JFrame {
 		btnSalir = new JButton(imagenSalir);
 		btnSalir.setBounds(25, 400, 100, 100);
 		panelIzq.add(btnSalir);
+		
+		ImageIcon imagenCambiarModo = new ImageIcon("Images\\ModoOscurobtnClaro.png");
+		btnCambiarModo = new JButton(imagenCambiarModo);
+		btnCambiarModo.setBounds(0, 510, 161, 55);
+		panelIzq.add(btnCambiarModo);
 
 		ImageIcon imagenCambiarModo = new ImageIcon("Images\\ModoOscurobtnClaro.png");
 		btnCambiarModo = new JButton(imagenCambiarModo);
@@ -115,6 +121,11 @@ public class MenuAereolinea extends JFrame {
 		btnActualizar = new JButton(imagenActualizar);
 		btnActualizar.setBounds(300, 5, 75, 75);
 		panelInferior.add(btnActualizar);
+		
+		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
+		btnEliminar = new JButton(imagenEliminar);
+		btnEliminar.setBounds(450, 5, 75, 75);
+		panelInferior.add(btnEliminar);
 
 		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		btnEliminar = new JButton(imagenEliminar);
@@ -124,7 +135,9 @@ public class MenuAereolinea extends JFrame {
 		// Boton panel de busqueda
 		ImageIcon imagenBuscarCentral = new ImageIcon("Images\\BusquedabtnClaro.png");
 		btnBuscarCentral = new JButton(imagenBuscarCentral);
+
 		btnBuscarCentral.setBounds(640, 0, 140, 38);
+
 		panelBuscar.add(btnBuscarCentral);
 	}
 
@@ -175,45 +188,43 @@ public class MenuAereolinea extends JFrame {
 	public void textfield() {
 
 		// Identificador del Vuelo
+		/*
 		txtID = new JTextField();
 		txtID.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtID.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtID);
+		*/
 
-		txtCompanyName = new JTextField();
-		txtCompanyName.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtCompanyName.setBounds(240, 55, 400, 40);
-		panelCentral.add(txtCompanyName);
 
 		txtPassengersNumber = new JTextField();
 		txtPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtPassengersNumber.setBounds(240, 55, 400, 40);
+		txtPassengersNumber.setBounds(180, 125, 400, 20);
 		panelCentral.add(txtPassengersNumber);
 
-		txtNameCaptain = new JTextField();
+		/*txtNameCaptain = new JTextField();
 		txtNameCaptain.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtNameCaptain.setBounds(240, 55, 400, 40);
+		txtNameCaptain.setBounds(180, 125, 400, 20);
 		panelCentral.add(txtNameCaptain);
 
 		txtNameSecondCommand = new JTextField();
 		txtNameSecondCommand.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtNameSecondCommand.setBounds(240, 55, 400, 40);
-		panelCentral.add(txtNameSecondCommand);
+		txtNameSecondCommand.setBounds(180, 125, 400, 20);
+		panelCentral.add(txtNameSecondCommand);*/
 
 		txtDepartureTime = new JTextField();
 		txtDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtDepartureTime.setBounds(240, 55, 400, 40);
+		txtDepartureTime.setBounds(180, 175, 400, 20);
 		panelCentral.add(txtDepartureTime);
 
 		txtArrivalTime = new JTextField();
 		txtArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtArrivalTime.setBounds(240, 55, 400, 40);
+		txtArrivalTime.setBounds(180, 225, 400, 20);
 		panelCentral.add(txtArrivalTime);
 
-		txtFuelWeight = new JTextField();
+		/*txtFuelWeight = new JTextField();
 		txtFuelWeight.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtFuelWeight.setBounds(240, 55, 400, 40);
-		panelCentral.add(txtFuelWeight);
+		txtFuelWeight.setBounds(180, 125, 400, 20);
+		panelCentral.add(txtFuelWeight);*/
 
 		txtIsTurboProp = new JTextField();
 		txtIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 14));
@@ -225,14 +236,17 @@ public class MenuAereolinea extends JFrame {
 		txtIsTurbine.setBounds(240, 55, 400, 40);
 		panelNationalFlight.add(txtIsTurbine);
 
-		txtIsVisa = new JTextField();
+		/*txtIsVisa = new JTextField();
 		txtIsVisa.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIsVisa.setBounds(240, 55, 400, 40);
-		panelInternationalFlight.add(txtIsVisa);
+		panelInternationalFlight.add(txtIsVisa);*/
 
-		txtIDVueloBuscar = new JTextField();
+		/*txtIDVueloBuscar = new JTextField();
 		txtIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIDVueloBuscar.setBounds(240, 55, 400, 40);
+
+		panelBuscar.add(txtIDVueloBuscar);*/
+
 		panelBuscar.add(txtIDVueloBuscar);
 
 		txtArrivalPlace = new JTextField();
@@ -245,12 +259,15 @@ public class MenuAereolinea extends JFrame {
 		txtDeparturePlace.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtDeparturePlace);
 
+
 	}
 
 	public void Combobox() {
 		aerolinea = new JComboBox<String>();
+
 		aerolinea.setBounds(180, 100, 200, 20);
 		aerolinea.setToolTipText("Seleccione la aerolinea");
+
 		aerolinea.addItem("");
 		aerolinea.addItem("Avianca");
 		aerolinea.addItem("Latam");
@@ -265,12 +282,76 @@ public class MenuAereolinea extends JFrame {
 		aerolinea.addItem("Delta");
 
 		panelCentral.add(aerolinea);
+		
+		cmbIsTurbine = new JComboBox<String>();
+		cmbIsTurbine.setBounds(150, 25, 180, 20);
+		cmbIsTurbine.setToolTipText("Set Yes or No");
+		cmbIsTurbine.addItem("");
+		cmbIsTurbine.addItem("Yes");
+		cmbIsTurbine.addItem("No");
+		panelInternationalFlight.add(cmbIsTurbine);
+		
+		cmbIsTurbo = new JComboBox<String>();
+		cmbIsTurbo.setBounds(520, 25, 180, 20);
+		cmbIsTurbo.setToolTipText("Set Yes or No");
+		cmbIsTurbo.addItem("");
+		cmbIsTurbo.addItem("Yes");
+		cmbIsTurbo.addItem("No");
+		panelInternationalFlight.add(cmbIsTurbo);
 	}
 
 	public void labels() {
 		logo = new JLabel();
+
 		logo.setBounds(550, 100, 100, 65);
+
 		panelCentral.add(logo);
+		
+		
+		lblCompanyName = new JLabel("Company name:");
+		lblCompanyName.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblCompanyName.setBounds(40, 70, 230, 30);
+        panelCentral.add(lblCompanyName);	
+		
+        lblPassengersNumber = new JLabel("Passengers number:");
+        lblPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblPassengersNumber.setBounds(40, 120, 230, 30);
+        panelCentral.add(lblPassengersNumber);		
+		
+        lblDepartureTime = new JLabel("Departure time:");
+        lblDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblDepartureTime.setBounds(40, 170, 230, 30);
+        panelCentral.add(lblDepartureTime);
+        
+        lblArrivalTime = new JLabel("Arrival time:");
+        lblArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblArrivalTime.setBounds(40, 220, 230, 30);
+        panelCentral.add(lblArrivalTime);        
+       
+        lblDeparturePlace = new JLabel("Departure place:");
+        lblDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblDeparturePlace.setBounds(40, 270, 230, 30);
+        panelCentral.add(lblDeparturePlace);
+        
+        lblArrivalPlace = new JLabel("Arrival place:");
+        lblArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblArrivalPlace.setBounds(40, 320, 230, 30);
+        panelCentral.add(lblArrivalPlace);
+        
+        lblIsTurbine = new JLabel("Turbine plane?");
+        lblIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblIsTurbine.setBounds(40, 15, 230, 30);
+        panelInternationalFlight.add(lblIsTurbine);
+        
+        lblIsTurboProp = new JLabel("TurboJett plane?");
+        lblIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblIsTurboProp.setBounds(410, 15, 230, 30);
+        panelInternationalFlight.add(lblIsTurboProp);
+        
+        lblIsVisa = new JLabel();
+        lblIsVisa.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblIsVisa.setBounds(40, 320, 230, 30);
+        panelInternationalFlight.add(lblIsVisa);
 	}
 	// Getters and Setters
 
@@ -418,13 +499,6 @@ public class MenuAereolinea extends JFrame {
 		this.panelVariable = panelVariable;
 	}
 
-	public JTextField getTxtCompanyName() {
-		return txtCompanyName;
-	}
-
-	public void setTxtCompanyName(JTextField txtCompanyName) {
-		this.txtCompanyName = txtCompanyName;
-	}
 
 	public JTextField getTxtPassengersNumber() {
 		return txtPassengersNumber;
@@ -514,13 +588,6 @@ public class MenuAereolinea extends JFrame {
 		this.txtIDVueloBuscar = txtIDVueloBuscar;
 	}
 
-	public JLabel getLblNombre() {
-		return lblNombre;
-	}
-
-	public void setLblNombre(JLabel lblNombre) {
-		this.lblNombre = lblNombre;
-	}
 
 	public JLabel getLblCompanyName() {
 		return lblCompanyName;
@@ -689,5 +756,41 @@ public class MenuAereolinea extends JFrame {
 	public void setTxtArrivalPlace(JTextField txtArrivalPlace) {
 		this.txtArrivalPlace = txtArrivalPlace;
 	}
+
+	public JLabel getLblDeparturePlace() {
+		return lblDeparturePlace;
+	}
+
+	public void setLblDeparturePlace(JLabel lblDeparturePlace) {
+		this.lblDeparturePlace = lblDeparturePlace;
+	}
+
+	public JLabel getLblArrivalPlace() {
+		return lblArrivalPlace;
+	}
+
+	public void setLblArrivalPlace(JLabel lblArrivalPlace) {
+		this.lblArrivalPlace = lblArrivalPlace;
+	}
+
+	public JComboBox<String> getCmbIsTurbo() {
+		return cmbIsTurbo;
+	}
+
+	public void setCmbIsTurbo(JComboBox<String> cmbIsTurbo) {
+		this.cmbIsTurbo = cmbIsTurbo;
+	}
+
+	public JComboBox<String> getCmbIsTurbine() {
+		return cmbIsTurbine;
+	}
+
+	public void setCmbIsTurbine(JComboBox<String> cmbIsTurbine) {
+		this.cmbIsTurbine = cmbIsTurbine;
+	}
+	
+	
+	
+
 
 }
