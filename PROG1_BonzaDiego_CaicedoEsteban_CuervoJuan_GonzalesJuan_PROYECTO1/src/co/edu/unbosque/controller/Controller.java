@@ -13,17 +13,24 @@ import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
+import co.edu.unbosque.util.exception.BooleanNotValidInputException;
+import co.edu.unbosque.util.exception.ExceptionChecker;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf = new ModelFacade();
 	private ViewFacade vf = new ViewFacade();
+	private int numSeleccionado = 0;
+	private String aerolinea = "";
+	private NationalFlightDTO na;
+	private InternationalFlightDTO in;
 
 	public Controller() {
 
 		mf = new ModelFacade();
 		vf = new ViewFacade();
-
+		na = new NationalFlightDTO();
+		in = new InternationalFlightDTO();
 		vf.getPi().setVisible(true);
 
 		asignarLectores();
@@ -68,23 +75,88 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnEliminar().setActionCommand("");
 
 		vf.getMa().getBtnGuardar().addActionListener(this);
-		vf.getMa().getBtnGuardar().setActionCommand("");
+		vf.getMa().getBtnGuardar().setActionCommand("guardar");
+
 
 		vf.getMa().getBtnMostrar().addActionListener(this);
 		vf.getMa().getBtnMostrar().setActionCommand("");
 
+	
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
-		vf.getMa().getBtnVuelosInternac().setActionCommand("");
+		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
-		vf.getMa().getBtnVuelosNac().setActionCommand("");
+		vf.getMa().getBtnVuelosNac().setActionCommand("nacional");
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		String aerolinea = "";
 
 		switch (e.getActionCommand()) {
+
+		case "internacional":
+
+			numSeleccionado = 2;
+
+			break;
+		case "nacional":
+			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
+			numSeleccionado = 1;
+
+			break;
+
+		case "guardar":
+
+			switch (numSeleccionado) {
+			case 1:
+
+				if (vf.getMa().getTxtDepartureTime().getText().equals("")
+						|| vf.getMa().getTxtArrivalTime().getText().equals("")
+						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
+						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
+						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
+						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")) {
+
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+					String company = aerolinea;
+					String passangers = vf.getMa().getTxtPassengersNumber().getText().toString();
+					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+					String departurePlace = "Bogota";
+					String turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+					String turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
+
+					boolean theTurbine = convBolean(turbine);
+					boolean theTurbo = convBolean(turbo);
+					int thePassangers = Integer.parseInt(passangers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+
+					boolean condition = booleanException(turbine);
+					boolean condition2 = booleanException(turbo);
+					if (condition == true || condition2 == true) {
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no en cordones", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+					mf.getNational()
+							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
+									theArraivalTime, 0, incNumReceipt(), departurePlace, "", theTurbo, theTurbo));
+					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+				}
+					
+				break;
+			case 2:
+
+				break;
+			default:
+				break;
+			}
+
+			break;
 
 		case "btnAreolinea":
 			vf.getPi().setVisible(false);
@@ -97,7 +169,7 @@ public class Controller implements ActionListener {
 			break;
 		case "seleccionarAerolinea":
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
-
+ 
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
 
 				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
@@ -248,7 +320,46 @@ public class Controller implements ActionListener {
 	}
 
 	public int random() {
-		return (int) (Math.random() * 1000 + 1);
+		return (int) (Math.random() * 1000 + 10);
+	}
+
+	/**
+	 * Convierte una cadena de texto a un valor booleano. Acepta "si" (o "Si") como
+	 * verdadero y "no" (o "No") como falso.
+	 * 
+	 * @param text La cadena de texto a convertir.
+	 * @return true si el texto es "si", false si es "no", y false si el texto no es
+	 *         reconocido.
+	 */
+	public boolean convBolean(String text) {
+		// Convertir el texto a minúsculas para comparación
+		String txt = text.toLowerCase();
+
+		// Comparar el texto con las opciones válidas
+		if (txt.equals("si")) {
+			return true; // Retornar verdadero si el texto es "si"
+		} else if (txt.equals("no")) {
+			return false; // Retornar falso si el texto es "no"
+		}
+
+		return false; // Retornar falso si el texto no es válido
+	}
+
+	/**
+	 * Verifica si la entrada booleana es válida utilizando el validador de
+	 * excepciones.
+	 * 
+	 * @param bo La cadena de texto que se desea validar como entrada booleana.
+	 * @return true si se lanza una excepción de entrada no válida; false si la
+	 *         entrada es válida.
+	 */
+	public boolean booleanException(String bo) {
+		try {
+			ExceptionChecker.BooleanNotValidInput(bo);
+		} catch (BooleanNotValidInputException e) {
+			return true;
+		}
+		return false;
 	}
 
 	public void combustibleNacional() {

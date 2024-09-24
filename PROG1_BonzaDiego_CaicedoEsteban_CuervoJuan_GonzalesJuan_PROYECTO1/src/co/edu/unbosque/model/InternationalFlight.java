@@ -8,26 +8,23 @@ public class InternationalFlight extends Flight implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private boolean isTurboProp;
-	private boolean isTurbine;
+	private boolean isVisa;
 
 	public InternationalFlight() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public InternationalFlight(boolean isTurboProp, boolean isTurbine) {
+	public InternationalFlight(boolean isVisa) {
 		super();
-		this.isTurboProp = isTurboProp;
-		this.isTurbine = isTurbine;
+		this.isVisa = isVisa;
 	}
 
 	public InternationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
 			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
-			String arrivalDestination, boolean isTurboProp, boolean isTurbine) {
+			String arrivalDestination, boolean isVisa) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight, id,
 				departureDestination, arrivalDestination);
-		this.isTurboProp = isTurboProp;
-		this.isTurbine = isTurbine;
+		this.isVisa = isVisa;
 	}
 
 	public InternationalFlight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
@@ -38,25 +35,17 @@ public class InternationalFlight extends Flight implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean isTurboProp() {
-		return isTurboProp;
+	public boolean isVisa() {
+		return isVisa;
 	}
 
-	public void setTurboProp(boolean isTurboProp) {
-		this.isTurboProp = isTurboProp;
-	}
-
-	public boolean isTurbine() {
-		return isTurbine;
-	}
-
-	public void setTurbine(boolean isTurbine) {
-		this.isTurbine = isTurbine;
+	public void setVisa(boolean isVisa) {
+		this.isVisa = isVisa;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " \n Is TurboProp :" + isTurboProp + " \n Is Turbine :" + isTurbine + "";
+		return super.toString() + "InternationalFlight [isVisa=" + isVisa + "]";
 	}
 
 }

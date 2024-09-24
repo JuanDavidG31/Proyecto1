@@ -15,8 +15,7 @@ public class DataMapper {
 		InternationalFlight entity;
 		entity = new InternationalFlight(dto.getCompanyName(), dto.getPassengersNumber(), dto.getNameCaptain(),
 				dto.getNameSecondCommand(), dto.getDepartureTime(), dto.getArrivalTime(), dto.getFuelWeight(),
-				dto.getId(), dto.getDepartureDestination(), dto.getArrivalDestination(), dto.isTurbine(),
-				dto.isTurboProp());
+				dto.getId(), dto.getDepartureDestination(), dto.getArrivalDestination(), dto.isVisa());
 		return entity;
 	}
 
@@ -25,7 +24,7 @@ public class DataMapper {
 		dto = new InternationalFlightDTO(entity.getCompanyName(), entity.getPassengersNumber(), entity.getNameCaptain(),
 				entity.getNameSecondCommand(), entity.getDepartureTime(), entity.getArrivalTime(),
 				entity.getFuelWeight(), entity.getId(), entity.getDepartureDestination(),
-				entity.getArrivalDestination(), entity.isTurbine(), entity.isTurboProp());
+				entity.getArrivalDestination(), entity.isVisa());
 		return dto;
 	}
 
@@ -35,7 +34,7 @@ public class DataMapper {
 		for (InternationalFlight g : entityList) {
 			dtoList.add(new InternationalFlightDTO(g.getCompanyName(), g.getPassengersNumber(), g.getNameCaptain(),
 					g.getNameSecondCommand(), g.getDepartureTime(), g.getArrivalTime(), g.getFuelWeight(), g.getId(),
-					g.getDepartureDestination(), g.getArrivalDestination(), g.isTurbine(), g.isTurboProp()));
+					g.getDepartureDestination(), g.getArrivalDestination(), g.isVisa()));
 		}
 		return dtoList;
 	}
@@ -46,7 +45,7 @@ public class DataMapper {
 		for (InternationalFlightDTO d : dtoList) {
 			entityList.add(new InternationalFlight(d.getCompanyName(), d.getPassengersNumber(), d.getNameCaptain(),
 					d.getNameSecondCommand(), d.getDepartureTime(), d.getArrivalTime(), d.getFuelWeight(), d.getId(),
-					d.getDepartureDestination(), d.getArrivalDestination(), d.isTurbine(), d.isTurboProp()));
+					d.getDepartureDestination(), d.getArrivalDestination(), d.isVisa()));
 		}
 		return entityList;
 	}
@@ -57,7 +56,8 @@ public class DataMapper {
 		NationalFlight entity;
 		entity = new NationalFlight(dto.getCompanyName(), dto.getPassengersNumber(), dto.getNameCaptain(),
 				dto.getNameSecondCommand(), dto.getDepartureTime(), dto.getArrivalTime(), dto.getFuelWeight(),
-				dto.getId(), dto.getDepartureDestination(), dto.getArrivalDestination(), dto.isVisa());
+				dto.getId(), dto.getDepartureDestination(), dto.getArrivalDestination(), dto.isTurboProp(),
+				dto.isTurbine());
 		return entity;
 	}
 
@@ -66,7 +66,7 @@ public class DataMapper {
 		dto = new NationalFlightDTO(entity.getCompanyName(), entity.getPassengersNumber(), entity.getNameCaptain(),
 				entity.getNameSecondCommand(), entity.getDepartureTime(), entity.getArrivalTime(),
 				entity.getFuelWeight(), entity.getId(), entity.getDepartureDestination(),
-				entity.getArrivalDestination(), entity.isVisa());
+				entity.getArrivalDestination(), entity.isTurboProp(), entity.isTurbine());
 		return dto;
 	}
 
@@ -76,7 +76,7 @@ public class DataMapper {
 		for (NationalFlight g : entityList) {
 			dtoList.add(new NationalFlightDTO(g.getCompanyName(), g.getPassengersNumber(), g.getNameCaptain(),
 					g.getNameSecondCommand(), g.getDepartureTime(), g.getArrivalTime(), g.getFuelWeight(), g.getId(),
-					g.getDepartureDestination(), g.getArrivalDestination(), g.isVisa()));
+					g.getDepartureDestination(), g.getArrivalDestination(), g.isTurboProp(), g.isTurbine()));
 		}
 		return dtoList;
 	}
@@ -87,7 +87,7 @@ public class DataMapper {
 		for (NationalFlightDTO d : dtoList) {
 			entityList.add(new NationalFlight(d.getCompanyName(), d.getPassengersNumber(), d.getNameCaptain(),
 					d.getNameSecondCommand(), d.getDepartureTime(), d.getArrivalTime(), d.getFuelWeight(), d.getId(),
-					d.getDepartureDestination(), d.getArrivalDestination(), d.isVisa()));
+					d.getDepartureDestination(), d.getArrivalDestination(), d.isTurboProp(), d.isTurbine()));
 		}
 		return entityList;
 	}

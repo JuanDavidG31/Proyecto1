@@ -4,6 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ExceptionChecker {
+	
+	
+	/**
+	 * Verifica si la entrada de booleano es válida.
+	 *
+	 * @param bo La entrada de tipo booleano como cadena.
+	 * @throws BooleanNotValidInputException si la entrada no es "si" o "no".
+	 */
+	public static void BooleanNotValidInput(String bo) throws BooleanNotValidInputException {
+		String f = bo.toLowerCase();
+		if (!f.equals("si") && !f.equals("no")) {
+			throw new BooleanNotValidInputException();
+		}
+	}
 
 	public static void CheckNegativeNumer(int numero) throws NegativeNumberException {
 		if (numero < 0) {
