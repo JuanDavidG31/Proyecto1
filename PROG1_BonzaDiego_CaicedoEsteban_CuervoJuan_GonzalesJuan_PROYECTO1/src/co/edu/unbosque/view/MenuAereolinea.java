@@ -6,33 +6,46 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class MenuAereolinea extends JFrame{
-	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnBuscarIzq, btnMostrar, btnSalir, btnCambiarModo, btnBuscarCentral, btnGuardar,
-	btnActualizar, btnEliminar;
-private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable, panelInternationalFlight, panelNationalFlight;
+public class MenuAereolinea extends JFrame {
+	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnBuscarIzq, btnMostrar, btnSalir, btnCambiarModo,
+			btnBuscarCentral, btnGuardar, btnActualizar, btnEliminar;
+	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
+			panelInternationalFlight, panelNationalFlight;
 //private JTextArea txtaMostrar;
-private JTextField txtCompanyName, txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime, txtArrivalTime, txtFuelWeight, txtID, 
-	txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar;
-private JLabel lblNombre, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand, lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID,
-		lblIsTurboProp, lblIsTurbine, lblIsVisa, lblIDVueloBuscar;
+	private JTextField txtCompanyName, txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
+			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar;
+	private JLabel lblNombre, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
+			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
+			lblIDVueloBuscar, logo;
+	private JComboBox<String> aerolinea;
 
-private JScrollPane scrollpane;
-private final static String INT = "Internacional";
-private final static String NAC = "Nacional";
+	private JScrollPane scrollpane;
+	private final static String INT = "Internacional";
+	private final static String NAC = "Nacional";
 
-CardLayout cardLayout = new CardLayout();
+	CardLayout cardLayout = new CardLayout();
 
 	public MenuAereolinea() {
+
 		ventana();
 		paneles();
-		labels();
 		textfield();
+		labels();
+		Combobox();
+
+		getPanelBuscar().setVisible(false);
+		getPanelCentral().setVisible(true);
+		getPanelInferior().setVisible(false);
+		getPanelIzq().setVisible(false);
+		getPanelVariable().setVisible(false);
+		getPanelVuelos().setVisible(false);
 		
 		add(panelBuscar);
 		add(panelCentral);
@@ -40,125 +53,126 @@ CardLayout cardLayout = new CardLayout();
 		add(panelIzq);
 		add(panelVariable);
 		add(panelVuelos);
+
+		
 	}
-	
+
 	public void ventana() {
 		setBounds(50, 50, 1000, 700);
 		setTitle("Aeropuerto el Dorado");
-        setDefaultCloseOperation(EXIT_ON_CLOSE); 
-        setResizable(false);
-        setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		setLayout(null);
 	}
-	
+
 	public void botones() {
-		//Botones panel superior
+		// Botones panel superior
 		ImageIcon imagenVuelosNacionales = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnVuelosNac = new JButton(imagenVuelosNacionales);
 		btnVuelosNac.setBounds(635, 0, 426, 88);
-		panelVuelos.add(btnVuelosNac);	
+		panelVuelos.add(btnVuelosNac);
 
 		ImageIcon imagenVuelosInternacionales = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnVuelosInternac = new JButton(imagenVuelosInternacionales);
 		btnVuelosInternac.setBounds(635, 0, 426, 88);
-		panelVuelos.add(btnVuelosInternac);			
-		
-		//Botones panel izquierda (menu)
+		panelVuelos.add(btnVuelosInternac);
+
+		// Botones panel izquierda (menu)
 		ImageIcon imagenAseoBtn = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnAniadir = new JButton(imagenAseoBtn);
 		btnAniadir.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnAniadir);		
-	
+		panelIzq.add(btnAniadir);
+
 		ImageIcon imagenBuscar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnBuscarIzq = new JButton(imagenBuscar);
 		btnBuscarIzq.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnBuscarIzq);			
-	
+		panelIzq.add(btnBuscarIzq);
+
 		ImageIcon imagenMostrar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnMostrar = new JButton(imagenMostrar);
 		btnMostrar.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnMostrar);			
-		
+		panelIzq.add(btnMostrar);
+
 		ImageIcon imagenCambiarModo = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnCambiarModo = new JButton(imagenCambiarModo);
 		btnCambiarModo.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnCambiarModo);			
-		
+		panelIzq.add(btnCambiarModo);
+
 		ImageIcon imagenSalir = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
 		btnSalir = new JButton(imagenSalir);
 		btnSalir.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnSalir);	
-		
-		//Botones panel Inferior
+		panelIzq.add(btnSalir);
+
+		// Botones panel Inferior
 		ImageIcon imagenGuardar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
-		btnGuardar= new JButton(imagenGuardar);
+		btnGuardar = new JButton(imagenGuardar);
 		btnGuardar.setBounds(635, 0, 426, 88);
 		panelInferior.add(btnGuardar);
-	
+
 		ImageIcon imagenActualizar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
-		btnActualizar= new JButton(imagenActualizar);
+		btnActualizar = new JButton(imagenActualizar);
 		btnActualizar.setBounds(635, 0, 426, 88);
 		panelInferior.add(btnActualizar);
-		
-		//Boton panel de busqueda
+
+		// Boton panel de busqueda
 		ImageIcon imagenBuscarCentral = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
-		btnBuscarCentral= new JButton(imagenBuscarCentral);
+		btnBuscarCentral = new JButton(imagenBuscarCentral);
 		btnBuscarCentral.setBounds(635, 0, 426, 88);
-		panelBuscar.add(btnBuscarCentral);		
+		panelBuscar.add(btnBuscarCentral);
 	}
-	
+
 	public void paneles() {
 		panelVuelos = new JPanel();
 		panelVuelos.setLayout(null);
 		panelVuelos.setBounds(0, 0, 1000, 60);
 		panelVuelos.setBackground(Color.green);
-		
+
 		panelIzq = new JPanel();
 		panelIzq.setLayout(null);
 		panelIzq.setBounds(0, 61, 150, 615);
 		panelIzq.setBackground(Color.blue);
-		
+
 		panelBuscar = new JPanel();
 		panelBuscar.setLayout(null);
 		panelBuscar.setBounds(151, 61, 850, 45);
 		panelBuscar.setBackground(Color.red);
-		
+
 		panelCentral = new JPanel();
 		panelCentral.setLayout(null);
 		panelCentral.setBounds(151, 106, 850, 430);
 		panelCentral.setBackground(Color.white);
-		
+
 		panelInferior = new JPanel();
 		panelInferior.setLayout(null);
 		panelInferior.setBounds(151, 610, 850, 90);
 		panelInferior.setBackground(Color.yellow);
-		
+
 		panelNationalFlight = new JPanel();
 		panelNationalFlight.setLayout(null);
 		panelNationalFlight.setBounds(151, 535, 850, 75);
 		panelNationalFlight.setBackground(Color.orange);
-		
+
 		panelInternationalFlight = new JPanel();
 		panelInternationalFlight.setLayout(null);
 		panelInternationalFlight.setBounds(151, 535, 850, 75);
 		panelInternationalFlight.setBackground(Color.magenta);
-		
+
 		panelVariable = new JPanel(cardLayout);
 		panelVariable.setBounds(151, 535, 850, 75);
 		panelVariable.setBackground(Color.gray);
 		panelVariable.add(panelInternationalFlight, INT);
 		panelVariable.add(panelNationalFlight, NAC);
-		
-		
+
 	}
-	
+
 	public void textfield() {
-		
-		//Identificador del Vuelo
-		txtID = new JTextField();	
+
+		// Identificador del Vuelo
+		txtID = new JTextField();
 		txtID.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtID.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtID);
-		
+
 		txtCompanyName = new JTextField();
 		txtCompanyName.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtCompanyName.setBounds(240, 55, 400, 40);
@@ -168,57 +182,78 @@ CardLayout cardLayout = new CardLayout();
 		txtPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtPassengersNumber.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtPassengersNumber);
- 
+
 		txtNameCaptain = new JTextField();
 		txtNameCaptain.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtNameCaptain.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtNameCaptain);
-		
+
 		txtNameSecondCommand = new JTextField();
 		txtNameSecondCommand.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtNameSecondCommand.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtNameSecondCommand);
-		
+
 		txtDepartureTime = new JTextField();
 		txtDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtDepartureTime.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtDepartureTime);
-		
+
 		txtArrivalTime = new JTextField();
 		txtArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtArrivalTime.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtArrivalTime);
-		
+
 		txtFuelWeight = new JTextField();
 		txtFuelWeight.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtFuelWeight.setBounds(240, 55, 400, 40);
 		panelCentral.add(txtFuelWeight);
-		
-		
+
 		txtIsTurboProp = new JTextField();
 		txtIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIsTurboProp.setBounds(240, 55, 400, 40);
 		panelNationalFlight.add(txtIsTurboProp);
-		
+
 		txtIsTurbine = new JTextField();
 		txtIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIsTurbine.setBounds(240, 55, 400, 40);
 		panelNationalFlight.add(txtIsTurbine);
-		
+
 		txtIsVisa = new JTextField();
 		txtIsVisa.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIsVisa.setBounds(240, 55, 400, 40);
 		panelInternationalFlight.add(txtIsVisa);
-		
+
 		txtIDVueloBuscar = new JTextField();
 		txtIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIDVueloBuscar.setBounds(240, 55, 400, 40);
 		panelBuscar.add(txtIDVueloBuscar);
-		
+
 	}
-	
+
+	public void Combobox() {
+		aerolinea = new JComboBox<String>();
+		aerolinea.setBounds(100	, 100, 200, 100);
+		aerolinea.setToolTipText("Seleccione la aerolinea");
+		aerolinea.addItem("");
+		aerolinea.addItem("Avianca");
+		aerolinea.addItem("Latam");
+		aerolinea.addItem("Wingo");
+		aerolinea.addItem("Clic");
+		aerolinea.addItem("JetSmart");
+		aerolinea.addItem("Satena");
+		aerolinea.addItem("Air Canada");
+		aerolinea.addItem("KLM");
+		aerolinea.addItem("Iberia");
+		aerolinea.addItem("Emirates");
+		aerolinea.addItem("Delta");
+
+		panelCentral.add(aerolinea);
+	}
+
 	public void labels() {
-		
+		logo = new JLabel();
+		logo.setBounds(150, 150, 100, 50);
+		panelCentral.add(logo);
 	}
 	// Getters and Setters
 
@@ -589,9 +624,30 @@ CardLayout cardLayout = new CardLayout();
 	public static String getNac() {
 		return NAC;
 	}
+
+	public JComboBox<String> getAerolinea() {
+		return aerolinea;
+	}
+
+	public void setAerolinea(JComboBox<String> aerolinea) {
+		this.aerolinea = aerolinea;
+	}
+
+	public JLabel getLogo() {
+		return logo;
+	}
+
+	public void setLogo(JLabel logo) {
+		this.logo = logo;
+	}
+
+	public CardLayout getCardLayout() {
+		return cardLayout;
+	}
+
+	public void setCardLayout(CardLayout cardLayout) {
+		this.cardLayout = cardLayout;
+	}
 	
-	
-	
-	
-	
+
 }

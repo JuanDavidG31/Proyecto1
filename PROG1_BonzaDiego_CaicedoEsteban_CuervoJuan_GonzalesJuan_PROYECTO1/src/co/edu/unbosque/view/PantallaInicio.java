@@ -25,19 +25,19 @@ public class PantallaInicio extends JFrame{
 	}
 	
 	public void botones() {
-		ImageIcon btnClienteImg = new ImageIcon("src/co/edu/unbosque/view/btnCliente.png");
+		ImageIcon btnClienteImg = new ImageIcon("Images\\btnCliente.png");
 		btnCliente = new JButton(btnClienteImg);
-		btnCliente.setBounds(140, 250, 418, 30);
+		btnCliente.setBounds(140, 320, 418, 30);
 		add(btnCliente);
 		
-		ImageIcon btnAereolineaImg = new ImageIcon("src/co/edu/unbosque/view/btnAerolinea.png");
+		ImageIcon btnAereolineaImg = new ImageIcon("Images\\btnAerolinea.png");
 		btnAereolinea = new JButton(btnAereolineaImg);
-		btnAereolinea.setBounds(140, 320, 418, 30);
+		btnAereolinea.setBounds(140, 250, 418, 30);
 		add(btnAereolinea);
 	}
 	
 	public void labels() {
-		lblFondo = new JLabel(new ImageIcon("src/co/edu/unbosque/view/pantallaInicioDorado.png"));
+		lblFondo = new JLabel(new ImageIcon("Images\\pantallaInicioDorado.png"));
 		setContentPane(lblFondo);
 	}
 
