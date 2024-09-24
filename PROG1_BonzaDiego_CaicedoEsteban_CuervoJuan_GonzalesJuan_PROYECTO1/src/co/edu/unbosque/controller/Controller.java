@@ -151,50 +151,50 @@ public class Controller implements ActionListener {
 			boolean frist = false;
 			boolean second = false;
 			num = random();
-			
+
 			ArrayList<InternationalFlightDTO> in;
 			in = new ArrayList<>();
 			in = mf.getInternational().getAll();
-			second: for (int i = 0; i <= in.size(); i++) {
-				
-				if(in.isEmpty()) {
+			second: for (int i = 0; i < in.size(); i++) {
+
+				if (in.isEmpty()) {
 					break main;
-				}else {
-					
-					if(in.get(i).getId()==num) {
+				} else {
+
+					if (in.get(i).getId() == num) {
 						frist = true;
 						break second;
-					}else {
+					} else {
 						continue;
 					}
-	
+
 				}
-				
+
 			}
 
 			ArrayList<NationalFlightDTO> na;
 			na = new ArrayList<>();
 			na = mf.getNational().getAll();
-			tres: for (int i = 0; i <= na.size(); i++) {
-				
-				if(na.isEmpty()) {
+			tres: for (int i = 0; i < na.size(); i++) {
+
+				if (na.isEmpty()) {
 					break main;
-				}else {
-					
-					if(na.get(i).getId()==num) {
+				} else {
+
+					if (na.get(i).getId() == num) {
 						second = true;
 						break tres;
-					}else {
+					} else {
 						continue;
 					}
-	
+
 				}
 
 			}
-			
-			if(frist == true || second == true) {
+
+			if (frist == true || second == true) {
 				continue;
-			}else {
+			} else {
 				break main;
 			}
 		}
