@@ -42,43 +42,43 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getAerolinea().addActionListener(this);
 		vf.getMa().getAerolinea().setActionCommand("seleccionarAerolinea");
-		
+
 		vf.getMa().getBtnAniadir().addActionListener(this);
 		vf.getMa().getBtnAniadir().setActionCommand("btnAniadir");
-		
+
 		vf.getMa().getBtnActualizar().addActionListener(this);
 		vf.getMa().getBtnActualizar().setActionCommand("btnActualizar");
 
 		vf.getMa().getBtnBuscarIzq().addActionListener(this);
 		vf.getMa().getBtnBuscarIzq().setActionCommand("btnBuscar");
-		
+
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
-		
+
 		vf.getMa().getBtnBuscarCentral().addActionListener(this);
 		vf.getMa().getBtnBuscarCentral().setActionCommand("");
-		
+
 		vf.getMa().getBtnBuscarIzq().addActionListener(this);
 		vf.getMa().getBtnBuscarIzq().setActionCommand("");
-		
+
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
 		vf.getMa().getBtnCambiarModo().setActionCommand("");
-		
+
 		vf.getMa().getBtnEliminar().addActionListener(this);
 		vf.getMa().getBtnEliminar().setActionCommand("");
-		
+
 		vf.getMa().getBtnGuardar().addActionListener(this);
 		vf.getMa().getBtnGuardar().setActionCommand("");
-		
+
 		vf.getMa().getBtnMostrar().addActionListener(this);
 		vf.getMa().getBtnMostrar().setActionCommand("");
-		
+
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("");
-		
+
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
 		vf.getMa().getBtnVuelosNac().setActionCommand("");
-		 
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -174,6 +174,9 @@ public class Controller implements ActionListener {
 				Image resizedD = delta.getImage().getScaledInstance(100, 75, Image.SCALE_REPLICATE);
 				vf.getMa().getLogo().setIcon(new ImageIcon(resizedD));
 				aerolinea = "Delta";
+			} else if (vf.getMa().getAerolinea().getSelectedItem().equals("")) {
+				vf.getMa().getLogo().setIcon(null);
+
 			}
 
 			break;
@@ -248,4 +251,11 @@ public class Controller implements ActionListener {
 		return (int) (Math.random() * 1000 + 1);
 	}
 
+	public void combustibleNacional() {
+
+	}
+
+	public void combustibleInternacional() {
+
+	}
 }
