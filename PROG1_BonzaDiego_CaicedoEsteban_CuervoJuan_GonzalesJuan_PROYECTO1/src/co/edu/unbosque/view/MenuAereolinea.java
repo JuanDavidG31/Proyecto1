@@ -294,8 +294,7 @@ public class MenuAereolinea extends JFrame {
 	public void labels() {
 		logo = new JLabel();
 
-		logo.setBounds(550, 100, 100, 65);
-
+		logo.setBounds(450, 50, 100, 75);
 		panelCentral.add(logo);
 		
 		
