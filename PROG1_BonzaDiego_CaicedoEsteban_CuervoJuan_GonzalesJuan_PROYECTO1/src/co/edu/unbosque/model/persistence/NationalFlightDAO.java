@@ -11,8 +11,9 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 	private final String SERIAL_NAME = "NationalFlight.dat";
 
 	public NationalFlightDAO() {
-		listaNationalFlight = new ArrayList<>();
+		//listaNationalFlight = new ArrayList<>();
 		FileHandler.checkFolder();
+		readSerilized();
 	}
 
 	@Override
@@ -100,7 +101,10 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 			content += m.getNameCaptain() + ";";
 			content += m.getNameSecondCommand() + ";";
 			content += m.getPassengersNumber() + ";";
-			content += m.isVisa() + ";";
+			content += m.getDepartureDestination() + ";";
+			content += m.getId() + ";";
+			content += m.isTurbine() + ";";
+			content += m.isTurboProp() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
