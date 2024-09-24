@@ -238,7 +238,7 @@ public class MenuAereolinea extends JFrame {
 
 		panelBuscar.add(txtIDVueloBuscar);*/
 
-		panelBuscar.add(txtIDVueloBuscar);
+		//panelBuscar.add(txtIDVueloBuscar);
 
 		txtArrivalPlace = new JTextField();
 		txtArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 14));
