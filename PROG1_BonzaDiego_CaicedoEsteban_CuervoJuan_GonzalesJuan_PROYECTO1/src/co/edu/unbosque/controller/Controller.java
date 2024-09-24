@@ -47,6 +47,7 @@ public class Controller implements ActionListener {
 			vf.getPi().setVisible(false);
 			vf.getMa().setVisible(true);
 			vf.getMa().getPanelVuelos().setVisible(true);
+			vf.getMa().getPanelVuelos().setVisible(true);
 			break;
 		case "btnCliente":
 
@@ -55,7 +56,7 @@ public class Controller implements ActionListener {
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
 
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
-				Image resizedA = avianca.getImage().getScaledInstance(100, 50, Image.SCALE_REPLICATE);
+				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
 				vf.getMa().getLogo().setIcon(new ImageIcon(resizedA));
 				aerolinea="Avianca";
 				

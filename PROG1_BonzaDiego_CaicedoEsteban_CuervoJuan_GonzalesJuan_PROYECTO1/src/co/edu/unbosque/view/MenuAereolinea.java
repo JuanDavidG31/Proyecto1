@@ -20,7 +20,8 @@ public class MenuAereolinea extends JFrame {
 			panelInternationalFlight, panelNationalFlight;
 //private JTextArea txtaMostrar;
 	private JTextField txtCompanyName, txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
-			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar;
+			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar, 
+			txtDeparturePlace, txtArrivalPlace;
 	private JLabel lblNombre, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
 			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
 			lblIDVueloBuscar, logo;
@@ -37,15 +38,16 @@ public class MenuAereolinea extends JFrame {
 		ventana();
 		paneles();
 		textfield();
+		botones();
 		labels();
 		Combobox();
 
-		getPanelBuscar().setVisible(false);
+		getPanelBuscar().setVisible(true);
 		getPanelCentral().setVisible(true);
-		getPanelInferior().setVisible(false);
-		getPanelIzq().setVisible(false);
-		getPanelVariable().setVisible(false);
-		getPanelVuelos().setVisible(false);
+		getPanelInferior().setVisible(true);
+		getPanelIzq().setVisible(true);
+		getPanelVariable().setVisible(true);
+		getPanelVuelos().setVisible(true);
 		
 		add(panelBuscar);
 		add(panelCentral);
@@ -67,57 +69,63 @@ public class MenuAereolinea extends JFrame {
 
 	public void botones() {
 		// Botones panel superior
-		ImageIcon imagenVuelosNacionales = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenVuelosNacionales = new ImageIcon("Images\\NacionaleBtn.png");
 		btnVuelosNac = new JButton(imagenVuelosNacionales);
-		btnVuelosNac.setBounds(635, 0, 426, 88);
+		btnVuelosNac.setBounds(150, 10, 320, 51);
 		panelVuelos.add(btnVuelosNac);
 
-		ImageIcon imagenVuelosInternacionales = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenVuelosInternacionales = new ImageIcon("Images\\InternacionalesBtn.png");
 		btnVuelosInternac = new JButton(imagenVuelosInternacionales);
-		btnVuelosInternac.setBounds(635, 0, 426, 88);
+		btnVuelosInternac.setBounds(520, 10, 320, 51);
 		panelVuelos.add(btnVuelosInternac);
 
 		// Botones panel izquierda (menu)
-		ImageIcon imagenAseoBtn = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenAseoBtn = new ImageIcon("Images\\AniadirbtnClaro.png");
 		btnAniadir = new JButton(imagenAseoBtn);
-		btnAniadir.setBounds(635, 0, 426, 88);
+		btnAniadir.setBounds(25, 25, 100, 100);
 		panelIzq.add(btnAniadir);
 
-		ImageIcon imagenBuscar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenBuscar = new ImageIcon("Images\\BuscarbtnClaro.png");
 		btnBuscarIzq = new JButton(imagenBuscar);
-		btnBuscarIzq.setBounds(635, 0, 426, 88);
+		btnBuscarIzq.setBounds(25, 150, 100, 100);
 		panelIzq.add(btnBuscarIzq);
 
-		ImageIcon imagenMostrar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenMostrar = new ImageIcon("Images\\MostrarbtnClaro.png");
 		btnMostrar = new JButton(imagenMostrar);
-		btnMostrar.setBounds(635, 0, 426, 88);
+		btnMostrar.setBounds(25, 275, 100, 100);
 		panelIzq.add(btnMostrar);
 
-		ImageIcon imagenCambiarModo = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+
+		ImageIcon imagenSalir = new ImageIcon("Images\\SalirbtnClaro.png");
+		btnSalir = new JButton(imagenSalir);
+		btnSalir.setBounds(25, 400, 100, 100);
+		panelIzq.add(btnSalir);
+		
+		ImageIcon imagenCambiarModo = new ImageIcon("Images\\ModoOscurobtnClaro.png");
 		btnCambiarModo = new JButton(imagenCambiarModo);
-		btnCambiarModo.setBounds(635, 0, 426, 88);
+		btnCambiarModo.setBounds(0, 510, 161, 55);
 		panelIzq.add(btnCambiarModo);
 
-		ImageIcon imagenSalir = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
-		btnSalir = new JButton(imagenSalir);
-		btnSalir.setBounds(635, 0, 426, 88);
-		panelIzq.add(btnSalir);
-
 		// Botones panel Inferior
-		ImageIcon imagenGuardar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenGuardar = new ImageIcon("Images\\GuardarbtnClaro.png");
 		btnGuardar = new JButton(imagenGuardar);
-		btnGuardar.setBounds(635, 0, 426, 88);
+		btnGuardar.setBounds(150, 5, 75, 75);
 		panelInferior.add(btnGuardar);
 
-		ImageIcon imagenActualizar = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenActualizar = new ImageIcon("Images\\ActualizarbtnClaro.png");
 		btnActualizar = new JButton(imagenActualizar);
-		btnActualizar.setBounds(635, 0, 426, 88);
+		btnActualizar.setBounds(300, 5, 75, 75);
 		panelInferior.add(btnActualizar);
+		
+		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
+		btnEliminar = new JButton(imagenEliminar);
+		btnEliminar.setBounds(450, 5, 75, 75);
+		panelInferior.add(btnEliminar);
 
 		// Boton panel de busqueda
-		ImageIcon imagenBuscarCentral = new ImageIcon("src/co/edu/unbosque/view/bntAseo.png");
+		ImageIcon imagenBuscarCentral = new ImageIcon("Images\\BusquedabtnClaro.png");
 		btnBuscarCentral = new JButton(imagenBuscarCentral);
-		btnBuscarCentral.setBounds(635, 0, 426, 88);
+		btnBuscarCentral.setBounds(640, 0, 140, 38);
 		panelBuscar.add(btnBuscarCentral);
 	}
 
@@ -125,12 +133,12 @@ public class MenuAereolinea extends JFrame {
 		panelVuelos = new JPanel();
 		panelVuelos.setLayout(null);
 		panelVuelos.setBounds(0, 0, 1000, 60);
-		panelVuelos.setBackground(Color.green);
+		panelVuelos.setBackground(Color.white);
 
 		panelIzq = new JPanel();
 		panelIzq.setLayout(null);
 		panelIzq.setBounds(0, 61, 150, 615);
-		panelIzq.setBackground(Color.blue);
+		panelIzq.setBackground(Color.white);
 
 		panelBuscar = new JPanel();
 		panelBuscar.setLayout(null);
@@ -139,12 +147,12 @@ public class MenuAereolinea extends JFrame {
 
 		panelCentral = new JPanel();
 		panelCentral.setLayout(null);
-		panelCentral.setBounds(151, 106, 850, 430);
+		panelCentral.setBounds(151, 106, 850, 405);
 		panelCentral.setBackground(Color.white);
 
 		panelInferior = new JPanel();
 		panelInferior.setLayout(null);
-		panelInferior.setBounds(151, 610, 850, 90);
+		panelInferior.setBounds(151, 585, 850, 90);
 		panelInferior.setBackground(Color.yellow);
 
 		panelNationalFlight = new JPanel();
@@ -158,7 +166,7 @@ public class MenuAereolinea extends JFrame {
 		panelInternationalFlight.setBackground(Color.magenta);
 
 		panelVariable = new JPanel(cardLayout);
-		panelVariable.setBounds(151, 535, 850, 75);
+		panelVariable.setBounds(151, 510, 850, 75);
 		panelVariable.setBackground(Color.gray);
 		panelVariable.add(panelInternationalFlight, INT);
 		panelVariable.add(panelNationalFlight, NAC);
@@ -227,12 +235,23 @@ public class MenuAereolinea extends JFrame {
 		txtIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIDVueloBuscar.setBounds(240, 55, 400, 40);
 		panelBuscar.add(txtIDVueloBuscar);
-
+ 
+		txtArrivalPlace = new JTextField();
+		txtArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 14));
+		txtArrivalPlace.setBounds(240, 55, 400, 40);
+		panelCentral.add(txtArrivalPlace);
+		
+		txtDeparturePlace = new JTextField();
+		txtDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 14));
+		txtDeparturePlace.setBounds(240, 55, 400, 40);
+		panelCentral.add(txtDeparturePlace);
+		
+		
 	}
 
 	public void Combobox() {
 		aerolinea = new JComboBox<String>();
-		aerolinea.setBounds(100	, 100, 200, 100);
+		aerolinea.setBounds(180	, 100, 200, 20);
 		aerolinea.setToolTipText("Seleccione la aerolinea");
 		aerolinea.addItem("");
 		aerolinea.addItem("Avianca");
@@ -252,7 +271,7 @@ public class MenuAereolinea extends JFrame {
 
 	public void labels() {
 		logo = new JLabel();
-		logo.setBounds(150, 150, 100, 50);
+		logo.setBounds(550, 100, 100, 65);
 		panelCentral.add(logo);
 	}
 	// Getters and Setters
@@ -648,6 +667,24 @@ public class MenuAereolinea extends JFrame {
 	public void setCardLayout(CardLayout cardLayout) {
 		this.cardLayout = cardLayout;
 	}
+
+	public JTextField getTxtDeparturePlace() {
+		return txtDeparturePlace;
+	}
+
+	public void setTxtDeparturePlace(JTextField txtDeparturePlace) {
+		this.txtDeparturePlace = txtDeparturePlace;
+	}
+
+	public JTextField getTxtArrivalPlace() {
+		return txtArrivalPlace;
+	}
+
+	public void setTxtArrivalPlace(JTextField txtArrivalPlace) {
+		this.txtArrivalPlace = txtArrivalPlace;
+	}
+	
+	
 	
 
 }
