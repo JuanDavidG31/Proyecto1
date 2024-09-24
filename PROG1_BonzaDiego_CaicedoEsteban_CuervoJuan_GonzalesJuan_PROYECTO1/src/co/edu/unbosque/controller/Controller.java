@@ -144,7 +144,7 @@ public class Controller implements ActionListener {
 
 					mf.getNational()
 							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
-									theArraivalTime, 0, incNumReceipt(), departurePlace, "", theTurbo, theTurbo));
+									theArraivalTime, 0, incNumReceipt(), departurePlace, "", theTurbo, theTurbine));
 					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
 				}
 					
