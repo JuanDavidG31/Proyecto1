@@ -1,6 +1,13 @@
 package co.edu.unbosque.model;
 
-public class NationalFlightDTO extends Flight {
+import java.io.Serializable;
+
+public class NationalFlightDTO extends Flight implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isVisa;
 
 	public NationalFlightDTO() {
@@ -13,16 +20,18 @@ public class NationalFlightDTO extends Flight {
 	}
 	
 	public NationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id, boolean isVisa) {
+			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
+			String arrivalDestination, boolean isVisa) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id);
+				id, departureDestination,arrivalDestination);
 		this.isVisa = isVisa;
 	}
 
 	public NationalFlightDTO(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id) {
+			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
+			String arrivalDestination) {
 		super(companyName, passengersNumber, nameCaptain, nameSecondCommand, departureTime, arrivalTime, fuelWeight,
-				id);
+				id,departureDestination, arrivalDestination);
 		
 	}
 	

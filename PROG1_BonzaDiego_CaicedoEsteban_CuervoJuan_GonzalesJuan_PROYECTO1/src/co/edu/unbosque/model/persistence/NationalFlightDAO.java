@@ -2,13 +2,13 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 
 public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, NationalFlight> {
 	private ArrayList<NationalFlight> listaNationalFlight;
 	private final String FILE_NAME = "NationalFlight.csv";
+	private final String SERIAL_NAME = "NationalFlight.dat";
 
 	public NationalFlightDAO() {
 		listaNationalFlight = new ArrayList<>();
@@ -39,6 +39,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 		if (find(DataMapper.NationalFlightDTOToNationalFlight(newData)) == null) {
 			listaNationalFlight.add(DataMapper.NationalFlightDTOToNationalFlight(newData));
 			writeFile();
+			writeSerialized();
 			return true;
 		} else {
 			return false;
@@ -62,7 +63,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 		NationalFlight found = null;
 		if (!listaNationalFlight.isEmpty()) {
 			for (NationalFlight NationalFlight : listaNationalFlight) {
-				if (NationalFlight.getId().equals(toFind.getId())) {
+				if (NationalFlight.getId() == toFind.getId()) {
 					found = NationalFlight;
 					return found;
 				} else {
@@ -82,6 +83,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 			listaNationalFlight.remove(found);
 			listaNationalFlight.add(DataMapper.NationalFlightDTOToNationalFlight(newData));
 			writeFile();
+			writeSerialized();
 			return true;
 		} else {
 			return false;
@@ -114,5 +116,25 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 
 	public String getFILE_NAME() {
 		return FILE_NAME;
+	}
+
+	public void writeSerialized() {
+		FileHandler.writerSerialized(SERIAL_NAME, listaNationalFlight);
+	}
+
+	public void readSerilized() {
+		Object content = FileHandler.readSerialized(SERIAL_NAME);
+		if (content == null) {
+			listaNationalFlight = new ArrayList<>();
+		} else {
+			listaNationalFlight = (ArrayList<NationalFlight>) content;
+
+		}
+	}
+
+	@Override
+	public NationalFlight find2(NationalFlight toFind) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
