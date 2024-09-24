@@ -19,11 +19,10 @@ public class MenuAereolinea extends JFrame {
 	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
 			panelInternationalFlight, panelNationalFlight;
 //private JTextArea txtaMostrar;
-
-	private JTextField txtCompanyName, txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
+	private JTextField  txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime,
 			txtArrivalTime, txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar,
 			txtDeparturePlace, txtArrivalPlace;
-	private JLabel lblNombre, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
+	private JLabel  lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
 			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
 			lblIDVueloBuscar, logo, lblDeparturePlace, lblArrivalPlace;
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine;
