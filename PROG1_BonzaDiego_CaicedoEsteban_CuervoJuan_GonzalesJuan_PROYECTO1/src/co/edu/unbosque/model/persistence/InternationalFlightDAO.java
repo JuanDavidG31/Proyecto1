@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.InternationalFlight;
 import co.edu.unbosque.model.InternationalFlightDTO;
 
-public class InternationalFlightDAO implements CRUDOperation<InternationalFlightDTO, InternationalFlight>{
+public class InternationalFlightDAO implements CRUDOperation<InternationalFlightDTO, InternationalFlight> {
 	private ArrayList<InternationalFlight> listaInternationalFlight;
 	private final String FILE_NAME = "InternationalFlight.csv";
+	private final String SERIAL_NAME = "InternationalFlight.dat";
 
 	public InternationalFlightDAO() {
 		listaInternationalFlight = new ArrayList<>();
@@ -38,6 +39,7 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 		if (find(DataMapper.InternationalFlightDTOToInternationalFlight(newData)) == null) {
 			listaInternationalFlight.add(DataMapper.InternationalFlightDTOToInternationalFlight(newData));
 			writeFile();
+			writeSerialized();
 			return true;
 		} else {
 			return false;
@@ -81,6 +83,7 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 			listaInternationalFlight.remove(found);
 			listaInternationalFlight.add(DataMapper.InternationalFlightDTOToInternationalFlight(newData));
 			writeFile();
+			writeSerialized();
 			return true;
 		} else {
 			return false;
@@ -116,4 +119,35 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 		return FILE_NAME;
 	}
 
+	public void writeSerialized() {
+		FileHandler.writerSerialized(SERIAL_NAME, listaInternationalFlight);
+	}
+
+	public void readSerilized() {
+		Object content = FileHandler.readSerialized(SERIAL_NAME);
+		if (content == null) {
+			listaInternationalFlight = new ArrayList<>();
+		} else {
+			listaInternationalFlight = (ArrayList<InternationalFlight>) content;
+
+		}
+	}
+
+	@Override
+	public InternationalFlight find2(InternationalFlight toFind) {
+		InternationalFlight found = null;
+		if (!listaInternationalFlight.isEmpty()) {
+			for (InternationalFlight InternationalFlight : listaInternationalFlight) {
+				if (InternationalFlight.getId().equals(toFind.getId())) {
+					found = InternationalFlight;
+					return found;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			return null;
+		}
+		return null;
 }
+	}

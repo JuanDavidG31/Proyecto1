@@ -1,6 +1,13 @@
 package co.edu.unbosque.model;
 
-public abstract class Flight {
+import java.io.Serializable;
+
+public abstract class Flight implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String companyName;
 	private int passengersNumber;
@@ -10,13 +17,16 @@ public abstract class Flight {
 	private int arrivalTime;
 	private int fuelWeight;
 	private String id;
+	private String departureDestination;
+	private String arrivalDestination;
 
 	public Flight() {
 
 	}
 
 	public Flight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, String id) {
+			int departureTime, int arrivalTime, int fuelWeight, String id, String departureDestination,
+			String arrivalDestination) {
 		super();
 		this.companyName = companyName;
 		this.passengersNumber = passengersNumber;
@@ -26,6 +36,8 @@ public abstract class Flight {
 		this.arrivalTime = arrivalTime;
 		this.fuelWeight = fuelWeight;
 		this.id = id;
+		this.departureDestination = departureDestination;
+		this.arrivalDestination = arrivalDestination;
 	}
 
 	public String getCompanyName() {
@@ -92,11 +104,28 @@ public abstract class Flight {
 		this.id = id;
 	}
 
+	public String getDepartureDestination() {
+		return departureDestination;
+	}
+
+	public void setDepartureDestination(String departureDestination) {
+		this.departureDestination = departureDestination;
+	}
+
+	public String getArrivalDestination() {
+		return arrivalDestination;
+	}
+
+	public void setArrivalDestination(String arrivalDestination) {
+		this.arrivalDestination = arrivalDestination;
+	}
+
 	@Override
 	public String toString() {
-		return "Company Name :" + companyName + " \n Passengers Number : " + passengersNumber + " \n Name Captain : "
-				+ nameCaptain + " \n Name Second Command :" + nameSecondCommand + " \n Departure Time :" + departureTime
-				+ " \n Arrival Time :" + arrivalTime + " \n Fuel Weight :" + fuelWeight + "";
+		return "Flight [companyName=" + companyName + ", passengersNumber=" + passengersNumber + ", nameCaptain="
+				+ nameCaptain + ", nameSecondCommand=" + nameSecondCommand + ", departureTime=" + departureTime
+				+ ", arrivalTime=" + arrivalTime + ", fuelWeight=" + fuelWeight + ", id=" + id
+				+ ", departureDestination=" + departureDestination + ", arrivalDestination=" + arrivalDestination + "]";
 	}
 
 }
