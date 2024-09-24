@@ -54,6 +54,30 @@ public class Controller implements ActionListener {
 		
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
+		
+		vf.getMa().getBtnBuscarCentral().addActionListener(this);
+		vf.getMa().getBtnBuscarCentral().setActionCommand("");
+		
+		vf.getMa().getBtnBuscarIzq().addActionListener(this);
+		vf.getMa().getBtnBuscarIzq().setActionCommand("");
+		
+		vf.getMa().getBtnCambiarModo().addActionListener(this);
+		vf.getMa().getBtnCambiarModo().setActionCommand("");
+		
+		vf.getMa().getBtnEliminar().addActionListener(this);
+		vf.getMa().getBtnEliminar().setActionCommand("");
+		
+		vf.getMa().getBtnGuardar().addActionListener(this);
+		vf.getMa().getBtnGuardar().setActionCommand("");
+		
+		vf.getMa().getBtnMostrar().addActionListener(this);
+		vf.getMa().getBtnMostrar().setActionCommand("");
+		
+		vf.getMa().getBtnVuelosInternac().addActionListener(this);
+		vf.getMa().getBtnVuelosInternac().setActionCommand("");
+		
+		vf.getMa().getBtnVuelosNac().addActionListener(this);
+		vf.getMa().getBtnVuelosNac().setActionCommand("");
 		 
 	}
 
@@ -193,7 +217,7 @@ public class Controller implements ActionListener {
 			ArrayList<NationalFlightDTO> na;
 			na = new ArrayList<>();
 			na = mf.getNational().getAll();
-			tres: for (int i = 0; i < na.size(); i++) {
+			third: for (int i = 0; i < na.size(); i++) {
 
 				if (na.isEmpty()) {
 					break main;
@@ -201,9 +225,9 @@ public class Controller implements ActionListener {
 
 					if (na.get(i).getId() == num) {
 						second = true;
-						break tres;
+						break third;
 					} else {
-						continue tres;
+						continue third;
 					}
 
 				}
