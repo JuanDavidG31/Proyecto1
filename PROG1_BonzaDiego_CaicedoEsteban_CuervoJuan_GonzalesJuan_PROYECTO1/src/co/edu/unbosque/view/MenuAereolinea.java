@@ -323,25 +323,23 @@ public class MenuAereolinea extends JFrame {
 		arrivalInternacional.addItem("");
 		arrivalInternacional.addItem("Madrid");//8039 km
 		arrivalInternacional.addItem("Barcelona");//8522 km.
-		arrivalInternacional.addItem("Lisboa");//7,523 km
-		arrivalInternacional.addItem("Paris");//8,639 km
-		arrivalInternacional.addItem("Roma");//9,355 km
-		arrivalInternacional.addItem("Bruselas");//8,800 km
-		arrivalInternacional.addItem("Berlin");//9,421 km
-		arrivalInternacional.addItem("Londres");//8,503 km
-		arrivalInternacional.addItem("Dubai");//13,622 km
-		arrivalInternacional.addItem("New York");//4,002 km
-		arrivalInternacional.addItem("Los Angeles");//5,597 km
-		arrivalInternacional.addItem("Miami");//2,433 km
-		arrivalInternacional.addItem("Otawa");//4,527 km
-		arrivalInternacional.addItem("CDMX");//3,157 km
+		arrivalInternacional.addItem("Lisboa");//7523 km
+		arrivalInternacional.addItem("Paris");//8639 km
+		arrivalInternacional.addItem("Roma");//9355 km
+		arrivalInternacional.addItem("Bruselas");//8800 km
+		arrivalInternacional.addItem("Berlin");//9421 km
+		arrivalInternacional.addItem("Londres");//8503 km
+		arrivalInternacional.addItem("Dubai");//13622 km
+		arrivalInternacional.addItem("New York");//4002 km
+		arrivalInternacional.addItem("Los Angeles");//5597 km
+		arrivalInternacional.addItem("Miami");//2433 km
+		arrivalInternacional.addItem("Otawa");//4527 km
+		arrivalInternacional.addItem("CDMX");//3157 km
 		arrivalInternacional.addItem("Buenos Aires");//4694 km
 		arrivalInternacional.addItem("Lima");//1888 km
 		arrivalInternacional.addItem("Santiago de Chile");//4255 km
 		arrivalInternacional.addItem("São Paulo");//4340 km
-		arrivalInternacional.addItem("Dublin");//8,132 km
-		
-		arrivalInternacional.setVisible(true);
+		arrivalInternacional.setVisible(false);
 		panelCentral.add(arrivalInternacional);
 		
 		cmbBusqueda = new JComboBox<String>();
