@@ -57,10 +57,10 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnAniadir().setActionCommand("btnAniadir");
 
 		vf.getMa().getBtnActualizar().addActionListener(this);
-		vf.getMa().getBtnActualizar().setActionCommand("btnActualizar");
+		vf.getMa().getBtnActualizar().setActionCommand("actualizar");
 
-		vf.getMa().getBtnBuscarIzq().addActionListener(this);
-		vf.getMa().getBtnBuscarIzq().setActionCommand("btnBuscar");
+		vf.getMa().getBtnActualizarInferior().addActionListener(this);
+		vf.getMa().getBtnActualizarInferior().setActionCommand("btnActualizandoDatos");
 
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
@@ -71,14 +71,14 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
 		vf.getMa().getBtnCambiarModo().setActionCommand("btnCambiarModo");
 
-		vf.getMa().getBtnEliminar().addActionListener(this);
-		vf.getMa().getBtnEliminar().setActionCommand("");
-
 		vf.getMa().getBtnGuardar().addActionListener(this);
 		vf.getMa().getBtnGuardar().setActionCommand("guardar");
 
+		vf.getMa().getBtnEliminar().addActionListener(this);
+		vf.getMa().getBtnEliminar().setActionCommand("eliminar");
+
 		vf.getMa().getBtnMostrar().addActionListener(this);
-		vf.getMa().getBtnMostrar().setActionCommand("");
+		vf.getMa().getBtnMostrar().setActionCommand("btnMostrar");
 
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
@@ -90,6 +90,79 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+		case "actualizar":
+			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
+			mostrarActualizar();
+			vf.getMa().getNumVuelo().setText(numAct);
+			int numero = Integer.parseInt(numAct);
+
+			switch (numSeleccionado) {
+
+			case 1:
+
+				if (vf.getMa().getTxtDepartureTime().getText().equals("")
+						|| vf.getMa().getTxtArrivalTime().getText().equals("")
+						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
+						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
+						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
+						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")
+						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
+
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+				String companyAct = aerolinea;
+				String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
+				String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
+				String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
+				String departurePlaceAct = "Bogota";
+				String turbineAct = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+				String turboAct = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
+				String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+
+				boolean theTurbine = convBolean(turbineAct);
+				boolean theTurbo = convBolean(turboAct);
+				int thePassangers = Integer.parseInt(passangersAct);
+				int theDepartureTime = Integer.parseInt(departureTimeAct);
+				int theArraivalTime = Integer.parseInt(arrivalTimeAct);
+
+				
+
+				}
+				break;
+			case 2:
+				if (vf.getMa().getTxtDepartureTime().getText().equals("")
+						|| vf.getMa().getTxtArrivalTime().getText().equals("")
+						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
+						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
+						|| vf.getMa().getCmbVisa().getSelectedItem().toString().equals("")
+						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
+
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+					String companyAct = aerolinea;
+					String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
+					String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
+					String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
+					String departurePlaceAct = "Bogota";
+					String visaAct = vf.getMa().getCmbVisa().getSelectedItem().toString();
+					String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+
+					boolean theVisa = convBolean(visaAct);
+
+					int thePassangers = Integer.parseInt(passangersAct);
+					int theDepartureTime = Integer.parseInt(departureTimeAct);
+					int theArraivalTime = Integer.parseInt(arrivalTimeAct);
+					
+				}
+				break;
+
+			default:
+				break;
+			}
 
 		case "eliminar":
 			String numVuelo = JOptionPane.showInputDialog("ingrese el numero de vuelo a eliminar");
@@ -150,7 +223,6 @@ public class Controller implements ActionListener {
 
 					int num = incNum();
 
-
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
 					if (condition == true || condition2 == true) {
@@ -186,14 +258,13 @@ public class Controller implements ActionListener {
 					String departurePlace = "Bogota";
 					String visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
 					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
-					
+
 					boolean theVisa = convBolean(visa);
 
 					int thePassangers = Integer.parseInt(passangers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int flightNum = incNum();
-
 
 					boolean condition = booleanException(visa);
 
@@ -318,17 +389,49 @@ public class Controller implements ActionListener {
 
 	}
 
-	
 	public void mostrarAniadir() {
-        vf.getMa().getPanelCentral().setVisible(true);
-        vf.getMa().getPanelVariable().setVisible(true);
-        if (numSeleccionado == 1) { 
-            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
-            vf.getMa().getArrivalInternacional().setVisible(false);
-        } else if (numSeleccionado == 2) { 
-            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
-            vf.getMa().getArrival().setVisible(false);
-           }
+		vf.getMa().getPanelCentral().setVisible(true);
+		vf.getMa().getPanelVariable().setVisible(true);
+		vf.getMa().getTxtNumVuelo().setVisible(false);
+		vf.getMa().getNumVuelo().setVisible(false);
+		if (numSeleccionado == 1) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
+			vf.getMa().getArrivalInternacional().setVisible(false);
+		} else if (numSeleccionado == 2) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
+			vf.getMa().getArrival().setVisible(false);
+		}
+	}
+
+	public void mostrarActualizar() {
+		vf.getMa().getPanelCentral().setVisible(true);
+		vf.getMa().getPanelVariable().setVisible(true);
+		vf.getMa().getTxtNumVuelo().setVisible(true);
+		vf.getMa().getNumVuelo().setVisible(true);
+		if (numSeleccionado == 1) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
+			vf.getMa().getArrivalInternacional().setVisible(false);
+			vf.getMa().getAerolinea().setSelectedIndex(0);
+			vf.getMa().getLogo().setIcon(null);
+			vf.getMa().getTxtPassengersNumber().setText(null);
+			vf.getMa().getTxtDepartureTime().setText(null);
+			vf.getMa().getTxtArrivalTime().setText(null);
+			vf.getMa().getArrival().setSelectedIndex(0);
+			vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
+			vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+
+		} else if (numSeleccionado == 2) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
+			vf.getMa().getArrival().setVisible(false);
+			vf.getMa().getAerolinea().setSelectedIndex(0);
+			vf.getMa().getArrivalInternacional().setSelectedIndex(0);
+			vf.getMa().getLogo().setIcon(null);
+			vf.getMa().getTxtPassengersNumber().setText(null);
+			vf.getMa().getTxtDepartureTime().setText(null);
+			vf.getMa().getTxtArrivalTime().setText(null);
+			vf.getMa().getCmbVisa().setSelectedIndex(0);
+
+		}
 	}
 
 	public void desactivarMenuVariables() {
@@ -438,7 +541,6 @@ public class Controller implements ActionListener {
 		}
 		return false;
 	}
-
 
 	public void eliminar(String numVuelo) {
 
@@ -553,11 +655,32 @@ public class Controller implements ActionListener {
 
 		switch (internacional) {
 		case "":
-			
+
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void reiniciarInputsNac() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrival().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
+		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+	}
+
+	public void reiniciarInputsInt() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrivalInternacional().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getCmbVisa().setSelectedIndex(0);
 	}
 
 }

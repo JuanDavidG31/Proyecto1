@@ -28,11 +28,13 @@ public class PantallaInicio extends JFrame{
 		ImageIcon btnClienteImg = new ImageIcon("Images\\btnCliente.png");
 		btnCliente = new JButton(btnClienteImg);
 		btnCliente.setBounds(140, 320, 418, 30);
+		btnCliente.setBorder(null);
 		add(btnCliente);
 		
 		ImageIcon btnAereolineaImg = new ImageIcon("Images\\btnAerolinea.png");
 		btnAereolinea = new JButton(btnAereolineaImg);
 		btnAereolinea.setBounds(140, 250, 418, 30);
+		btnAereolinea.setBorder(null);
 		add(btnAereolinea);
 	}
 	
