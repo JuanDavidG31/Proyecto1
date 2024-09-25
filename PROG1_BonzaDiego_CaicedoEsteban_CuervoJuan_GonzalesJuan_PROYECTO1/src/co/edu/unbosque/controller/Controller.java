@@ -172,7 +172,7 @@ public class Controller implements ActionListener {
 					String departurePlace = "Bogota";
 					String visa = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
 					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
-					
+
 					boolean theVisa = convBolean(visa);
 
 					int thePassangers = Integer.parseInt(passangers);
@@ -397,15 +397,59 @@ public class Controller implements ActionListener {
 		}
 		return false;
 	}
-	
-	public int eliminar() {
+
+	public void eliminar(String numVuelo) {
+			
+		int theNum = Integer.parseInt(numVuelo);
+			
+		ArrayList<InternationalFlightDTO> in;
+		in = new ArrayList<>();
+		in = mf.getInternational().getAll();
+		for (int i = 0; i < in.size(); i++) {
+
+			int num = in.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getInternational()
+						.delete(new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false))) {
+					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
+		ArrayList<NationalFlightDTO> na;
+		na = new ArrayList<>();
+		na = mf.getNational().getAll();
 		
-		
-		
-		return 0;
-		
-		
-		
+		for (int i = 0; i < na.size(); i++) {
+
+			int num = na.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getNational()
+						.delete(new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false,false))) {
+					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
+
 	}
 
 	public void distanciaNacional() {
@@ -464,15 +508,85 @@ public class Controller implements ActionListener {
 	}
 
 	public void distanciaInternacional() {
+
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
 		switch (internacional) {
-		case "":
-			
+
+		case "Madrid":
+			distanceInternacional = 8039;
+			break;
+		case "Barcelona":
+			distanceInternacional = 8522;
+			break;
+		case "Lisboa":
+			distanceInternacional = 7523;
+			break;
+		case "Paris":
+			distanceInternacional = 8639;
+			break;
+		case "Roma":
+			distanceInternacional = 9355;
+			break;
+		case "Bruselas":
+			distanceInternacional = 8800;
+			break;
+		case "Berlin":
+			distanceInternacional = 9421;
+			break;
+		case "Londres":
+			distanceInternacional = 8503;
+			break;
+		case "Dubai":
+			distanceInternacional = 13622;
+			break;
+		case "New York":
+			distanceInternacional = 4002;
+			break;
+		case "Los Angeles":
+			distanceInternacional = 5597;
+			break;
+		case "Miami":
+			distanceInternacional = 2433;
+			break;
+		case "Otawa":
+			distanceInternacional = 4527;
+			break;
+		case "CDMX":
+			distanceInternacional = 3157;
+			break;
+		case "Buenos Aires":
+			distanceInternacional = 4694;
+			break;
+		case "Lima":
+			distanceInternacional = 1888;
+			break;
+		case "Santiago de Chile":
+			distanceInternacional = 4255;
+			break;
+		case "São Paulo":
+			distanceInternacional = 4340;
 			break;
 		default:
 			break;
 		}
 	}
 
+	public int combustibleInt(int distance, int pasajeros) {
+
+		return 0;
+	}
+
+	public int combustibleNac(int distance, int pasajeros) {
+
+		return 0;
+	}
+  
+	public int pesoPasajeros(int pasajeros) {
+	  
+	  int pesoPersona=70;
+	  int pesototal=pesoPersona*pasajeros;
+	  
+	  return pesototal;
+  }
 }
