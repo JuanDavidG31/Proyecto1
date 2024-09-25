@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 
+
+
 public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, NationalFlight> {
 	private ArrayList<NationalFlight> listaNationalFlight;
-	private final String FILE_NAME = "NationalFlight.csv";
-	private final String SERIAL_NAME = "NationalFlight.dat";
+	private final String FILE_NAME = "nationalFlight.csv";
+	private final String SERIAL_NAME = "nationalFlight.dat";
 
 	public NationalFlightDAO() {
 		//listaNationalFlight = new ArrayList<>();
@@ -18,15 +20,15 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 
 	@Override
 	public String showAll() {
-		String rta = "";
-		if (listaNationalFlight.isEmpty()) {
-			return "No hay NationalFlights en la lista";
-		} else {
-			for (NationalFlight NationalFlight : listaNationalFlight) {
-				rta += NationalFlight;
-			}
-			return rta;
-		}
+        String rta = "";
+        if (listaNationalFlight.isEmpty()) {
+            return "No hay Users en la lista";
+        } else {
+            for (NationalFlight user : listaNationalFlight) {
+                rta += user;
+            }
+            return rta;
+        }
 	}
 
 	@Override
@@ -52,10 +54,14 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 	public boolean delete(NationalFlightDTO toDelete) {
 		NationalFlight found = find(DataMapper.NationalFlightDTOToNationalFlight(toDelete));
 		if (found != null) {
-			return listaNationalFlight.remove(found);
+			listaNationalFlight.remove(found);
+			writeFile();
+			writeSerialized();
+			return true;
 		} else {
 			return false;
 		}
+		
 	}
 
 	@Override
