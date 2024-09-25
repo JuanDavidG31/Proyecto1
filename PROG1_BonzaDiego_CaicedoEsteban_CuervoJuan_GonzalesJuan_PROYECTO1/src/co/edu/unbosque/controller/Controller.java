@@ -441,7 +441,7 @@ public class Controller implements ActionListener {
 
 				if (mf.getNational().delete(
 						new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false, false))) {
-					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					JOptionPane.showMessageDialog(null, "vuelo "+ numVuelo+" eliminado correctamente");
 					break;
 
 				} else {

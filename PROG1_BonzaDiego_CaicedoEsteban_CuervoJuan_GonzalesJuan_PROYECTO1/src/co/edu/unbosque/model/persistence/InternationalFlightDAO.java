@@ -52,7 +52,10 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 	public boolean delete(InternationalFlightDTO toDelete) {
 		InternationalFlight found = find(DataMapper.InternationalFlightDTOToInternationalFlight(toDelete));
 		if (found != null) {
-			return listaInternationalFlight.remove(found);
+			listaInternationalFlight.remove(found);
+			writeFile();
+			writeSerialized();
+			return true;
 		} else {
 			return false;
 		}
