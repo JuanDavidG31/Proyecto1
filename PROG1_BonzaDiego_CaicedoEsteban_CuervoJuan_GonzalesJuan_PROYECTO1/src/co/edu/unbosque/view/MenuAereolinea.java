@@ -92,6 +92,7 @@ public class MenuAereolinea extends JFrame {
 		ImageIcon imagenBuscar = new ImageIcon("Images\\Actualizar100btnClaro.png");
 		btnActualizar = new JButton(imagenBuscar);
 		btnActualizar.setBounds(25, 150, 100, 100);
+		btnActualizar.setBorder(null);
 		panelIzq.add(btnActualizar);
 
 
@@ -124,6 +125,7 @@ public class MenuAereolinea extends JFrame {
 
 		btnActualizarInferior = new JButton(imagenActualizar);
 		btnActualizarInferior.setBounds(300, 5, 75, 75);
+		btnActualizarInferior.setBorder(null);
 		panelInferior.add(btnActualizarInferior);
 
 
