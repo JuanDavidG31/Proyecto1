@@ -71,11 +71,11 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
 		vf.getMa().getBtnCambiarModo().setActionCommand("btnCambiarModo");
 
-		vf.getMa().getBtnEliminar().addActionListener(this);
-		vf.getMa().getBtnEliminar().setActionCommand("");
-
 		vf.getMa().getBtnGuardar().addActionListener(this);
 		vf.getMa().getBtnGuardar().setActionCommand("guardar");
+
+		vf.getMa().getBtnEliminar().addActionListener(this);
+		vf.getMa().getBtnEliminar().setActionCommand("eliminar");
 
 		vf.getMa().getBtnMostrar().addActionListener(this);
 		vf.getMa().getBtnMostrar().setActionCommand("");
