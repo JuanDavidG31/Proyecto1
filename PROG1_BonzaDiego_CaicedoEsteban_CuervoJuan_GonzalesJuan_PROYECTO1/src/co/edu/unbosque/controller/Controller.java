@@ -81,12 +81,6 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnMostrar().setActionCommand("");
 
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
-		vf.getMa().getBtnVuelosInternac().setActionCommand("");
-
-		vf.getMa().getBtnVuelosNac().addActionListener(this);
-		vf.getMa().getBtnVuelosNac().setActionCommand("");
-
-		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
@@ -131,6 +125,7 @@ public class Controller implements ActionListener {
 					String departurePlace = "Bogota";
 					String turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
 					String turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
+					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
 
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
@@ -141,19 +136,54 @@ public class Controller implements ActionListener {
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
 					if (condition == true || condition2 == true) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no en cordones", "Error",
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
 					mf.getNational()
 							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
-									theArraivalTime, 0, incNumReceipt(), departurePlace, "", theTurbo, theTurbine));
+									theArraivalTime, 0, incNum(), departurePlace, arrival, theTurbo, theTurbine));
 					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
 				}
-					
+
 				break;
 			case 2:
+				if (vf.getMa().getTxtDepartureTime().getText().equals("")
+						|| vf.getMa().getTxtArrivalTime().getText().equals("")
+						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
+						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
+						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
+						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")) {
 
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+					String company = aerolinea;
+					String passangers = vf.getMa().getTxtPassengersNumber().getText().toString();
+					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+					String departurePlace = "Bogota";
+					String visa = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					
+					boolean theVisa = convBolean(visa);
+
+					int thePassangers = Integer.parseInt(passangers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+
+					boolean condition = booleanException(visa);
+
+					if (condition == true) {
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+					mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
+							theDepartureTime, theArraivalTime, 0, incNum(), departurePlace, arrival, theVisa));
+					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+				}
 				break;
 			default:
 				break;
@@ -172,7 +202,7 @@ public class Controller implements ActionListener {
 			break;
 		case "seleccionarAerolinea":
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
- 
+
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
 
 				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
@@ -262,7 +292,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public int incNumReceipt() {
+	public int incNum() {
 		int num = 0;
 		main: while (true) {
 			boolean frist = false;
@@ -360,6 +390,16 @@ public class Controller implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+	
+	public int eliminar() {
+		
+		
+		
+		return 0;
+		
+		
+		
 	}
 
 }
