@@ -25,7 +25,7 @@ public class MenuAereolinea extends JFrame {
 	private JLabel lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand, lblDepartureTime,
 			lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa, lblIDVueloBuscar,
 			logo, lblDeparturePlace, lblArrivalPlace;
-	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, arrival,arrivalInternacional;
+	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
 
 	private JScrollPane scrollpane;
 	private final static String INT = "Internacional";
@@ -42,11 +42,11 @@ public class MenuAereolinea extends JFrame {
 		labels();
 		Combobox();
 
-		getPanelBuscar().setVisible(true);
-		getPanelCentral().setVisible(true);
-		getPanelInferior().setVisible(true);
-		getPanelIzq().setVisible(true);
-		getPanelVariable().setVisible(true);
+		getPanelBuscar().setVisible(false);
+		getPanelCentral().setVisible(false);
+		getPanelInferior().setVisible(false);
+		getPanelIzq().setVisible(false);
+		getPanelVariable().setVisible(false);
 		getPanelVuelos().setVisible(true);
 
 		add(panelBuscar);
@@ -62,6 +62,7 @@ public class MenuAereolinea extends JFrame {
 		setBounds(50, 50, 1000, 700);
 		setTitle("Aeropuerto el Dorado");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setBackground(Color.white);
 		setResizable(false);
 		setLayout(null);
 	}
@@ -151,23 +152,24 @@ public class MenuAereolinea extends JFrame {
 		panelInferior = new JPanel();
 		panelInferior.setLayout(null);
 		panelInferior.setBounds(151, 585, 850, 90);
-		panelInferior.setBackground(Color.yellow);
+		panelInferior.setBackground(Color.white);
 
 		panelNationalFlight = new JPanel();
 		panelNationalFlight.setLayout(null);
 		panelNationalFlight.setBounds(151, 535, 850, 75);
-		panelNationalFlight.setBackground(Color.orange);
+		panelNationalFlight.setBackground(Color.white);
 
 		panelInternationalFlight = new JPanel();
 		panelInternationalFlight.setLayout(null);
 		panelInternationalFlight.setBounds(151, 535, 850, 75);
-		panelInternationalFlight.setBackground(Color.magenta);
+		panelInternationalFlight.setBackground(Color.white);
 
 		panelVariable = new JPanel(cardLayout);
 		panelVariable.setBounds(151, 510, 850, 75);
-		panelVariable.setBackground(Color.gray);
+		panelVariable.setBackground(Color.white);
 		panelVariable.add(panelInternationalFlight, INT);
 		panelVariable.add(panelNationalFlight, NAC);
+		
 
 	}
 
@@ -210,7 +212,7 @@ public class MenuAereolinea extends JFrame {
 		 * panelCentral.add(txtFuelWeight);
 		 */
 
-		txtIsTurboProp = new JTextField();
+		/*txtIsTurboProp = new JTextField();
 		txtIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 14));
 		txtIsTurboProp.setBounds(240, 55, 400, 40);
 		panelNationalFlight.add(txtIsTurboProp);
@@ -220,11 +222,12 @@ public class MenuAereolinea extends JFrame {
 		txtIsTurbine.setBounds(240, 55, 400, 40);
 		panelNationalFlight.add(txtIsTurbine);
 
-		/*
-		 * txtIsVisa = new JTextField(); txtIsVisa.setFont(new Font("Agency FB",
-		 * Font.BOLD, 14)); txtIsVisa.setBounds(240, 55, 400, 40);
-		 * panelInternationalFlight.add(txtIsVisa);
-		 */
+		
+		/*txtIsVisa = new JTextField(); 
+		txtIsVisa.setFont(new Font("Agency FB",Font.BOLD, 14)); 
+		txtIsVisa.setBounds(240, 55, 400, 40);
+		panelInternationalFlight.add(txtIsVisa);
+		 
 
 		/*
 		 * txtIDVueloBuscar = new JTextField(); txtIDVueloBuscar.setFont(new
@@ -276,7 +279,7 @@ public class MenuAereolinea extends JFrame {
 		cmbIsTurbine.addItem("");
 		cmbIsTurbine.addItem("Si");
 		cmbIsTurbine.addItem("No");
-		panelInternationalFlight.add(cmbIsTurbine);
+		panelNationalFlight.add(cmbIsTurbine);
 
 		cmbIsTurbo = new JComboBox<String>();
 		cmbIsTurbo.setBounds(520, 25, 180, 20);
@@ -284,7 +287,15 @@ public class MenuAereolinea extends JFrame {
 		cmbIsTurbo.addItem("");
 		cmbIsTurbo.addItem("Si");
 		cmbIsTurbo.addItem("No");
-		panelInternationalFlight.add(cmbIsTurbo);
+		panelNationalFlight.add(cmbIsTurbo);
+		
+		cmbVisa = new JComboBox<String>();
+		cmbVisa.setBounds(150, 25, 180, 20);
+		cmbVisa.setToolTipText("Selecione si o no");
+		cmbVisa.addItem("");
+		cmbVisa.addItem("Si");
+		cmbVisa.addItem("No");
+		panelInternationalFlight.add(cmbVisa);
 
 		arrival = new JComboBox<String>();
 		arrival.setBounds(180, 275, 400, 20);
@@ -331,6 +342,9 @@ public class MenuAereolinea extends JFrame {
 		arrivalInternacional.setVisible(false);
 		panelCentral.add(arrivalInternacional);
 		
+		cmbBusqueda = new JComboBox<String>();
+		cmbBusqueda.setBounds(250, 10, 230, 20);
+		
 	}
 
 	public void labels() {
@@ -373,17 +387,24 @@ public class MenuAereolinea extends JFrame {
         lblIsTurbine = new JLabel("¿Avion de turbina?");
         lblIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 18));
         lblIsTurbine.setBounds(35, 20, 230, 30);
-        panelInternationalFlight.add(lblIsTurbine);
+        panelNationalFlight.add(lblIsTurbine);
         
-        lblIsTurboProp = new JLabel("Avion de turbo elice?");
+        lblIsTurboProp = new JLabel("¿Avion de turbo elice?");
         lblIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 18));
         lblIsTurboProp.setBounds(390, 20, 230, 30);
-        panelInternationalFlight.add(lblIsTurboProp);
+        panelNationalFlight.add(lblIsTurboProp);
         
-        lblIsVisa = new JLabel();
+        lblIsVisa = new JLabel("¿Necesita VISA?");
         lblIsVisa.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblIsVisa.setBounds(40, 320, 230, 30);
+        lblIsVisa.setBounds(35, 20, 230, 30);
         panelInternationalFlight.add(lblIsVisa);
+        
+        
+        lblIDVueloBuscar = new JLabel("Seleccione el número de vuelo a buscar:");
+        lblIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 18));
+        lblIDVueloBuscar.setBounds(15, 10, 230, 30);
+        panelBuscar.add(lblIDVueloBuscar);
+        
 
 	}
 	// Getters and Setters
@@ -732,11 +753,11 @@ public class MenuAereolinea extends JFrame {
 		this.panelNationalFlight = panelNationalFlight;
 	}
 
-	public static String getInt() {
+	public String getInt() {
 		return INT;
 	}
 
-	public static String getNac() {
+	public String getNac() {
 		return NAC;
 	}
 
@@ -828,4 +849,21 @@ public class MenuAereolinea extends JFrame {
 		this.arrivalInternacional = arrivalInternacional;
 	}
 
+	public JComboBox<String> getCmbVisa() {
+		return cmbVisa;
+	}
+
+	public void setCmbVisa(JComboBox<String> cmbVisa) {
+		this.cmbVisa = cmbVisa;
+	}
+
+	public JComboBox<String> getCmbBusqueda() {
+		return cmbBusqueda;
+	}
+
+	public void setCmbBusqueda(JComboBox<String> cmbBusqueda) {
+		this.cmbBusqueda = cmbBusqueda;
+	}
+
+	
 }
