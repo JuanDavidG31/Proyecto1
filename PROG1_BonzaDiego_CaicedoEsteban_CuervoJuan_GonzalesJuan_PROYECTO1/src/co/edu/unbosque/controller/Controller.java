@@ -91,6 +91,12 @@ public class Controller implements ActionListener {
 
 		switch (e.getActionCommand()) {
 
+		case "eliminar":
+			String numVuelo = JOptionPane.showInputDialog("ingrese el numero de vuelo a eliminar");
+			eliminar(numVuelo);
+
+			break;
+
 		case "internacional":
 			numSeleccionado = 2;
 			vf.getMa().getArrivalInternacional().setVisible(true);
@@ -120,7 +126,8 @@ public class Controller implements ActionListener {
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
 						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
 						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
-						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")) {
+						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")
+						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
 
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -141,6 +148,9 @@ public class Controller implements ActionListener {
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 
+					int num = incNum();
+
+
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
 					if (condition == true || condition2 == true) {
@@ -148,10 +158,12 @@ public class Controller implements ActionListener {
 								JOptionPane.ERROR_MESSAGE);
 					}
 
-					mf.getNational()
-							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
-									theArraivalTime, 0, incNum(), departurePlace, arrival, theTurbo, theTurbine));
-					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+					mf.getNational().add(na = new NationalFlightDTO(company, thePassangers, null, null,
+							theDepartureTime, theArraivalTime, 0, num, departurePlace, arrival, theTurbo, theTurbine));
+					JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
+
+					reiniciarInputsNac();
+
 				}
 
 				break;
@@ -160,8 +172,8 @@ public class Controller implements ActionListener {
 						|| vf.getMa().getTxtArrivalTime().getText().equals("")
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
 						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
-						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
-						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")) {
+						|| vf.getMa().getCmbVisa().getSelectedItem().toString().equals("")
+						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
 
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -172,7 +184,7 @@ public class Controller implements ActionListener {
 					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
 					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
 					String departurePlace = "Bogota";
-					String visa = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+					String visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
 					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
 					
 					boolean theVisa = convBolean(visa);
@@ -180,6 +192,8 @@ public class Controller implements ActionListener {
 					int thePassangers = Integer.parseInt(passangers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
+					int flightNum = incNum();
+
 
 					boolean condition = booleanException(visa);
 
@@ -189,8 +203,12 @@ public class Controller implements ActionListener {
 					}
 
 					mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
-							theDepartureTime, theArraivalTime, 0, incNum(), departurePlace, arrival, theVisa));
-					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+
+							theDepartureTime, theArraivalTime, 0, flightNum, departurePlace, arrival, theVisa));
+					JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
+
+					reiniciarInputsInt();
+
 				}
 				break;
 			default:
@@ -299,6 +317,7 @@ public class Controller implements ActionListener {
 		}
 
 	}
+
 	
 	public void mostrarAniadir() {
         vf.getMa().getPanelCentral().setVisible(true);
@@ -311,16 +330,15 @@ public class Controller implements ActionListener {
             vf.getMa().getArrival().setVisible(false);
            }
 	}
-	
+
 	public void desactivarMenuVariables() {
 		vf.getMa().getPanelIzq().setVisible(true);
 		vf.getMa().getPanelInferior().setVisible(true);
-        vf.getMa().getPanelCentral().setVisible(false);
-        vf.getMa().getPanelVariable().setVisible(false);
-        //vf.getMa().getPanelVuelos().setVisible(true);
-    }
-	
-	
+		vf.getMa().getPanelCentral().setVisible(false);
+		vf.getMa().getPanelVariable().setVisible(false);
+		// vf.getMa().getPanelVuelos().setVisible(true);
+	}
+
 	public int incNum() {
 		int num = 0;
 		main: while (true) {
@@ -420,15 +438,59 @@ public class Controller implements ActionListener {
 		}
 		return false;
 	}
-	
-	public int eliminar() {
-		
-		
-		
-		return 0;
-		
-		
-		
+
+
+	public void eliminar(String numVuelo) {
+
+		int theNum = Integer.parseInt(numVuelo);
+
+		ArrayList<InternationalFlightDTO> in;
+		in = new ArrayList<>();
+		in = mf.getInternational().getAll();
+		for (int i = 0; i < in.size(); i++) {
+
+			int num = in.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getInternational()
+						.delete(new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false))) {
+					JOptionPane.showMessageDialog(null, "vuelo " + numVuelo + " eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
+		ArrayList<NationalFlightDTO> na;
+		na = new ArrayList<>();
+		na = mf.getNational().getAll();
+
+		for (int i = 0; i < na.size(); i++) {
+
+			int num = na.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getNational().delete(
+						new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false, false))) {
+					JOptionPane.showMessageDialog(null, "vuelo " + numVuelo + " eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
 	}
 
 	public void distanciaNacional() {
