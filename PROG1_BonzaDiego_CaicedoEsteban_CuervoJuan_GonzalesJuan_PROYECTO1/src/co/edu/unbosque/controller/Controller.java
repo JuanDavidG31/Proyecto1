@@ -142,6 +142,7 @@ public class Controller implements ActionListener {
 					int thePassangers = Integer.parseInt(passangers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
+					int num =incNum();
 
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
@@ -152,8 +153,10 @@ public class Controller implements ActionListener {
 
 					mf.getNational()
 							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
-									theArraivalTime, 0, incNum(), departurePlace, arrival, theTurbo, theTurbine));
-					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+									theArraivalTime, 0, num, departurePlace, arrival, theTurbo, theTurbine));
+					JOptionPane.showMessageDialog(null, "Vuelo numero "+num+" creado exitosamente");
+					
+					reiniciarInputsNac();
 				}
 
 				break;
@@ -182,6 +185,7 @@ public class Controller implements ActionListener {
 					int thePassangers = Integer.parseInt(passangers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
+					int flightNum= incNum();
 
 					boolean condition = booleanException(visa);
 
@@ -191,9 +195,12 @@ public class Controller implements ActionListener {
 					}
 
 					mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
-							theDepartureTime, theArraivalTime, 0, incNum(), departurePlace, arrival, theVisa));
-					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
-				}
+							theDepartureTime, theArraivalTime, 0,flightNum , departurePlace, arrival, theVisa));
+					JOptionPane.showMessageDialog(null, "Vuelo numero "+ flightNum+" creado exitosamente");
+				
+					reiniciarInputsInt();
+					
+					}
 				break;
 			default:
 				break;
@@ -441,7 +448,7 @@ public class Controller implements ActionListener {
 
 				if (mf.getNational().delete(
 						new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false, false))) {
-					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					JOptionPane.showMessageDialog(null, "vuelo "+ numVuelo+" eliminado correctamente");
 					break;
 
 				} else {
@@ -591,5 +598,26 @@ public class Controller implements ActionListener {
 		int pesototal = pesoPersona * pasajeros;
 
 		return pesototal;
+	}
+
+	public void reiniciarInputsNac() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrival().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
+		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+	}
+
+	public void reiniciarInputsInt() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrivalInternacional().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getTxtIsVisa().setText(null);
 	}
 }
