@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class MenuAereolinea extends JFrame {
-	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnBuscarIzq, btnMostrar, btnSalir, btnCambiarModo,
+	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir, btnCambiarModo,
 			btnBuscarCentral, btnGuardar, btnActualizar, btnEliminar;
 	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
 			panelInternationalFlight, panelNationalFlight;
@@ -22,9 +22,9 @@ public class MenuAereolinea extends JFrame {
 	private JTextField txtPassengersNumber, txtNameCaptain, txtNameSecondCommand, txtDepartureTime, txtArrivalTime,
 			txtFuelWeight, txtID, txtIsTurboProp, txtIsTurbine, txtIsVisa, txtIDVueloBuscar, txtDeparturePlace,
 			txtArrivalPlace;
-	private JLabel lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand, lblDepartureTime,
-			lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa, lblIDVueloBuscar,
-			logo, lblDeparturePlace, lblArrivalPlace;
+	private JLabel numVuelo, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblNameCaptain, lblNameSecondCommand,
+			lblDepartureTime, lblArrivalTime, lblFuelWeight, lblBuscarPorID, lblIsTurboProp, lblIsTurbine, lblIsVisa,
+			lblIDVueloBuscar, logo, lblDeparturePlace, lblArrivalPlace;
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
 
 	private JScrollPane scrollpane;
@@ -71,11 +71,13 @@ public class MenuAereolinea extends JFrame {
 		// Botones panel superior
 		ImageIcon imagenVuelosNacionales = new ImageIcon("Images\\NacionaleBtn.png");
 		btnVuelosNac = new JButton(imagenVuelosNacionales);
+		btnVuelosNac.setBorder(null);
 		btnVuelosNac.setBounds(150, 10, 320, 51);
 		panelVuelos.add(btnVuelosNac);
 
 		ImageIcon imagenVuelosInternacionales = new ImageIcon("Images\\InternacionalesBtn.png");
 		btnVuelosInternac = new JButton(imagenVuelosInternacionales);
+		btnVuelosInternac.setBorder(null);
 		btnVuelosInternac.setBounds(520, 10, 320, 51);
 		panelVuelos.add(btnVuelosInternac);
 
@@ -83,48 +85,59 @@ public class MenuAereolinea extends JFrame {
 		ImageIcon imagenAseoBtn = new ImageIcon("Images\\AniadirbtnClaro.png");
 		btnAniadir = new JButton(imagenAseoBtn);
 		btnAniadir.setBounds(25, 25, 100, 100);
+		btnAniadir.setBorder(null);
 		panelIzq.add(btnAniadir);
 
-		ImageIcon imagenBuscar = new ImageIcon("Images\\BuscarbtnClaro.png");
-		btnBuscarIzq = new JButton(imagenBuscar);
-		btnBuscarIzq.setBounds(25, 150, 100, 100);
-		panelIzq.add(btnBuscarIzq);
+
+		ImageIcon imagenBuscar = new ImageIcon("Images\\Actualizar100btnClaro.png");
+		btnActualizar = new JButton(imagenBuscar);
+		btnActualizar.setBounds(25, 150, 100, 100);
+		panelIzq.add(btnActualizar);
+
 
 		ImageIcon imagenMostrar = new ImageIcon("Images\\MostrarbtnClaro.png");
 		btnMostrar = new JButton(imagenMostrar);
 		btnMostrar.setBounds(25, 275, 100, 100);
+		btnMostrar.setBorder(null);
 		panelIzq.add(btnMostrar);
 
 		ImageIcon imagenSalir = new ImageIcon("Images\\SalirbtnClaro.png");
 		btnSalir = new JButton(imagenSalir);
 		btnSalir.setBounds(25, 400, 100, 100);
+		btnSalir.setBorder(null);
 		panelIzq.add(btnSalir);
 
 		ImageIcon imagenCambiarModo = new ImageIcon("Images\\ModoOscurobtnClaro.png");
 		btnCambiarModo = new JButton(imagenCambiarModo);
 		btnCambiarModo.setBounds(0, 510, 161, 55);
+		btnCambiarModo.setBorder(null);
 		panelIzq.add(btnCambiarModo);
 
 		// Botones panel Inferior
 		ImageIcon imagenGuardar = new ImageIcon("Images\\GuardarbtnClaro.png");
 		btnGuardar = new JButton(imagenGuardar);
 		btnGuardar.setBounds(150, 5, 75, 75);
+		btnGuardar.setBorder(null);
 		panelInferior.add(btnGuardar);
 
 		ImageIcon imagenActualizar = new ImageIcon("Images\\ActualizarbtnClaro.png");
-		btnActualizar = new JButton(imagenActualizar);
-		btnActualizar.setBounds(300, 5, 75, 75);
-		panelInferior.add(btnActualizar);
+
+		btnActualizarInferior = new JButton(imagenActualizar);
+		btnActualizarInferior.setBounds(300, 5, 75, 75);
+		panelInferior.add(btnActualizarInferior);
+
 
 		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		btnEliminar = new JButton(imagenEliminar);
 		btnEliminar.setBounds(450, 5, 75, 75);
+		btnEliminar.setBorder(null);
 		panelInferior.add(btnEliminar);
 
 		// Boton panel de busqueda
 		ImageIcon imagenBuscarCentral = new ImageIcon("Images\\BusquedabtnClaro.png");
 		btnBuscarCentral = new JButton(imagenBuscarCentral);
 		btnBuscarCentral.setBounds(640, 5, 140, 38);
+		btnBuscarCentral.setBorder(null);
 		panelBuscar.add(btnBuscarCentral);
 	}
 
@@ -169,7 +182,6 @@ public class MenuAereolinea extends JFrame {
 		panelVariable.setBackground(Color.white);
 		panelVariable.add(panelInternationalFlight, INT);
 		panelVariable.add(panelNationalFlight, NAC);
-		
 
 	}
 
@@ -183,7 +195,7 @@ public class MenuAereolinea extends JFrame {
 
 		txtPassengersNumber = new JTextField();
 		txtPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtPassengersNumber.setBounds(180, 125, 400, 20);
+		txtPassengersNumber.setBounds(190, 125, 400, 20);
 		panelCentral.add(txtPassengersNumber);
 
 		/*
@@ -198,12 +210,12 @@ public class MenuAereolinea extends JFrame {
 
 		txtDepartureTime = new JTextField();
 		txtDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtDepartureTime.setBounds(180, 175, 400, 20);
+		txtDepartureTime.setBounds(190, 175, 400, 20);
 		panelCentral.add(txtDepartureTime);
 
 		txtArrivalTime = new JTextField();
 		txtArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtArrivalTime.setBounds(180, 225, 400, 20);
+		txtArrivalTime.setBounds(190, 225, 400, 20);
 		panelCentral.add(txtArrivalTime);
 
 		/*
@@ -212,22 +224,25 @@ public class MenuAereolinea extends JFrame {
 		 * panelCentral.add(txtFuelWeight);
 		 */
 
-		/*txtIsTurboProp = new JTextField();
-		txtIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtIsTurboProp.setBounds(240, 55, 400, 40);
-		panelNationalFlight.add(txtIsTurboProp);
-
-		txtIsTurbine = new JTextField();
-		txtIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtIsTurbine.setBounds(240, 55, 400, 40);
-		panelNationalFlight.add(txtIsTurbine);
-
-		
-		/*txtIsVisa = new JTextField(); 
-		txtIsVisa.setFont(new Font("Agency FB",Font.BOLD, 14)); 
-		txtIsVisa.setBounds(240, 55, 400, 40);
-		panelInternationalFlight.add(txtIsVisa);
-		 
+		/*
+		 * txtIsTurboProp = new JTextField(); txtIsTurboProp.setFont(new
+		 * Font("Agency FB", Font.BOLD, 14)); txtIsTurboProp.setBounds(240, 55, 400,
+		 * 40); panelNationalFlight.add(txtIsTurboProp);
+		 * 
+		 * txtIsTurbine = new JTextField(); txtIsTurbine.setFont(new Font("Agency FB",
+		 * Font.BOLD, 14)); txtIsTurbine.setBounds(240, 55, 400, 40);
+		 * panelNationalFlight.add(txtIsTurbine);
+		 * 
+		 * 
+		 * /*txtIsVisa = new JTextField(); txtIsVisa.setFont(new
+		 * Font("Agency FB",Font.BOLD, 14)); txtIsVisa.setBounds(240, 55, 400, 40);
+		 * panelInternationalFlight.add(txtIsVisa);
+		 * 
+		 * 
+		 * /* txtIDVueloBuscar = new JTextField(); txtIDVueloBuscar.setFont(new
+		 * Font("Agency FB", Font.BOLD, 14)); txtIDVueloBuscar.setBounds(240, 55, 400,
+		 * 40); panelBuscar.add(txtIDVueloBuscar);
+		 */
 
 		/*
 		 * txtIDVueloBuscar = new JTextField(); txtIDVueloBuscar.setFont(new
@@ -235,29 +250,23 @@ public class MenuAereolinea extends JFrame {
 		 * 40); panelBuscar.add(txtIDVueloBuscar);
 		 */
 
+		/*
+		 * txtArrivalPlace = new JTextField(); txtArrivalPlace.setFont(new
+		 * Font("Agency FB", Font.BOLD, 14)); txtArrivalPlace.setBounds(180, 325, 400,
+		 * 20); panelCentral.add(txtArrivalPlace);
+		 */
 
-		/*txtIDVueloBuscar = new JTextField();
-		txtIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtIDVueloBuscar.setBounds(240, 55, 400, 40);
-		panelBuscar.add(txtIDVueloBuscar);*/
- 
-		/*txtArrivalPlace = new JTextField();
-		txtArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtArrivalPlace.setBounds(180, 325, 400, 20);
-		panelCentral.add(txtArrivalPlace);*/
-		
-		/*txtDeparturePlace = new JTextField();
-		txtDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 14));
-		txtDeparturePlace.setBounds(180, 275, 400, 20);
-		panelCentral.add(txtDeparturePlace);*/
-		
-		
+		/*
+		 * txtDeparturePlace = new JTextField(); txtDeparturePlace.setFont(new
+		 * Font("Agency FB", Font.BOLD, 14)); txtDeparturePlace.setBounds(180, 275, 400,
+		 * 20); panelCentral.add(txtDeparturePlace);
+		 */
 
 	}
 
 	public void Combobox() {
 		aerolinea = new JComboBox<String>();
-		aerolinea.setBounds(180, 80, 200, 20);
+		aerolinea.setBounds(190, 80, 200, 20);
 		aerolinea.setToolTipText("Nombre de la compañia");
 		aerolinea.addItem("");
 		aerolinea.addItem("Avianca");
@@ -288,7 +297,7 @@ public class MenuAereolinea extends JFrame {
 		cmbIsTurbo.addItem("Si");
 		cmbIsTurbo.addItem("No");
 		panelNationalFlight.add(cmbIsTurbo);
-		
+
 		cmbVisa = new JComboBox<String>();
 		cmbVisa.setBounds(150, 25, 180, 20);
 		cmbVisa.setToolTipText("Selecione si o no");
@@ -298,53 +307,53 @@ public class MenuAereolinea extends JFrame {
 		panelInternationalFlight.add(cmbVisa);
 
 		arrival = new JComboBox<String>();
-		arrival.setBounds(180, 275, 400, 20);
+		arrival.setBounds(190, 275, 400, 20);
 		arrival.setToolTipText("Seleccione el destino del avion");
 		arrival.addItem("");
-		arrival.addItem("Medellin");//217km
-		arrival.addItem("Cartagena");//656 km
-		arrival.addItem("Pasto");//507 km
-		arrival.addItem("Cali");//279 km
-		arrival.addItem("Bucaramanga");//290 km
-		arrival.addItem("Ibague");//113 km
-		arrival.addItem("Pereira");//177 km
-		arrival.addItem("Manizales");//150 km
-		arrival.addItem("Monteria");//494 km
-		arrival.addItem("Barranquilla");//692 km
-		arrival.addItem("Santa Marta");//714 km
-		arrival.addItem("Cucuta");//402 km
+		arrival.addItem("Medellin");// 217km
+		arrival.addItem("Cartagena");// 656 km
+		arrival.addItem("Pasto");// 507 km
+		arrival.addItem("Cali");// 279 km
+		arrival.addItem("Bucaramanga");// 290 km
+		arrival.addItem("Ibague");// 113 km
+		arrival.addItem("Pereira");// 177 km
+		arrival.addItem("Manizales");// 150 km
+		arrival.addItem("Monteria");// 494 km
+		arrival.addItem("Barranquilla");// 692 km
+		arrival.addItem("Santa Marta");// 714 km
+		arrival.addItem("Cucuta");// 402 km
 
 		arrival.setVisible(false);
 		panelCentral.add(arrival);
-		
+
 		arrivalInternacional = new JComboBox<String>();
-		arrivalInternacional.setBounds(180, 275, 400, 20);
+		arrivalInternacional.setBounds(190, 275, 400, 20);
 		arrivalInternacional.setToolTipText("Seleccione el destino del avion");
 		arrivalInternacional.addItem("");
-		arrivalInternacional.addItem("Madrid");//8039 km
-		arrivalInternacional.addItem("Barcelona");//8522 km.
-		arrivalInternacional.addItem("Lisboa");//7523 km
-		arrivalInternacional.addItem("Paris");//8639 km
-		arrivalInternacional.addItem("Roma");//9355 km
-		arrivalInternacional.addItem("Bruselas");//8800 km
-		arrivalInternacional.addItem("Berlin");//9421 km
-		arrivalInternacional.addItem("Londres");//8503 km
-		arrivalInternacional.addItem("Dubai");//13622 km
-		arrivalInternacional.addItem("New York");//4002 km
-		arrivalInternacional.addItem("Los Angeles");//5597 km
-		arrivalInternacional.addItem("Miami");//2433 km
-		arrivalInternacional.addItem("Otawa");//4527 km
-		arrivalInternacional.addItem("CDMX");//3157 km
-		arrivalInternacional.addItem("Buenos Aires");//4694 km
-		arrivalInternacional.addItem("Lima");//1888 km
-		arrivalInternacional.addItem("Santiago de Chile");//4255 km
-		arrivalInternacional.addItem("São Paulo");//4340 km
+		arrivalInternacional.addItem("Madrid");// 8039 km
+		arrivalInternacional.addItem("Barcelona");// 8522 km.
+		arrivalInternacional.addItem("Lisboa");// 7523 km
+		arrivalInternacional.addItem("Paris");// 8639 km
+		arrivalInternacional.addItem("Roma");// 9355 km
+		arrivalInternacional.addItem("Bruselas");// 8800 km
+		arrivalInternacional.addItem("Berlin");// 9421 km
+		arrivalInternacional.addItem("Londres");// 8503 km
+		arrivalInternacional.addItem("Dubai");// 13622 km
+		arrivalInternacional.addItem("New York");// 4002 km
+		arrivalInternacional.addItem("Los Angeles");// 5597 km
+		arrivalInternacional.addItem("Miami");// 2433 km
+		arrivalInternacional.addItem("Otawa");// 4527 km
+		arrivalInternacional.addItem("CDMX");// 3157 km
+		arrivalInternacional.addItem("Buenos Aires");// 4694 km
+		arrivalInternacional.addItem("Lima");// 1888 km
+		arrivalInternacional.addItem("Santiago de Chile");// 4255 km
+		arrivalInternacional.addItem("São Paulo");// 4340 km
 		arrivalInternacional.setVisible(false);
 		panelCentral.add(arrivalInternacional);
-		
+
 		cmbBusqueda = new JComboBox<String>();
 		cmbBusqueda.setBounds(250, 10, 230, 20);
-		
+
 	}
 
 	public void labels() {
@@ -352,59 +361,69 @@ public class MenuAereolinea extends JFrame {
 		logo.setBounds(450, 50, 100, 75);
 		panelCentral.add(logo);
 
-		
-		
+		numVuelo = new JLabel("");
+		numVuelo.setVisible(false);
+		numVuelo.setBounds(750, 10, 80, 70);
+		numVuelo.setFont(new Font("Agency FB", Font.BOLD, 24));
+		panelCentral.add(numVuelo);
+
+		txtNumVuelo = new JLabel("Numero de vuelo:");
+		txtNumVuelo.setVisible(false);
+		txtNumVuelo.setBounds(600, 10, 130, 70);
+		txtNumVuelo.setFont(new Font("Agency FB", Font.BOLD, 24));
+		panelCentral.add(txtNumVuelo);
+
 		lblCompanyName = new JLabel("Nombre de la compañia:");
 		lblCompanyName.setFont(new Font("Agency FB", Font.BOLD, 18));
 		lblCompanyName.setBounds(35, 70, 230, 30);
-        panelCentral.add(lblCompanyName);	
-		
-        lblPassengersNumber = new JLabel("Numero de pasajeros:");
-        lblPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblPassengersNumber.setBounds(35, 120, 230, 30);
-        panelCentral.add(lblPassengersNumber);		
-		
-        lblDepartureTime = new JLabel("Hora de salida:");
-        lblDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblDepartureTime.setBounds(35, 170, 230, 30);
-        panelCentral.add(lblDepartureTime);
-        
-        lblArrivalTime = new JLabel("Hora de llegada:");
-        lblArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblArrivalTime.setBounds(35, 220, 230, 30);
-        panelCentral.add(lblArrivalTime);        
-       
-        /*lblDeparturePlace = new JLabel("Departure place:");
-        lblDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblDeparturePlace.setBounds(40, 270, 230, 30);
-        panelCentral.add(lblDeparturePlace);*/
-        
-        lblArrivalPlace = new JLabel("Destino:");
-        lblArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblArrivalPlace.setBounds(35, 270, 230, 30);
-        panelCentral.add(lblArrivalPlace);
-        
-        lblIsTurbine = new JLabel("¿Avion de turbina?");
-        lblIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblIsTurbine.setBounds(35, 20, 230, 30);
-        panelNationalFlight.add(lblIsTurbine);
-        
-        lblIsTurboProp = new JLabel("¿Avion de turbo elice?");
-        lblIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblIsTurboProp.setBounds(390, 20, 230, 30);
-        panelNationalFlight.add(lblIsTurboProp);
-        
-        lblIsVisa = new JLabel("¿Necesita VISA?");
-        lblIsVisa.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblIsVisa.setBounds(35, 20, 230, 30);
-        panelInternationalFlight.add(lblIsVisa);
-        
-        
-        lblIDVueloBuscar = new JLabel("Seleccione el número de vuelo a buscar:");
-        lblIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 18));
-        lblIDVueloBuscar.setBounds(15, 10, 230, 30);
-        panelBuscar.add(lblIDVueloBuscar);
-        
+		panelCentral.add(lblCompanyName);
+
+		lblPassengersNumber = new JLabel("Numero de pasajeros:");
+		lblPassengersNumber.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblPassengersNumber.setBounds(35, 120, 230, 30);
+		panelCentral.add(lblPassengersNumber);
+
+		lblDepartureTime = new JLabel("Hora de salida:");
+		lblDepartureTime.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblDepartureTime.setBounds(35, 170, 230, 30);
+		panelCentral.add(lblDepartureTime);
+
+		lblArrivalTime = new JLabel("Hora de llegada:");
+		lblArrivalTime.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblArrivalTime.setBounds(35, 220, 230, 30);
+		panelCentral.add(lblArrivalTime);
+
+		/*
+		 * lblDeparturePlace = new JLabel("Departure place:");
+		 * lblDeparturePlace.setFont(new Font("Agency FB", Font.BOLD, 18));
+		 * lblDeparturePlace.setBounds(40, 270, 230, 30);
+		 * panelCentral.add(lblDeparturePlace);
+		 */
+
+		lblArrivalPlace = new JLabel("Destino:");
+		lblArrivalPlace.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblArrivalPlace.setBounds(35, 270, 230, 30);
+		panelCentral.add(lblArrivalPlace);
+
+		lblIsTurbine = new JLabel("¿Avion de turbina?");
+		lblIsTurbine.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblIsTurbine.setBounds(35, 20, 230, 30);
+		panelNationalFlight.add(lblIsTurbine);
+
+		lblIsTurboProp = new JLabel("¿Avion de turbo elice?");
+		lblIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblIsTurboProp.setBounds(380, 20, 230, 30);
+		panelNationalFlight.add(lblIsTurboProp);
+
+		lblIsVisa = new JLabel("¿Necesita VISA?");
+		lblIsVisa.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblIsVisa.setBounds(35, 20, 230, 30);
+		panelInternationalFlight.add(lblIsVisa);
+
+		lblIDVueloBuscar = new JLabel("Seleccione el número de vuelo a buscar:");
+		lblIDVueloBuscar.setFont(new Font("Agency FB", Font.BOLD, 18));
+		lblIDVueloBuscar.setBounds(15, 10, 230, 30);
+		panelBuscar.add(lblIDVueloBuscar);
 
 	}
 	// Getters and Setters
@@ -433,13 +452,6 @@ public class MenuAereolinea extends JFrame {
 		this.btnAniadir = btnAniadir;
 	}
 
-	public JButton getBtnBuscarIzq() {
-		return btnBuscarIzq;
-	}
-
-	public void setBtnBuscarIzq(JButton btnBuscarIzq) {
-		this.btnBuscarIzq = btnBuscarIzq;
-	}
 
 	public JButton getBtnMostrar() {
 		return btnMostrar;
@@ -865,5 +877,30 @@ public class MenuAereolinea extends JFrame {
 		this.cmbBusqueda = cmbBusqueda;
 	}
 
+	public JButton getBtnActualizarInferior() {
+		return btnActualizarInferior;
+	}
+
+	public void setBtnActualizarInferior(JButton btnActualizarInferior) {
+		this.btnActualizarInferior = btnActualizarInferior;
+	}
+
 	
+
+	public JLabel getNumVuelo() {
+		return numVuelo;
+	}
+
+	public void setNumVuelo(JLabel numVuelo) {
+		this.numVuelo = numVuelo;
+	}
+
+	public JLabel getTxtNumVuelo() {
+		return txtNumVuelo;
+	}
+
+	public void setTxtNumVuelo(JLabel txtNumVuelo) {
+		this.txtNumVuelo = txtNumVuelo;
+	}
+
 }
