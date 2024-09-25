@@ -150,7 +150,6 @@ public class Controller implements ActionListener {
 
 					int num = incNum();
 
-
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
 					if (condition == true || condition2 == true) {
@@ -186,14 +185,13 @@ public class Controller implements ActionListener {
 					String departurePlace = "Bogota";
 					String visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
 					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
-					
+
 					boolean theVisa = convBolean(visa);
 
 					int thePassangers = Integer.parseInt(passangers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int flightNum = incNum();
-
 
 					boolean condition = booleanException(visa);
 
@@ -318,17 +316,16 @@ public class Controller implements ActionListener {
 
 	}
 
-	
 	public void mostrarAniadir() {
-        vf.getMa().getPanelCentral().setVisible(true);
-        vf.getMa().getPanelVariable().setVisible(true);
-        if (numSeleccionado == 1) { 
-            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
-            vf.getMa().getArrivalInternacional().setVisible(false);
-        } else if (numSeleccionado == 2) { 
-            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
-            vf.getMa().getArrival().setVisible(false);
-           }
+		vf.getMa().getPanelCentral().setVisible(true);
+		vf.getMa().getPanelVariable().setVisible(true);
+		if (numSeleccionado == 1) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
+			vf.getMa().getArrivalInternacional().setVisible(false);
+		} else if (numSeleccionado == 2) {
+			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
+			vf.getMa().getArrival().setVisible(false);
+		}
 	}
 
 	public void desactivarMenuVariables() {
@@ -438,7 +435,6 @@ public class Controller implements ActionListener {
 		}
 		return false;
 	}
-
 
 	public void eliminar(String numVuelo) {
 
@@ -553,11 +549,32 @@ public class Controller implements ActionListener {
 
 		switch (internacional) {
 		case "":
-			
+
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void reiniciarInputsNac() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrival().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
+		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+	}
+
+	public void reiniciarInputsInt() {
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getArrivalInternacional().setVisible(false);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getTxtIsVisa().setText(null);
 	}
 
 }
