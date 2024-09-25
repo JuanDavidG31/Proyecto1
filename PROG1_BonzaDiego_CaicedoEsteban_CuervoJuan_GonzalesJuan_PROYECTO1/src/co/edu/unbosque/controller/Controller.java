@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
+import co.edu.unbosque.model.persistence.DataMapper;
 import co.edu.unbosque.util.exception.BooleanNotValidInputException;
 import co.edu.unbosque.util.exception.ExceptionChecker;
 import co.edu.unbosque.view.ViewFacade;
@@ -57,7 +59,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnAniadir().setActionCommand("btnAniadir");
 
 		vf.getMa().getBtnActualizar().addActionListener(this);
-		vf.getMa().getBtnActualizar().setActionCommand("actualizar");
+		vf.getMa().getBtnActualizar().setActionCommand("mostrarActualizar");
 
 		vf.getMa().getBtnActualizarInferior().addActionListener(this);
 		vf.getMa().getBtnActualizarInferior().setActionCommand("btnActualizandoDatos");
@@ -85,17 +87,15 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
 		vf.getMa().getBtnVuelosNac().setActionCommand("nacional");
+
+		vf.getMa().getBtnActualizarInferior().addActionListener(this);
+		vf.getMa().getBtnActualizarInferior().setActionCommand("actualizar");
 	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
 		case "actualizar":
-			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
-			mostrarActualizar();
-			vf.getMa().getNumVuelo().setText(numAct);
-			int numero = Integer.parseInt(numAct);
-
 			switch (numSeleccionado) {
 
 			case 1:
@@ -111,24 +111,41 @@ public class Controller implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 
-				} else {
-				String companyAct = aerolinea;
-				String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
-				String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
-				String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
-				String departurePlaceAct = "Bogota";
-				String turbineAct = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
-				String turboAct = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
-				String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+				} else {/*
+						 * String companyAct = aerolinea; String passangersAct =
+						 * vf.getMa().getTxtPassengersNumber().getText().toString(); String
+						 * departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
+						 * String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
+						 * String departurePlaceAct = "Bogota"; String turbineAct =
+						 * vf.getMa().getCmbIsTurbine().getSelectedItem().toString(); String turboAct =
+						 * vf.getMa().getCmbIsTurbo().getSelectedItem().toString(); String arrivalAct =
+						 * vf.getMa().getArrival().getSelectedItem().toString();
+						 * 
+						 * boolean theTurbine = convBolean(turbineAct); boolean theTurbo =
+						 * convBolean(turboAct); int thePassangers = Integer.parseInt(passangersAct);
+						 * int theDepartureTime = Integer.parseInt(departureTimeAct); int
+						 * theArraivalTime = Integer.parseInt(arrivalTimeAct);
+						 */
+					ArrayList<NationalFlightDTO> s1;
+					s1 = new ArrayList<>();
+					s1 = mf.getNational().getAll();
+					for (int i = 0; i < s1.size(); i++) {
+						int numeroV = s1.get(i).getId();
+						String nombreCap = s1.get(i).getNameCaptain();
+						String nombre2Cap = s1.get(i).getNameSecondCommand();
+						String company = s1.get(i).getCompanyName();
+						String destination = s1.get(i).getArrivalDestination();
+						String origen = s1.get(i).getDepartureDestination();
+						int dTime = s1.get(i).getDepartureTime();
+						int aTime = s1.get(i).getArrivalTime();
+						int fuel = s1.get(i).getFuelWeight();
+						int passenger = s1.get(i).getPassengersNumber();
+						boolean turbina = s1.get(i).isTurbine();
+						boolean helice = s1.get(i).isTurboProp();
+						if (mf.getNational().find2(DataMapper.NationalFlightDTOToNationalFlight(na)) != null) {
 
-				boolean theTurbine = convBolean(turbineAct);
-				boolean theTurbo = convBolean(turboAct);
-				int thePassangers = Integer.parseInt(passangersAct);
-				int theDepartureTime = Integer.parseInt(departureTimeAct);
-				int theArraivalTime = Integer.parseInt(arrivalTimeAct);
-
-				
-
+						}
+					}
 				}
 				break;
 			case 2:
@@ -143,20 +160,42 @@ public class Controller implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					String companyAct = aerolinea;
-					String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
-					String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
-					String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
-					String departurePlaceAct = "Bogota";
-					String visaAct = vf.getMa().getCmbVisa().getSelectedItem().toString();
-					String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+					/*
+					 * String companyAct = aerolinea; String passangersAct =
+					 * vf.getMa().getTxtPassengersNumber().getText().toString(); String
+					 * departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
+					 * String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
+					 * String departurePlaceAct = "Bogota"; String visaAct =
+					 * vf.getMa().getCmbVisa().getSelectedItem().toString(); String arrivalAct =
+					 * vf.getMa().getArrival().getSelectedItem().toString();
+					 * 
+					 * boolean theVisa = convBolean(visaAct);
+					 * 
+					 * int thePassangers = Integer.parseInt(passangersAct); int theDepartureTime =
+					 * Integer.parseInt(departureTimeAct); int theArraivalTime =
+					 * Integer.parseInt(arrivalTimeAct);
+					 */
+					ArrayList<InternationalFlightDTO> i1;
+					i1 = new ArrayList<>();
+					i1 = mf.getInternational().getAll();
+					for (int j = 0; j < i1.size(); j++) {
 
-					boolean theVisa = convBolean(visaAct);
+						int numeroV = i1.get(j).getId();
+						String nombreCap = i1.get(j).getNameCaptain();
+						String nombre2Cap = i1.get(j).getNameSecondCommand();
+						String company = i1.get(j).getCompanyName();
+						String destination = i1.get(j).getArrivalDestination();
+						String origen = i1.get(j).getDepartureDestination();
+						int dTime = i1.get(j).getDepartureTime();
+						int aTime = i1.get(j).getArrivalTime();
+						int fuel = i1.get(j).getFuelWeight();
+						int passenger = i1.get(j).getPassengersNumber();
+						boolean visa = i1.get(j).isVisa();
+						if (mf.getInternational()
+								.find2(DataMapper.InternationalFlightDTOToInternationalFlight(in)) != null) {
 
-					int thePassangers = Integer.parseInt(passangersAct);
-					int theDepartureTime = Integer.parseInt(departureTimeAct);
-					int theArraivalTime = Integer.parseInt(arrivalTimeAct);
-					
+						}
+					}
 				}
 				break;
 
@@ -164,6 +203,14 @@ public class Controller implements ActionListener {
 				break;
 			}
 
+			break;
+		case "mostrarActualizar":
+			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
+			vf.getMa().getNumVuelo().setText(numAct);
+			int numero = Integer.parseInt(numAct);
+			mostrarActualizar();
+
+			break;
 		case "eliminar":
 			String numVuelo = JOptionPane.showInputDialog("ingrese el numero de vuelo a eliminar");
 			eliminar(numVuelo);
