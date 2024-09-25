@@ -59,8 +59,8 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnActualizar().addActionListener(this);
 		vf.getMa().getBtnActualizar().setActionCommand("actualizar");
 
-		vf.getMa().getBtnBuscarIzq().addActionListener(this);
-		vf.getMa().getBtnBuscarIzq().setActionCommand("btnBuscar");
+		vf.getMa().getBtnActualizarInferior().addActionListener(this);
+		vf.getMa().getBtnActualizarInferior().setActionCommand("btnActualizandoDatos");
 
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
@@ -78,7 +78,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnEliminar().setActionCommand("eliminar");
 
 		vf.getMa().getBtnMostrar().addActionListener(this);
-		vf.getMa().getBtnMostrar().setActionCommand("");
+		vf.getMa().getBtnMostrar().setActionCommand("btnMostrar");
 
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
