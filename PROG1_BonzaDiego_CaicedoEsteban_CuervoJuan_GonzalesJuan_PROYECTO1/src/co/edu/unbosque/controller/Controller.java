@@ -394,7 +394,7 @@ public class Controller implements ActionListener {
 	}
 
 	public int random() {
-		return (int) (Math.random() * 1000 + 10);
+		return (int) (Math.random() * 10000 + 100);
 	}
 
 	/**
