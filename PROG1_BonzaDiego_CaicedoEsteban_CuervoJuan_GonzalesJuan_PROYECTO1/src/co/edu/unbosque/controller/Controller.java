@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.lang.classfile.instruction.SwitchCase;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ public class Controller implements ActionListener {
 	private String aerolinea = "";
 	private NationalFlightDTO na;
 	private InternationalFlightDTO in;
+	private int distanceInternacional = 0;
+	private int distanceNacional = 0;
 
 	public Controller() {
 
@@ -34,6 +37,7 @@ public class Controller implements ActionListener {
 		vf.getPi().setVisible(true);
 
 		asignarLectores();
+
 	}
 
 	public void run() {
@@ -92,18 +96,20 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "internacional":
-
 			numSeleccionado = 2;
+			vf.getMa().getArrivalInternacional().setVisible(true);
+			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
 
 			break;
 		case "nacional":
-			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 			numSeleccionado = 1;
+			vf.getMa().getArrival().setVisible(true);
+			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 
 			break;
 
 		case "guardar":
-
+			// distanciaNacional();
 			switch (numSeleccionado) {
 			case 1:
 
@@ -400,6 +406,73 @@ public class Controller implements ActionListener {
 		
 		
 		
+	}
+
+	public void distanciaNacional() {
+		String nacional = vf.getMa().getArrival().getSelectedItem().toString();
+
+		switch (nacional) {
+		case "Medellin":
+			distanceNacional = 217;
+			break;
+		case "Cartagena":
+			distanceNacional = 656;
+
+			break;
+		case "Pasto":
+			distanceNacional = 507;
+
+			break;
+		case "Cali":
+			distanceNacional = 279;
+			break;
+		case "Bucaramanga":
+			distanceNacional = 290;
+
+			break;
+		case "Ibague":
+			distanceNacional = 113;
+
+			break;
+		case "Pereira":
+			distanceNacional = 177;
+
+			break;
+		case "Manizales":
+			distanceNacional = 150;
+
+			break;
+		case "Monteria":
+			distanceNacional = 494;
+
+			break;
+		case "Barranquilla":
+			distanceNacional = 692;
+
+			break;
+		case "Santa Marta":
+			distanceNacional = 714;
+
+			break;
+		case "Cucuta":
+			distanceNacional = 402;
+
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void distanciaInternacional() {
+		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
+
+		switch (internacional) {
+		case "":
+			
+			break;
+		default:
+			break;
+		}
 	}
 
 }
