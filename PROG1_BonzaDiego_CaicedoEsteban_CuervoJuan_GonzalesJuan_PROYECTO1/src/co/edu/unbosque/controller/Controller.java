@@ -67,13 +67,10 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
 
 		vf.getMa().getBtnBuscarCentral().addActionListener(this);
-		vf.getMa().getBtnBuscarCentral().setActionCommand("");
-
-		vf.getMa().getBtnBuscarIzq().addActionListener(this);
-		vf.getMa().getBtnBuscarIzq().setActionCommand("");
+		vf.getMa().getBtnBuscarCentral().setActionCommand("btnBusqueda");
 
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
-		vf.getMa().getBtnCambiarModo().setActionCommand("");
+		vf.getMa().getBtnCambiarModo().setActionCommand("btnCambiarModo");
 
 		vf.getMa().getBtnEliminar().addActionListener(this);
 		vf.getMa().getBtnEliminar().setActionCommand("");
@@ -99,13 +96,19 @@ public class Controller implements ActionListener {
 			numSeleccionado = 2;
 			vf.getMa().getArrivalInternacional().setVisible(true);
 			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
-
+			desactivarMenuVariables();
 			break;
 		case "nacional":
 			numSeleccionado = 1;
 			vf.getMa().getArrival().setVisible(true);
 			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
-
+			desactivarMenuVariables();
+			break;
+		case "btnAniadir":
+			//mostrarAniadir();
+			break;
+		case "btnBusqueda":
+			vf.getMa().getPanelBuscar().setVisible(true);
 			break;
 
 		case "guardar":
@@ -211,7 +214,7 @@ public class Controller implements ActionListener {
 
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
 
-				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
+				Image resizedA = avianca.getImage().getScaledInstance(100, 75, Image.SCALE_REPLICATE);
 
 				vf.getMa().getLogo().setIcon(new ImageIcon(resizedA));
 				aerolinea = "Avianca";
@@ -297,7 +300,28 @@ public class Controller implements ActionListener {
 		}
 
 	}
-
+	
+	/*public void mostrarAniadir() {
+        vf.getMa().getPanelCentral().setVisible(true);
+        vf.getMa().getPanelVariable().setVisible(true);
+        if (numSeleccionado == 1) { 
+            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
+            vf.getMa().getArrivalInternacional().setVisible(false);
+        } else if (numSeleccionado == 2) { 
+            vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
+            vf.getMa().getArrival().setVisible(false);
+           }
+	}*/
+	
+	public void desactivarMenuVariables() {
+		vf.getMa().getPanelIzq().setVisible(true);
+		vf.getMa().getPanelInferior().setVisible(true);
+        vf.getMa().getPanelCentral().setVisible(false);
+        vf.getMa().getPanelVariable().setVisible(false);
+        //vf.getMa().getPanelVuelos().setVisible(true);
+    }
+	
+	
 	public int incNum() {
 		int num = 0;
 		main: while (true) {
