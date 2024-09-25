@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class MenuAereolinea extends JFrame {
-	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnBuscarIzq, btnMostrar, btnSalir, btnCambiarModo,
+	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir, btnCambiarModo,
 			btnBuscarCentral, btnGuardar, btnActualizar, btnEliminar;
 	private JPanel panelVuelos, panelIzq, panelBuscar, panelCentral, panelInferior, panelVariable,
 			panelInternationalFlight, panelNationalFlight;
@@ -85,10 +85,10 @@ public class MenuAereolinea extends JFrame {
 		btnAniadir.setBounds(25, 25, 100, 100);
 		panelIzq.add(btnAniadir);
 
-		ImageIcon imagenBuscar = new ImageIcon("Images\\BuscarbtnClaro.png");
-		btnBuscarIzq = new JButton(imagenBuscar);
-		btnBuscarIzq.setBounds(25, 150, 100, 100);
-		panelIzq.add(btnBuscarIzq);
+		ImageIcon imagenBuscar = new ImageIcon("Images\\Actualizar100btnClaro.png");
+		btnActualizar = new JButton(imagenBuscar);
+		btnActualizar.setBounds(25, 150, 100, 100);
+		panelIzq.add(btnActualizar);
 
 		ImageIcon imagenMostrar = new ImageIcon("Images\\MostrarbtnClaro.png");
 		btnMostrar = new JButton(imagenMostrar);
@@ -112,9 +112,9 @@ public class MenuAereolinea extends JFrame {
 		panelInferior.add(btnGuardar);
 
 		ImageIcon imagenActualizar = new ImageIcon("Images\\ActualizarbtnClaro.png");
-		btnActualizar = new JButton(imagenActualizar);
-		btnActualizar.setBounds(300, 5, 75, 75);
-		panelInferior.add(btnActualizar);
+		btnActualizarInferior = new JButton(imagenActualizar);
+		btnActualizarInferior.setBounds(300, 5, 75, 75);
+		panelInferior.add(btnActualizarInferior);
 
 		ImageIcon imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		btnEliminar = new JButton(imagenEliminar);
@@ -433,13 +433,6 @@ public class MenuAereolinea extends JFrame {
 		this.btnAniadir = btnAniadir;
 	}
 
-	public JButton getBtnBuscarIzq() {
-		return btnBuscarIzq;
-	}
-
-	public void setBtnBuscarIzq(JButton btnBuscarIzq) {
-		this.btnBuscarIzq = btnBuscarIzq;
-	}
 
 	public JButton getBtnMostrar() {
 		return btnMostrar;
@@ -863,6 +856,14 @@ public class MenuAereolinea extends JFrame {
 
 	public void setCmbBusqueda(JComboBox<String> cmbBusqueda) {
 		this.cmbBusqueda = cmbBusqueda;
+	}
+
+	public JButton getBtnActualizarInferior() {
+		return btnActualizarInferior;
+	}
+
+	public void setBtnActualizarInferior(JButton btnActualizarInferior) {
+		this.btnActualizarInferior = btnActualizarInferior;
 	}
 
 	
