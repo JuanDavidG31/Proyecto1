@@ -105,6 +105,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 			content += m.getId() + ";";
 			content += m.isTurbine() + ";";
 			content += m.isTurboProp() + ";";
+			content += m.getArrivalDestination() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);

@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.lang.classfile.instruction.SwitchCase;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ public class Controller implements ActionListener {
 	private String aerolinea = "";
 	private NationalFlightDTO na;
 	private InternationalFlightDTO in;
+	private int distanceInternacional = 0;
+	private int distanceNacional = 0;
 
 	public Controller() {
 
@@ -34,6 +37,7 @@ public class Controller implements ActionListener {
 		vf.getPi().setVisible(true);
 
 		asignarLectores();
+
 	}
 
 	public void run() {
@@ -81,12 +85,6 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnMostrar().setActionCommand("");
 
 		vf.getMa().getBtnVuelosInternac().addActionListener(this);
-		vf.getMa().getBtnVuelosInternac().setActionCommand("");
-
-		vf.getMa().getBtnVuelosNac().addActionListener(this);
-		vf.getMa().getBtnVuelosNac().setActionCommand("");
-
-		vf.getMa().getBtnVuelosInternac().addActionListener(this);
 		vf.getMa().getBtnVuelosInternac().setActionCommand("internacional");
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
@@ -98,18 +96,20 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "internacional":
-
 			numSeleccionado = 2;
+			vf.getMa().getArrivalInternacional().setVisible(true);
+			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
 
 			break;
 		case "nacional":
-			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 			numSeleccionado = 1;
+			vf.getMa().getArrival().setVisible(true);
+			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 
 			break;
 
 		case "guardar":
-
+			// distanciaNacional();
 			switch (numSeleccionado) {
 			case 1:
 
@@ -131,6 +131,7 @@ public class Controller implements ActionListener {
 					String departurePlace = "Bogota";
 					String turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
 					String turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
+					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
 
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
@@ -141,19 +142,54 @@ public class Controller implements ActionListener {
 					boolean condition = booleanException(turbine);
 					boolean condition2 = booleanException(turbo);
 					if (condition == true || condition2 == true) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no en cordones", "Error",
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
 					mf.getNational()
 							.add(na = new NationalFlightDTO(company, thePassangers, null, null, theDepartureTime,
-									theArraivalTime, 0, incNumReceipt(), departurePlace, "", theTurbo, theTurbine));
+									theArraivalTime, 0, incNum(), departurePlace, arrival, theTurbo, theTurbine));
 					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
 				}
-					
+
 				break;
 			case 2:
+				if (vf.getMa().getTxtDepartureTime().getText().equals("")
+						|| vf.getMa().getTxtArrivalTime().getText().equals("")
+						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
+						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
+						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
+						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")) {
 
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+					String company = aerolinea;
+					String passangers = vf.getMa().getTxtPassengersNumber().getText().toString();
+					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+					String departurePlace = "Bogota";
+					String visa = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					
+					boolean theVisa = convBolean(visa);
+
+					int thePassangers = Integer.parseInt(passangers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+
+					boolean condition = booleanException(visa);
+
+					if (condition == true) {
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+					mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
+							theDepartureTime, theArraivalTime, 0, incNum(), departurePlace, arrival, theVisa));
+					JOptionPane.showMessageDialog(null, "Vuelo creado exitosamente");
+				}
 				break;
 			default:
 				break;
@@ -172,7 +208,7 @@ public class Controller implements ActionListener {
 			break;
 		case "seleccionarAerolinea":
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
- 
+
 				ImageIcon avianca = new ImageIcon("Images\\Avianca.png");
 
 				Image resizedA = avianca.getImage().getScaledInstance(100, 65, Image.SCALE_REPLICATE);
@@ -262,7 +298,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public int incNumReceipt() {
+	public int incNum() {
 		int num = 0;
 		main: while (true) {
 			boolean frist = false;
@@ -360,6 +396,83 @@ public class Controller implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+	
+	public int eliminar() {
+		
+		
+		
+		return 0;
+		
+		
+		
+	}
+
+	public void distanciaNacional() {
+		String nacional = vf.getMa().getArrival().getSelectedItem().toString();
+
+		switch (nacional) {
+		case "Medellin":
+			distanceNacional = 217;
+			break;
+		case "Cartagena":
+			distanceNacional = 656;
+
+			break;
+		case "Pasto":
+			distanceNacional = 507;
+
+			break;
+		case "Cali":
+			distanceNacional = 279;
+			break;
+		case "Bucaramanga":
+			distanceNacional = 290;
+
+			break;
+		case "Ibague":
+			distanceNacional = 113;
+
+			break;
+		case "Pereira":
+			distanceNacional = 177;
+
+			break;
+		case "Manizales":
+			distanceNacional = 150;
+
+			break;
+		case "Monteria":
+			distanceNacional = 494;
+
+			break;
+		case "Barranquilla":
+			distanceNacional = 692;
+
+			break;
+		case "Santa Marta":
+			distanceNacional = 714;
+
+			break;
+		case "Cucuta":
+			distanceNacional = 402;
+
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void distanciaInternacional() {
+		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
+
+		switch (internacional) {
+		case "":
+			
+			break;
+		default:
+			break;
+		}
 	}
 
 }

@@ -303,7 +303,7 @@ public class MenuAereolinea extends JFrame {
 		arrival.addItem("Santa Marta");//714 km
 		arrival.addItem("Cucuta");//402 km
 
-		arrival.setVisible(true);
+		arrival.setVisible(false);
 		panelCentral.add(arrival);
 		
 		arrivalInternacional = new JComboBox<String>();
