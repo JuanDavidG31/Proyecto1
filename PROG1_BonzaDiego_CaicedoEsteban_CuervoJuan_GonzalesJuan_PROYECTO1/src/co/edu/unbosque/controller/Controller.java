@@ -76,7 +76,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnCambiarModo().setActionCommand("");
 
 		vf.getMa().getBtnEliminar().addActionListener(this);
-		vf.getMa().getBtnEliminar().setActionCommand("");
+		vf.getMa().getBtnEliminar().setActionCommand("eliminar");
 
 		vf.getMa().getBtnGuardar().addActionListener(this);
 		vf.getMa().getBtnGuardar().setActionCommand("guardar");
@@ -94,7 +94,11 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
-
+		case "eliminar":
+			String numVuelo = JOptionPane.showInputDialog("ingrese el numero de vuelo a eliminar");
+			eliminar(numVuelo);
+					
+			break;
 		case "internacional":
 			numSeleccionado = 2;
 			vf.getMa().getArrivalInternacional().setVisible(true);
@@ -399,9 +403,9 @@ public class Controller implements ActionListener {
 	}
 
 	public void eliminar(String numVuelo) {
-			
+
 		int theNum = Integer.parseInt(numVuelo);
-			
+
 		ArrayList<InternationalFlightDTO> in;
 		in = new ArrayList<>();
 		in = mf.getInternational().getAll();
@@ -413,7 +417,7 @@ public class Controller implements ActionListener {
 
 				if (mf.getInternational()
 						.delete(new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false))) {
-					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					JOptionPane.showMessageDialog(null, "vuelo "+ numVuelo+" eliminado correctamente");
 					break;
 
 				} else {
@@ -428,15 +432,15 @@ public class Controller implements ActionListener {
 		ArrayList<NationalFlightDTO> na;
 		na = new ArrayList<>();
 		na = mf.getNational().getAll();
-		
+
 		for (int i = 0; i < na.size(); i++) {
 
 			int num = na.get(i).getId();
 
 			if (num == theNum) {
 
-				if (mf.getNational()
-						.delete(new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false,false))) {
+				if (mf.getNational().delete(
+						new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false, false))) {
 					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
 					break;
 
@@ -448,7 +452,6 @@ public class Controller implements ActionListener {
 			}
 
 		}
-
 
 	}
 
@@ -581,12 +584,12 @@ public class Controller implements ActionListener {
 
 		return 0;
 	}
-  
+
 	public int pesoPasajeros(int pasajeros) {
-	  
-	  int pesoPersona=70;
-	  int pesototal=pesoPersona*pasajeros;
-	  
-	  return pesototal;
-  }
+
+		int pesoPersona = 70;
+		int pesototal = pesoPersona * pasajeros;
+
+		return pesototal;
+	}
 }
