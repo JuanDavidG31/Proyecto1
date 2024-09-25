@@ -398,9 +398,57 @@ public class Controller implements ActionListener {
 		return false;
 	}
 
-	public int eliminar() {
+	public void eliminar(String numVuelo) {
+			
+		int theNum = Integer.parseInt(numVuelo);
+			
+		ArrayList<InternationalFlightDTO> in;
+		in = new ArrayList<>();
+		in = mf.getInternational().getAll();
+		for (int i = 0; i < in.size(); i++) {
 
-		return 0;
+			int num = in.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getInternational()
+						.delete(new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false))) {
+					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
+		ArrayList<NationalFlightDTO> na;
+		na = new ArrayList<>();
+		na = mf.getNational().getAll();
+		
+		for (int i = 0; i < na.size(); i++) {
+
+			int num = na.get(i).getId();
+
+			if (num == theNum) {
+
+				if (mf.getNational()
+						.delete(new NationalFlightDTO(null, 0, null, null, 0, 0, 0, theNum, null, null, false,false))) {
+					JOptionPane.showMessageDialog(null, "vuelo eliminado correctamente");
+					break;
+
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo eliminar el vuelo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+			}
+
+		}
+
 
 	}
 
@@ -464,6 +512,7 @@ public class Controller implements ActionListener {
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
 		switch (internacional) {
+
 		case "Madrid":
 			distanceInternacional = 8039;
 			break;
@@ -518,7 +567,6 @@ public class Controller implements ActionListener {
 		case "São Paulo":
 			distanceInternacional = 4340;
 			break;
-
 		default:
 			break;
 		}
