@@ -229,7 +229,7 @@ public class Controller implements ActionListener {
 						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
 						departurePlace = "Bogota";
 						visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
-						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+						arrival = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 					} catch (NumberFormatException x) {
 						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 								JOptionPane.ERROR_MESSAGE);
