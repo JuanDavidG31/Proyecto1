@@ -327,14 +327,13 @@ public class Controller implements ActionListener {
 				} else {
 					continue;
 				}
-				
+
 			}
 
 			if (funcion == false && funcion2 == false) {
 				vf.getMa().getNumVuelo().setText("No existe");
 				JOptionPane.showMessageDialog(null, "No existe el vuelo digitado", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-
 
 			break;
 
@@ -371,7 +370,6 @@ public class Controller implements ActionListener {
 
 				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.white);
 				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.white);
-
 
 				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
@@ -411,7 +409,6 @@ public class Controller implements ActionListener {
 
 				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.black);
 				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.black);
-
 
 				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
@@ -538,7 +535,7 @@ public class Controller implements ActionListener {
 					String departureTime = "";
 					String arrivalTime = "";
 					String departurePlace = "";
-					String arrival = "";
+					String arrivalInt = "";
 					String visa = "";
 
 					try {
@@ -548,7 +545,7 @@ public class Controller implements ActionListener {
 						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
 						departurePlace = "Bogota";
 						visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
-						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+						arrivalInt = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 					} catch (NumberFormatException x) {
 						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 								JOptionPane.ERROR_MESSAGE);
@@ -574,7 +571,7 @@ public class Controller implements ActionListener {
 						mf.getInternational()
 								.add(in = new InternationalFlightDTO(company, thePassengers, verificarNombreCap(),
 										verificarNombreSubCap(), theDepartureTime, theArraivalTime, combustibleInt,
-										flightNum, departurePlace, arrival, theVisa));
+										flightNum, departurePlace, arrivalInt, theVisa));
 
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
 
@@ -698,7 +695,7 @@ public class Controller implements ActionListener {
 						"Combustible", "Avion de turbina", "Avion de elice" };
 				ArrayList<NationalFlightDTO> naList = mf.getNational().getAll();
 				String datosNac[][] = new String[naList.size()][12];
-				
+
 				vf.getMa().getPanelMostrarJTableNacional().setVisible(true);
 				vf.getMa().getPanelMostrarJTableOInternacional().setVisible(false);
 				vf.getMa().getPanelCentral().setVisible(false);
@@ -732,10 +729,10 @@ public class Controller implements ActionListener {
 			case 2:
 				String titulosInt[] = { "Numero de Vuelo", "Aerolinea", "Hora de salida", "Hora de llegada", "Origen",
 						"Destino", "Nombre Capitan", "Nombre del Segundo al Mando", "Numero de Pasajeros",
-						"Combustible", "Necesita VISA"};
+						"Combustible", "Necesita VISA" };
 				ArrayList<InternationalFlightDTO> intList = mf.getInternational().getAll();
 				String datosInt[][] = new String[intList.size()][11];
-				
+
 				vf.getMa().getPanelMostrarJTableOInternacional().setVisible(true);
 				vf.getMa().getPanelMostrarJTableNacional().setVisible(false);
 				vf.getMa().getPanelCentral().setVisible(false);
