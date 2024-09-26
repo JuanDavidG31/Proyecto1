@@ -2,130 +2,299 @@ package co.edu.unbosque.model;
 
 import java.io.Serializable;
 
+/**
+ * La clase abstracta Flight representa un vuelo general con detalles
+ * como el nombre de la compañía, número de pasajeros, miembros de la tripulación,
+ * horarios y peso del combustible.
+ * 
+ * <p>Implementa la interfaz Serializable para permitir la serialización de objetos.
+ * Esta clase sirve como base para diferentes tipos de vuelos, proporcionando
+ * propiedades y métodos comunes.</p>
+ * 
+ */
 public abstract class Flight implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Identificador de versión de la clase Flight. Se utiliza durante el proceso 
+     * de deserialización para verificar la compatibilidad de versiones.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private String companyName;
-	private int passengersNumber;
-	private String nameCaptain;
-	private String nameSecondCommand;
-	private int departureTime;
-	private int arrivalTime;
-	private int fuelWeight;
-	private int id;
-	private String departureDestination;
-	private String arrivalDestination;
+    /**
+     * Nombre de la compañía aérea.
+     */
+    private String companyName;
 
-	public Flight() {
+    /**
+     * Número de pasajeros a bordo.
+     */
+    private int passengersNumber;
 
-	}
+    /**
+     * Nombre del capitán del vuelo.
+     */
+    private String nameCaptain;
 
-	public Flight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
-			int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
-			String arrivalDestination) {
-		super();
-		this.companyName = companyName;
-		this.passengersNumber = passengersNumber;
-		this.nameCaptain = nameCaptain;
-		this.nameSecondCommand = nameSecondCommand;
-		this.departureTime = departureTime;
-		this.arrivalTime = arrivalTime;
-		this.fuelWeight = fuelWeight;
-		this.id = id;
-		this.departureDestination = departureDestination;
-		this.arrivalDestination = arrivalDestination;
-	}
+    /**
+     * Nombre del segundo al mando.
+     */
+    private String nameSecondCommand;
 
-	public String getCompanyName() {
-		return companyName;
-	}
+    /**
+     * Hora de salida del vuelo en formato de 24 horas (ej. 1300 para 1:00 PM).
+     */
+    private int departureTime;
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+    /**
+     * Hora de llegada del vuelo en formato de 24 horas (ej. 1500 para 3:00 PM).
+     */
+    private int arrivalTime;
 
-	public int getPassengersNumber() {
-		return passengersNumber;
-	}
+    /**
+     * Peso del combustible en el vuelo (en kilogramos).
+     */
+    private int fuelWeight;
 
-	public void setPassengersNumber(int passengersNumber) {
-		this.passengersNumber = passengersNumber;
-	}
+    /**
+     * Identificador único del vuelo.
+     */
+    private int id;
 
-	public String getNameCaptain() {
-		return nameCaptain;
-	}
+    /**
+     * Destino de salida del vuelo.
+     */
+    private String departureDestination;
 
-	public void setNameCaptain(String nameCaptain) {
-		this.nameCaptain = nameCaptain;
-	}
+    /**
+     * Destino de llegada del vuelo.
+     */
+    private String arrivalDestination;
 
-	public String getNameSecondCommand() {
-		return nameSecondCommand;
-	}
+    /**
+     * Constructor por defecto de la clase Flight.
+     */
+    public Flight() {
+    }
 
-	public void setNameSecondCommand(String nameSecondCommand) {
-		this.nameSecondCommand = nameSecondCommand;
-	}
+    /**
+     * Constructor que inicializa todos los atributos del vuelo.
+     * 
+     * @param companyName Nombre de la compañía aérea
+     * @param passengersNumber Número de pasajeros a bordo
+     * @param nameCaptain Nombre del capitán del vuelo
+     * @param nameSecondCommand Nombre del segundo al mando
+     * @param departureTime Hora de salida del vuelo
+     * @param arrivalTime Hora de llegada del vuelo
+     * @param fuelWeight Peso del combustible
+     * @param id Identificador único del vuelo
+     * @param departureDestination Destino de salida
+     * @param arrivalDestination Destino de llegada
+     */
+    public Flight(String companyName, int passengersNumber, String nameCaptain, String nameSecondCommand,
+                  int departureTime, int arrivalTime, int fuelWeight, int id, String departureDestination,
+                  String arrivalDestination) {
+        this.companyName = companyName;
+        this.passengersNumber = passengersNumber;
+        this.nameCaptain = nameCaptain;
+        this.nameSecondCommand = nameSecondCommand;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.fuelWeight = fuelWeight;
+        this.id = id;
+        this.departureDestination = departureDestination;
+        this.arrivalDestination = arrivalDestination;
+    }
 
-	public int getDepartureTime() {
-		return departureTime;
-	}
+    /**
+     * Obtiene el nombre de la compañía aérea.
+     * 
+     * @return Nombre de la compañía aérea
+     */
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	public void setDepartureTime(int departureTime) {
-		this.departureTime = departureTime;
-	}
+    /**
+     * Establece el nombre de la compañía aérea.
+     * 
+     * @param companyName Nombre de la compañía aérea
+     */
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	public int getArrivalTime() {
-		return arrivalTime;
-	}
+    /**
+     * Obtiene el número de pasajeros a bordo.
+     * 
+     * @return Número de pasajeros
+     */
+    public int getPassengersNumber() {
+        return passengersNumber;
+    }
 
-	public void setArrivalTime(int arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
+    /**
+     * Establece el número de pasajeros a bordo.
+     * 
+     * @param passengersNumber Número de pasajeros
+     */
+    public void setPassengersNumber(int passengersNumber) {
+        this.passengersNumber = passengersNumber;
+    }
 
-	public int getFuelWeight() {
-		return fuelWeight;
-	}
+    /**
+     * Obtiene el nombre del capitán del vuelo.
+     * 
+     * @return Nombre del capitán
+     */
+    public String getNameCaptain() {
+        return nameCaptain;
+    }
 
-	public void setFuelWeight(int fuelWeight) {
-		this.fuelWeight = fuelWeight;
-	}
+    /**
+     * Establece el nombre del capitán del vuelo.
+     * 
+     * @param nameCaptain Nombre del capitán
+     */
+    public void setNameCaptain(String nameCaptain) {
+        this.nameCaptain = nameCaptain;
+    }
 
-	public int getId() {
-		return id;
-	}
+    /**
+     * Obtiene el nombre del segundo al mando.
+     * 
+     * @return Nombre del segundo al mando
+     */
+    public String getNameSecondCommand() {
+        return nameSecondCommand;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * Establece el nombre del segundo al mando.
+     * 
+     * @param nameSecondCommand Nombre del segundo al mando
+     */
+    public void setNameSecondCommand(String nameSecondCommand) {
+        this.nameSecondCommand = nameSecondCommand;
+    }
 
-	public String getDepartureDestination() {
-		return departureDestination;
-	}
+    /**
+     * Obtiene la hora de salida del vuelo.
+     * 
+     * @return Hora de salida
+     */
+    public int getDepartureTime() {
+        return departureTime;
+    }
 
-	public void setDepartureDestination(String departureDestination) {
-		this.departureDestination = departureDestination;
-	}
+    /**
+     * Establece la hora de salida del vuelo.
+     * 
+     * @param departureTime Hora de salida
+     */
+    public void setDepartureTime(int departureTime) {
+        this.departureTime = departureTime;
+    }
 
-	public String getArrivalDestination() {
-		return arrivalDestination;
-	}
+    /**
+     * Obtiene la hora de llegada del vuelo.
+     * 
+     * @return Hora de llegada
+     */
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
 
-	public void setArrivalDestination(String arrivalDestination) {
-		this.arrivalDestination = arrivalDestination;
-	}
+    /**
+     * Establece la hora de llegada del vuelo.
+     * 
+     * @param arrivalTime Hora de llegada
+     */
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
 
-	@Override
-	public String toString() {
-		return "Flight [companyName=" + companyName + ", passengersNumber=" + passengersNumber + ", nameCaptain="
-				+ nameCaptain + ", nameSecondCommand=" + nameSecondCommand + ", departureTime=" + departureTime
-				+ ", arrivalTime=" + arrivalTime + ", fuelWeight=" + fuelWeight + ", id=" + id
-				+ ", departureDestination=" + departureDestination + ", arrivalDestination=" + arrivalDestination + "]";
-	}
+    /**
+     * Obtiene el peso del combustible del vuelo.
+     * 
+     * @return Peso del combustible en kilogramos
+     */
+    public int getFuelWeight() {
+        return fuelWeight;
+    }
 
+    /**
+     * Establece el peso del combustible del vuelo.
+     * 
+     * @param fuelWeight Peso del combustible
+     */
+    public void setFuelWeight(int fuelWeight) {
+        this.fuelWeight = fuelWeight;
+    }
+
+    /**
+     * Obtiene el identificador único del vuelo.
+     * 
+     * @return Identificador del vuelo
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Establece el identificador único del vuelo.
+     * 
+     * @param id Identificador del vuelo
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtiene el destino de salida del vuelo.
+     * 
+     * @return Destino de salida
+     */
+    public String getDepartureDestination() {
+        return departureDestination;
+    }
+
+    /**
+     * Establece el destino de salida del vuelo.
+     * 
+     * @param departureDestination Destino de salida
+     */
+    public void setDepartureDestination(String departureDestination) {
+        this.departureDestination = departureDestination;
+    }
+
+    /**
+     * Obtiene el destino de llegada del vuelo.
+     * 
+     * @return Destino de llegada
+     */
+    public String getArrivalDestination() {
+        return arrivalDestination;
+    }
+
+    /**
+     * Establece el destino de llegada del vuelo.
+     * 
+     * @param arrivalDestination Destino de llegada
+     */
+    public void setArrivalDestination(String arrivalDestination) {
+        this.arrivalDestination = arrivalDestination;
+    }
+
+    /**
+     * Devuelve una representación en cadena del vuelo.
+     * 
+     * @return Cadena de texto que describe el vuelo
+     */
+    @Override
+    public String toString() {
+        return "Flight [companyName=" + companyName + ", passengersNumber=" + passengersNumber + ", nameCaptain="
+                + nameCaptain + ", nameSecondCommand=" + nameSecondCommand + ", departureTime=" + departureTime
+                + ", arrivalTime=" + arrivalTime + ", fuelWeight=" + fuelWeight + ", id=" + id
+                + ", departureDestination=" + departureDestination + ", arrivalDestination=" + arrivalDestination + "]";
+    }
 }

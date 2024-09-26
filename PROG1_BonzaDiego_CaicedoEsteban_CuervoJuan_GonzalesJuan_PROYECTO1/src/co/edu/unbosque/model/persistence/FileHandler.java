@@ -8,9 +8,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-//import java.util.Scanner;
 import java.util.Scanner;
 
+/**
+ * La clase FileHandler proporciona métodos estáticos para manejar la lectura y escritura
+ * de archivos de texto plano y objetos serializados. Además, se encarga de verificar
+ * y crear las carpetas necesarias para almacenar los archivos.
+ * 
+ * @autor (Tu nombre)
+ * @version 1.0
+ */
 public class FileHandler {
 
 	private static PrintWriter pw;
@@ -23,6 +30,13 @@ public class FileHandler {
 	private static FileInputStream fis;
 	private static ObjectInputStream ois;
 
+
+    /**
+     * Lee un archivo serializado desde una ubicación especificada.
+     * 
+     * @param url la ruta del archivo serializado.
+     * @return el objeto deserializado si el archivo se leyó correctamente, o null si hubo un error.
+     */
 	public static Object readSerialized(String url) {
 		try {
 			archivo = new File(FOLDER_NAME +"/" + url);
@@ -48,6 +62,12 @@ public class FileHandler {
 
 	}
 
+    /**
+     * Escribe un objeto serializado en un archivo especificado.
+     * 
+     * @param url la ruta del archivo donde se almacenará el objeto.
+     * @param content el objeto a ser serializado y almacenado.
+     */
 	public static void writerSerialized(String url, Object content) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -65,6 +85,9 @@ public class FileHandler {
 		}
 	}
 
+    /**
+     * Verifica si la carpeta de almacenamiento existe. Si no existe, la crea.
+     */
 	public static void checkFolder() {
 		archivo = new File(FOLDER_NAME);
 		if (archivo.exists() && archivo.isDirectory()) {
@@ -74,6 +97,12 @@ public class FileHandler {
 		}
 	}
 
+    /**
+     * Escribe contenido de texto en un archivo especificado.
+     * 
+     * @param url la ruta del archivo de texto donde se almacenará el contenido.
+     * @param content el contenido a escribir en el archivo.
+     */
 	public static void writeFile(String url, String content) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -90,7 +119,13 @@ public class FileHandler {
 			System.out.println("Error en la correcion del archivo(Texto plano)");
 		}
 	}
-
+	
+    /**
+     * Lee el contenido de un archivo de texto especificado.
+     * 
+     * @param url la ruta del archivo de texto a leer.
+     * @return el contenido del archivo como una cadena de texto, o null si hubo un error.
+     */
 	public static String readFile(String url) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
