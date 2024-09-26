@@ -44,7 +44,6 @@ public class Controller implements ActionListener {
 	private int numActualizar = 0;
 	boolean modoOscuro = false;
 
-
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
@@ -162,6 +161,7 @@ public class Controller implements ActionListener {
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleNac = combustibleNacional(thePassengers);
 
 					ArrayList<NationalFlightDTO> s1;
 					s1 = new ArrayList<>();
@@ -171,10 +171,12 @@ public class Controller implements ActionListener {
 						if (id == theId) {
 							String cap = s1.get(i).getNameCaptain();
 							String sub = s1.get(i).getNameSecondCommand();
+
 							mf.getNational().update(
 									new NationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false, false),
 									new NationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
-											theArraivalTime, 0, id, departurePlace, arrival, theTurbo, theTurbine));
+											theArraivalTime, combustibleNac, id, departurePlace, arrival, theTurbo,
+											theTurbine));
 							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
 							reiniciarInputsInt();
 							reiniciarInputsNac();
@@ -224,19 +226,20 @@ public class Controller implements ActionListener {
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
-
+					int combustibleInt = combustibleIntercional(thePassengers);
 					ArrayList<InternationalFlightDTO> i1;
 					i1 = new ArrayList<>();
 					i1 = mf.getInternational().getAll();
 					m1: for (int i = 0; i < i1.size(); i++) {
 						int theId = i1.get(i).getId();
+
 						if (id == theId) {
 							String cap = i1.get(i).getNameCaptain();
 							String sub = i1.get(i).getNameSecondCommand();
 							mf.getInternational().update(
 									new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false),
 									new InternationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
-											theArraivalTime, 0, id, departurePlace, arrival, theVisa));
+											theArraivalTime, combustibleInt, id, departurePlace, arrival, theVisa));
 							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
 							reiniciarInputsInt();
 							reiniciarInputsNac();
@@ -300,9 +303,9 @@ public class Controller implements ActionListener {
 
 			break;
 		case "btnCambiarModo":
-			
+
 			if (modoOscuro) {
-				//Botones
+				// Botones
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModo());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzq());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizar());
@@ -314,8 +317,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionales());
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadir());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustible());
-				
-				//Paneles
+
+				// Paneles
 				vf.getMa().getPanelCentral().setBackground(Color.white);
 				vf.getMa().getPanelInferior().setBackground(Color.white);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.white);
@@ -323,8 +326,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelNationalFlight().setBackground(Color.white);
 				vf.getMa().getPanelVariable().setBackground(Color.white);
 				vf.getMa().getPanelVuelos().setBackground(Color.white);
-				
-				//Labels
+
+				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
 				vf.getMa().getLblArrivalTime().setForeground(Color.black);
 				vf.getMa().getLblCompanyName().setForeground(Color.black);
@@ -335,11 +338,10 @@ public class Controller implements ActionListener {
 				vf.getMa().getLblPassengersNumber().setForeground(Color.black);
 				vf.getMa().getNumVuelo().setForeground(Color.black);
 				vf.getMa().getTxtNumVuelo().setForeground(Color.black);
-				
-				
+
 				modoOscuro = false;
 			} else {
-				//Botones
+				// Botones
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModoOscuro());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzqOscuro());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizarOscuro());
@@ -351,8 +353,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionalesOscuro());
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadirOscuro());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustibleOscuro());
-				
-				//Paneles
+
+				// Paneles
 				vf.getMa().getPanelCentral().setBackground(Color.black);
 				vf.getMa().getPanelInferior().setBackground(Color.black);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.black);
@@ -360,8 +362,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelNationalFlight().setBackground(Color.black);
 				vf.getMa().getPanelVariable().setBackground(Color.black);
 				vf.getMa().getPanelVuelos().setBackground(Color.black);
-				
-				//Labels
+
+				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
 				vf.getMa().getLblArrivalTime().setForeground(Color.white);
 				vf.getMa().getLblCompanyName().setForeground(Color.white);
@@ -375,7 +377,6 @@ public class Controller implements ActionListener {
 				modoOscuro = true;
 			}
 			break;
-			
 
 		case "internacional":
 			numSeleccionado = 2;
@@ -452,8 +453,9 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getNational().add(na = new NationalFlightDTO(company, thePassengers, verificarNombreCap(),
-										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, num,
+						mf.getNational()
+								.add(na = new NationalFlightDTO(company, thePassengers, verificarNombreCap(),
+										verificarNombreSubCap(), theDepartureTime, theArraivalTime, combustibleNac, num,
 										departurePlace, arrival, theTurbo, theTurbine));
 
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
@@ -518,9 +520,10 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, verificarNombreCap(),
-										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, flightNum,
-										departurePlace, arrival, theVisa));
+						mf.getInternational()
+								.add(in = new InternationalFlightDTO(company, thePassengers, verificarNombreCap(),
+										verificarNombreSubCap(), theDepartureTime, theArraivalTime, combustibleInt,
+										flightNum, departurePlace, arrival, theVisa));
 
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
 
