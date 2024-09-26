@@ -13,31 +13,46 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
+/**
+ * Clase que representa la interfaz gráfica de la aplicación de la aerolínea.
+ * Extiende de JFrame para crear la ventana principal del programa.
+ * Contiene todos los paneles, botones, etiquetas y campos de texto necesarios 
+ * para la gestión de vuelos nacionales e internacionales.
+ */
 public class MenuAereolinea extends JFrame {
+	// Botones de la interfaz
 	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir,
 			btnCambiarModo, btnGuardar, btnActualizar, btnEliminar, btnCombustible;
+	// Paneles de la interfaz
 	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable, panelInternationalFlight,
 			panelNationalFlight, panelMostrarJTableNacional, panelMostrarJTableOInternacional;
+	 // Campos de texto
 	private JTextField txtPassengersNumber, txtDepartureTime, txtArrivalTime;
+	// Etiquetas
 	private JLabel numVuelo, txtCombustible, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblDepartureTime,
 			lblArrivalTime, lblIsTurboProp, lblIsTurbine, lblIsVisa, logo, lblArrivalPlace;
-
+	// ComboBox
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
+	// Iconos de imágenes
 	private ImageIcon imagenCambiarModo, imagenCambiarModoOscuro, imagenGuardar, imagenGuardarOscuro, imagenActualizar,
 			imagenActualizarOscuro, imagenEliminar, imagenEliminarOscuro, imagenVuelosNacionales,
 			imagenVuelosNacionalesOscuro, imagenVuelosInternacionales, imagenVuelosInternacionalesOscuro, imagenAniadir,
 			imagenAniadirOscuro, imagenActualizarIzq, imagenActualizarIzqOscuro, imagenMostrar, imagenMostrarOscuro,
 			imagenSalir, imagenSalirOscuro, imagenCombustible, imagenCombustibleOscuro;
+	 // ScrollPane y JTable
 	private JScrollPane scrollpaneNac, scrollpaneInt;
 	private JTable tablaVuelosNacional, tablaVuelosInterNacional;
+	// Constantes para identificación de vuelos
 	private final static String INT = "Internacional";
 	private final static String NAC = "Nacional";
-
+	// Layout para la gestión de paneles
 	CardLayout cardLayout = new CardLayout();
 	
 	
-
+	/**
+     * Constructor de la clase MenuAereolinea.
+     * Inicializa la ventana y todos sus componentes.
+     */
 	public MenuAereolinea() {
 
 		ventana();
@@ -47,7 +62,7 @@ public class MenuAereolinea extends JFrame {
 		labels();
 		Combobox();
 		//jTables();
-
+		// Inicializa la visibilidad de los paneles
 		getPanelCentral().setVisible(false);
 		getPanelInferior().setVisible(false);
 		getPanelIzq().setVisible(false);
@@ -55,7 +70,7 @@ public class MenuAereolinea extends JFrame {
 		getPanelVuelos().setVisible(true);
 		getPanelMostrarJTableNacional().setVisible(false);
 		getPanelMostrarJTableOInternacional().setVisible(false);
-
+		// Agrega los paneles a la ventana
 		add(panelCentral);
 		add(panelInferior);
 		add(panelIzq);
@@ -65,7 +80,9 @@ public class MenuAereolinea extends JFrame {
 		add(panelMostrarJTableOInternacional);
 
 	}
-
+	/**
+     * Configura la ventana principal de la aplicación.
+     */
 	public void ventana() {
 		setBounds(50, 50, 1000, 700);
 		setTitle("Aeropuerto el Dorado");
@@ -74,9 +91,11 @@ public class MenuAereolinea extends JFrame {
 		setResizable(false);
 		setLayout(null);
 	}
-
+	/**
+     * Configura los botones de la interfaz.
+     */
 	public void botones() {
-		// Botones panel superior
+		// Configuración de botones y sus imágenes para el panel superior
 		imagenVuelosNacionales = new ImageIcon("Images\\NacionaleBtn.png");
 		imagenVuelosNacionalesOscuro = new ImageIcon("Images\\btnNacionalesOscuro.png");
 		btnVuelosNac = new JButton(imagenVuelosNacionales);
@@ -91,7 +110,7 @@ public class MenuAereolinea extends JFrame {
 		btnVuelosInternac.setBounds(520, 3, 320, 51);
 		panelVuelos.add(btnVuelosInternac);
 
-		// Botones panel izquierda (menu)
+		 // Configuración de botones para el panel izquierdo (menu)
 		imagenAniadir = new ImageIcon("Images\\AniadirbtnClaro.png");
 		imagenAniadirOscuro = new ImageIcon("Images\\btnAniadirOscuro.png");
 		btnAniadir = new JButton(imagenAniadir);
@@ -128,7 +147,7 @@ public class MenuAereolinea extends JFrame {
 		btnCambiarModo.setBorder(null);
 		panelIzq.add(btnCambiarModo);
 
-		// Botones panel Inferior
+		// Configuración de botones para el panel Inferior
 		imagenGuardar = new ImageIcon("Images\\GuardarbtnClaro.png");
 		imagenGuardarOscuro = new ImageIcon("Images\\btnGuardarOscuro.png");
 		btnGuardar = new JButton(imagenGuardar);
@@ -160,7 +179,9 @@ public class MenuAereolinea extends JFrame {
 
 
 	}
-
+	/**
+     * Configura los paneles de la interfaz.
+     */
 	public void paneles() {
 		panelVuelos = new JPanel();
 		panelVuelos.setLayout(null);
@@ -210,7 +231,9 @@ public class MenuAereolinea extends JFrame {
 		
 
 	}
-
+	/**
+     * Configura los campos de texto de la interfaz.
+     */
 	public void textfield() {
 
 		txtPassengersNumber = new JTextField();
@@ -228,7 +251,9 @@ public class MenuAereolinea extends JFrame {
 		txtArrivalTime.setBounds(190, 225, 400, 20);
 		panelCentral.add(txtArrivalTime);
 	}
-
+	/**
+     * Configura los combo boxes de la interfaz.
+     */
 	public void Combobox() {
 		aerolinea = new JComboBox<String>();
 		aerolinea.setBounds(190, 80, 200, 20);
@@ -320,7 +345,33 @@ public class MenuAereolinea extends JFrame {
 		cmbBusqueda.setBounds(250, 10, 230, 20);
 
 	}
-
+	
+////
+	/**
+	 * Este método configura y añade varias etiquetas (`JLabel`) a diferentes paneles de la interfaz gráfica de usuario.
+	 * Las etiquetas se utilizan para mostrar información relacionada con vuelos, como el número de vuelo, nombre de la 
+	 * compañía, número de pasajeros, horas de salida y llegada, destino, y otros datos importantes.
+	 * 
+	 * Las etiquetas se añaden a dos paneles principales:
+	 * - `panelCentral`: Contiene información relacionada con el vuelo y su estado.
+	 * - `panelNationalFlight` y `panelInternationalFlight`: Contienen información específica sobre vuelos nacionales e internacionales.
+	 * 
+	 * En particular, este método realiza lo siguiente:
+	 * 
+	 * - Crea una etiqueta de logo (`logo`) y la añade al `panelCentral`.
+	 * - Configura y oculta temporalmente las etiquetas del número de vuelo (`numVuelo`) y el texto asociado (`txtNumVuelo`).
+	 * - Añade etiquetas para el nombre de la compañía, número de pasajeros, hora de salida y llegada, destino y combustible.
+	 * - Configura etiquetas adicionales en el panel de vuelos nacionales e internacionales para datos como si el avión es de 
+	 *   turbina, turbohélice o si se requiere VISA para vuelos internacionales.
+	 * 
+	 * Configuraciones específicas:
+	 * - Las etiquetas utilizan la fuente "Agency FB" con tamaños y estilos diferentes, como negrita.
+	 * - Las posiciones y dimensiones de las etiquetas se establecen mediante el método `setBounds()`, que define su ubicación
+	 *   y tamaño en el panel correspondiente.
+	 * 
+	 * No retorna ningún valor.
+	 */
+	
 	public void labels() {
 		logo = new JLabel();
 		logo.setBounds(450, 50, 100, 75);

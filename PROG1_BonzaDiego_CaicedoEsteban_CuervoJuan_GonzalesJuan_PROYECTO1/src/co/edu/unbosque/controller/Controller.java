@@ -1,3 +1,27 @@
+/**
+ * La clase {@code Controller} es responsable de manejar las interacciones entre la vista y el modelo en el sistema de gestión de vuelos.
+ * Implementa {@link ActionListener} para responder a eventos de acción generados en la interfaz de usuario.
+ * 
+ * <p>
+ * El controlador se encarga de coordinar las operaciones entre la vista y el modelo, como la actualización,
+ * eliminación y creación de vuelos nacionales e internacionales.
+ * </p>
+ * 
+ * <p>
+ * Algunos métodos claves incluyen:
+ * <ul>
+ *  <li>{@code asignarLectores()}: Asigna los eventos a los botones de la vista.</li>
+ *  <li>{@code actionPerformed(ActionEvent e)}: Controla los eventos disparados por la interfaz de usuario.</li>
+ *  <li>{@code eliminar(String numVuelo)}: Elimina un vuelo en base a su ID.</li>
+ * </ul>
+ * </p>
+ * 
+ * @see co.edu.unbosque.model.ModelFacade
+ * @see co.edu.unbosque.view.ViewFacade
+ * @see co.edu.unbosque.model.NationalFlightDTO
+ * @see co.edu.unbosque.model.InternationalFlightDTO
+ * 
+ */
 package co.edu.unbosque.controller;
 
 import java.awt.Color;
@@ -34,19 +58,34 @@ import co.edu.unbosque.util.exception.PassengersNumberException;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
+	
+	/** Facade del modelo que maneja la lógica de los vuelos */
 	private ModelFacade mf = new ModelFacade();
+	/** Facade de la vista que maneja la interfaz de usuario */
 	private ViewFacade vf = new ViewFacade();
+	/** Número del vuelo seleccionado */
 	private int numSeleccionado = 0;
+	/** ID del vuelo actual */
 	private int id = 0;
+	/** Aerolínea seleccionada */
 	private String aerolinea = "";
+	/** DTO para vuelos nacionales */
 	private NationalFlightDTO na;
+	/** DTO para vuelos internacionales */
 	private InternationalFlightDTO in;
-
+	  /** Duración de vuelos internacionales */
 	private int duracionInternacional = 0;
+	 /** Duración de vuelos nacionales */
 	private int duracionNacional = 0;
+	 /** Número de vuelo a actualizar */
 	private int numActualizar = 0;
+	/** Modo oscuro activado o no */
 	boolean modoOscuro = false;
 
+	/**
+     * Constructor de la clase {@code Controller}.
+     * Inicializa los objetos de la vista y del modelo, y asigna los eventos de la interfaz.
+     */
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
@@ -60,7 +99,9 @@ public class Controller implements ActionListener {
 	public void run() {
 
 	}
-
+	/**
+     * Asigna los eventos de acción a los componentes de la interfaz de usuario.
+     */
 	public void asignarLectores() {
 		vf.getPi().getBtnAereolinea().addActionListener(this);
 		vf.getPi().getBtnAereolinea().setActionCommand("btnAreolinea");
@@ -105,6 +146,12 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnCombustible().setActionCommand("combustible");
 	}
 
+	 /**
+     * Método que responde a las acciones de los botones en la vista.
+     * Controla el flujo lógico para actualizar, mostrar, eliminar o agregar vuelos.
+     *
+     * @param e Evento de acción disparado desde la vista
+     */
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
@@ -343,10 +390,24 @@ public class Controller implements ActionListener {
 			eliminar(numVuelo);
 
 			break;
+			
+			/**
+		     * Elimina un vuelo basado en su número de vuelo.
+		     *
+		     * @param numVuelo El número de vuelo a eliminar
+		     */
+			
 		case "btnCambiarModo":
+			/**
+			 * Maneja el evento de cambio de modo (claro/oscuro) en la interfaz.
+			 * Dependiendo del estado actual de `modoOscuro`, cambia el tema visual de
+			 * la aplicación, alterando los colores de fondo, iconos y etiquetas.
+			 * 
+			 * @param event El evento generado al presionar el botón de cambio de modo.
+			 */
 
 			if (modoOscuro) {
-				// Botones
+				// Cambiar iconos de los botones a modo claro
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModo());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzq());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizar());
@@ -359,7 +420,7 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadir());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustible());
 
-				// Paneles
+				 // Cambiar colores de los paneles a modo claro
 				vf.getMa().getPanelCentral().setBackground(Color.white);
 				vf.getMa().getPanelInferior().setBackground(Color.white);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.white);
@@ -371,7 +432,7 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.white);
 				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.white);
 
-				// Labels
+				// Cambiar colores de las etiquetas a modo claro
 				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
 				vf.getMa().getLblArrivalTime().setForeground(Color.black);
 				vf.getMa().getLblCompanyName().setForeground(Color.black);
@@ -382,10 +443,10 @@ public class Controller implements ActionListener {
 				vf.getMa().getLblPassengersNumber().setForeground(Color.black);
 				vf.getMa().getNumVuelo().setForeground(Color.black);
 				vf.getMa().getTxtNumVuelo().setForeground(Color.black);
-
+				// Establecer el modo oscuro como desactivado
 				modoOscuro = false;
 			} else {
-				// Botones
+				// Cambiar iconos de los botones a modo oscuro
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModoOscuro());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzqOscuro());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizarOscuro());
@@ -398,7 +459,7 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadirOscuro());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustibleOscuro());
 
-				// Paneles
+				// Cambiar colores de los paneles a modo oscuro
 				vf.getMa().getPanelCentral().setBackground(Color.black);
 				vf.getMa().getPanelInferior().setBackground(Color.black);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.black);
@@ -410,7 +471,7 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.black);
 				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.black);
 
-				// Labels
+				/// Cambiar colores de las etiquetas a modo oscuro
 				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
 				vf.getMa().getLblArrivalTime().setForeground(Color.white);
 				vf.getMa().getLblCompanyName().setForeground(Color.white);
@@ -421,16 +482,34 @@ public class Controller implements ActionListener {
 				vf.getMa().getLblPassengersNumber().setForeground(Color.white);
 				vf.getMa().getNumVuelo().setForeground(Color.white);
 				vf.getMa().getTxtNumVuelo().setForeground(Color.white);
+				// Establecer el modo oscuro como activado
 				modoOscuro = true;
 			}
 			break;
-
+			
+			////
+			/**
+			 * Controla las acciones relacionadas con la selección de vuelos y aerolíneas.
+			 *
+			 * @param comando el comando que activa una acción específica (internacional, nacional, btnAniadir, guardar, etc.)
+			 */
+			
+			/**
+	         * Selecciona un vuelo internacional.
+	         * Muestra el panel correspondiente y desactiva el menú.
+	         * Muestra un mensaje de confirmación de selección de vuelo.
+	         */
 		case "internacional":
 			numSeleccionado = 2;
 			vf.getMa().getArrivalInternacional().setVisible(true);
 			desactivarMenuVariables();
-			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
+			JOptionPane.showMessageDialog(null, "Vuelo internacional seleccionado");
 			break;
+			/**
+	         * Selecciona un vuelo nacional.
+	         * Muestra el panel correspondiente y desactiva el menú.
+	         * Muestra un mensaje de confirmación de selección de vuelo.
+	         */
 		case "nacional":
 
 			numSeleccionado = 1;
@@ -438,14 +517,26 @@ public class Controller implements ActionListener {
 			desactivarMenuVariables();
 			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 			break;
+			
+			/**
+	         * Muestra el panel de añadir un nuevo vuelo.
+	         */
 		case "btnAniadir":
 			mostrarAniadir();
 			break;
+			/**
+	         * Guarda los datos de un vuelo dependiendo si es nacional o internacional.
+	         * Verifica que todos los campos requeridos sean ingresados.
+	         * Realiza cálculos sobre los valores introducidos.
+	         * Muestra un mensaje de error o confirmación según sea el caso.
+	         */
 		case "guardar":
-			// distanciaNacional();
+			/**
+             * Guarda un vuelo nacional.
+             */
 			switch (numSeleccionado) {
 			case 1:
-
+				// Verificación de campos vacíos y manejo de excepciones
 				if (vf.getMa().getTxtDepartureTime().getText().equals("")
 						|| vf.getMa().getTxtArrivalTime().getText().equals("")
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
@@ -518,7 +609,11 @@ public class Controller implements ActionListener {
 				}
 
 				break;
+				/**
+                 * Guarda un vuelo internacional.
+                 */
 			case 2:
+				// Verificación de campos vacíos y manejo de excepciones
 				if (vf.getMa().getTxtDepartureTime().getText().equals("")
 						|| vf.getMa().getTxtArrivalTime().getText().equals("")
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
@@ -590,7 +685,9 @@ public class Controller implements ActionListener {
 			}
 
 			break;
-
+			/**
+	         * Muestra el panel de aerolíneas.
+	         */
 		case "btnAreolinea":
 			vf.getPi().setVisible(false);
 			vf.getMa().setVisible(true);
@@ -600,6 +697,9 @@ public class Controller implements ActionListener {
 		case "btnCliente":
 
 			break;
+			/**
+	         * Maneja la selección de una aerolínea y muestra el logo correspondiente.
+	         */
 		case "seleccionarAerolinea":
 			if (vf.getMa().getAerolinea().getSelectedItem().equals("Avianca")) {
 
@@ -682,9 +782,43 @@ public class Controller implements ActionListener {
 			}
 
 			break;
+			
+			/**
+	         * Cierra la aplicación.
+	         */
 		case "btnSalir":
 			System.exit(0);
 			break;
+
+			//
+			
+			/**
+			 * Muestra la información de vuelos nacionales o internacionales en una tabla, dependiendo de la selección del usuario.
+			 *
+			 * <p>Este método es parte de un control de interfaz gráfica que permite al usuario visualizar 
+			 * los vuelos disponibles en función de su selección. Si el usuario selecciona la opción de vuelos nacionales, 
+			 * se despliega una tabla con los detalles de dichos vuelos. Si selecciona vuelos internacionales, 
+			 * se muestra otra tabla con información pertinente.</p>
+			 *
+			 * <p>El método realiza lo siguiente:</p>
+			 * <ol>
+			 *   <li>Declara un arreglo de títulos de columnas para la tabla de vuelos nacionales o internacionales.</li>
+			 *   <li>Obtiene la lista de vuelos nacionales o internacionales mediante la clase de manejo de vuelos (mf).</li>
+			 *   <li>Inicializa un arreglo bidimensional para almacenar los datos de los vuelos.</li>
+			 *   <li>Configura la visibilidad de los paneles en la interfaz gráfica para mostrar la tabla correspondiente.</li>
+			 *   <li>Rellena el arreglo de datos con la información de cada vuelo (como número de vuelo, aerolínea, hora de salida, etc.).</li>
+			 *   <li>Crea un objeto JTable para mostrar la información y la agrega a un JScrollPane para permitir el desplazamiento.</li>
+			 *   <li>Configura el modo de redimensionamiento de la tabla y ajusta su tamaño en el panel correspondiente.</li>
+			 * </ol>
+			 *
+			 * <p>Al finalizar, el método se encarga de mostrar la tabla de vuelos nacionales o internacionales en 
+			 * el panel correspondiente y oculta el resto de elementos de la interfaz.</p>
+			 *
+			 * @throws NullPointerException si el objeto de la clase de manejo de vuelos (mf) es nulo o si 
+			 *                              no se puede obtener la lista de vuelos.
+			 * @throws ArrayIndexOutOfBoundsException si la lista de vuelos está vacía o si hay un error al acceder 
+			 *                                         a los índices del arreglo de datos.
+			 */
 
 		case "btnMostrar":
 
@@ -774,12 +908,21 @@ public class Controller implements ActionListener {
 		}
 
 	}
-
+	
+	/**
+	 * Muestra el panel para añadir un nuevo vuelo. 
+	 * <p>Este método configura la interfaz gráfica para permitir al usuario 
+	 * ingresar los detalles de un nuevo vuelo, ocultando componentes que no son 
+	 * relevantes y mostrando el panel adecuado dependiendo de si se trata de un 
+	 * vuelo nacional o internacional.</p>
+	 */
 	public void mostrarAniadir() {
 		vf.getMa().getPanelCentral().setVisible(true);
 		vf.getMa().getPanelVariable().setVisible(true);
 		vf.getMa().getTxtNumVuelo().setVisible(false);
 		vf.getMa().getNumVuelo().setVisible(false);
+		vf.getMa().getPanelMostrarJTableNacional().setVisible(false);
+		vf.getMa().getPanelMostrarJTableOInternacional().setVisible(false);
 		if (numSeleccionado == 1) {
 			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
 			vf.getMa().getArrivalInternacional().setVisible(false);
@@ -788,12 +931,22 @@ public class Controller implements ActionListener {
 			vf.getMa().getArrival().setVisible(false);
 		}
 	}
-
+	/**
+	 * Muestra el panel para actualizar un vuelo nacional.
+	 * <p>Este método configura la interfaz gráfica para permitir al usuario 
+	 * actualizar los detalles de un vuelo nacional. Se asegura de que el panel 
+	 * correspondiente esté visible y que los campos se limpien o se preparen 
+	 * adecuadamente para la entrada de datos.</p>
+	 *
+	 * @throws NullPointerException si los componentes del panel son nulos.
+	 */
 	public void mostrarActualizar1() {
 		vf.getMa().getPanelCentral().setVisible(true);
 		vf.getMa().getPanelVariable().setVisible(true);
 		vf.getMa().getTxtNumVuelo().setVisible(true);
 		vf.getMa().getNumVuelo().setVisible(true);
+		vf.getMa().getPanelMostrarJTableNacional().setVisible(false);
+		vf.getMa().getPanelMostrarJTableOInternacional().setVisible(false);
 
 		vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
 		vf.getMa().getArrivalInternacional().setVisible(false);
@@ -809,7 +962,15 @@ public class Controller implements ActionListener {
 		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
 
 	}
-
+	/**
+	 * Muestra el panel para actualizar un vuelo internacional.
+	 * <p>Este método configura la interfaz gráfica para permitir al usuario 
+	 * actualizar los detalles de un vuelo internacional. Se asegura de que el 
+	 * panel correspondiente esté visible y que los campos se limpien o se 
+	 * preparen adecuadamente para la entrada de datos.</p>
+	 *
+	 * @throws NullPointerException si los componentes del panel son nulos.
+	 */
 	public void mostrarActualizar2() {
 		vf.getMa().getArrival().setVisible(false);
 
@@ -828,7 +989,11 @@ public class Controller implements ActionListener {
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
 	}
-
+	/**
+	 * Desactiva el menú de variables y oculta los paneles de entrada de datos.
+	 * <p>Este método es útil para restablecer el estado de la interfaz 
+	 * gráfica y asegurarse de que no se muestren elementos innecesarios.</p>
+	 */
 	public void desactivarMenuVariables() {
 		vf.getMa().getPanelIzq().setVisible(true);
 		vf.getMa().getPanelInferior().setVisible(true);
@@ -836,7 +1001,15 @@ public class Controller implements ActionListener {
 		vf.getMa().getPanelVariable().setVisible(false);
 		// vf.getMa().getPanelVuelos().setVisible(true);
 	}
-
+	/**
+	 * Genera un número de vuelo único que no se repita entre vuelos internacionales 
+	 * y nacionales.
+	 * <p>Este método genera un número aleatorio y verifica que no exista ya en 
+	 * las listas de vuelos existentes. Si el número ya existe, se vuelve a 
+	 * generar hasta encontrar uno que sea único.</p>
+	 *
+	 * @return un número entero que representa un número de vuelo único.
+	 */
 	public int incNum() {
 		int num = 0;
 		main: while (true) {
@@ -893,7 +1066,7 @@ public class Controller implements ActionListener {
 
 		return num;
 	}
-
+////
 	public int random() {
 		return (int) (Math.random() * 10000 + 100);
 	}
@@ -962,14 +1135,14 @@ public class Controller implements ActionListener {
 
 			ExceptionChecker.checkNegativeTime(departure);
 		} catch (CheckNegativeTime e) {
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de salida no puede ser negativa", "Error",
+			JOptionPane.showMessageDialog(vf.getMa(), "La hora de salida no puede ser negativa", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return 2;
 		}
 		try {
 			ExceptionChecker.MilitaryHour(departure);
 		} catch (MilitaryHourException e) {
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de salida debe estar en formato militar", "Error",
+			JOptionPane.showMessageDialog(vf.getMa(), "La hora de salida debe estar en formato militar", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			// TODO: handle exception
 			return 2;
@@ -978,14 +1151,14 @@ public class Controller implements ActionListener {
 			ExceptionChecker.checkNegativeTime(arrival);
 		} catch (CheckNegativeTime e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada no puede ser negativa", "Error",
+			JOptionPane.showMessageDialog(vf.getMa(), "La hora de llegada no puede ser negativa", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return 1;
 		}
 		try {
 			ExceptionChecker.MilitaryHour(arrival);
 		} catch (MilitaryHourException e) {
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada debe estar en formato militar", "Error",
+			JOptionPane.showMessageDialog(vf.getMa(), "La hora de llegada debe estar en formato militar", "Error",
 					JOptionPane.ERROR_MESSAGE);
 
 			return 1;
@@ -993,7 +1166,17 @@ public class Controller implements ActionListener {
 
 		return 0;
 	}
-
+/////
+	
+	/**
+	 * Elimina un vuelo dado su número de vuelo.
+	 * <p>Este método busca el vuelo en las listas de vuelos internacionales y 
+	 * nacionales, y lo elimina si se encuentra. Se muestra un mensaje de éxito 
+	 * o de error según corresponda.</p>
+	 *
+	 * @param numVuelo el número de vuelo que se desea eliminar.
+	 * @throws NumberFormatException si el número de vuelo no es un entero válido.
+	 */
 	public void eliminar(String numVuelo) {
 
 		int theNum = Integer.parseInt(numVuelo);
@@ -1046,7 +1229,11 @@ public class Controller implements ActionListener {
 		}
 
 	}
-
+	/**
+	 * Calcula la duración del vuelo nacional basado en la ciudad de destino seleccionada.
+	 * <p>Este método asigna un valor a la variable {@code duracionNacional} 
+	 * dependiendo de la ciudad de llegada seleccionada.</p>
+	 */
 	public void distanciaNacional() {
 		String nacional = vf.getMa().getArrival().getSelectedItem().toString();
 
@@ -1101,7 +1288,11 @@ public class Controller implements ActionListener {
 			break;
 		}
 	}
-
+	/**
+	 * Calcula la duración del vuelo internacional basado en la ciudad de destino seleccionada.
+	 * <p>Este método asigna un valor a la variable {@code duracionInternacional} 
+	 * dependiendo de la ciudad de llegada seleccionada.</p>
+	 */
 	public void distanciaInternacional() {
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
@@ -1164,7 +1355,15 @@ public class Controller implements ActionListener {
 			break;
 		}
 	}
-
+	/**
+	 * Calcula el consumo de combustible para un vuelo nacional dado el número de pasajeros.
+	 * <p>Este método utiliza una fórmula que considera la duración del vuelo, 
+	 * el peso del avión vacío, y otros factores para calcular el total de 
+	 * combustible necesario.</p>
+	 *
+	 * @param pasajeros el número de pasajeros a bordo.
+	 * @return el total de combustible estimado en litros.
+	 */
 	public int combustibleNacional(int pasajeros) {
 		int duracion = duracionNacional;
 		int cantMotor = 2400;
@@ -1177,7 +1376,15 @@ public class Controller implements ActionListener {
 		int total = estimado + tierra + reserva + pesoTotal;
 		return total;
 	}
-
+	/**
+	 * Calcula el consumo de combustible para un vuelo internacional dado el número de pasajeros.
+	 * <p>Este método utiliza una fórmula que considera la duración del vuelo, 
+	 * el peso del avión vacío, y otros factores para calcular el total de 
+	 * combustible necesario.</p>
+	 *
+	 * @param pasajeros el número de pasajeros a bordo.
+	 * @return el total de combustible estimado en litros.
+	 */
 	public int combustibleIntercional(int pasajeros) {
 		int duracion = duracionInternacional;
 		int cantMotor = 4800;
@@ -1190,7 +1397,11 @@ public class Controller implements ActionListener {
 		int total = estimado + tierra + reserva + pesoTotal;
 		return total;
 	}
-
+	/**
+	 * Reinicia los campos de entrada para un vuelo nacional.
+	 * <p>Este método establece todos los campos de entrada relacionados con 
+	 * un vuelo nacional a sus valores predeterminados.</p>
+	 */
 	public void reiniciarInputsNac() {
 		vf.getMa().getAerolinea().setSelectedIndex(0);
 		vf.getMa().getLogo().setIcon(null);
@@ -1203,7 +1414,11 @@ public class Controller implements ActionListener {
 		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
 		vf.getMa().getTxtCombustible().setText(null);
 	}
-
+	/**
+	 * Reinicia los campos de entrada para un vuelo internacional.
+	 * <p>Este método establece todos los campos de entrada relacionados con 
+	 * un vuelo internacional a sus valores predeterminados.</p>
+	 */
 	public void reiniciarInputsInt() {
 		vf.getMa().getAerolinea().setSelectedIndex(0);
 		vf.getMa().getLogo().setIcon(null);
@@ -1215,7 +1430,13 @@ public class Controller implements ActionListener {
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
 		vf.getMa().getTxtCombustible().setText(null);
 	}
-
+	/**
+	 * Obtiene un nombre aleatorio desde un archivo CSV.
+	 * <p>Este método lee un archivo llamado "nombres.csv" y retorna un 
+	 * nombre aleatorio de entre los nombres listados en el archivo.</p>
+	 *
+	 * @return un nombre aleatorio, o {@code null} si no se pudo obtener ningún nombre.
+	 */
 	public static String obtenerNombres() {
 		List<String[]> datos = new ArrayList<>();
 		String linea;
@@ -1241,7 +1462,14 @@ public class Controller implements ActionListener {
 
 		return filaAleatoria[rand.nextInt(filaAleatoria.length)];
 	}
-
+	/**
+	 * Verifica y obtiene un nombre de capitán que no esté ya asignado a 
+	 * algún vuelo internacional o nacional.
+	 * <p>Este método genera nombres aleatorios hasta encontrar uno que no 
+	 * coincida con los nombres de capitán ya utilizados.</p>
+	 *
+	 * @return un nombre de capitán que no se haya utilizado previamente.
+	 */
 	public String verificarNombreCap() {
 
 		String name = "";
@@ -1300,7 +1528,14 @@ public class Controller implements ActionListener {
 		return name;
 
 	}
-
+	/**
+	 * Verifica y obtiene un nombre de copiloto que no esté ya asignado a 
+	 * algún vuelo internacional o nacional.
+	 * <p>Este método genera nombres aleatorios hasta encontrar uno que no 
+	 * coincida con los nombres de copiloto ya utilizados.</p>
+	 *
+	 * @return un nombre de copiloto que no se haya utilizado previamente.
+	 */
 	public String verificarNombreSubCap() {
 
 		String name = "";
