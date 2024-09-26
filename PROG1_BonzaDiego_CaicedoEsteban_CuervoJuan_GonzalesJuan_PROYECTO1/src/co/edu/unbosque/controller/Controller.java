@@ -3,9 +3,15 @@ package co.edu.unbosque.controller;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -36,13 +42,11 @@ public class Controller implements ActionListener {
 	private int numActualizar = 0;
 
 	public Controller() {
-
 		mf = new ModelFacade();
 		vf = new ViewFacade();
 		na = new NationalFlightDTO();
 		in = new InternationalFlightDTO();
 		vf.getPi().setVisible(true);
-
 		asignarLectores();
 
 	}
@@ -143,8 +147,6 @@ public class Controller implements ActionListener {
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
-					
-					
 
 					ArrayList<NationalFlightDTO> s1;
 					s1 = new ArrayList<>();
@@ -152,10 +154,11 @@ public class Controller implements ActionListener {
 					m: for (int i = 0; i < s1.size(); i++) {
 						int theId = s1.get(i).getId();
 						if (id == theId) {
-
+							String cap = s1.get(i).getNameCaptain();
+							String sub = s1.get(i).getNameSecondCommand();
 							mf.getNational().update(
 									new NationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false, false),
-									new NationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
+									new NationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
 											theArraivalTime, 0, id, departurePlace, arrival, theTurbo, theTurbine));
 							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
 							reiniciarInputsInt();
@@ -206,17 +209,18 @@ public class Controller implements ActionListener {
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
-					
-					
+
 					ArrayList<InternationalFlightDTO> i1;
 					i1 = new ArrayList<>();
 					i1 = mf.getInternational().getAll();
 					m1: for (int i = 0; i < i1.size(); i++) {
 						int theId = i1.get(i).getId();
 						if (id == theId) {
+							String cap = i1.get(i).getNameCaptain();
+							String sub = i1.get(i).getNameSecondCommand();
 							mf.getInternational().update(
 									new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false),
-									new InternationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
+									new InternationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
 											theArraivalTime, 0, id, departurePlace, arrival, theVisa));
 							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
 							reiniciarInputsInt();
@@ -288,6 +292,7 @@ public class Controller implements ActionListener {
 			desactivarMenuVariables();
 			break;
 		case "nacional":
+
 			numSeleccionado = 1;
 			vf.getMa().getArrival().setVisible(true);
 			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
@@ -360,8 +365,9 @@ public class Controller implements ActionListener {
 						}
 
 						mf.getNational()
-								.add(na = new NationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
-										theArraivalTime, 0, num, departurePlace, arrival, theTurbo, theTurbine));
+								.add(na = new NationalFlightDTO(company, thePassengers, verificarNombreCap(),
+										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, num,
+										departurePlace, arrival, theTurbo, theTurbine));
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
 
 						reiniciarInputsNac();
@@ -423,8 +429,10 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
-								theDepartureTime, theArraivalTime, 0, flightNum, departurePlace, arrival, theVisa));
+						mf.getInternational()
+								.add(in = new InternationalFlightDTO(company, thePassangers, verificarNombreCap(),
+										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, flightNum,
+										departurePlace, arrival, theVisa));
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
 
 						reiniciarInputsInt();
@@ -906,8 +914,147 @@ public class Controller implements ActionListener {
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
 	}
 
-	public void update() {
+	public static String obtenerNombres() {
+		List<String[]> datos = new ArrayList<>();
+		String linea;
+		String separador = ",";
 
+		try (BufferedReader br = new BufferedReader(new FileReader("data" + "/" + "nombres.csv"))) {
+			while ((linea = br.readLine()) != null) {
+
+				String[] valores = linea.split(separador);
+				datos.add(valores);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (datos.isEmpty()) {
+			return null;
+		}
+
+		Random rand = new Random();
+
+		String[] filaAleatoria = datos.get(rand.nextInt(datos.size()));
+
+		return filaAleatoria[rand.nextInt(filaAleatoria.length)];
+	}
+
+	public String verificarNombreCap() {
+
+		String name = "";
+		main: while (true) {
+			boolean frist = false;
+			boolean second = false;
+			name = obtenerNombres();
+
+			ArrayList<InternationalFlightDTO> in;
+			in = new ArrayList<>();
+			in = mf.getInternational().getAll();
+			second: for (int i = 0; i < in.size(); i++) {
+
+				if (in.isEmpty()) {
+					break main;
+				} else {
+
+					if (in.get(i).getNameCaptain().equals(name)) {
+						frist = true;
+						break second;
+					} else {
+						continue second;
+					}
+
+				}
+
+			}
+
+			ArrayList<NationalFlightDTO> na;
+			na = new ArrayList<>();
+			na = mf.getNational().getAll();
+			third: for (int i = 0; i < na.size(); i++) {
+
+				if (na.isEmpty()) {
+					break main;
+				} else {
+
+					if (na.get(i).getNameCaptain().equals(name)) {
+						second = true;
+						break third;
+					} else {
+						continue third;
+					}
+
+				}
+
+			}
+
+			if (frist == true || second == true) {
+				continue main;
+			} else {
+				break main;
+			}
+		}
+
+		return name;
+
+	}
+
+	public String verificarNombreSubCap() {
+
+		String name = "";
+		main: while (true) {
+			boolean frist = false;
+			boolean second = false;
+			name = obtenerNombres();
+
+			ArrayList<InternationalFlightDTO> in;
+			in = new ArrayList<>();
+			in = mf.getInternational().getAll();
+			second: for (int i = 0; i < in.size(); i++) {
+
+				if (in.isEmpty()) {
+					break main;
+				} else {
+
+					if (in.get(i).getNameSecondCommand().equals(name)) {
+						frist = true;
+						break second;
+					} else {
+						continue second;
+					}
+
+				}
+
+			}
+
+			ArrayList<NationalFlightDTO> na;
+			na = new ArrayList<>();
+			na = mf.getNational().getAll();
+			third: for (int i = 0; i < na.size(); i++) {
+
+				if (na.isEmpty()) {
+					break main;
+				} else {
+
+					if (na.get(i).getNameSecondCommand().equals(name)) {
+						second = true;
+						break third;
+					} else {
+						continue third;
+					}
+
+				}
+
+			}
+
+			if (frist == true || second == true) {
+				continue main;
+			} else {
+				break main;
+			}
+		}
+
+		return name;
 	}
 
 }
