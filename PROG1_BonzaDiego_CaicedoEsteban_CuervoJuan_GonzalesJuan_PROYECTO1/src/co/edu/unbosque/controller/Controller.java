@@ -10,12 +10,15 @@ import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 import co.edu.unbosque.model.persistence.DataMapper;
+import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.util.exception.BooleanNotValidInputException;
 import co.edu.unbosque.util.exception.CheckNegativeTime;
 import co.edu.unbosque.util.exception.ExceptionChecker;
@@ -37,7 +40,6 @@ public class Controller implements ActionListener {
 	private int duracionNacional = 0;
 	private int numActualizar = 0;
 	boolean modoOscuro = false;
-
 
 	public Controller() {
 
@@ -293,9 +295,9 @@ public class Controller implements ActionListener {
 
 			break;
 		case "btnCambiarModo":
-			
+
 			if (modoOscuro) {
-				//Botones
+				// Botones
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModo());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzq());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizar());
@@ -307,8 +309,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionales());
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadir());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustible());
-				
-				//Paneles
+
+				// Paneles
 				vf.getMa().getPanelCentral().setBackground(Color.white);
 				vf.getMa().getPanelInferior().setBackground(Color.white);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.white);
@@ -316,8 +318,10 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelNationalFlight().setBackground(Color.white);
 				vf.getMa().getPanelVariable().setBackground(Color.white);
 				vf.getMa().getPanelVuelos().setBackground(Color.white);
-				
-				//Labels
+				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.white);
+				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.white);
+
+				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
 				vf.getMa().getLblArrivalTime().setForeground(Color.black);
 				vf.getMa().getLblCompanyName().setForeground(Color.black);
@@ -328,11 +332,10 @@ public class Controller implements ActionListener {
 				vf.getMa().getLblPassengersNumber().setForeground(Color.black);
 				vf.getMa().getNumVuelo().setForeground(Color.black);
 				vf.getMa().getTxtNumVuelo().setForeground(Color.black);
-				
-				
+
 				modoOscuro = false;
 			} else {
-				//Botones
+				// Botones
 				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModoOscuro());
 				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzqOscuro());
 				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizarOscuro());
@@ -344,8 +347,8 @@ public class Controller implements ActionListener {
 				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionalesOscuro());
 				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadirOscuro());
 				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustibleOscuro());
-				
-				//Paneles
+
+				// Paneles
 				vf.getMa().getPanelCentral().setBackground(Color.black);
 				vf.getMa().getPanelInferior().setBackground(Color.black);
 				vf.getMa().getPanelInternationalFlight().setBackground(Color.black);
@@ -353,8 +356,10 @@ public class Controller implements ActionListener {
 				vf.getMa().getPanelNationalFlight().setBackground(Color.black);
 				vf.getMa().getPanelVariable().setBackground(Color.black);
 				vf.getMa().getPanelVuelos().setBackground(Color.black);
-				
-				//Labels
+				vf.getMa().getPanelMostrarJTableNacional().setBackground(Color.black);
+				vf.getMa().getPanelMostrarJTableOInternacional().setBackground(Color.black);
+
+				// Labels
 				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
 				vf.getMa().getLblArrivalTime().setForeground(Color.white);
 				vf.getMa().getLblCompanyName().setForeground(Color.white);
@@ -368,7 +373,6 @@ public class Controller implements ActionListener {
 				modoOscuro = true;
 			}
 			break;
-			
 
 		case "internacional":
 			numSeleccionado = 2;
@@ -625,6 +629,89 @@ public class Controller implements ActionListener {
 			break;
 		case "btnSalir":
 			System.exit(0);
+			break;
+
+		case "btnMostrar":
+
+			switch (numSeleccionado) {
+			case 1:
+				String titulosNac[] = { "Numero de Vuelo", "Aerolinea", "Hora de salida", "Hora de llegada", "Origen",
+						"Destino", "Nombre Capitan", "Nombre del Segundo al Mando", "Numero de Pasajeros",
+						"Combustible", "Avion de turbina", "Avion de elice" };
+				ArrayList<NationalFlightDTO> naList = mf.getNational().getAll();
+				String datosNac[][] = new String[naList.size()][12];
+				
+				vf.getMa().getPanelMostrarJTableNacional().setVisible(true);
+				vf.getMa().getPanelMostrarJTableOInternacional().setVisible(false);
+				vf.getMa().getPanelCentral().setVisible(false);
+				vf.getMa().getPanelVariable().setVisible(false);
+				int i = 0;
+				for (NationalFlightDTO naDTO : naList) {
+					datosNac[i][0] = Integer.toString(naDTO.getId());
+					datosNac[i][1] = naDTO.getCompanyName();
+					datosNac[i][2] = Integer.toString(naDTO.getDepartureTime());
+					datosNac[i][3] = Integer.toString(naDTO.getArrivalTime());
+					datosNac[i][4] = naDTO.getDepartureDestination();
+					datosNac[i][5] = naDTO.getArrivalDestination();
+					datosNac[i][6] = naDTO.getNameCaptain();
+					datosNac[i][7] = naDTO.getNameSecondCommand();
+					datosNac[i][8] = Integer.toString(naDTO.getPassengersNumber());
+					datosNac[i][9] = Integer.toString(naDTO.getFuelWeight());
+					datosNac[i][10] = Boolean.toString(naDTO.isTurbine());
+					datosNac[i][11] = Boolean.toString(naDTO.isTurboProp());
+					i++;
+
+				}
+
+				JTable jtNac = new JTable(datosNac, titulosNac);
+				jtNac.setEnabled(true);
+				jtNac.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(10, 10, 820, 505);
+				vf.getMa().getPanelMostrarJTableNacional().add(scrollPane);
+				scrollPane.setViewportView(jtNac);
+				break;
+			case 2:
+				String titulosInt[] = { "Numero de Vuelo", "Aerolinea", "Hora de salida", "Hora de llegada", "Origen",
+						"Destino", "Nombre Capitan", "Nombre del Segundo al Mando", "Numero de Pasajeros",
+						"Combustible", "Necesita VISA"};
+				ArrayList<InternationalFlightDTO> intList = mf.getInternational().getAll();
+				String datosInt[][] = new String[intList.size()][11];
+				
+				vf.getMa().getPanelMostrarJTableOInternacional().setVisible(true);
+				vf.getMa().getPanelMostrarJTableNacional().setVisible(false);
+				vf.getMa().getPanelCentral().setVisible(false);
+				vf.getMa().getPanelVariable().setVisible(false);
+				int in = 0;
+				for (InternationalFlightDTO intDTO : intList) {
+					datosInt[in][0] = Integer.toString(intDTO.getId());
+					datosInt[in][1] = intDTO.getCompanyName();
+					datosInt[in][2] = Integer.toString(intDTO.getDepartureTime());
+					datosInt[in][3] = Integer.toString(intDTO.getArrivalTime());
+					datosInt[in][4] = intDTO.getDepartureDestination();
+					datosInt[in][5] = intDTO.getArrivalDestination();
+					datosInt[in][6] = intDTO.getNameCaptain();
+					datosInt[in][7] = intDTO.getNameSecondCommand();
+					datosInt[in][8] = Integer.toString(intDTO.getPassengersNumber());
+					datosInt[in][9] = Integer.toString(intDTO.getFuelWeight());
+					datosInt[in][10] = Boolean.toString(intDTO.isVisa());
+					in++;
+
+				}
+
+				JTable jtInt = new JTable(datosInt, titulosInt);
+				jtInt.setEnabled(true);
+				jtInt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				JScrollPane scrollPaneInt = new JScrollPane();
+				scrollPaneInt.setBounds(10, 10, 820, 505);
+				vf.getMa().getPanelMostrarJTableOInternacional().add(scrollPaneInt);
+				scrollPaneInt.setViewportView(jtInt);
+				break;
+
+			default:
+				break;
+			}
+
 			break;
 
 		default:
