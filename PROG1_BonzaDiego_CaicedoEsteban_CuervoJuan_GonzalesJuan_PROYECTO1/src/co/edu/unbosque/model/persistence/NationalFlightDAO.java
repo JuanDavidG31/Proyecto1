@@ -5,30 +5,28 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 
-
-
 public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, NationalFlight> {
 	private ArrayList<NationalFlight> listaNationalFlight;
 	private final String FILE_NAME = "nationalFlight.csv";
 	private final String SERIAL_NAME = "nationalFlight.dat";
 
 	public NationalFlightDAO() {
-		//listaNationalFlight = new ArrayList<>();
+		// listaNationalFlight = new ArrayList<>();
 		FileHandler.checkFolder();
 		readSerilized();
 	}
 
 	@Override
 	public String showAll() {
-        String rta = "";
-        if (listaNationalFlight.isEmpty()) {
-            return "No hay Users en la lista";
-        } else {
-            for (NationalFlight user : listaNationalFlight) {
-                rta += user;
-            }
-            return rta;
-        }
+		String rta = "";
+		if (listaNationalFlight.isEmpty()) {
+			return "No hay Users en la lista";
+		} else {
+			for (NationalFlight user : listaNationalFlight) {
+				rta += user;
+			}
+			return rta;
+		}
 	}
 
 	@Override
@@ -61,7 +59,7 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 		} else {
 			return false;
 		}
-		
+
 	}
 
 	@Override
@@ -100,18 +98,18 @@ public class NationalFlightDAO implements CRUDOperation<NationalFlightDTO, Natio
 	public void writeFile() {
 		String content = "";
 		for (NationalFlight m : listaNationalFlight) {
-			content += m.getArrivalTime() + ";";
+			content += m.getId() + ";";
 			content += m.getCompanyName() + ";";
+			content += m.getArrivalTime() + ";";
 			content += m.getDepartureTime() + ";";
-			content += m.getFuelWeight() + ";";
+			content += m.getDepartureDestination() + ";";
+			content += m.getArrivalDestination() + ";";
 			content += m.getNameCaptain() + ";";
 			content += m.getNameSecondCommand() + ";";
 			content += m.getPassengersNumber() + ";";
-			content += m.getDepartureDestination() + ";";
-			content += m.getId() + ";";
+			content += m.getFuelWeight() + ";";
 			content += m.isTurbine() + ";";
 			content += m.isTurboProp() + ";";
-			content += m.getArrivalDestination() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);

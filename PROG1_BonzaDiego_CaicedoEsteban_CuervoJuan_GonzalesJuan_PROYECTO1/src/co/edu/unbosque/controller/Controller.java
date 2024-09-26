@@ -31,8 +31,8 @@ public class Controller implements ActionListener {
 	private String aerolinea = "";
 	private NationalFlightDTO na;
 	private InternationalFlightDTO in;
-	private int distanceInternacional = 0;
-	private int distanceNacional = 0;
+	private int duracionInternacional = 0;
+	private int duracionNacional = 0;
 	private int numActualizar = 0;
 
 	public Controller() {
@@ -93,12 +93,26 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getBtnActualizarInferior().addActionListener(this);
 		vf.getMa().getBtnActualizarInferior().setActionCommand("actualizar");
+
+		vf.getMa().getCombustible().addActionListener(this);
+		vf.getMa().getCombustible().setActionCommand("combustible");
 	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+		case "combustible":
+			if (numSeleccionado == 1) {
+				int pasajerosNac = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
 
+				int combustible = combustibleNacional(pasajerosNac);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			} else if (numSeleccionado == 2) {
+				int pasajerosInt = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
+				int combustible = combustibleIntercional(pasajerosInt);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			}
+			break;
 		case "actualizar":
 			switch (numActualizar) {
 			case 1:
@@ -143,8 +157,6 @@ public class Controller implements ActionListener {
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
-					
-					
 
 					ArrayList<NationalFlightDTO> s1;
 					s1 = new ArrayList<>();
@@ -206,8 +218,7 @@ public class Controller implements ActionListener {
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
-					
-					
+
 					ArrayList<InternationalFlightDTO> i1;
 					i1 = new ArrayList<>();
 					i1 = mf.getInternational().getAll();
@@ -340,13 +351,13 @@ public class Controller implements ActionListener {
 								JOptionPane.ERROR_MESSAGE);
 					}
 					int conditionNum1 = passengersException(passengers);
-
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleNac = combustibleNacional(thePassengers);
 
 					int num = incNum();
 					boolean condition = booleanException(turbine);
@@ -361,7 +372,8 @@ public class Controller implements ActionListener {
 
 						mf.getNational()
 								.add(na = new NationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
-										theArraivalTime, 0, num, departurePlace, arrival, theTurbo, theTurbine));
+										theArraivalTime, combustibleNac, num, departurePlace, arrival, theTurbo,
+										theTurbine));
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
 
 						reiniciarInputsNac();
@@ -409,12 +421,13 @@ public class Controller implements ActionListener {
 					}
 					boolean theVisa = convBolean(visa);
 
-					int thePassangers = Integer.parseInt(passengers);
+					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int flightNum = incNum();
 					int conditionNum1 = passengersException(passengers);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleInt = combustibleIntercional(thePassengers);
 
 					boolean condition = booleanException(visa);
 					if (conditionNum1 == 0 && conditionTime == 0) {
@@ -423,8 +436,10 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
-								theDepartureTime, theArraivalTime, 0, flightNum, departurePlace, arrival, theVisa));
+						mf.getInternational()
+								.add(in = new InternationalFlightDTO(company, thePassengers, null, null,
+										theDepartureTime, theArraivalTime, combustibleInt, flightNum, departurePlace,
+										arrival, theVisa));
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
 
 						reiniciarInputsInt();
@@ -821,49 +836,49 @@ public class Controller implements ActionListener {
 
 		switch (nacional) {
 		case "Medellin":
-			distanceNacional = 217;
+			duracionNacional = 1;
 			break;
 		case "Cartagena":
-			distanceNacional = 656;
+			duracionNacional = 2;
 
 			break;
 		case "Pasto":
-			distanceNacional = 507;
+			duracionNacional = 2;
 
 			break;
 		case "Cali":
-			distanceNacional = 279;
+			duracionNacional = 1;
 			break;
 		case "Bucaramanga":
-			distanceNacional = 290;
+			duracionNacional = 1;
 
 			break;
 		case "Ibague":
-			distanceNacional = 113;
+			duracionNacional = 1;
 
 			break;
 		case "Pereira":
-			distanceNacional = 177;
+			duracionNacional = 1;
 
 			break;
 		case "Manizales":
-			distanceNacional = 150;
+			duracionNacional = 1;
 
 			break;
 		case "Monteria":
-			distanceNacional = 494;
+			duracionNacional = 2;
 
 			break;
 		case "Barranquilla":
-			distanceNacional = 692;
+			duracionNacional = 2;
 
 			break;
 		case "Santa Marta":
-			distanceNacional = 714;
+			duracionNacional = 2;
 
 			break;
 		case "Cucuta":
-			distanceNacional = 402;
+			duracionNacional = 1;
 
 			break;
 		default:
@@ -875,12 +890,89 @@ public class Controller implements ActionListener {
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
 		switch (internacional) {
-		case "":
-
+		case "Madrid":
+			duracionInternacional = 10;
+			break;
+		case "Barcelona":
+			duracionInternacional = 10;
+			break;
+		case "Lisboa":
+			duracionInternacional = 13;
+			break;
+		case "Paris":
+			duracionInternacional = 11;
+			break;
+		case "Roma":
+			duracionInternacional = 14;
+			break;
+		case "Bruselas":
+			duracionInternacional = 13;
+			break;
+		case "Berlin":
+			duracionInternacional = 14;
+			break;
+		case "Londres":
+			duracionInternacional = 10;
+			break;
+		case "Dubai":
+			duracionInternacional = 18;
+			break;
+		case "New York":
+			duracionInternacional = 6;
+			break;
+		case "Los Angeles":
+			duracionInternacional = 9;
+			break;
+		case "Miami":
+			duracionInternacional = 4;
+			break;
+		case "Otawa":
+			duracionInternacional = 9;
+			break;
+		case "CDMX":
+			duracionInternacional = 5;
+			break;
+		case "Buenos Aires":
+			duracionInternacional = 7;
+			break;
+		case "Lima":
+			duracionInternacional = 3;
+			break;
+		case "Santiago de Chile":
+			duracionInternacional = 6;
+			break;
+		case "São Paulo":
+			duracionInternacional = 6;
 			break;
 		default:
 			break;
 		}
+	}
+
+	public int combustibleNacional(int pasajeros) {
+		int duracion = duracionNacional;
+		int cantMotor = 2400;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 43000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
+	}
+
+	public int combustibleIntercional(int pasajeros) {
+		int duracion = duracionInternacional;
+		int cantMotor = 4800;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 250000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
 	}
 
 	public void reiniciarInputsNac() {
@@ -893,6 +985,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
 		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
 	}
 
 	public void reiniciarInputsInt() {
@@ -904,6 +997,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getTxtDepartureTime().setText(null);
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
 	}
 
 	public void update() {
