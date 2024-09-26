@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,9 +38,12 @@ public class Controller implements ActionListener {
 	private String aerolinea = "";
 	private NationalFlightDTO na;
 	private InternationalFlightDTO in;
-	private int distanceInternacional = 0;
-	private int distanceNacional = 0;
+
+	private int duracionInternacional = 0;
+	private int duracionNacional = 0;
 	private int numActualizar = 0;
+	boolean modoOscuro = false;
+
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -74,9 +78,6 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
 
-		vf.getMa().getBtnBuscarCentral().addActionListener(this);
-		vf.getMa().getBtnBuscarCentral().setActionCommand("btnBusqueda");
-
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
 		vf.getMa().getBtnCambiarModo().setActionCommand("btnCambiarModo");
 
@@ -97,12 +98,26 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getBtnActualizarInferior().addActionListener(this);
 		vf.getMa().getBtnActualizarInferior().setActionCommand("actualizar");
+
+		vf.getMa().getBtnCombustible().addActionListener(this);
+		vf.getMa().getBtnCombustible().setActionCommand("combustible");
 	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+		case "combustible":
+			if (numSeleccionado == 1) {
+				int pasajerosNac = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
 
+				int combustible = combustibleNacional(pasajerosNac);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			} else if (numSeleccionado == 2) {
+				int pasajerosInt = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
+				int combustible = combustibleIntercional(pasajerosInt);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			}
+			break;
 		case "actualizar":
 			switch (numActualizar) {
 			case 1:
@@ -284,6 +299,83 @@ public class Controller implements ActionListener {
 			eliminar(numVuelo);
 
 			break;
+		case "btnCambiarModo":
+			
+			if (modoOscuro) {
+				//Botones
+				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModo());
+				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzq());
+				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizar());
+				vf.getMa().getBtnEliminar().setIcon(vf.getMa().getImagenEliminar());
+				vf.getMa().getBtnGuardar().setIcon(vf.getMa().getImagenGuardar());
+				vf.getMa().getBtnMostrar().setIcon(vf.getMa().getImagenMostrar());
+				vf.getMa().getBtnSalir().setIcon(vf.getMa().getImagenSalir());
+				vf.getMa().getBtnVuelosInternac().setIcon(vf.getMa().getImagenVuelosInternacionales());
+				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionales());
+				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadir());
+				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustible());
+				
+				//Paneles
+				vf.getMa().getPanelCentral().setBackground(Color.white);
+				vf.getMa().getPanelInferior().setBackground(Color.white);
+				vf.getMa().getPanelInternationalFlight().setBackground(Color.white);
+				vf.getMa().getPanelIzq().setBackground(Color.white);
+				vf.getMa().getPanelNationalFlight().setBackground(Color.white);
+				vf.getMa().getPanelVariable().setBackground(Color.white);
+				vf.getMa().getPanelVuelos().setBackground(Color.white);
+				
+				//Labels
+				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
+				vf.getMa().getLblArrivalTime().setForeground(Color.black);
+				vf.getMa().getLblCompanyName().setForeground(Color.black);
+				vf.getMa().getLblDepartureTime().setForeground(Color.black);
+				vf.getMa().getLblIsTurbine().setForeground(Color.black);
+				vf.getMa().getLblIsTurboProp().setForeground(Color.black);
+				vf.getMa().getLblIsVisa().setForeground(Color.black);
+				vf.getMa().getLblPassengersNumber().setForeground(Color.black);
+				vf.getMa().getNumVuelo().setForeground(Color.black);
+				vf.getMa().getTxtNumVuelo().setForeground(Color.black);
+				
+				
+				modoOscuro = false;
+			} else {
+				//Botones
+				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModoOscuro());
+				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzqOscuro());
+				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizarOscuro());
+				vf.getMa().getBtnEliminar().setIcon(vf.getMa().getImagenEliminarOscuro());
+				vf.getMa().getBtnGuardar().setIcon(vf.getMa().getImagenGuardarOscuro());
+				vf.getMa().getBtnMostrar().setIcon(vf.getMa().getImagenMostrarOscuro());
+				vf.getMa().getBtnSalir().setIcon(vf.getMa().getImagenSalirOscuro());
+				vf.getMa().getBtnVuelosInternac().setIcon(vf.getMa().getImagenVuelosInternacionalesOscuro());
+				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionalesOscuro());
+				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadirOscuro());
+				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustibleOscuro());
+				
+				//Paneles
+				vf.getMa().getPanelCentral().setBackground(Color.black);
+				vf.getMa().getPanelInferior().setBackground(Color.black);
+				vf.getMa().getPanelInternationalFlight().setBackground(Color.black);
+				vf.getMa().getPanelIzq().setBackground(Color.black);
+				vf.getMa().getPanelNationalFlight().setBackground(Color.black);
+				vf.getMa().getPanelVariable().setBackground(Color.black);
+				vf.getMa().getPanelVuelos().setBackground(Color.black);
+				
+				//Labels
+				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
+				vf.getMa().getLblArrivalTime().setForeground(Color.white);
+				vf.getMa().getLblCompanyName().setForeground(Color.white);
+				vf.getMa().getLblDepartureTime().setForeground(Color.white);
+				vf.getMa().getLblIsTurbine().setForeground(Color.white);
+				vf.getMa().getLblIsTurboProp().setForeground(Color.white);
+				vf.getMa().getLblIsVisa().setForeground(Color.white);
+				vf.getMa().getLblPassengersNumber().setForeground(Color.white);
+				vf.getMa().getNumVuelo().setForeground(Color.white);
+				vf.getMa().getTxtNumVuelo().setForeground(Color.white);
+				modoOscuro = true;
+			}
+			break;
+			
 
 		case "internacional":
 			numSeleccionado = 2;
@@ -301,10 +393,6 @@ public class Controller implements ActionListener {
 		case "btnAniadir":
 			mostrarAniadir();
 			break;
-		case "btnBusqueda":
-			vf.getMa().getPanelBuscar().setVisible(true);
-			break;
-
 		case "guardar":
 			// distanciaNacional();
 			switch (numSeleccionado) {
@@ -345,13 +433,13 @@ public class Controller implements ActionListener {
 								JOptionPane.ERROR_MESSAGE);
 					}
 					int conditionNum1 = passengersException(passengers);
-
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleNac = combustibleNacional(thePassengers);
 
 					int num = incNum();
 					boolean condition = booleanException(turbine);
@@ -364,10 +452,10 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getNational()
-								.add(na = new NationalFlightDTO(company, thePassengers, verificarNombreCap(),
+						mf.getNational().add(na = new NationalFlightDTO(company, thePassengers, verificarNombreCap(),
 										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, num,
 										departurePlace, arrival, theTurbo, theTurbine));
+
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
 
 						reiniciarInputsNac();
@@ -415,12 +503,13 @@ public class Controller implements ActionListener {
 					}
 					boolean theVisa = convBolean(visa);
 
-					int thePassangers = Integer.parseInt(passengers);
+					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int flightNum = incNum();
 					int conditionNum1 = passengersException(passengers);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleInt = combustibleIntercional(thePassengers);
 
 					boolean condition = booleanException(visa);
 					if (conditionNum1 == 0 && conditionTime == 0) {
@@ -429,10 +518,10 @@ public class Controller implements ActionListener {
 									JOptionPane.ERROR_MESSAGE);
 						}
 
-						mf.getInternational()
-								.add(in = new InternationalFlightDTO(company, thePassangers, verificarNombreCap(),
+						mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, verificarNombreCap(),
 										verificarNombreSubCap(), theDepartureTime, theArraivalTime, 0, flightNum,
 										departurePlace, arrival, theVisa));
+
 						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
 
 						reiniciarInputsInt();
@@ -829,49 +918,49 @@ public class Controller implements ActionListener {
 
 		switch (nacional) {
 		case "Medellin":
-			distanceNacional = 217;
+			duracionNacional = 1;
 			break;
 		case "Cartagena":
-			distanceNacional = 656;
+			duracionNacional = 2;
 
 			break;
 		case "Pasto":
-			distanceNacional = 507;
+			duracionNacional = 2;
 
 			break;
 		case "Cali":
-			distanceNacional = 279;
+			duracionNacional = 1;
 			break;
 		case "Bucaramanga":
-			distanceNacional = 290;
+			duracionNacional = 1;
 
 			break;
 		case "Ibague":
-			distanceNacional = 113;
+			duracionNacional = 1;
 
 			break;
 		case "Pereira":
-			distanceNacional = 177;
+			duracionNacional = 1;
 
 			break;
 		case "Manizales":
-			distanceNacional = 150;
+			duracionNacional = 1;
 
 			break;
 		case "Monteria":
-			distanceNacional = 494;
+			duracionNacional = 2;
 
 			break;
 		case "Barranquilla":
-			distanceNacional = 692;
+			duracionNacional = 2;
 
 			break;
 		case "Santa Marta":
-			distanceNacional = 714;
+			duracionNacional = 2;
 
 			break;
 		case "Cucuta":
-			distanceNacional = 402;
+			duracionNacional = 1;
 
 			break;
 		default:
@@ -883,12 +972,89 @@ public class Controller implements ActionListener {
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
 		switch (internacional) {
-		case "":
-
+		case "Madrid":
+			duracionInternacional = 10;
+			break;
+		case "Barcelona":
+			duracionInternacional = 10;
+			break;
+		case "Lisboa":
+			duracionInternacional = 13;
+			break;
+		case "Paris":
+			duracionInternacional = 11;
+			break;
+		case "Roma":
+			duracionInternacional = 14;
+			break;
+		case "Bruselas":
+			duracionInternacional = 13;
+			break;
+		case "Berlin":
+			duracionInternacional = 14;
+			break;
+		case "Londres":
+			duracionInternacional = 10;
+			break;
+		case "Dubai":
+			duracionInternacional = 18;
+			break;
+		case "New York":
+			duracionInternacional = 6;
+			break;
+		case "Los Angeles":
+			duracionInternacional = 9;
+			break;
+		case "Miami":
+			duracionInternacional = 4;
+			break;
+		case "Otawa":
+			duracionInternacional = 9;
+			break;
+		case "CDMX":
+			duracionInternacional = 5;
+			break;
+		case "Buenos Aires":
+			duracionInternacional = 7;
+			break;
+		case "Lima":
+			duracionInternacional = 3;
+			break;
+		case "Santiago de Chile":
+			duracionInternacional = 6;
+			break;
+		case "São Paulo":
+			duracionInternacional = 6;
 			break;
 		default:
 			break;
 		}
+	}
+
+	public int combustibleNacional(int pasajeros) {
+		int duracion = duracionNacional;
+		int cantMotor = 2400;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 43000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
+	}
+
+	public int combustibleIntercional(int pasajeros) {
+		int duracion = duracionInternacional;
+		int cantMotor = 4800;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 250000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
 	}
 
 	public void reiniciarInputsNac() {
@@ -901,6 +1067,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
 		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
 	}
 
 	public void reiniciarInputsInt() {
@@ -912,6 +1079,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getTxtDepartureTime().setText(null);
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
 	}
 
 	public static String obtenerNombres() {
