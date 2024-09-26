@@ -7,10 +7,23 @@ import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
 
+/**
+ * La clase DataMapper proporciona métodos para transformar objetos de las clases
+ * de entidad (NationalFlight, InternationalFlight) en objetos DTO (Data
+ * Transfer Objects), y viceversa. Se utiliza para facilitar el transporte de
+ * datos entre capas de la aplicación sin exponer directamente las entidades de
+ * dominio.
+ */
 public class DataMapper {
 
-	// International Flight
+    // International Flight
 
+    /**
+     * Convierte un objeto de tipo InternationalFlightDTO a InternationalFlight.
+     *
+     * @param dto el objeto InternationalFlightDTO a convertir.
+     * @return un objeto InternationalFlight basado en los datos del DTO.
+     */
 	public static InternationalFlight InternationalFlightDTOToInternationalFlight(InternationalFlightDTO dto) {
 		InternationalFlight entity;
 		entity = new InternationalFlight(dto.getCompanyName(), dto.getPassengersNumber(), dto.getNameCaptain(),
@@ -19,6 +32,12 @@ public class DataMapper {
 		return entity;
 	}
 
+    /**
+     * Convierte un objeto de tipo InternationalFlight a InternationalFlightDTO.
+     *
+     * @param entity el objeto InternationalFlight a convertir.
+     * @return un objeto InternationalFlightDTO basado en los datos de la entidad.
+     */
 	public static InternationalFlightDTO InternationalFlightToInternationalFlightDTO(InternationalFlight entity) {
 		InternationalFlightDTO dto;
 		dto = new InternationalFlightDTO(entity.getCompanyName(), entity.getPassengersNumber(), entity.getNameCaptain(),
@@ -28,6 +47,13 @@ public class DataMapper {
 		return dto;
 	}
 
+    /**
+     * Convierte una lista de objetos InternationalFlight a una lista de objetos
+     * InternationalFlightDTO.
+     *
+     * @param entityList la lista de objetos InternationalFlight a convertir.
+     * @return una lista de objetos InternationalFlightDTO.
+     */
 	public static ArrayList<InternationalFlightDTO> listaInternationalFlightToListaInternationalFlightDTO(
 			ArrayList<InternationalFlight> entityList) {
 		ArrayList<InternationalFlightDTO> dtoList = new ArrayList<>();
@@ -39,6 +65,13 @@ public class DataMapper {
 		return dtoList;
 	}
 
+    /**
+     * Convierte una lista de objetos InternationalFlightDTO a una lista de objetos
+     * InternationalFlight.
+     *
+     * @param dtoList la lista de objetos InternationalFlightDTO a convertir.
+     * @return una lista de objetos InternationalFlight.
+     */
 	public static ArrayList<InternationalFlight> listaInternationalFlightDTOToListaInternationalFlight(
 			ArrayList<InternationalFlightDTO> dtoList) {
 		ArrayList<InternationalFlight> entityList = new ArrayList<>();
@@ -50,8 +83,14 @@ public class DataMapper {
 		return entityList;
 	}
 
-	// National Flight
+    // National Flight
 
+    /**
+     * Convierte un objeto de tipo NationalFlightDTO a NationalFlight.
+     *
+     * @param dto el objeto NationalFlightDTO a convertir.
+     * @return un objeto NationalFlight basado en los datos del DTO.
+     */
 	public static NationalFlight NationalFlightDTOToNationalFlight(NationalFlightDTO dto) {
 		NationalFlight entity;
 		entity = new NationalFlight(dto.getCompanyName(), dto.getPassengersNumber(), dto.getNameCaptain(),
@@ -61,6 +100,12 @@ public class DataMapper {
 		return entity;
 	}
 
+    /**
+     * Convierte un objeto de tipo NationalFlight a NationalFlightDTO.
+     *
+     * @param entity el objeto NationalFlight a convertir.
+     * @return un objeto NationalFlightDTO basado en los datos de la entidad.
+     */
 	public static NationalFlightDTO NationalFlightToNationalFlightDTO(NationalFlight entity) {
 		NationalFlightDTO dto;
 		dto = new NationalFlightDTO(entity.getCompanyName(), entity.getPassengersNumber(), entity.getNameCaptain(),
@@ -70,6 +115,13 @@ public class DataMapper {
 		return dto;
 	}
 
+    /**
+     * Convierte una lista de objetos NationalFlight a una lista de objetos
+     * NationalFlightDTO.
+     *
+     * @param entityList la lista de objetos NationalFlight a convertir.
+     * @return una lista de objetos NationalFlightDTO.
+     */
 	public static ArrayList<NationalFlightDTO> listaNationalFlightToListaNationalFlightDTO(
 			ArrayList<NationalFlight> entityList) {
 		ArrayList<NationalFlightDTO> dtoList = new ArrayList<>();
@@ -81,6 +133,13 @@ public class DataMapper {
 		return dtoList;
 	}
 
+    /**
+     * Convierte una lista de objetos NationalFlightDTO a una lista de objetos
+     * NationalFlight.
+     *
+     * @param dtoList la lista de objetos NationalFlightDTO a convertir.
+     * @return una lista de objetos NationalFlight.
+     */
 	public static ArrayList<NationalFlight> listaNationalFlightDTOToListaNationalFlight(
 			ArrayList<NationalFlightDTO> dtoList) {
 		ArrayList<NationalFlight> entityList = new ArrayList<>();
