@@ -95,8 +95,8 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnActualizarInferior().addActionListener(this);
 		vf.getMa().getBtnActualizarInferior().setActionCommand("actualizar");
 
-		vf.getMa().getCombustible().addActionListener(this);
-		vf.getMa().getCombustible().setActionCommand("combustible");
+		vf.getMa().getBtnCombustible().addActionListener(this);
+		vf.getMa().getBtnCombustible().setActionCommand("combustible");
 	}
 
 	public void actionPerformed(ActionEvent e) {
