@@ -324,11 +324,14 @@ public class Controller implements ActionListener {
 				} else {
 					continue;
 				}
+				
 			}
+
 			if (funcion == false && funcion2 == false) {
 				vf.getMa().getNumVuelo().setText("No existe");
 				JOptionPane.showMessageDialog(null, "No existe el vuelo digitado", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+
 
 			break;
 
