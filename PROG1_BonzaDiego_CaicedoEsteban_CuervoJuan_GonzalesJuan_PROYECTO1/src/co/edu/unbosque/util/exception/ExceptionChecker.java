@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ExceptionChecker {
-	
-	
+
 	/**
 	 * Verifica si la entrada de booleano es válida.
 	 *
@@ -19,35 +18,39 @@ public class ExceptionChecker {
 		}
 	}
 
-	public static void CheckNegativeNumer(int numero) throws NegativeNumberException {
+	public static void checkNegativeTime(int numero) throws CheckNegativeTime {
 		if (numero < 0) {
-			throw new NegativeNumberException();
+			throw new CheckNegativeTime();
 		}
 	}
 
-	public static void IdentificationFlightNotValidNumber(String number) throws FlightNumberException {
-		Pattern p = Pattern.compile("[^0-9]"); 
+	public static void NotValidNumber(String number) throws FlightNumberException {
+		Pattern p = Pattern.compile("[^0-9]");
 		Matcher m = p.matcher(number);
 		if (m.find()) {
 			throw new FlightNumberException();
 		}
 	}
 
-	public static void NameNotValid(String nombre) throws NameNotValidException {
-		Pattern p = Pattern.compile("[^a-zA-Z ]"); 
-		Matcher m = p.matcher(nombre);
-		if (m.find()) {
-			throw new NameNotValidException();
-		}
-	}
 	public static void PassengersNotValidNumber(String number) throws PassengersNumberException {
-		Pattern p = Pattern.compile("[^0-9]"); 
-		Matcher m = p.matcher(number);
-		if (m.find()) {
+		int numero = Integer.parseInt(number);
+		if (numero > 300) {
 			throw new PassengersNumberException();
+
+		}
+
+	}
+
+	public static void PassengersNegativeNumber(String number) throws PassengersNegativeNumberException {
+		int numero = Integer.parseInt(number);
+		if (numero < 0) {
+			throw new PassengersNegativeNumberException();
 		}
 	}
-	
 
-
+	public static void MilitaryHour(int time) throws MilitaryHourException {
+		if (time > 2400) {
+			throw new MilitaryHourException();
+		}
+	}
 }

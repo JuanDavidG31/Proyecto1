@@ -11,7 +11,7 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 	private final String SERIAL_NAME = "InternationalFlight.dat";
 
 	public InternationalFlightDAO() {
-		//listaInternationalFlight = new ArrayList<>();
+		// listaInternationalFlight = new ArrayList<>();
 		FileHandler.checkFolder();
 		readSerilized();
 	}
@@ -97,14 +97,14 @@ public class InternationalFlightDAO implements CRUDOperation<InternationalFlight
 	public void writeFile() {
 		String content = "";
 		for (InternationalFlight m : listaInternationalFlight) {
-			content += m.getArrivalTime() + ";";
+			content += m.getId() + ";";
 			content += m.getCompanyName() + ";";
 			content += m.getDepartureTime() + ";";
-			content += m.getFuelWeight() + ";";
+			content += m.getArrivalTime() + ";";
 			content += m.getNameCaptain() + ";";
 			content += m.getNameSecondCommand() + ";";
 			content += m.getPassengersNumber() + ";";
-			content += m.getId() + ";";
+			content += m.getFuelWeight() + ";";
 			content += m.isVisa() + ";";
 			content += "\n";
 		}

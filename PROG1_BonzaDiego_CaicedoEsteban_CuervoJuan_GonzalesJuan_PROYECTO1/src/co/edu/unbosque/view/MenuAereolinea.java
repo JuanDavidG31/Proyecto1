@@ -16,12 +16,12 @@ import javax.swing.JTextField;
 public class MenuAereolinea extends JFrame {
 	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir,
 			btnCambiarModo, btnGuardar, btnActualizar, btnEliminar, btnCombustible;
-	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable, panelInternationalFlight,
-			panelNationalFlight;
-//private JTextArea txtaMostrar;
-	private JTextField txtPassengersNumber, txtDepartureTime, txtArrivalTime;
-	private JLabel numVuelo, txtNumVuelo, lblCompanyName, lblPassengersNumber,lblDepartureTime, lblArrivalTime, lblFuelWeight, 
-			lblIsTurboProp, lblIsTurbine, lblIsVisa, logo, lblArrivalPlace;
+	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable,
+			panelInternationalFlight, panelNationalFlight;
+	private JTextField txtPassengersNumber,  txtDepartureTime, txtArrivalTime;
+	private JLabel numVuelo, txtCombustible, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblDepartureTime, lblArrivalTime, lblIsTurboProp,
+			lblIsTurbine, lblIsVisa, lblIDVueloBuscar, logo, lblArrivalPlace;
+  
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
 	private ImageIcon imagenCambiarModo, imagenCambiarModoOscuro, imagenGuardar, imagenGuardarOscuro, imagenActualizar, imagenActualizarOscuro,
 			imagenEliminar, imagenEliminarOscuro, imagenVuelosNacionales, imagenVuelosNacionalesOscuro, imagenVuelosInternacionales,imagenVuelosInternacionalesOscuro,
@@ -89,6 +89,7 @@ public class MenuAereolinea extends JFrame {
 		btnAniadir.setBorder(null);
 		panelIzq.add(btnAniadir);
 
+
 		imagenActualizarIzq = new ImageIcon("Images\\Actualizar100btnClaro.png");
 		imagenActualizarIzqOscuro = new ImageIcon("Images\\btnActualizar100Oscuro.png");
 		btnActualizar = new JButton(imagenActualizarIzq);
@@ -96,8 +97,10 @@ public class MenuAereolinea extends JFrame {
 		btnActualizar.setBorder(null);
 		panelIzq.add(btnActualizar);
 
+
 		imagenMostrar = new ImageIcon("Images\\MostrarbtnClaro.png");
 		imagenMostrarOscuro = new ImageIcon("Images\\btnMostrarOscuro.png");
+
 		btnMostrar = new JButton(imagenMostrar);
 		btnMostrar.setBounds(25, 275, 100, 100);
 		btnMostrar.setBorder(null);
@@ -132,6 +135,7 @@ public class MenuAereolinea extends JFrame {
 		btnActualizarInferior.setBorder(null);
 		panelInferior.add(btnActualizarInferior);
 
+
 		imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		imagenEliminarOscuro = new ImageIcon("Images\\btnEliminarOscuro.png");
 		btnEliminar = new JButton(imagenEliminar);
@@ -145,6 +149,16 @@ public class MenuAereolinea extends JFrame {
 		btnCombustible.setBounds(50, 395, 159, 36);
 		btnCombustible.setBorder(null);
 		panelCentral.add(btnCombustible);
+
+
+
+		ImageIcon combustibleImg = new ImageIcon("Images\\combustibleClaro.png");
+		combustible = new JButton();
+		combustible.setBounds(50, 340, 159, 36);
+		combustible.setIcon(combustibleImg);
+		combustible.setBorder(null);
+		combustible.setToolTipText("Calcular combustible");
+		panelCentral.add(combustible);
 
 	}
 
@@ -251,18 +265,18 @@ public class MenuAereolinea extends JFrame {
 		arrival.setBounds(190, 275, 400, 20);
 		arrival.setToolTipText("Seleccione el destino del avion");
 		arrival.addItem("");
-		arrival.addItem("Medellin");// 217km
-		arrival.addItem("Cartagena");// 656 km
-		arrival.addItem("Pasto");// 507 km
-		arrival.addItem("Cali");// 279 km
-		arrival.addItem("Bucaramanga");// 290 km
-		arrival.addItem("Ibague");// 113 km
-		arrival.addItem("Pereira");// 177 km
-		arrival.addItem("Manizales");// 150 km
-		arrival.addItem("Monteria");// 494 km
-		arrival.addItem("Barranquilla");// 692 km
-		arrival.addItem("Santa Marta");// 714 km
-		arrival.addItem("Cucuta");// 402 km
+		arrival.addItem("Medellin");// 1
+		arrival.addItem("Cartagena");// 1:30hora
+		arrival.addItem("Pasto");// 2
+		arrival.addItem("Cali");// 1
+		arrival.addItem("Bucaramanga");// 1
+		arrival.addItem("Ibague");// 1
+		arrival.addItem("Pereira");// 1
+		arrival.addItem("Manizales");// 1
+		arrival.addItem("Monteria");// 1:30
+		arrival.addItem("Barranquilla");// 1:30
+		arrival.addItem("Santa Marta");// 1:30
+		arrival.addItem("Cucuta");// 1
 
 		arrival.setVisible(false);
 		panelCentral.add(arrival);
@@ -271,24 +285,24 @@ public class MenuAereolinea extends JFrame {
 		arrivalInternacional.setBounds(190, 275, 400, 20);
 		arrivalInternacional.setToolTipText("Seleccione el destino del avion");
 		arrivalInternacional.addItem("");
-		arrivalInternacional.addItem("Madrid");// 8039 km
-		arrivalInternacional.addItem("Barcelona");// 8522 km.
-		arrivalInternacional.addItem("Lisboa");// 7523 km
-		arrivalInternacional.addItem("Paris");// 8639 km
-		arrivalInternacional.addItem("Roma");// 9355 km
-		arrivalInternacional.addItem("Bruselas");// 8800 km
-		arrivalInternacional.addItem("Berlin");// 9421 km
-		arrivalInternacional.addItem("Londres");// 8503 km
-		arrivalInternacional.addItem("Dubai");// 13622 km
-		arrivalInternacional.addItem("New York");// 4002 km
-		arrivalInternacional.addItem("Los Angeles");// 5597 km
-		arrivalInternacional.addItem("Miami");// 2433 km
-		arrivalInternacional.addItem("Otawa");// 4527 km
-		arrivalInternacional.addItem("CDMX");// 3157 km
-		arrivalInternacional.addItem("Buenos Aires");// 4694 km
-		arrivalInternacional.addItem("Lima");// 1888 km
-		arrivalInternacional.addItem("Santiago de Chile");// 4255 km
-		arrivalInternacional.addItem("São Paulo");// 4340 km
+		arrivalInternacional.addItem("Madrid");// 10
+		arrivalInternacional.addItem("Barcelona");// 10
+		arrivalInternacional.addItem("Lisboa");// 13
+		arrivalInternacional.addItem("Paris");// 11
+		arrivalInternacional.addItem("Roma");// 14
+		arrivalInternacional.addItem("Bruselas");// 13
+		arrivalInternacional.addItem("Berlin");// 14
+		arrivalInternacional.addItem("Londres");// 10
+		arrivalInternacional.addItem("Dubai");// 18
+		arrivalInternacional.addItem("New York");// 6
+		arrivalInternacional.addItem("Los Angeles");// 9 30 km
+		arrivalInternacional.addItem("Miami");// 4
+		arrivalInternacional.addItem("Otawa");// 9
+		arrivalInternacional.addItem("CDMX");// 5
+		arrivalInternacional.addItem("Buenos Aires");// 6 30
+		arrivalInternacional.addItem("Lima");// 3
+		arrivalInternacional.addItem("Santiago de Chile");// 6
+		arrivalInternacional.addItem("São Paulo");// 6
 		arrivalInternacional.setVisible(false);
 		panelCentral.add(arrivalInternacional);
 
@@ -353,6 +367,12 @@ public class MenuAereolinea extends JFrame {
 		lblIsVisa.setFont(new Font("Agency FB", Font.BOLD, 18));
 		lblIsVisa.setBounds(35, 20, 230, 30);
 		panelInternationalFlight.add(lblIsVisa);
+
+		txtCombustible = new JLabel();
+		txtCombustible.setBounds(270, 320, 130, 70);
+		txtCombustible.setFont(new Font("Agency FB", Font.BOLD, 24));
+		panelCentral.add(txtCombustible);
+
 
 	}
 	// Getters and Setters
@@ -693,6 +713,24 @@ public class MenuAereolinea extends JFrame {
 		this.txtNumVuelo = txtNumVuelo;
 	}
 
+
+	public JButton getCombustible() {
+		return combustible;
+	}
+
+	public void setCombustible(JButton combustible) {
+		this.combustible = combustible;
+	}
+
+	public JLabel getTxtCombustible() {
+		return txtCombustible;
+	}
+
+	public void setTxtCombustible(JLabel txtCombustible) {
+		this.txtCombustible = txtCombustible;
+	}
+
+
 	public ImageIcon getImagenCambiarModo() {
 		return imagenCambiarModo;
 	}
@@ -876,9 +914,5 @@ public class MenuAereolinea extends JFrame {
 	public void setImagenCombustibleOscuro(ImageIcon imagenCombustibleOscuro) {
 		this.imagenCombustibleOscuro = imagenCombustibleOscuro;
 	}
-	
-	
-	
-	
 
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -14,20 +15,29 @@ import co.edu.unbosque.model.InternationalFlightDTO;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.NationalFlight;
 import co.edu.unbosque.model.NationalFlightDTO;
+import co.edu.unbosque.model.persistence.DataMapper;
 import co.edu.unbosque.util.exception.BooleanNotValidInputException;
+import co.edu.unbosque.util.exception.CheckNegativeTime;
 import co.edu.unbosque.util.exception.ExceptionChecker;
+import co.edu.unbosque.util.exception.MilitaryHourException;
+import co.edu.unbosque.util.exception.PassengersNegativeNumberException;
+import co.edu.unbosque.util.exception.PassengersNumberException;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf = new ModelFacade();
 	private ViewFacade vf = new ViewFacade();
 	private int numSeleccionado = 0;
+	private int id = 0;
 	private String aerolinea = "";
 	private NationalFlightDTO na;
 	private InternationalFlightDTO in;
-	private int distanceInternacional = 0;
-	private int distanceNacional = 0;
+
+	private int duracionInternacional = 0;
+	private int duracionNacional = 0;
+	private int numActualizar = 0;
 	boolean modoOscuro = false;
+
 
 	public Controller() {
 
@@ -59,10 +69,7 @@ public class Controller implements ActionListener {
 		vf.getMa().getBtnAniadir().setActionCommand("btnAniadir");
 
 		vf.getMa().getBtnActualizar().addActionListener(this);
-		vf.getMa().getBtnActualizar().setActionCommand("actualizar");
-
-		vf.getMa().getBtnActualizarInferior().addActionListener(this);
-		vf.getMa().getBtnActualizarInferior().setActionCommand("btnActualizandoDatos");
+		vf.getMa().getBtnActualizar().setActionCommand("mostrarActualizar");
 
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
@@ -84,21 +91,32 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getBtnVuelosNac().addActionListener(this);
 		vf.getMa().getBtnVuelosNac().setActionCommand("nacional");
+
+		vf.getMa().getBtnActualizarInferior().addActionListener(this);
+		vf.getMa().getBtnActualizarInferior().setActionCommand("actualizar");
+
+		vf.getMa().getCombustible().addActionListener(this);
+		vf.getMa().getCombustible().setActionCommand("combustible");
 	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+		case "combustible":
+			if (numSeleccionado == 1) {
+				int pasajerosNac = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
+
+				int combustible = combustibleNacional(pasajerosNac);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			} else if (numSeleccionado == 2) {
+				int pasajerosInt = Integer.parseInt(vf.getMa().getTxtPassengersNumber().getText());
+				int combustible = combustibleIntercional(pasajerosInt);
+				vf.getMa().getTxtCombustible().setText(combustible + " kg");
+			}
+			break;
 		case "actualizar":
-			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
-			mostrarActualizar();
-			vf.getMa().getNumVuelo().setText(numAct);
-			int numero = Integer.parseInt(numAct);
-
-			switch (numSeleccionado) {
-
+			switch (numActualizar) {
 			case 1:
-
 				if (vf.getMa().getTxtDepartureTime().getText().equals("")
 						|| vf.getMa().getTxtArrivalTime().getText().equals("")
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
@@ -106,28 +124,62 @@ public class Controller implements ActionListener {
 						|| vf.getMa().getCmbIsTurbine().getSelectedItem().toString().equals("")
 						|| vf.getMa().getCmbIsTurbo().getSelectedItem().toString().equals("")
 						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
-
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-				String companyAct = aerolinea;
-				String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
-				String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
-				String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
-				String departurePlaceAct = "Bogota";
-				String turbineAct = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
-				String turboAct = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
-				String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+					String company = "";
+					String passengers = "";
+					String departureTime = "";
+					String arrivalTime = "";
+					String departurePlace = "";
+					String arrival = "";
+					String turbine = "";
+					String turbo = "";
+					try {
+						company = aerolinea;
+						passengers = vf.getMa().getTxtPassengersNumber().getText().toString();
+						departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+						departurePlace = "Bogota";
+						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+						turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+						turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
 
-				boolean theTurbine = convBolean(turbineAct);
-				boolean theTurbo = convBolean(turboAct);
-				int thePassangers = Integer.parseInt(passangersAct);
-				int theDepartureTime = Integer.parseInt(departureTimeAct);
-				int theArraivalTime = Integer.parseInt(arrivalTimeAct);
+					} catch (NumberFormatException x) {
+						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					int conditionNum1 = passengersException(passengers);
 
-				
+					boolean theTurbine = convBolean(turbine);
+					boolean theTurbo = convBolean(turbo);
+					int thePassengers = Integer.parseInt(passengers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+					int conditionTime = timeException(theArraivalTime, theDepartureTime);
 
+					ArrayList<NationalFlightDTO> s1;
+					s1 = new ArrayList<>();
+					s1 = mf.getNational().getAll();
+					m: for (int i = 0; i < s1.size(); i++) {
+						int theId = s1.get(i).getId();
+						if (id == theId) {
+
+							mf.getNational().update(
+									new NationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false, false),
+									new NationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
+											theArraivalTime, 0, id, departurePlace, arrival, theTurbo, theTurbine));
+							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
+							reiniciarInputsInt();
+							reiniciarInputsNac();
+							break m;
+
+						} else {
+							continue m;
+						}
+
+					}
 				}
 				break;
 			case 2:
@@ -136,35 +188,107 @@ public class Controller implements ActionListener {
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
 						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
 						|| vf.getMa().getCmbVisa().getSelectedItem().toString().equals("")
-						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
-
+						|| vf.getMa().getArrivalInternacional().getSelectedItem().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					String companyAct = aerolinea;
-					String passangersAct = vf.getMa().getTxtPassengersNumber().getText().toString();
-					String departureTimeAct = vf.getMa().getTxtDepartureTime().getText().toString();
-					String arrivalTimeAct = vf.getMa().getTxtArrivalTime().getText().toString();
-					String departurePlaceAct = "Bogota";
-					String visaAct = vf.getMa().getCmbVisa().getSelectedItem().toString();
-					String arrivalAct = vf.getMa().getArrival().getSelectedItem().toString();
+					String company = "";
+					String passengers = "";
+					String departureTime = "";
+					String arrivalTime = "";
+					String departurePlace = "";
+					String arrival = "";
+					String visa = "";
 
-					boolean theVisa = convBolean(visaAct);
+					try {
+						company = aerolinea;
+						passengers = vf.getMa().getTxtPassengersNumber().getText().toString();
+						departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+						departurePlace = "Bogota";
+						visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
+						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					} catch (NumberFormatException x) {
+						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 
-					int thePassangers = Integer.parseInt(passangersAct);
-					int theDepartureTime = Integer.parseInt(departureTimeAct);
-					int theArraivalTime = Integer.parseInt(arrivalTimeAct);
-					
+					boolean theVisa = convBolean(visa);
+
+					int thePassengers = Integer.parseInt(passengers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+
+					ArrayList<InternationalFlightDTO> i1;
+					i1 = new ArrayList<>();
+					i1 = mf.getInternational().getAll();
+					m1: for (int i = 0; i < i1.size(); i++) {
+						int theId = i1.get(i).getId();
+						if (id == theId) {
+							mf.getInternational().update(
+									new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false),
+									new InternationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
+											theArraivalTime, 0, id, departurePlace, arrival, theVisa));
+							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
+							reiniciarInputsInt();
+							reiniciarInputsNac();
+							break m1;
+						} else {
+							continue m1;
+						}
+
+					}
 				}
-				break;
 
+				break;
 			default:
 				break;
 			}
 
+			break;
+
+		case "mostrarActualizar":
+
+			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
+			vf.getMa().getNumVuelo().setText(numAct);
+			id = Integer.parseInt(numAct);
+
+			ArrayList<NationalFlightDTO> s1;
+			s1 = new ArrayList<>();
+			s1 = mf.getNational().getAll();
+
+			m: for (int i = 0; i < s1.size(); i++) {
+				int theId = s1.get(i).getId();
+				if (id == theId) {
+					mostrarActualizar1();
+					numActualizar = 1;
+					break m;
+				} else {
+					continue;
+				}
+			}
+
+			ArrayList<InternationalFlightDTO> i1;
+			i1 = new ArrayList<>();
+			i1 = mf.getInternational().getAll();
+
+			m: for (int i = 0; i < i1.size(); i++) {
+				int theId = i1.get(i).getId();
+				if (id == theId) {
+					mostrarActualizar2();
+					numActualizar = 2;
+					break m;
+				} else {
+					continue;
+				}
+			}
+
+			break;
+
 		case "eliminar":
 			String numVuelo = JOptionPane.showInputDialog("ingrese el numero de vuelo a eliminar");
+
 			eliminar(numVuelo);
 
 			break;
@@ -278,36 +402,62 @@ public class Controller implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					String company = aerolinea;
-					String passangers = vf.getMa().getTxtPassengersNumber().getText().toString();
-					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
-					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
-					String departurePlace = "Bogota";
-					String turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
-					String turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
-					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					String company = "";
+					String passengers = "";
+					String departureTime = "";
+					String arrivalTime = "";
+					String departurePlace = "";
+					String arrival = "";
+					String turbine = "";
+					String turbo = "";
+					try {
+						company = aerolinea;
+						passengers = vf.getMa().getTxtPassengersNumber().getText().toString();
+						departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+						departurePlace = "Bogota";
+						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+						turbine = vf.getMa().getCmbIsTurbine().getSelectedItem().toString();
+						turbo = vf.getMa().getCmbIsTurbo().getSelectedItem().toString();
 
-					boolean theTurbine = convBolean(turbine);
-					boolean theTurbo = convBolean(turbo);
-					int thePassangers = Integer.parseInt(passangers);
-					int theDepartureTime = Integer.parseInt(departureTime);
-					int theArraivalTime = Integer.parseInt(arrivalTime);
-
-					int num = incNum();
-
-					boolean condition = booleanException(turbine);
-					boolean condition2 = booleanException(turbo);
-					if (condition == true || condition2 == true) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+					} catch (NumberFormatException x) {
+						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
+					int conditionNum1 = passengersException(passengers);
+					boolean theTurbine = convBolean(turbine);
+					boolean theTurbo = convBolean(turbo);
+					int thePassengers = Integer.parseInt(passengers);
+					int theDepartureTime = Integer.parseInt(departureTime);
+					int theArraivalTime = Integer.parseInt(arrivalTime);
+					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleNac = combustibleNacional(thePassengers);
 
-					mf.getNational().add(na = new NationalFlightDTO(company, thePassangers, null, null,
-							theDepartureTime, theArraivalTime, 0, num, departurePlace, arrival, theTurbo, theTurbine));
-					JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
+					int num = incNum();
+					boolean condition = booleanException(turbine);
+					boolean condition2 = booleanException(turbo);
 
-					reiniciarInputsNac();
+					if (conditionNum1 == 0 && conditionTime == 0) {
 
+						if (condition == true || condition2 == true) {
+							JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+
+						mf.getNational()
+								.add(na = new NationalFlightDTO(company, thePassengers, null, null, theDepartureTime,
+										theArraivalTime, combustibleNac, num, departurePlace, arrival, theTurbo,
+										theTurbine));
+						JOptionPane.showMessageDialog(null, "Vuelo numero " + num + " creado exitosamente");
+
+						reiniciarInputsNac();
+					} else if (conditionNum1 == 1) {
+						vf.getMa().getTxtPassengersNumber().setText(null);
+					} else if (conditionTime == 1) {
+						vf.getMa().getTxtArrivalTime().setText(null);
+					} else if (conditionTime == 2) {
+						vf.getMa().getTxtDepartureTime().setText(null);
+					}
 				}
 
 				break;
@@ -317,41 +467,63 @@ public class Controller implements ActionListener {
 						|| vf.getMa().getAerolinea().getSelectedItem().toString().equals("")
 						|| vf.getMa().getTxtPassengersNumber().getText().equals("")
 						|| vf.getMa().getCmbVisa().getSelectedItem().toString().equals("")
-						|| vf.getMa().getArrival().getSelectedItem().toString().equals("")) {
+						|| vf.getMa().getArrivalInternacional().getSelectedItem().toString().equals("")) {
 
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					String company = aerolinea;
-					String passangers = vf.getMa().getTxtPassengersNumber().getText().toString();
-					String departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
-					String arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
-					String departurePlace = "Bogota";
-					String visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
-					String arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					String company = "";
+					String passengers = "";
+					String departureTime = "";
+					String arrivalTime = "";
+					String departurePlace = "";
+					String arrival = "";
+					String visa = "";
 
+					try {
+						company = aerolinea;
+						passengers = vf.getMa().getTxtPassengersNumber().getText().toString();
+						departureTime = vf.getMa().getTxtDepartureTime().getText().toString();
+						arrivalTime = vf.getMa().getTxtArrivalTime().getText().toString();
+						departurePlace = "Bogota";
+						visa = vf.getMa().getCmbVisa().getSelectedItem().toString();
+						arrival = vf.getMa().getArrival().getSelectedItem().toString();
+					} catch (NumberFormatException x) {
+						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 					boolean theVisa = convBolean(visa);
 
-					int thePassangers = Integer.parseInt(passangers);
+					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int flightNum = incNum();
+					int conditionNum1 = passengersException(passengers);
+					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int combustibleInt = combustibleIntercional(thePassengers);
 
 					boolean condition = booleanException(visa);
+					if (conditionNum1 == 0 && conditionTime == 0) {
+						if (condition == true) {
+							JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 
-					if (condition == true) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						mf.getInternational()
+								.add(in = new InternationalFlightDTO(company, thePassengers, null, null,
+										theDepartureTime, theArraivalTime, combustibleInt, flightNum, departurePlace,
+										arrival, theVisa));
+						JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
+
+						reiniciarInputsInt();
+					} else if (conditionNum1 == 1) {
+						vf.getMa().getTxtPassengersNumber().setText(null);
+					} else if (conditionTime == 1) {
+						vf.getMa().getTxtArrivalTime().setText(null);
+					} else if (conditionTime == 2) {
+						vf.getMa().getTxtDepartureTime().setText(null);
 					}
-
-					mf.getInternational().add(in = new InternationalFlightDTO(company, thePassangers, null, null,
-
-							theDepartureTime, theArraivalTime, 0, flightNum, departurePlace, arrival, theVisa));
-					JOptionPane.showMessageDialog(null, "Vuelo numero " + flightNum + " creado exitosamente");
-
-					reiniciarInputsInt();
-
 				}
 				break;
 			default:
@@ -475,35 +647,44 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	public void mostrarActualizar() {
+	public void mostrarActualizar1() {
 		vf.getMa().getPanelCentral().setVisible(true);
 		vf.getMa().getPanelVariable().setVisible(true);
 		vf.getMa().getTxtNumVuelo().setVisible(true);
 		vf.getMa().getNumVuelo().setVisible(true);
-		if (numSeleccionado == 1) {
-			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
-			vf.getMa().getArrivalInternacional().setVisible(false);
-			vf.getMa().getAerolinea().setSelectedIndex(0);
-			vf.getMa().getLogo().setIcon(null);
-			vf.getMa().getTxtPassengersNumber().setText(null);
-			vf.getMa().getTxtDepartureTime().setText(null);
-			vf.getMa().getTxtArrivalTime().setText(null);
-			vf.getMa().getArrival().setSelectedIndex(0);
-			vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
-			vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
 
-		} else if (numSeleccionado == 2) {
-			vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
-			vf.getMa().getArrival().setVisible(false);
-			vf.getMa().getAerolinea().setSelectedIndex(0);
-			vf.getMa().getArrivalInternacional().setSelectedIndex(0);
-			vf.getMa().getLogo().setIcon(null);
-			vf.getMa().getTxtPassengersNumber().setText(null);
-			vf.getMa().getTxtDepartureTime().setText(null);
-			vf.getMa().getTxtArrivalTime().setText(null);
-			vf.getMa().getCmbVisa().setSelectedIndex(0);
+		vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getNac());
+		vf.getMa().getArrivalInternacional().setVisible(false);
+		vf.getMa().getAerolinea().setVisible(true);
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getArrival().setVisible(true);
+		vf.getMa().getArrival().setSelectedIndex(0);
+		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
+		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
 
-		}
+	}
+
+	public void mostrarActualizar2() {
+		vf.getMa().getArrival().setVisible(false);
+
+		vf.getMa().getPanelCentral().setVisible(true);
+		vf.getMa().getPanelVariable().setVisible(true);
+		vf.getMa().getTxtNumVuelo().setVisible(true);
+		vf.getMa().getNumVuelo().setVisible(true);
+		vf.getMa().getCardLayout().show(vf.getMa().getPanelVariable(), vf.getMa().getInt());
+		vf.getMa().getArrivalInternacional().setVisible(true);
+		vf.getMa().getAerolinea().setVisible(true);
+		vf.getMa().getAerolinea().setSelectedIndex(0);
+		vf.getMa().getArrivalInternacional().setSelectedIndex(0);
+		vf.getMa().getLogo().setIcon(null);
+		vf.getMa().getTxtPassengersNumber().setText(null);
+		vf.getMa().getTxtDepartureTime().setText(null);
+		vf.getMa().getTxtArrivalTime().setText(null);
+		vf.getMa().getCmbVisa().setSelectedIndex(0);
 	}
 
 	public void desactivarMenuVariables() {
@@ -572,7 +753,7 @@ public class Controller implements ActionListener {
 	}
 
 	public int random() {
-		return (int) (Math.random() * 1000 + 10);
+		return (int) (Math.random() * 10000 + 100);
 	}
 
 	/**
@@ -612,6 +793,63 @@ public class Controller implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+
+	public int passengersException(String passengers) {
+		try {
+			ExceptionChecker.PassengersNegativeNumber(passengers);
+		} catch (PassengersNegativeNumberException e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la cantidad de personas no puede ser negativa", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return 1;
+			// TODO: handle exception
+		}
+		try {
+			ExceptionChecker.PassengersNotValidNumber(passengers);
+		} catch (PassengersNumberException e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la cantidad de personas no puede ser mayor a 300", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return 1;
+		}
+		return 0;
+
+	}
+
+	public int timeException(int arrival, int departure) {
+		try {
+			ExceptionChecker.checkNegativeTime(arrival);
+		} catch (CheckNegativeTime e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada no puede ser negativa", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return 1;
+		}
+		try {
+			ExceptionChecker.MilitaryHour(arrival);
+		} catch (MilitaryHourException e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada debe estar en formato militar", "Error",
+					JOptionPane.ERROR_MESSAGE);
+
+			return 1;
+		}
+		try {
+
+			ExceptionChecker.checkNegativeTime(departure);
+		} catch (CheckNegativeTime e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de salida no puede ser negativa", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return 2;
+		}
+		try {
+			ExceptionChecker.MilitaryHour(departure);
+		} catch (MilitaryHourException e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de salida debe estar en formato militar", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			// TODO: handle exception
+			return 2;
+		}
+
+		return 0;
 	}
 
 	public void eliminar(String numVuelo) {
@@ -672,49 +910,49 @@ public class Controller implements ActionListener {
 
 		switch (nacional) {
 		case "Medellin":
-			distanceNacional = 217;
+			duracionNacional = 1;
 			break;
 		case "Cartagena":
-			distanceNacional = 656;
+			duracionNacional = 2;
 
 			break;
 		case "Pasto":
-			distanceNacional = 507;
+			duracionNacional = 2;
 
 			break;
 		case "Cali":
-			distanceNacional = 279;
+			duracionNacional = 1;
 			break;
 		case "Bucaramanga":
-			distanceNacional = 290;
+			duracionNacional = 1;
 
 			break;
 		case "Ibague":
-			distanceNacional = 113;
+			duracionNacional = 1;
 
 			break;
 		case "Pereira":
-			distanceNacional = 177;
+			duracionNacional = 1;
 
 			break;
 		case "Manizales":
-			distanceNacional = 150;
+			duracionNacional = 1;
 
 			break;
 		case "Monteria":
-			distanceNacional = 494;
+			duracionNacional = 2;
 
 			break;
 		case "Barranquilla":
-			distanceNacional = 692;
+			duracionNacional = 2;
 
 			break;
 		case "Santa Marta":
-			distanceNacional = 714;
+			duracionNacional = 2;
 
 			break;
 		case "Cucuta":
-			distanceNacional = 402;
+			duracionNacional = 1;
 
 			break;
 		default:
@@ -726,33 +964,118 @@ public class Controller implements ActionListener {
 		String internacional = vf.getMa().getArrivalInternacional().getSelectedItem().toString();
 
 		switch (internacional) {
-		case "":
-
+		case "Madrid":
+			duracionInternacional = 10;
+			break;
+		case "Barcelona":
+			duracionInternacional = 10;
+			break;
+		case "Lisboa":
+			duracionInternacional = 13;
+			break;
+		case "Paris":
+			duracionInternacional = 11;
+			break;
+		case "Roma":
+			duracionInternacional = 14;
+			break;
+		case "Bruselas":
+			duracionInternacional = 13;
+			break;
+		case "Berlin":
+			duracionInternacional = 14;
+			break;
+		case "Londres":
+			duracionInternacional = 10;
+			break;
+		case "Dubai":
+			duracionInternacional = 18;
+			break;
+		case "New York":
+			duracionInternacional = 6;
+			break;
+		case "Los Angeles":
+			duracionInternacional = 9;
+			break;
+		case "Miami":
+			duracionInternacional = 4;
+			break;
+		case "Otawa":
+			duracionInternacional = 9;
+			break;
+		case "CDMX":
+			duracionInternacional = 5;
+			break;
+		case "Buenos Aires":
+			duracionInternacional = 7;
+			break;
+		case "Lima":
+			duracionInternacional = 3;
+			break;
+		case "Santiago de Chile":
+			duracionInternacional = 6;
+			break;
+		case "São Paulo":
+			duracionInternacional = 6;
 			break;
 		default:
 			break;
 		}
 	}
 
+	public int combustibleNacional(int pasajeros) {
+		int duracion = duracionNacional;
+		int cantMotor = 2400;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 43000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
+	}
+
+	public int combustibleIntercional(int pasajeros) {
+		int duracion = duracionInternacional;
+		int cantMotor = 4800;
+		int tierra = 100;
+		int reserva = 600;
+		int avionVacio = 250000;
+		int personas = pasajeros * 70;
+		int pesoTotal = (personas + avionVacio);
+		int estimado = (duracion * cantMotor);
+		int total = estimado + tierra + reserva + pesoTotal;
+		return total;
+	}
+
 	public void reiniciarInputsNac() {
 		vf.getMa().getAerolinea().setSelectedIndex(0);
 		vf.getMa().getLogo().setIcon(null);
-		vf.getMa().getArrival().setVisible(false);
+		// vf.getMa().getArrival().setVisible(true);
+		vf.getMa().getArrival().setSelectedIndex(0);
 		vf.getMa().getTxtPassengersNumber().setText(null);
 		vf.getMa().getTxtDepartureTime().setText(null);
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbIsTurbine().setSelectedIndex(0);
 		vf.getMa().getCmbIsTurbo().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
 	}
 
 	public void reiniciarInputsInt() {
 		vf.getMa().getAerolinea().setSelectedIndex(0);
 		vf.getMa().getLogo().setIcon(null);
-		vf.getMa().getArrivalInternacional().setVisible(false);
+		// vf.getMa().getArrivalInternacional().setVisible(true);
+		vf.getMa().getArrivalInternacional().setSelectedIndex(0);
 		vf.getMa().getTxtPassengersNumber().setText(null);
 		vf.getMa().getTxtDepartureTime().setText(null);
 		vf.getMa().getTxtArrivalTime().setText(null);
 		vf.getMa().getCmbVisa().setSelectedIndex(0);
+		vf.getMa().getTxtCombustible().setText(null);
+	}
+
+	public void update() {
+
 	}
 
 }
