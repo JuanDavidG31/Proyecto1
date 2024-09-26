@@ -155,6 +155,11 @@ public class Controller implements ActionListener {
 					}
 					int conditionNum1 = passengersException(passengers);
 
+					if (conditionNum1 == 0) {
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
 					int thePassengers = Integer.parseInt(passengers);
@@ -218,6 +223,12 @@ public class Controller implements ActionListener {
 						arrival = vf.getMa().getArrival().getSelectedItem().toString();
 					} catch (NumberFormatException x) {
 						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					int conditionNum1 = passengersException(passengers);
+
+					if (conditionNum1 == 0) {
+						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
