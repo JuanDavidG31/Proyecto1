@@ -16,17 +16,18 @@ import javax.swing.JTextField;
 public class MenuAereolinea extends JFrame {
 	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir,
 			btnCambiarModo, btnGuardar, btnActualizar, btnEliminar, btnCombustible;
-	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable,
-			panelInternationalFlight, panelNationalFlight;
-	private JTextField txtPassengersNumber,  txtDepartureTime, txtArrivalTime;
-	private JLabel numVuelo, txtCombustible, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblDepartureTime, lblArrivalTime, lblIsTurboProp,
-			lblIsTurbine, lblIsVisa, lblIDVueloBuscar, logo, lblArrivalPlace;
-  
+	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable, panelInternationalFlight,
+			panelNationalFlight;
+	private JTextField txtPassengersNumber, txtDepartureTime, txtArrivalTime;
+	private JLabel numVuelo, txtCombustible, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblDepartureTime,
+			lblArrivalTime, lblIsTurboProp, lblIsTurbine, lblIsVisa, lblIDVueloBuscar, logo, lblArrivalPlace;
+
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
-	private ImageIcon imagenCambiarModo, imagenCambiarModoOscuro, imagenGuardar, imagenGuardarOscuro, imagenActualizar, imagenActualizarOscuro,
-			imagenEliminar, imagenEliminarOscuro, imagenVuelosNacionales, imagenVuelosNacionalesOscuro, imagenVuelosInternacionales,imagenVuelosInternacionalesOscuro,
-			imagenAniadir, imagenAniadirOscuro, imagenActualizarIzq, imagenActualizarIzqOscuro,imagenMostrar,imagenMostrarOscuro, imagenSalir, imagenSalirOscuro,
-			imagenCombustible, imagenCombustibleOscuro;
+	private ImageIcon imagenCambiarModo, imagenCambiarModoOscuro, imagenGuardar, imagenGuardarOscuro, imagenActualizar,
+			imagenActualizarOscuro, imagenEliminar, imagenEliminarOscuro, imagenVuelosNacionales,
+			imagenVuelosNacionalesOscuro, imagenVuelosInternacionales, imagenVuelosInternacionalesOscuro, imagenAniadir,
+			imagenAniadirOscuro, imagenActualizarIzq, imagenActualizarIzqOscuro, imagenMostrar, imagenMostrarOscuro,
+			imagenSalir, imagenSalirOscuro, imagenCombustible, imagenCombustibleOscuro;
 	private JScrollPane scrollpane;
 	private final static String INT = "Internacional";
 	private final static String NAC = "Nacional";
@@ -89,14 +90,12 @@ public class MenuAereolinea extends JFrame {
 		btnAniadir.setBorder(null);
 		panelIzq.add(btnAniadir);
 
-
 		imagenActualizarIzq = new ImageIcon("Images\\Actualizar100btnClaro.png");
 		imagenActualizarIzqOscuro = new ImageIcon("Images\\btnActualizar100Oscuro.png");
 		btnActualizar = new JButton(imagenActualizarIzq);
 		btnActualizar.setBounds(25, 150, 100, 100);
 		btnActualizar.setBorder(null);
 		panelIzq.add(btnActualizar);
-
 
 		imagenMostrar = new ImageIcon("Images\\MostrarbtnClaro.png");
 		imagenMostrarOscuro = new ImageIcon("Images\\btnMostrarOscuro.png");
@@ -135,30 +134,21 @@ public class MenuAereolinea extends JFrame {
 		btnActualizarInferior.setBorder(null);
 		panelInferior.add(btnActualizarInferior);
 
-
 		imagenEliminar = new ImageIcon("Images\\EliminarbtnClaro.png");
 		imagenEliminarOscuro = new ImageIcon("Images\\btnEliminarOscuro.png");
 		btnEliminar = new JButton(imagenEliminar);
 		btnEliminar.setBounds(450, 5, 75, 75);
 		btnEliminar.setBorder(null);
 		panelInferior.add(btnEliminar);
-		
+
 		imagenCombustible = new ImageIcon("Images\\combustibleClaro.png");
 		imagenCombustibleOscuro = new ImageIcon("Images\\combustibleOscuro.png");
 		btnCombustible = new JButton(imagenCombustible);
 		btnCombustible.setBounds(50, 395, 159, 36);
+		btnCombustible.setToolTipText("Calcular combustible");
 		btnCombustible.setBorder(null);
 		panelCentral.add(btnCombustible);
 
-
-
-		ImageIcon combustibleImg = new ImageIcon("Images\\combustibleClaro.png");
-		combustible = new JButton();
-		combustible.setBounds(50, 340, 159, 36);
-		combustible.setIcon(combustibleImg);
-		combustible.setBorder(null);
-		combustible.setToolTipText("Calcular combustible");
-		panelCentral.add(combustible);
 
 	}
 
@@ -373,7 +363,6 @@ public class MenuAereolinea extends JFrame {
 		txtCombustible.setFont(new Font("Agency FB", Font.BOLD, 24));
 		panelCentral.add(txtCombustible);
 
-
 	}
 	// Getters and Setters
 
@@ -545,14 +534,6 @@ public class MenuAereolinea extends JFrame {
 		this.lblArrivalTime = lblArrivalTime;
 	}
 
-	public JLabel getLblFuelWeight() {
-		return lblFuelWeight;
-	}
-
-	public void setLblFuelWeight(JLabel lblFuelWeight) {
-		this.lblFuelWeight = lblFuelWeight;
-	}
-
 	public JLabel getLblIsTurboProp() {
 		return lblIsTurboProp;
 	}
@@ -713,15 +694,6 @@ public class MenuAereolinea extends JFrame {
 		this.txtNumVuelo = txtNumVuelo;
 	}
 
-
-	public JButton getCombustible() {
-		return combustible;
-	}
-
-	public void setCombustible(JButton combustible) {
-		this.combustible = combustible;
-	}
-
 	public JLabel getTxtCombustible() {
 		return txtCombustible;
 	}
@@ -729,7 +701,6 @@ public class MenuAereolinea extends JFrame {
 	public void setTxtCombustible(JLabel txtCombustible) {
 		this.txtCombustible = txtCombustible;
 	}
-
 
 	public ImageIcon getImagenCambiarModo() {
 		return imagenCambiarModo;
