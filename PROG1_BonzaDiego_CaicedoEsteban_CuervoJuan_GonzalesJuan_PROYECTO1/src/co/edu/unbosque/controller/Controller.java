@@ -139,6 +139,7 @@ public class Controller implements ActionListener {
 					String arrival = "";
 					String turbine = "";
 					String turbo = "";
+
 					try {
 						company = aerolinea;
 						passengers = vf.getMa().getTxtPassengersNumber().getText().toString();
@@ -153,13 +154,8 @@ public class Controller implements ActionListener {
 						JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
+
 					int conditionNum1 = passengersException(passengers);
-
-					if (conditionNum1 == 0) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
 					boolean theTurbine = convBolean(turbine);
 					boolean theTurbo = convBolean(turbo);
 					int thePassengers = Integer.parseInt(passengers);
@@ -168,29 +164,39 @@ public class Controller implements ActionListener {
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
 					int combustibleNac = combustibleNacional(thePassengers);
 
-					ArrayList<NationalFlightDTO> s1;
-					s1 = new ArrayList<>();
-					s1 = mf.getNational().getAll();
-					m: for (int i = 0; i < s1.size(); i++) {
-						int theId = s1.get(i).getId();
-						if (id == theId) {
-							String cap = s1.get(i).getNameCaptain();
-							String sub = s1.get(i).getNameSecondCommand();
+					if (conditionNum1 == 0 && conditionTime == 0) {
 
-							mf.getNational().update(
-									new NationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false, false),
-									new NationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
-											theArraivalTime, combustibleNac, id, departurePlace, arrival, theTurbo,
-											theTurbine));
-							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
-							reiniciarInputsInt();
-							reiniciarInputsNac();
-							break m;
+						ArrayList<NationalFlightDTO> s1;
+						s1 = new ArrayList<>();
+						s1 = mf.getNational().getAll();
+						m: for (int i = 0; i < s1.size(); i++) {
+							int theId = s1.get(i).getId();
+							if (id == theId) {
+								String cap = s1.get(i).getNameCaptain();
+								String sub = s1.get(i).getNameSecondCommand();
 
-						} else {
-							continue m;
+								mf.getNational()
+										.update(new NationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null,
+												false, false),
+												new NationalFlightDTO(company, thePassengers, cap, sub,
+														theDepartureTime, theArraivalTime, combustibleNac, id,
+														departurePlace, arrival, theTurbo, theTurbine));
+								JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
+								reiniciarInputsInt();
+								reiniciarInputsNac();
+								break m;
+
+							} else {
+								continue m;
+							}
+
 						}
-
+					} else if (conditionNum1 == 1) {
+						vf.getMa().getTxtPassengersNumber().setText(null);
+					} else if (conditionTime == 1) {
+						vf.getMa().getTxtArrivalTime().setText(null);
+					} else if (conditionTime == 2) {
+						vf.getMa().getTxtDepartureTime().setText(null);
 					}
 				}
 				break;
@@ -227,41 +233,48 @@ public class Controller implements ActionListener {
 					}
 					int conditionNum1 = passengersException(passengers);
 
-					if (conditionNum1 == 0) {
-						JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
 					boolean theVisa = convBolean(visa);
 
 					int thePassengers = Integer.parseInt(passengers);
 					int theDepartureTime = Integer.parseInt(departureTime);
 					int theArraivalTime = Integer.parseInt(arrivalTime);
 					int combustibleInt = combustibleIntercional(thePassengers);
-					ArrayList<InternationalFlightDTO> i1;
-					i1 = new ArrayList<>();
-					i1 = mf.getInternational().getAll();
-					m1: for (int i = 0; i < i1.size(); i++) {
-						int theId = i1.get(i).getId();
 
-						if (id == theId) {
-							String cap = i1.get(i).getNameCaptain();
-							String sub = i1.get(i).getNameSecondCommand();
-							mf.getInternational().update(
-									new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false),
-									new InternationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
-											theArraivalTime, combustibleInt, id, departurePlace, arrival, theVisa));
-							JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
-							reiniciarInputsInt();
-							reiniciarInputsNac();
-							break m1;
-						} else {
-							continue m1;
+					int conditionTime = timeException(theArraivalTime, theDepartureTime);
+					int conditionNum = passengersException(passengers);
+
+					if (conditionNum == 0 && conditionTime == 0) {
+						ArrayList<InternationalFlightDTO> i1;
+						i1 = new ArrayList<>();
+						i1 = mf.getInternational().getAll();
+						m1: for (int i = 0; i < i1.size(); i++) {
+							int theId = i1.get(i).getId();
+
+							if (id == theId) {
+								String cap = i1.get(i).getNameCaptain();
+								String sub = i1.get(i).getNameSecondCommand();
+								mf.getInternational().update(
+										new InternationalFlightDTO(null, 0, null, null, 0, 0, 0, id, null, null, false),
+										new InternationalFlightDTO(company, thePassengers, cap, sub, theDepartureTime,
+												theArraivalTime, combustibleInt, id, departurePlace, arrival, theVisa));
+								JOptionPane.showMessageDialog(null, "Vuelo numero " + id + " actualizado exitosamente");
+								reiniciarInputsInt();
+								reiniciarInputsNac();
+								break m1;
+							} else {
+								continue m1;
+							}
+
 						}
 
+					} else if (conditionNum1 == 1) {
+						vf.getMa().getTxtPassengersNumber().setText(null);
+					} else if (conditionTime == 1) {
+						vf.getMa().getTxtArrivalTime().setText(null);
+					} else if (conditionTime == 2) {
+						vf.getMa().getTxtDepartureTime().setText(null);
 					}
 				}
-
 				break;
 			default:
 				break;
@@ -270,10 +283,16 @@ public class Controller implements ActionListener {
 			break;
 
 		case "mostrarActualizar":
-
-			String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
-			vf.getMa().getNumVuelo().setText(numAct);
-			id = Integer.parseInt(numAct);
+			boolean funcion = false;
+			boolean funcion2 = false;
+			try {
+				String numAct = JOptionPane.showInputDialog("ingrese el numero de vuelo a actualizar");
+				vf.getMa().getNumVuelo().setText(numAct);
+				id = Integer.parseInt(numAct);
+			} catch (NumberFormatException x) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 			ArrayList<NationalFlightDTO> s1;
 			s1 = new ArrayList<>();
@@ -282,6 +301,7 @@ public class Controller implements ActionListener {
 			m: for (int i = 0; i < s1.size(); i++) {
 				int theId = s1.get(i).getId();
 				if (id == theId) {
+					funcion = true;
 					mostrarActualizar1();
 					numActualizar = 1;
 					break m;
@@ -297,12 +317,17 @@ public class Controller implements ActionListener {
 			m: for (int i = 0; i < i1.size(); i++) {
 				int theId = i1.get(i).getId();
 				if (id == theId) {
+					funcion2 = true;
 					mostrarActualizar2();
 					numActualizar = 2;
 					break m;
 				} else {
 					continue;
 				}
+			}
+			if (funcion == false && funcion2 == false) {
+				vf.getMa().getNumVuelo().setText("No existe");
+				JOptionPane.showMessageDialog(null, "No existe el vuelo digitado", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 			break;
@@ -392,15 +417,15 @@ public class Controller implements ActionListener {
 		case "internacional":
 			numSeleccionado = 2;
 			vf.getMa().getArrivalInternacional().setVisible(true);
-			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
 			desactivarMenuVariables();
+			JOptionPane.showMessageDialog(null, "Vuelo nacional internacional seleccionado");
 			break;
 		case "nacional":
 
 			numSeleccionado = 1;
 			vf.getMa().getArrival().setVisible(true);
-			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 			desactivarMenuVariables();
+			JOptionPane.showMessageDialog(null, "Vuelo nacional seleccionado");
 			break;
 		case "btnAniadir":
 			mostrarAniadir();
@@ -523,9 +548,10 @@ public class Controller implements ActionListener {
 					int conditionNum1 = passengersException(passengers);
 					int conditionTime = timeException(theArraivalTime, theDepartureTime);
 					int combustibleInt = combustibleIntercional(thePassengers);
-
 					boolean condition = booleanException(visa);
+
 					if (conditionNum1 == 0 && conditionTime == 0) {
+
 						if (condition == true) {
 							JOptionPane.showMessageDialog(null, "Solamente debe digitar si o no", "Error",
 									JOptionPane.ERROR_MESSAGE);
@@ -839,22 +865,6 @@ public class Controller implements ActionListener {
 
 	public int timeException(int arrival, int departure) {
 		try {
-			ExceptionChecker.checkNegativeTime(arrival);
-		} catch (CheckNegativeTime e) {
-			// TODO: handle exception
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada no puede ser negativa", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			return 1;
-		}
-		try {
-			ExceptionChecker.MilitaryHour(arrival);
-		} catch (MilitaryHourException e) {
-			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada debe estar en formato militar", "Error",
-					JOptionPane.ERROR_MESSAGE);
-
-			return 1;
-		}
-		try {
 
 			ExceptionChecker.checkNegativeTime(departure);
 		} catch (CheckNegativeTime e) {
@@ -869,6 +879,22 @@ public class Controller implements ActionListener {
 					JOptionPane.ERROR_MESSAGE);
 			// TODO: handle exception
 			return 2;
+		}
+		try {
+			ExceptionChecker.checkNegativeTime(arrival);
+		} catch (CheckNegativeTime e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada no puede ser negativa", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return 1;
+		}
+		try {
+			ExceptionChecker.MilitaryHour(arrival);
+		} catch (MilitaryHourException e) {
+			JOptionPane.showMessageDialog(vf.getMa(), "la La hora de llegada debe estar en formato militar", "Error",
+					JOptionPane.ERROR_MESSAGE);
+
+			return 1;
 		}
 
 		return 0;
