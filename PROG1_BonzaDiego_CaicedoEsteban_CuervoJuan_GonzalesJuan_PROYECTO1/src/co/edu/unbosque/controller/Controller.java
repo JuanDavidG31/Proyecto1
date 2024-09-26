@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ public class Controller implements ActionListener {
 	private InternationalFlightDTO in;
 	private int distanceInternacional = 0;
 	private int distanceNacional = 0;
+	boolean modoOscuro = false;
 
 	public Controller() {
 
@@ -64,9 +66,6 @@ public class Controller implements ActionListener {
 
 		vf.getMa().getBtnSalir().addActionListener(this);
 		vf.getMa().getBtnSalir().setActionCommand("btnSalir");
-
-		vf.getMa().getBtnBuscarCentral().addActionListener(this);
-		vf.getMa().getBtnBuscarCentral().setActionCommand("btnBusqueda");
 
 		vf.getMa().getBtnCambiarModo().addActionListener(this);
 		vf.getMa().getBtnCambiarModo().setActionCommand("btnCambiarModo");
@@ -169,6 +168,83 @@ public class Controller implements ActionListener {
 			eliminar(numVuelo);
 
 			break;
+		case "btnCambiarModo":
+			
+			if (modoOscuro) {
+				//Botones
+				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModo());
+				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzq());
+				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizar());
+				vf.getMa().getBtnEliminar().setIcon(vf.getMa().getImagenEliminar());
+				vf.getMa().getBtnGuardar().setIcon(vf.getMa().getImagenGuardar());
+				vf.getMa().getBtnMostrar().setIcon(vf.getMa().getImagenMostrar());
+				vf.getMa().getBtnSalir().setIcon(vf.getMa().getImagenSalir());
+				vf.getMa().getBtnVuelosInternac().setIcon(vf.getMa().getImagenVuelosInternacionales());
+				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionales());
+				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadir());
+				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustible());
+				
+				//Paneles
+				vf.getMa().getPanelCentral().setBackground(Color.white);
+				vf.getMa().getPanelInferior().setBackground(Color.white);
+				vf.getMa().getPanelInternationalFlight().setBackground(Color.white);
+				vf.getMa().getPanelIzq().setBackground(Color.white);
+				vf.getMa().getPanelNationalFlight().setBackground(Color.white);
+				vf.getMa().getPanelVariable().setBackground(Color.white);
+				vf.getMa().getPanelVuelos().setBackground(Color.white);
+				
+				//Labels
+				vf.getMa().getLblArrivalPlace().setForeground(Color.black);
+				vf.getMa().getLblArrivalTime().setForeground(Color.black);
+				vf.getMa().getLblCompanyName().setForeground(Color.black);
+				vf.getMa().getLblDepartureTime().setForeground(Color.black);
+				vf.getMa().getLblIsTurbine().setForeground(Color.black);
+				vf.getMa().getLblIsTurboProp().setForeground(Color.black);
+				vf.getMa().getLblIsVisa().setForeground(Color.black);
+				vf.getMa().getLblPassengersNumber().setForeground(Color.black);
+				vf.getMa().getNumVuelo().setForeground(Color.black);
+				vf.getMa().getTxtNumVuelo().setForeground(Color.black);
+				
+				
+				modoOscuro = false;
+			} else {
+				//Botones
+				vf.getMa().getBtnCambiarModo().setIcon(vf.getMa().getImagenCambiarModoOscuro());
+				vf.getMa().getBtnActualizar().setIcon(vf.getMa().getImagenActualizarIzqOscuro());
+				vf.getMa().getBtnActualizarInferior().setIcon(vf.getMa().getImagenActualizarOscuro());
+				vf.getMa().getBtnEliminar().setIcon(vf.getMa().getImagenEliminarOscuro());
+				vf.getMa().getBtnGuardar().setIcon(vf.getMa().getImagenGuardarOscuro());
+				vf.getMa().getBtnMostrar().setIcon(vf.getMa().getImagenMostrarOscuro());
+				vf.getMa().getBtnSalir().setIcon(vf.getMa().getImagenSalirOscuro());
+				vf.getMa().getBtnVuelosInternac().setIcon(vf.getMa().getImagenVuelosInternacionalesOscuro());
+				vf.getMa().getBtnVuelosNac().setIcon(vf.getMa().getImagenVuelosNacionalesOscuro());
+				vf.getMa().getBtnAniadir().setIcon(vf.getMa().getImagenAniadirOscuro());
+				vf.getMa().getBtnCombustible().setIcon(vf.getMa().getImagenCombustibleOscuro());
+				
+				//Paneles
+				vf.getMa().getPanelCentral().setBackground(Color.black);
+				vf.getMa().getPanelInferior().setBackground(Color.black);
+				vf.getMa().getPanelInternationalFlight().setBackground(Color.black);
+				vf.getMa().getPanelIzq().setBackground(Color.black);
+				vf.getMa().getPanelNationalFlight().setBackground(Color.black);
+				vf.getMa().getPanelVariable().setBackground(Color.black);
+				vf.getMa().getPanelVuelos().setBackground(Color.black);
+				
+				//Labels
+				vf.getMa().getLblArrivalPlace().setForeground(Color.white);
+				vf.getMa().getLblArrivalTime().setForeground(Color.white);
+				vf.getMa().getLblCompanyName().setForeground(Color.white);
+				vf.getMa().getLblDepartureTime().setForeground(Color.white);
+				vf.getMa().getLblIsTurbine().setForeground(Color.white);
+				vf.getMa().getLblIsTurboProp().setForeground(Color.white);
+				vf.getMa().getLblIsVisa().setForeground(Color.white);
+				vf.getMa().getLblPassengersNumber().setForeground(Color.white);
+				vf.getMa().getNumVuelo().setForeground(Color.white);
+				vf.getMa().getTxtNumVuelo().setForeground(Color.white);
+				modoOscuro = true;
+			}
+			break;
+			
 
 		case "internacional":
 			numSeleccionado = 2;
@@ -185,10 +261,6 @@ public class Controller implements ActionListener {
 		case "btnAniadir":
 			mostrarAniadir();
 			break;
-		case "btnBusqueda":
-			vf.getMa().getPanelBuscar().setVisible(true);
-			break;
-
 		case "guardar":
 			// distanciaNacional();
 			switch (numSeleccionado) {
