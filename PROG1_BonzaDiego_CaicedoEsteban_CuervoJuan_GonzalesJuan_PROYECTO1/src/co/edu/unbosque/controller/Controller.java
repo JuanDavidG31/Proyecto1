@@ -303,8 +303,10 @@ public class Controller implements ActionListener {
 				} else {
 					continue;
 				}
+				
 			}
-
+			
+			
 			break;
 
 		case "eliminar":
