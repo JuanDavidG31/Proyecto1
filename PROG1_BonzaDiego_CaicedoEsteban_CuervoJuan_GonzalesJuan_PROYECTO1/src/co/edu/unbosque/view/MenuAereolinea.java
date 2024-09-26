@@ -11,16 +11,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class MenuAereolinea extends JFrame {
 	private JButton btnVuelosNac, btnVuelosInternac, btnAniadir, btnActualizarInferior, btnMostrar, btnSalir,
 			btnCambiarModo, btnGuardar, btnActualizar, btnEliminar, btnCombustible;
 	private JPanel panelVuelos, panelIzq, panelCentral, panelInferior, panelVariable, panelInternationalFlight,
-			panelNationalFlight;
+			panelNationalFlight, panelMostrarJTableNacional, panelMostrarJTableOInternacional;
 	private JTextField txtPassengersNumber, txtDepartureTime, txtArrivalTime;
 	private JLabel numVuelo, txtCombustible, txtNumVuelo, lblCompanyName, lblPassengersNumber, lblDepartureTime,
-			lblArrivalTime, lblIsTurboProp, lblIsTurbine, lblIsVisa, lblIDVueloBuscar, logo, lblArrivalPlace;
+			lblArrivalTime, lblIsTurboProp, lblIsTurbine, lblIsVisa, logo, lblArrivalPlace;
 
 	private JComboBox<String> aerolinea, cmbIsTurbo, cmbIsTurbine, cmbVisa, arrival, arrivalInternacional, cmbBusqueda;
 	private ImageIcon imagenCambiarModo, imagenCambiarModoOscuro, imagenGuardar, imagenGuardarOscuro, imagenActualizar,
@@ -28,11 +29,14 @@ public class MenuAereolinea extends JFrame {
 			imagenVuelosNacionalesOscuro, imagenVuelosInternacionales, imagenVuelosInternacionalesOscuro, imagenAniadir,
 			imagenAniadirOscuro, imagenActualizarIzq, imagenActualizarIzqOscuro, imagenMostrar, imagenMostrarOscuro,
 			imagenSalir, imagenSalirOscuro, imagenCombustible, imagenCombustibleOscuro;
-	private JScrollPane scrollpane;
+	private JScrollPane scrollpaneNac, scrollpaneInt;
+	private JTable tablaVuelosNacional, tablaVuelosInterNacional;
 	private final static String INT = "Internacional";
 	private final static String NAC = "Nacional";
 
 	CardLayout cardLayout = new CardLayout();
+	
+	
 
 	public MenuAereolinea() {
 
@@ -42,18 +46,23 @@ public class MenuAereolinea extends JFrame {
 		botones();
 		labels();
 		Combobox();
+		//jTables();
 
 		getPanelCentral().setVisible(false);
 		getPanelInferior().setVisible(false);
 		getPanelIzq().setVisible(false);
 		getPanelVariable().setVisible(false);
 		getPanelVuelos().setVisible(true);
+		getPanelMostrarJTableNacional().setVisible(false);
+		getPanelMostrarJTableOInternacional().setVisible(false);
 
 		add(panelCentral);
 		add(panelInferior);
 		add(panelIzq);
 		add(panelVariable);
 		add(panelVuelos);
+		add(panelMostrarJTableNacional);
+		add(panelMostrarJTableOInternacional);
 
 	}
 
@@ -72,14 +81,14 @@ public class MenuAereolinea extends JFrame {
 		imagenVuelosNacionalesOscuro = new ImageIcon("Images\\btnNacionalesOscuro.png");
 		btnVuelosNac = new JButton(imagenVuelosNacionales);
 		btnVuelosNac.setBorder(null);
-		btnVuelosNac.setBounds(150, 10, 320, 51);
+		btnVuelosNac.setBounds(150, 3, 320, 51);
 		panelVuelos.add(btnVuelosNac);
 
 		imagenVuelosInternacionales = new ImageIcon("Images\\InternacionalesBtn.png");
 		imagenVuelosInternacionalesOscuro = new ImageIcon("Images\\btnInternacionalesOscuro.png");
 		btnVuelosInternac = new JButton(imagenVuelosInternacionales);
 		btnVuelosInternac.setBorder(null);
-		btnVuelosInternac.setBounds(520, 10, 320, 51);
+		btnVuelosInternac.setBounds(520, 3, 320, 51);
 		panelVuelos.add(btnVuelosInternac);
 
 		// Botones panel izquierda (menu)
@@ -188,6 +197,17 @@ public class MenuAereolinea extends JFrame {
 		panelVariable.setBackground(Color.white);
 		panelVariable.add(panelInternationalFlight, INT);
 		panelVariable.add(panelNationalFlight, NAC);
+		
+		panelMostrarJTableNacional = new JPanel();
+		panelMostrarJTableNacional.setLayout(null);
+		panelMostrarJTableNacional.setBounds(151, 61, 850, 525);
+		panelMostrarJTableNacional.setBackground(Color.white);
+		
+		panelMostrarJTableOInternacional = new JPanel();
+		panelMostrarJTableOInternacional.setLayout(null);
+		panelMostrarJTableOInternacional.setBounds(151, 61, 850, 525);
+		panelMostrarJTableOInternacional.setBackground(Color.white);
+		
 
 	}
 
@@ -348,7 +368,7 @@ public class MenuAereolinea extends JFrame {
 		lblIsTurbine.setBounds(35, 20, 230, 30);
 		panelNationalFlight.add(lblIsTurbine);
 
-		lblIsTurboProp = new JLabel("¿Avion de turbo elice?");
+		lblIsTurboProp = new JLabel("¿Avion de turbo helice?");
 		lblIsTurboProp.setFont(new Font("Agency FB", Font.BOLD, 18));
 		lblIsTurboProp.setBounds(380, 20, 230, 30);
 		panelNationalFlight.add(lblIsTurboProp);
@@ -364,6 +384,16 @@ public class MenuAereolinea extends JFrame {
 		panelCentral.add(txtCombustible);
 
 	}
+	
+	/*public void jTables() {
+		tablaVuelosInterNacional = new JTable();
+		
+		scrollpaneInt = new JScrollPane();
+		
+		tablaVuelosNacional = new JTable();
+		
+		scrollpaneNac = new JScrollPane();
+	}*/
 	// Getters and Setters
 
 	public JButton getBtnVuelosNac() {
@@ -556,14 +586,6 @@ public class MenuAereolinea extends JFrame {
 
 	public void setLblIsVisa(JLabel lblIsVisa) {
 		this.lblIsVisa = lblIsVisa;
-	}
-
-	public JScrollPane getScrollpane() {
-		return scrollpane;
-	}
-
-	public void setScrollpane(JScrollPane scrollpane) {
-		this.scrollpane = scrollpane;
 	}
 
 	public JPanel getPanelInternationalFlight() {
@@ -886,4 +908,53 @@ public class MenuAereolinea extends JFrame {
 		this.imagenCombustibleOscuro = imagenCombustibleOscuro;
 	}
 
+	public JPanel getPanelMostrarJTableNacional() {
+		return panelMostrarJTableNacional;
+	}
+
+	public void setPanelMostrarJTableNacional(JPanel panelMostrarJTableNacional) {
+		this.panelMostrarJTableNacional = panelMostrarJTableNacional;
+	}
+
+	public JPanel getPanelMostrarJTableOInternacional() {
+		return panelMostrarJTableOInternacional;
+	}
+
+	public void setPanelMostrarJTableOInternacional(JPanel panelMostrarJTableOInternacional) {
+		this.panelMostrarJTableOInternacional = panelMostrarJTableOInternacional;
+	}
+
+	public JScrollPane getScrollpaneNac() {
+		return scrollpaneNac;
+	}
+
+	public void setScrollpaneNac(JScrollPane scrollpaneNac) {
+		this.scrollpaneNac = scrollpaneNac;
+	}
+
+	public JScrollPane getScrollpaneInt() {
+		return scrollpaneInt;
+	}
+
+	public void setScrollpaneInt(JScrollPane scrollpaneInt) {
+		this.scrollpaneInt = scrollpaneInt;
+	}
+
+	public JTable getTablaVuelosNacional() {
+		return tablaVuelosNacional;
+	}
+
+	public void setTablaVuelosNacional(JTable tablaVuelosNacional) {
+		this.tablaVuelosNacional = tablaVuelosNacional;
+	}
+
+	public JTable getTablaVuelosInterNacional() {
+		return tablaVuelosInterNacional;
+	}
+
+	public void setTablaVuelosInterNacional(JTable tablaVuelosInterNacional) {
+		this.tablaVuelosInterNacional = tablaVuelosInterNacional;
+	}
+	
+	
 }
