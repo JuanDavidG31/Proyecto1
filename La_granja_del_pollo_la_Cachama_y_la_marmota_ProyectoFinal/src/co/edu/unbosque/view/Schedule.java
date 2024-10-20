@@ -79,7 +79,7 @@ public class Schedule extends JFrame {
 	}
 
 	public void buttons() {
-		generate= new JButton("Agendar");
+		generate = new JButton("Agendar");
 		generate.setBounds(500, 500, 100, 50);
 		mainPanel.add(generate);
 
@@ -94,5 +94,52 @@ public class Schedule extends JFrame {
 		// TODO Auto-generated method stub
 
 	}
+
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+
+
+	public void setName(JTextField name) {
+		this.name = name;
+	}
+
+	public JTextField getEmail() {
+		return email;
+	}
+
+	public void setEmail(JTextField email) {
+		this.email = email;
+	}
+
+	public JComboBox<String> getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(JComboBox<String> doctor) {
+		this.doctor = doctor;
+	}
+
+	public JComboBox<String> getSpecialty() {
+		return specialty;
+	}
+
+	public void setSpecialty(JComboBox<String> specialty) {
+		this.specialty = specialty;
+	}
+
+	public JButton getGenerate() {
+		return generate;
+	}
+
+	public void setGenerate(JButton generate) {
+		this.generate = generate;
+	}
+
 
 }
