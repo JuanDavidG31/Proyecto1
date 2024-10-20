@@ -13,19 +13,21 @@ public class Controller implements ActionListener {
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
-
 		assignReaders();
+		vf.getHome().setVisible(true);
 	}
 
 	public void assignReaders() {
-
+		vf.getHome().getSchedule().addActionListener(this);
+		vf.getHome().getSchedule().setActionCommand("scheduleInit");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "a":
-
+		case "scheduleInit":
+			vf.getHome().setVisible(false);
+			vf.getSchedule().setVisible(true);
 			break;
 
 		default:
