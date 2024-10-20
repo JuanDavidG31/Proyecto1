@@ -1,10 +1,12 @@
 package co.edu.unbosque.view;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class HomeWindow extends JFrame {
 	private JPanel mainPanel;
+	private JButton schedule;
 
 	public HomeWindow() {
 		window();
@@ -18,7 +20,7 @@ public class HomeWindow extends JFrame {
 
 	public void window() {
 		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
-										// wide,high)
+									// wide,high)
 		setTitle(""); // tittle on window
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // Close window and close the software
 		setResizable(false);
@@ -30,16 +32,18 @@ public class HomeWindow extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setBounds(0, 0, 800, 600);
 		mainPanel.setLayout(null);
-		
+
 	}
+
 	public void inputs() {
 		// TODO Auto-generated method stub
 
 	}
 
-
 	public void buttons() {
-		// TODO Auto-generated method stub
+		schedule = new JButton("agendar");
+		schedule.setBounds(50, 50, 150, 100);
+		mainPanel.add(schedule);
 
 	}
 
@@ -52,4 +56,21 @@ public class HomeWindow extends JFrame {
 		// TODO Auto-generated method stub
 
 	}
+
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+	public JButton getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(JButton schedule) {
+		this.schedule = schedule;
+	}
+	
 }
