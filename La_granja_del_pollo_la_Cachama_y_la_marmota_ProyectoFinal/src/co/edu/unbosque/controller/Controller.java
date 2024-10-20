@@ -37,14 +37,14 @@ public class Controller implements ActionListener {
 			break;
 
 		case "generatedPatient":
-			
+
 			String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 			String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
-			String name = vf.getSchedule().getName().toString();
+			String name = vf.getSchedule().getName1().getText().toString();
 			String gmail = vf.getSchedule().getEmail().getText().toString();
-			
+
 			mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, null, 0));
-			
+
 			break;
 
 		default:

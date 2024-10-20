@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 public class Schedule extends JFrame {
 	private JPanel mainPanel;
-	private JTextField name, email;
+	private JTextField name1, email;
 	private JComboBox<String> doctor, specialty;
 	private JButton generate;
 
@@ -68,9 +68,9 @@ public class Schedule extends JFrame {
 	}
 
 	public void inputs() {
-		name = new JTextField("nombre");
-		name.setBounds(300, 300, 150, 50);
-		mainPanel.add(name);
+		name1 = new JTextField();
+		name1.setBounds(300, 300, 150, 50);
+		mainPanel.add(name1);
 
 		email = new JTextField("correo electronico");
 		email.setBounds(400, 400, 150, 50);
@@ -103,10 +103,12 @@ public class Schedule extends JFrame {
 		this.mainPanel = mainPanel;
 	}
 
+	public JTextField getName1() {
+		return name1;
+	}
 
-
-	public void setName(JTextField name) {
-		this.name = name;
+	public void setName1(JTextField name1) {
+		this.name1 = name1;
 	}
 
 	public JTextField getEmail() {
@@ -140,6 +142,5 @@ public class Schedule extends JFrame {
 	public void setGenerate(JButton generate) {
 		this.generate = generate;
 	}
-
 
 }
