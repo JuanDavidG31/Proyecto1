@@ -22,7 +22,15 @@ public class Schedule extends JFrame {
 
 		add(mainPanel);
 	}
+	public void window() {
+		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
+									// wide,high)
+		setTitle(""); // tittle on window
+		setDefaultCloseOperation(EXIT_ON_CLOSE); // Close window and close the software
+		setResizable(false);
+		setLayout(null);
 
+	}
 	public void panels() {
 		mainPanel = new JPanel();
 		mainPanel.setBounds(0, 0, 800, 600);
@@ -57,18 +65,10 @@ public class Schedule extends JFrame {
 
 	}
 
-	public void window() {
-		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
-									// wide,high)
-		setTitle(""); // tittle on window
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // Close window and close the software
-		setResizable(false);
-		setLayout(null);
-
-	}
+	
 
 	public void inputs() {
-		name1 = new JTextField();
+		name1 = new JTextField("nombre");
 		name1.setBounds(300, 300, 150, 50);
 		mainPanel.add(name1);
 
@@ -79,7 +79,7 @@ public class Schedule extends JFrame {
 	}
 
 	public void buttons() {
-		generate = new JButton("Agendar");
+		generate= new JButton("Agendar");
 		generate.setBounds(500, 500, 100, 50);
 		mainPanel.add(generate);
 
