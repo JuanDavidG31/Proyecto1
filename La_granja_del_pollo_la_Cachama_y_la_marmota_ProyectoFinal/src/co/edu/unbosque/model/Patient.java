@@ -2,7 +2,7 @@ package co.edu.unbosque.model;
 
 import java.io.Serializable;
 
-public class Patient extends Person implements Serializable{
+public class Patient extends Person implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,12 +16,9 @@ public class Patient extends Person implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Patient(String doctor, String specialty, String date, int appointmentNum) {
-		super();
-		this.doctor = doctor;
-		this.specialty = specialty;
-		this.date = date;
-		this.appointmentNum = appointmentNum;
+	public Patient(String name, String gmail, int age, int id) {
+		super(name, gmail, age, id);
+		// TODO Auto-generated constructor stub
 	}
 
 	public Patient(String name, String gmail, int age, int id, String doctor, String specialty, String date,
@@ -32,6 +29,15 @@ public class Patient extends Person implements Serializable{
 		this.date = date;
 		this.appointmentNum = appointmentNum;
 	}
+
+	public Patient(String doctor, String specialty, String date, int appointmentNum) {
+		super();
+		this.doctor = doctor;
+		this.specialty = specialty;
+		this.date = date;
+		this.appointmentNum = appointmentNum;
+	}
+	
 
 	public String getDoctor() {
 		return doctor;

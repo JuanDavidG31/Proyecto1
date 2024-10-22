@@ -36,7 +36,7 @@ public class HomeWindow extends JFrame {
 	}
 
 	public void inputs() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
