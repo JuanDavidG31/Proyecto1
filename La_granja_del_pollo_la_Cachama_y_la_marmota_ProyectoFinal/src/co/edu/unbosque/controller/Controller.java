@@ -3,6 +3,7 @@ package co.edu.unbosque.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -144,9 +145,11 @@ public class Controller implements ActionListener {
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
 				String name = vf.getSchedule().getName1().getText().toString();
 				String gmail = vf.getSchedule().getEmail().getText().toString();
+				String date = vf.getSchedule().getDate1().getDate().toString();
+
 				int appoitment = appoitment();
 
-				mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, null, appoitment));
+				mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment));
 
 				JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
 			}
@@ -160,7 +163,7 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
-
+				String date = "date";
 				ArrayList<PatientDTO> pat;
 				pat = new ArrayList<>();
 				pat = mf.getPatient().getAll();
@@ -175,7 +178,7 @@ public class Controller implements ActionListener {
 						String gmail = pat.get(i).getGmail();
 
 						if (mf.getPatient().update(new PatientDTO(null, null, 0, 0, null, null, null, appoint),
-								new PatientDTO(name, gmail, 0, 0, doctor, specialty, "FECHA", appoint))) {
+								new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " actualizado exitosamente");
@@ -199,7 +202,7 @@ public class Controller implements ActionListener {
 
 			break;
 		case "cancel":
-			
+
 			if (vf.getSchedule().getAppointmentNumber().getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);

@@ -146,6 +146,14 @@ public class Schedule extends JFrame {
 
 	}
 
+	public JDateChooser getDate1() {
+		return date1;
+	}
+
+	public void setDate1(JDateChooser date1) {
+		this.date1 = date1;
+	}
+
 	public void window() {
 		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
 									// wide,high)
