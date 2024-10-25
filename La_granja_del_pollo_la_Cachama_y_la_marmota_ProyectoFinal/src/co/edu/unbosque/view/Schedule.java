@@ -183,7 +183,7 @@ public class Schedule extends JFrame {
 	private void comboBox() {
 		doctor = new JComboBox<String>();
 		doctor.setBounds(356, 297, 251, 30);
-		doctor.addItem("medico");
+		doctor.addItem("");
 		doctor.addItem("nombre 1");
 		doctor.addItem("nombre 2");
 		doctor.addItem("nombre 3");
@@ -195,7 +195,7 @@ public class Schedule extends JFrame {
 
 		specialty = new JComboBox<String>();
 		specialty.setBounds(356, 256, 251, 30);
-		specialty.addItem("especialidad");
+		specialty.addItem("");
 		specialty.addItem("1");
 		specialty.addItem("2");
 		specialty.addItem("3");
@@ -208,20 +208,21 @@ public class Schedule extends JFrame {
 	}
 
 	public void inputs() {
-		name1 = new JTextField("nombre");
+		name1 = new JTextField();
 		name1.setBorder(null);
 		name1.setBounds(356, 175, 251, 30);
 		schedulePanel.add(name1);
 
-		email = new JTextField("correo electronico");
+		email = new JTextField();
 		email.setBorder(null);
 		email.setBounds(356, 215, 251, 30);
 		schedulePanel.add(email);
 
-		appointmentNumber = new JTextField("Numero Cita");
+		appointmentNumber = new JTextField();
 		appointmentNumber.setBorder(null);
 		appointmentNumber.setBounds(354, 245, 251, 30);
-		reschedulePanel.add(appointmentNumber);
+		cancelPanel.add(appointmentNumber);
+		
 
 	}
 

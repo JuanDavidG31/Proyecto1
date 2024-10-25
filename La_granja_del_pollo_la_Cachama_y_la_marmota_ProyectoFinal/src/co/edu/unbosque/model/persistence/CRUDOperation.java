@@ -14,6 +14,8 @@ public interface CRUDOperation <D, E>{//D -> DTO || E -> Entidad
 	
 	public E find(E toFind); //to buscar; verificar si existe o no; null -> no existe
 	
+	public E find2(E toFind); //to buscar; verificar si existe o no; null -> no existe
+	
 	public boolean update(D previous, D newData); //actualizarr
 	
 }
