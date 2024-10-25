@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 public class Schedule extends JFrame {
 	private JPanel mainPanel, schedulePanel, reschedulePanel, cancelPanel, infoPanel;
 	private JTextField name1, email, appointmentNumber;
@@ -20,6 +23,7 @@ public class Schedule extends JFrame {
 	private JButton themeMain, schTheme, reTheme, canTheme, infoName, infoEmail, infospecialty, 
 	infoDoctor, infoDate,infoNDate,infoNum,infoNumCancel;
 	private JLabel background1, background2, background3, background4;
+	private JDateChooser date1;
 
 	public Schedule() {
 		window();
@@ -28,6 +32,7 @@ public class Schedule extends JFrame {
 		comboBox();
 		headlines();
 		info();
+		calendar();
 		buttons();
 		backgorunds();
 
@@ -41,6 +46,13 @@ public class Schedule extends JFrame {
 		reschedulePanel.setVisible(false);
 		cancelPanel.setVisible(false);
 		infoPanel.setVisible(false);
+	}
+
+	private void calendar() {
+		date1= new JDateChooser();
+		date1.setBounds(0, 0, 251, 200);
+		mainPanel.add(date1);
+		
 	}
 
 	private void info() {
@@ -101,6 +113,7 @@ public class Schedule extends JFrame {
 		infoNumCancel.setToolTipText("");
 		infoNumCancel.setIcon(new ImageIcon(scaled12));
 		infoPanel.add(infoNumCancel);
+		
 	}
 
 	private void backgorunds() {
