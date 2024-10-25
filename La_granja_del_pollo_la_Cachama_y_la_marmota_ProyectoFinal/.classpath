@@ -7,9 +7,9 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jcaledar">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JCalendar">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="E:/ProyectoFinalCorte3/ProyectoFinalCorte3/La_granja_del_pollo_la_Cachama_y_la_marmota_ProyectoFinal/Libraries"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
