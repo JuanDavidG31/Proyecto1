@@ -7,8 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JCalendar"/>
-
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jcaledar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
