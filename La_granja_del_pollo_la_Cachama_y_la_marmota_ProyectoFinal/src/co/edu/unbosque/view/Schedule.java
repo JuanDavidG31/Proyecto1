@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 public class Schedule extends JFrame {
 	private JPanel mainPanel, schedulePanel, reschedulePanel, cancelPanel, infoPanel;
 	private JTextField name1, email, appointmentNumber;
@@ -20,6 +23,7 @@ public class Schedule extends JFrame {
 	private JButton themeMain, schTheme, reTheme, canTheme, infoName, infoEmail, infospecialty, 
 	infoDoctor, infoDate,infoNDate,infoNum,infoNumCancel;
 	private JLabel background1, background2, background3, background4;
+	private JDateChooser date1;
 
 	public Schedule() {
 		window();
@@ -28,6 +32,7 @@ public class Schedule extends JFrame {
 		comboBox();
 		headlines();
 		info();
+		calendar();
 		buttons();
 		backgorunds();
 
@@ -41,6 +46,13 @@ public class Schedule extends JFrame {
 		reschedulePanel.setVisible(false);
 		cancelPanel.setVisible(false);
 		infoPanel.setVisible(false);
+	}
+
+	private void calendar() {
+		date1= new JDateChooser();
+		date1.setBounds(0, 0, 251, 200);
+		mainPanel.add(date1);
+		
 	}
 
 	private void info() {
@@ -101,6 +113,7 @@ public class Schedule extends JFrame {
 		infoNumCancel.setToolTipText("");
 		infoNumCancel.setIcon(new ImageIcon(scaled12));
 		infoPanel.add(infoNumCancel);
+		
 	}
 
 	private void backgorunds() {
@@ -170,7 +183,7 @@ public class Schedule extends JFrame {
 	private void comboBox() {
 		doctor = new JComboBox<String>();
 		doctor.setBounds(356, 297, 251, 30);
-		doctor.addItem("medico");
+		doctor.addItem("");
 		doctor.addItem("nombre 1");
 		doctor.addItem("nombre 2");
 		doctor.addItem("nombre 3");
@@ -182,7 +195,7 @@ public class Schedule extends JFrame {
 
 		specialty = new JComboBox<String>();
 		specialty.setBounds(356, 256, 251, 30);
-		specialty.addItem("especialidad");
+		specialty.addItem("");
 		specialty.addItem("1");
 		specialty.addItem("2");
 		specialty.addItem("3");
@@ -195,20 +208,21 @@ public class Schedule extends JFrame {
 	}
 
 	public void inputs() {
-		name1 = new JTextField("nombre");
+		name1 = new JTextField();
 		name1.setBorder(null);
 		name1.setBounds(356, 175, 251, 30);
 		schedulePanel.add(name1);
 
-		email = new JTextField("correo electronico");
+		email = new JTextField();
 		email.setBorder(null);
 		email.setBounds(356, 215, 251, 30);
 		schedulePanel.add(email);
 
-		appointmentNumber = new JTextField("Numero Cita");
+		appointmentNumber = new JTextField();
 		appointmentNumber.setBorder(null);
 		appointmentNumber.setBounds(354, 245, 251, 30);
-		reschedulePanel.add(appointmentNumber);
+		cancelPanel.add(appointmentNumber);
+		
 
 	}
 

@@ -51,7 +51,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 
 	@Override
 	public boolean delete(PatientDTO toDelete) {
-		Patient found = find(DataMapper.PatientDTOToPatient(toDelete));
+		Patient found = find2(DataMapper.PatientDTOToPatient(toDelete));
 		if (found != null) {
 			patientList.remove(found);
 			writeFile();
@@ -82,8 +82,27 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 	}
 
 	@Override
+	public Patient find2(Patient toFind) {
+
+		Patient found = null;
+		if (!patientList.isEmpty()) {
+			for (Patient Patient : patientList) {
+				if (Patient.getAppointmentNum() == toFind.getAppointmentNum()) {
+					found = Patient;
+					return found;
+				} else {
+					continue; // las sig lineas desps de continue no se ejecutan, saltan a la sig iteracion
+				}
+			}
+		} else {
+			return null;
+		}
+		return null;
+	}
+
+	@Override
 	public boolean update(PatientDTO previous, PatientDTO newData) {
-		Patient found = find(DataMapper.PatientDTOToPatient(previous));
+		Patient found = find2(DataMapper.PatientDTOToPatient(previous));
 		if (found != null) {
 			patientList.remove(found);
 			patientList.add(DataMapper.PatientDTOToPatient(newData));
