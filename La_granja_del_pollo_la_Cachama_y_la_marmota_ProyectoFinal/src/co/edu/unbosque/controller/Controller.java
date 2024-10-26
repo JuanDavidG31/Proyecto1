@@ -2,6 +2,7 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -145,13 +146,30 @@ public class Controller implements ActionListener {
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
 				String name = vf.getSchedule().getName1().getText().toString();
 				String gmail = vf.getSchedule().getEmail().getText().toString();
-				String date = vf.getSchedule().getDate1().getDate().toString();
+
+				Date tDate = vf.getSchedule().getDate1().getDate();
+				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+				String date = formatoFecha.format(tDate);
 
 				int appoitment = appoitment();
 
-				mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment));
+				
+				
+				if(mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment))) {
+					
+					
+					
+					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
+					
+					//ENVIO DE NOTIFICACION MEDIANTE CORREO GMAiL
+					
+				}else {
+					
+					
+					JOptionPane.showMessageDialog(null, "No se pudo crear");
+					
+				}
 
-				JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
 			}
 
 			break;
