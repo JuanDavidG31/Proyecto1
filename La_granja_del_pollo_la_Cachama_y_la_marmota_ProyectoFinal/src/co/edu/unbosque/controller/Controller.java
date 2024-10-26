@@ -93,7 +93,7 @@ public class Controller implements ActionListener {
 
 		vf.getSchedule().getReTheme().addActionListener(this);
 		vf.getSchedule().getReTheme().setActionCommand("theme");
-		
+
 		vf.getSchedule().getCanTheme().addActionListener(this);
 		vf.getSchedule().getCanTheme().setActionCommand("theme");
 
@@ -104,8 +104,7 @@ public class Controller implements ActionListener {
 
 		vf.getTreatemnets().getHome().addActionListener(this);
 		vf.getTreatemnets().getHome().setActionCommand("backMainMenu");
-		
-		
+
 	}
 
 	@Override
@@ -115,14 +114,14 @@ public class Controller implements ActionListener {
 			changeTheme();
 			break;
 		case "backMainMenu":
-			
+
 			if (vf.getSchedule().isVisible()) {
 				vf.getSchedule().setVisible(false);
 				vf.getHome().setVisible(true);
 			} else if (vf.getTreatemnets().isVisible()) {
 				vf.getTreatemnets().setVisible(false);
 				vf.getHome().setVisible(true);
-			}else if (vf.getShifts().isVisible()) {
+			} else if (vf.getShifts().isVisible()) {
 				vf.getShifts().setVisible(false);
 				vf.getHome().setVisible(true);
 			}
@@ -176,7 +175,8 @@ public class Controller implements ActionListener {
 			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getEmail().getText().toString().equals("")
 					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
-					|| vf.getSchedule().getName1().getText().toString().equals("")) {
+					|| vf.getSchedule().getName1().getText().toString().equals("")
+					|| vf.getSchedule().getDate1().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -210,12 +210,14 @@ public class Controller implements ActionListener {
 
 		case "reGenerated":
 
-			if (vf.getSchedule().getAppointmentNumber().getText().toString().equals("")) {
+			if (vf.getSchedule().getAppointmentNumbers().getText().toString().equals("")
+					|| vf.getSchedule().getDate2().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
-				String date = "date";
+				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
+				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+				String date = formatoFecha.format(vf.getSchedule().getDate2().getDate());
 				ArrayList<PatientDTO> pat;
 				pat = new ArrayList<>();
 				pat = mf.getPatient().getAll();
@@ -335,23 +337,23 @@ public class Controller implements ActionListener {
 
 			ImageIcon scheduleC = new ImageIcon("Images\\menuCitas\\1.png");
 			vf.getSchedule().getScheduleButton().setIcon(scheduleC);
-			
+
 			ImageIcon reScheduleC = new ImageIcon("Images\\menuCitas\\3.png");
 			vf.getSchedule().getRescheduleButton().setIcon(reScheduleC);
-			
+
 			ImageIcon cancelScheduleC = new ImageIcon("Images\\menuCitas\\5.png");
 			vf.getSchedule().getCancelButton().setIcon(cancelScheduleC);
-			
+
 			vf.getSchedule().getThemeMain().setIcon(themeClear);
-			
+
 			vf.getSchedule().getInfoPanel().setBackground(new Color(0, 74, 173));
-		
+
 			ImageIcon homeBClear = new ImageIcon("Images\\backButtons\\1.png");
 			vf.getSchedule().getHome().setIcon(homeBClear);
-			
+
 			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarCita.png");
 			vf.getSchedule().getBackground2().setIcon(schedulePanelClear);
-			
+
 			ImageIcon reSchedulePanelClear = new ImageIcon("Images\\menuCitas\\reagendarCita.png");
 			vf.getSchedule().getBackground3().setIcon(reSchedulePanelClear);
 
@@ -389,31 +391,29 @@ public class Controller implements ActionListener {
 
 			ImageIcon scheduleD = new ImageIcon("Images\\menuCitas\\2.png");
 			vf.getSchedule().getScheduleButton().setIcon(scheduleD);
-			
+
 			ImageIcon reScheduleD = new ImageIcon("Images\\menuCitas\\4.png");
 			vf.getSchedule().getRescheduleButton().setIcon(reScheduleD);
-			
+
 			ImageIcon cancelScheduleD = new ImageIcon("Images\\menuCitas\\6.png");
 			vf.getSchedule().getCancelButton().setIcon(cancelScheduleD);
-			
+
 			vf.getSchedule().getThemeMain().setIcon(themeDark);
-			
+
 			vf.getSchedule().getInfoPanel().setBackground(Color.BLACK);
-			
+
 			ImageIcon homeBDark = new ImageIcon("Images\\backButtons\\2.png");
 			vf.getSchedule().getHome().setIcon(homeBDark);
-			
+
 			ImageIcon schedulePanelDark = new ImageIcon("Images\\menuCitas\\agendarOscuro.png");
 			vf.getSchedule().getBackground2().setIcon(schedulePanelDark);
-			
+
 			ImageIcon reSchedulePanelDark = new ImageIcon("Images\\menuCitas\\reagendarOscuro.png");
 			vf.getSchedule().getBackground3().setIcon(reSchedulePanelDark);
 
 			ImageIcon cancelPanelDark = new ImageIcon("Images\\menuCitas\\cancelarOscuro.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelDark);
-			
-			
-			
+
 			darkMode = true;
 		}
 	}
