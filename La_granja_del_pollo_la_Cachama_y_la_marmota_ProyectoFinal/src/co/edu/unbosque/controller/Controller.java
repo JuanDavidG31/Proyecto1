@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -34,9 +35,11 @@ public class Controller implements ActionListener {
 	public void assignReaders() {
 
 		// Home Buttons
+		vf.getHome().getExit().addActionListener(this);
+		vf.getHome().getExit().setActionCommand("exit");
 
 		vf.getHome().getTheme().addActionListener(this);
-		vf.getHome().getTheme().setActionCommand("homeTheme");
+		vf.getHome().getTheme().setActionCommand("theme");
 
 		vf.getHome().getSchedule().addActionListener(this);
 		vf.getHome().getSchedule().setActionCommand("homeSchedule");
@@ -81,17 +84,49 @@ public class Controller implements ActionListener {
 
 		vf.getSchedule().getHome().addActionListener(this);
 		vf.getSchedule().getHome().setActionCommand("backMainMenu");
+
+		vf.getSchedule().getThemeMain().addActionListener(this);
+		vf.getSchedule().getThemeMain().setActionCommand("theme");
+
+		vf.getSchedule().getSchTheme().addActionListener(this);
+		vf.getSchedule().getSchTheme().setActionCommand("theme");
+
+		vf.getSchedule().getReTheme().addActionListener(this);
+		vf.getSchedule().getReTheme().setActionCommand("theme");
+		
+		vf.getSchedule().getCanTheme().addActionListener(this);
+		vf.getSchedule().getCanTheme().setActionCommand("theme");
+
+		// Treatments
+
+		vf.getTreatemnets().getThemeMain().addActionListener(this);
+		vf.getTreatemnets().getThemeMain().setActionCommand("theme");
+
+		vf.getTreatemnets().getHome().addActionListener(this);
+		vf.getTreatemnets().getHome().setActionCommand("backMainMenu");
+		
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "homeTheme":
+		case "theme":
 			changeTheme();
 			break;
 		case "backMainMenu":
-			vf.getSchedule().setVisible(false);
-			vf.getHome().setVisible(true);
+			
+			if (vf.getSchedule().isVisible()) {
+				vf.getSchedule().setVisible(false);
+				vf.getHome().setVisible(true);
+			} else if (vf.getTreatemnets().isVisible()) {
+				vf.getTreatemnets().setVisible(false);
+				vf.getHome().setVisible(true);
+			}else if (vf.getShifts().isVisible()) {
+				vf.getShifts().setVisible(false);
+				vf.getHome().setVisible(true);
+			}
+
 			break;
 		case "backHomeSchedule":
 			vf.getSchedule().getMainPanel().setVisible(true);
@@ -103,6 +138,10 @@ public class Controller implements ActionListener {
 		case "homeSchedule":
 			vf.getHome().setVisible(false);
 			vf.getSchedule().setVisible(true);
+			break;
+		case "homeTreatment":
+			vf.getHome().setVisible(false);
+			vf.getTreatemnets().setVisible(true);
 			break;
 		case "scheduleMenu":
 			vf.getSchedule().getMainPanel().setVisible(false);
@@ -153,21 +192,16 @@ public class Controller implements ActionListener {
 
 				int appoitment = appoitment();
 
-				
-				
-				if(mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment))) {
-					
-					
-					
+				if (mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment))) {
+
 					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
-					
-					//ENVIO DE NOTIFICACION MEDIANTE CORREO GMAiL
-					
-				}else {
-					
-					
+
+					// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAiL
+
+				} else {
+
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
-					
+
 				}
 
 			}
@@ -259,6 +293,10 @@ public class Controller implements ActionListener {
 			}
 
 			break;
+		case "exit":
+			JOptionPane.showMessageDialog(vf.getHome(), "Esta saliendo del programa");
+			System.exit(0);
+			break;
 		default:
 			break;
 		}
@@ -268,14 +306,16 @@ public class Controller implements ActionListener {
 	public void changeTheme() {
 
 		if (darkMode) {
+
+			// Home
 			ImageIcon homeClear = new ImageIcon("Images\\menuInicial\\Menu.png");
 			vf.getHome().getBackground1().setIcon(homeClear);
 
 			ImageIcon scheduleClear = new ImageIcon("Images\\menuInicial\\agendarClaro.png");
 			vf.getHome().getSchedule().setIcon(scheduleClear);
 
-			ImageIcon homeThemeClear = new ImageIcon("Images\\CambioTema\\cambioOscuro.png");
-			vf.getHome().getTheme().setIcon(homeThemeClear);
+			ImageIcon themeClear = new ImageIcon("Images\\CambioTema\\cambioOscuro.png");
+			vf.getHome().getTheme().setIcon(themeClear);
 
 			ImageIcon homeTreatmentClear = new ImageIcon("Images\\menuInicial\\tratamientoClaro.png");
 			vf.getHome().getTreatment().setIcon(homeTreatmentClear);
@@ -286,18 +326,50 @@ public class Controller implements ActionListener {
 			ImageIcon homeTurnClear = new ImageIcon("Images\\menuInicial\\turnoClaro.png");
 			vf.getHome().getTurn().setIcon(homeTurnClear);
 
+			ImageIcon exitCl = new ImageIcon("Images\\backButtons\\salirProgramaC.png");
+			vf.getHome().getExit().setIcon(exitCl);
+
+			// Agendar
+			ImageIcon scheduleHomeClear = new ImageIcon("Images\\menuCitas\\menuControlCitasClaro.png");
+			vf.getSchedule().getBackground1().setIcon(scheduleHomeClear);
+
+			ImageIcon scheduleC = new ImageIcon("Images\\menuCitas\\1.png");
+			vf.getSchedule().getScheduleButton().setIcon(scheduleC);
+			
+			ImageIcon reScheduleC = new ImageIcon("Images\\menuCitas\\3.png");
+			vf.getSchedule().getRescheduleButton().setIcon(reScheduleC);
+			
+			ImageIcon cancelScheduleC = new ImageIcon("Images\\menuCitas\\5.png");
+			vf.getSchedule().getCancelButton().setIcon(cancelScheduleC);
+			
+			vf.getSchedule().getThemeMain().setIcon(themeClear);
+			
+			vf.getSchedule().getInfoPanel().setBackground(new Color(0, 74, 173));
+		
+			ImageIcon homeBClear = new ImageIcon("Images\\backButtons\\1.png");
+			vf.getSchedule().getHome().setIcon(homeBClear);
+			
+			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarCita.png");
+			vf.getSchedule().getBackground2().setIcon(schedulePanelClear);
+			
+			ImageIcon reSchedulePanelClear = new ImageIcon("Images\\menuCitas\\reagendarCita.png");
+			vf.getSchedule().getBackground3().setIcon(reSchedulePanelClear);
+
+			ImageIcon cancelPanelClear = new ImageIcon("Images\\menuCitas\\cancelarCita.png");
+			vf.getSchedule().getBackground4().setIcon(cancelPanelClear);
+
 			darkMode = false;
 
 		} else {
-
+			// Home
 			ImageIcon homeDark = new ImageIcon("Images\\menuInicial\\MenuOscuro.png");
 			vf.getHome().getBackground1().setIcon(homeDark);
 
 			ImageIcon scheduleDark = new ImageIcon("Images\\menuInicial\\agendarOscuro.png");
 			vf.getHome().getSchedule().setIcon(scheduleDark);
 
-			ImageIcon homeThemeDark = new ImageIcon("Images\\CambioTema\\cambioClaro.png");
-			vf.getHome().getTheme().setIcon(homeThemeDark);
+			ImageIcon themeDark = new ImageIcon("Images\\CambioTema\\cambioClaro.png");
+			vf.getHome().getTheme().setIcon(themeDark);
 
 			ImageIcon homeTreatmentDark = new ImageIcon("Images\\menuInicial\\tratamientoOscuro.png");
 			vf.getHome().getTreatment().setIcon(homeTreatmentDark);
@@ -308,6 +380,40 @@ public class Controller implements ActionListener {
 			ImageIcon homeTurnDark = new ImageIcon("Images\\menuInicial\\turnoOscuro.png");
 			vf.getHome().getTurn().setIcon(homeTurnDark);
 
+			ImageIcon exitOS = new ImageIcon("Images\\backButtons\\salirProgramaO.png");
+			vf.getHome().getExit().setIcon(exitOS);
+
+			// Agendar
+			ImageIcon scheduleHomeDark = new ImageIcon("Images\\menuCitas\\menuAgendarOscuro.png");
+			vf.getSchedule().getBackground1().setIcon(scheduleHomeDark);
+
+			ImageIcon scheduleD = new ImageIcon("Images\\menuCitas\\2.png");
+			vf.getSchedule().getScheduleButton().setIcon(scheduleD);
+			
+			ImageIcon reScheduleD = new ImageIcon("Images\\menuCitas\\4.png");
+			vf.getSchedule().getRescheduleButton().setIcon(reScheduleD);
+			
+			ImageIcon cancelScheduleD = new ImageIcon("Images\\menuCitas\\6.png");
+			vf.getSchedule().getCancelButton().setIcon(cancelScheduleD);
+			
+			vf.getSchedule().getThemeMain().setIcon(themeDark);
+			
+			vf.getSchedule().getInfoPanel().setBackground(Color.BLACK);
+			
+			ImageIcon homeBDark = new ImageIcon("Images\\backButtons\\2.png");
+			vf.getSchedule().getHome().setIcon(homeBDark);
+			
+			ImageIcon schedulePanelDark = new ImageIcon("Images\\menuCitas\\agendarOscuro.png");
+			vf.getSchedule().getBackground2().setIcon(schedulePanelDark);
+			
+			ImageIcon reSchedulePanelDark = new ImageIcon("Images\\menuCitas\\reagendarOscuro.png");
+			vf.getSchedule().getBackground3().setIcon(reSchedulePanelDark);
+
+			ImageIcon cancelPanelDark = new ImageIcon("Images\\menuCitas\\cancelarOscuro.png");
+			vf.getSchedule().getBackground4().setIcon(cancelPanelDark);
+			
+			
+			
 			darkMode = true;
 		}
 	}

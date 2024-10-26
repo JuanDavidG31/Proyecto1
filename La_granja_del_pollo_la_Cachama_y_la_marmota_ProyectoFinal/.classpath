@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry exported="true" kind="lib" path="E:/Programación 1/git/ProyectoFinalCorte3/La_granja_del_pollo_la_Cachama_y_la_marmota_ProyectoFinal/Libraries/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libraries/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

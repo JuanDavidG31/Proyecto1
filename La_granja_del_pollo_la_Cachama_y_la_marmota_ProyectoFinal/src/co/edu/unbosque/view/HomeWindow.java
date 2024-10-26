@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 public class HomeWindow extends JFrame {
 	private JPanel mainPanel;
-	private JButton schedule, turn, treatment, report, theme;
+	private JButton schedule,exit, turn, treatment, report, theme;
 	private JLabel background1;
 
 	public HomeWindow() {
@@ -102,6 +102,15 @@ public class HomeWindow extends JFrame {
 		Image scaled5 = image5.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
 		theme.setIcon(new ImageIcon(scaled5));
 		mainPanel.add(theme);
+		
+		exit= new JButton();
+		exit.setBounds(655, 450, 79, 79);
+		exit.setBorderPainted(false);
+		exit.setToolTipText("Salir del programa");
+		ImageIcon imageE = new ImageIcon("Images\\backButtons\\salirProgramaC.png");
+		Image scaledE = imageE.getImage().getScaledInstance(79, 79, Image.SCALE_REPLICATE);
+		exit.setIcon(new ImageIcon(scaledE));
+		mainPanel.add(exit);
 
 	}
 
@@ -169,6 +178,14 @@ public class HomeWindow extends JFrame {
 
 	public void setBackground1(JLabel background1) {
 		this.background1 = background1;
+	}
+
+	public JButton getExit() {
+		return exit;
+	}
+
+	public void setExit(JButton exit) {
+		this.exit = exit;
 	}
 
 	

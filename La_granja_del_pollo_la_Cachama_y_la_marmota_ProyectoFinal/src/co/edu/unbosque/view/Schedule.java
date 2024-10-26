@@ -15,21 +15,20 @@ import com.toedter.calendar.JDateChooser;
 
 public class Schedule extends JFrame {
 	private JPanel mainPanel, schedulePanel, reschedulePanel, cancelPanel, infoPanel;
-	private JTextField name1, email, appointmentNumber;
+	private JTextField name1, email, appointmentNumber,appointmentNumbers;
 	private JComboBox<String> doctor, specialty;
 	private JButton generate, home, scheduleButton, rescheduleButton, cancelButton, reGenerate, 
 	cancel,homeSchedule,homeReschedule,homeCancel;
 	private JButton themeMain, schTheme, reTheme, canTheme, infoName, infoEmail, infospecialty, 
 	infoDoctor, infoDate,infoNDate,infoNum,infoNumCancel;
 	private JLabel background1, background2, background3, background4;
-	private JDateChooser date1;
+	private JDateChooser date1,date2;
 
 	public Schedule() {
 		window();
 		panels();
 		inputs();
 		comboBox();
-		headlines();
 		info();
 		calendar();
 		buttons();
@@ -48,10 +47,18 @@ public class Schedule extends JFrame {
 	}
 
 	private void calendar() {
-		date1= new JDateChooser();
-		date1.setBounds(0, 0, 251, 200);
-		mainPanel.add(date1);
 		
+		//fecha de cita para el agendar nueva cita
+		date1= new JDateChooser();
+		date1.setBounds(356, 340, 251, 30);
+		date1.setBorder(null);
+		schedulePanel.add(date1);
+		
+		//fecha de cita para el reagendar
+		date2= new JDateChooser();
+		date2.setBounds(354, 289, 251, 30);
+		date2.setBorder(null);
+		reschedulePanel.add(date2);
 	}
 
 	private void info() {
@@ -146,14 +153,7 @@ public class Schedule extends JFrame {
 
 	}
 
-	public JDateChooser getDate1() {
-		return date1;
-	}
-
-	public void setDate1(JDateChooser date1) {
-		this.date1 = date1;
-	}
-
+	
 	public void window() {
 		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
 									// wide,high)
@@ -225,11 +225,19 @@ public class Schedule extends JFrame {
 		email.setBounds(356, 215, 251, 30);
 		schedulePanel.add(email);
 
+		//numero de cita para el cancelar cita
+
 		appointmentNumber = new JTextField();
 		appointmentNumber.setBorder(null);
-		appointmentNumber.setBounds(354, 245, 251, 30);
+		appointmentNumber.setBounds(354, 262, 251, 30);
 		cancelPanel.add(appointmentNumber);
 		
+		
+		//numero de cita para el reagendar
+		appointmentNumbers = new JTextField();
+		appointmentNumbers.setBorder(null);
+		appointmentNumbers.setBounds(354, 246, 251, 30);
+		reschedulePanel.add(appointmentNumbers);
 
 	}
 
@@ -358,13 +366,10 @@ public class Schedule extends JFrame {
 		homeCancel.setIcon(new ImageIcon(scaled15));
 		cancelPanel.add(homeCancel);
 
+		
 
 	}
 
-	public void headlines() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public JPanel getMainPanel() {
 		return mainPanel;
@@ -652,6 +657,29 @@ public class Schedule extends JFrame {
 
 	public void setHomeCancel(JButton homeCancel) {
 		this.homeCancel = homeCancel;
+	}
+	public JDateChooser getDate1() {
+		return date1;
+	}
+
+	public void setDate1(JDateChooser date1) {
+		this.date1 = date1;
+	}
+
+	public JTextField getAppointmentNumbers() {
+		return appointmentNumbers;
+	}
+
+	public void setAppointmentNumbers(JTextField appointmentNumbers) {
+		this.appointmentNumbers = appointmentNumbers;
+	}
+
+	public JDateChooser getDate2() {
+		return date2;
+	}
+
+	public void setDate2(JDateChooser date2) {
+		this.date2 = date2;
 	}
 
 }
