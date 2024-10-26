@@ -176,7 +176,7 @@ public class Controller implements ActionListener {
 					|| vf.getSchedule().getEmail().getText().toString().equals("")
 					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getName1().getText().toString().equals("")
-					|| vf.getSchedule().getDate1().toString().equals("")) {
+					|| vf.getSchedule().getDate1().getDate() == null) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -211,7 +211,7 @@ public class Controller implements ActionListener {
 		case "reGenerated":
 
 			if (vf.getSchedule().getAppointmentNumbers().getText().toString().equals("")
-					|| vf.getSchedule().getDate2().toString().equals("")) {
+					|| vf.getSchedule().getDate2().getDate() == null) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
