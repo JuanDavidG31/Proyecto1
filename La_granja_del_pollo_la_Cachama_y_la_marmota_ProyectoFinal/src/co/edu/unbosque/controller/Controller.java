@@ -105,6 +105,14 @@ public class Controller implements ActionListener {
 		vf.getTreatemnets().getHome().addActionListener(this);
 		vf.getTreatemnets().getHome().setActionCommand("backMainMenu");
 
+		vf.getTreatemnets().getInitTreatment().addActionListener(this);
+		vf.getTreatemnets().getInitTreatment().setActionCommand("initTreatment");
+
+		vf.getTreatemnets().getInitSearchTreatment().addActionListener(this);
+		vf.getTreatemnets().getInitSearchTreatment().setActionCommand("searchTreatment");
+
+		vf.getTreatemnets().getInitFinishTreatment().addActionListener(this);
+		vf.getTreatemnets().getInitFinishTreatment().setActionCommand("finishTreatment");
 	}
 
 	@Override
@@ -112,6 +120,19 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "theme":
 			changeTheme();
+			break;
+		case "initTreatment":
+			vf.getTreatemnets().getMainPanel().setVisible(false);
+			vf.getTreatemnets().getNewTreatmentPanel().setVisible(true);
+			break;
+		case "searchTreatment":
+			vf.getTreatemnets().getMainPanel().setVisible(false);
+			vf.getTreatemnets().getSearchTreatmentPanel().setVisible(true);
+
+			break;
+		case"finishTreatment":
+			vf.getTreatemnets().getMainPanel().setVisible(false);
+			vf.getTreatemnets().getFinishTreatmentPanel().setVisible(true);
 			break;
 		case "backMainMenu":
 
