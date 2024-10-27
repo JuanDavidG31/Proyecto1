@@ -271,14 +271,13 @@ public class Controller implements ActionListener {
 					} else {
 						continue newP;
 					}
-				}
 
-				if (enter) {
-					JOptionPane.showMessageDialog(null, "El paciente no existe");
 				}
 
 			}
-
+			if (enter) {
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
+			}
 			break;
 
 		case "generatedPatient":
