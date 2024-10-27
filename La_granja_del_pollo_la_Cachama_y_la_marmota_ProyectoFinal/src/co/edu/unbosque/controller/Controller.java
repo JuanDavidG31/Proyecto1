@@ -129,7 +129,7 @@ public class Controller implements ActionListener {
 
 		vf.getTreatments().getRegister().addActionListener(this);
 		vf.getTreatments().getRegister().setActionCommand("registerTre");
-		
+
 	}
 
 	@Override
@@ -273,10 +273,10 @@ public class Controller implements ActionListener {
 					}
 				}
 
-			}
+				if (enter) {
+					JOptionPane.showMessageDialog(null, "El paciente no existe");
+				}
 
-			if (enter) {
-				JOptionPane.showMessageDialog(null, "El paciente no existe");
 			}
 
 			break;
