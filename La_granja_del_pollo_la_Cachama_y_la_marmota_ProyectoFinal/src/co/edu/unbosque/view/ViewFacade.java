@@ -4,13 +4,13 @@ public class ViewFacade {
 	private HomeWindow home;
 	private Schedule schedule;
 	private WorkShifts shifts;
-	private Treatments treatemnets;
+	private Treatments treatments;
 
 	public ViewFacade() {
 		home= new HomeWindow();
 		schedule= new Schedule();
 		shifts= new WorkShifts();
-		treatemnets= new Treatments();
+		treatments= new Treatments();
 	}
 
 	public HomeWindow getHome() {
@@ -37,12 +37,12 @@ public class ViewFacade {
 		this.shifts = shifts;
 	}
 
-	public Treatments getTreatemnets() {
-		return treatemnets;
+	public Treatments getTreatments() {
+		return treatments;
 	}
 
-	public void setTreatemnets(Treatments treatemnets) {
-		this.treatemnets = treatemnets;
+	public void setTreatments(Treatments treatments) {
+		this.treatments = treatments;
 	}
 	
 }

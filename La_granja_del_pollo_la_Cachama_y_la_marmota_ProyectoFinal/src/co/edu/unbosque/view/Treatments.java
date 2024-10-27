@@ -1,38 +1,72 @@
 package co.edu.unbosque.view;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Treatments extends JFrame {
-	private JPanel mainPanel, newTreatmentPanel, searchTreatmentPanel, finishTreatmentPanel;
+	private JPanel mainPanel, newTreatmentPanel, searchTreatmentPanel, finishTreatmentPanel, infoPanel;
 	private JLabel background1, background2, background3, background4;
-	private JButton home, themeMain, initTreatment, initSearchTreatment, initFinishTreatment;
+	// botones de accion
+	private JButton home, searchButton, homeTreatments1, homeTreatments2, homeTreatments3, themeMain, initTreatment,
+			initSearchTreatment, initFinishTreatment,register;
+	// Botones de info
+	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName;
+
+	JComboBox<String> status, specialty;
+	private JTextField name1,treatmentTxt;
 
 	public Treatments() {
 		window();
 		panels();
 		inputs();
-
-		backgrounds();
+		comboBox();
 		buttons();
+		info();
+		backgrounds();
 
 		add(mainPanel);
+		add(infoPanel);
 		add(newTreatmentPanel);
 		add(searchTreatmentPanel);
 		add(finishTreatmentPanel);
-		
+
 		newTreatmentPanel.setVisible(false);
 		searchTreatmentPanel.setVisible(false);
 		finishTreatmentPanel.setVisible(false);
-		//infoPanel.setVisible(false);
+		infoPanel.setVisible(true);
 	}
 
+	private void comboBox() {
+		status = new JComboBox<String>();
+		status.setToolTipText("Seleccione el estado del Tratamiento");
+		status.setBounds(356, 329, 250,30);
+		status.addItem("");
+		status.addItem("En tratamiento");
+		status.addItem("Finalizado");
+		newTreatmentPanel.add(status);
+		
+		specialty = new JComboBox<String>();
+		specialty.setToolTipText("Seleccione Una especialidad");
+		specialty.setBounds(356, 246, 250, 30);
+		specialty.addItem("");
+		specialty.addItem("1");
+		specialty.addItem("2");
+		specialty.addItem("3");
+		specialty.addItem("4");
+		specialty.addItem("5");
+		specialty.addItem("6");
+		specialty.addItem("7");
+		newTreatmentPanel.add(specialty);
 	
+	}
 
 	public void window() {
 		setBounds(0, 0, 800, 600);
@@ -60,7 +94,47 @@ public class Treatments extends JFrame {
 		finishTreatmentPanel.setBounds(0, 0, 800, 600);
 		finishTreatmentPanel.setLayout(null);
 
+		infoPanel = new JPanel();
+		infoPanel.setBounds(614, 170, 40, 210);
+		infoPanel.setBackground(new Color(0, 74, 173));
+		infoPanel.setLayout(null);
+		// new Color(0, 74, 173)
 	}
+
+	private void info() {
+		// INFO CREAR TRATAMIENTO
+		infoName = new JButton();
+		infoName.setBounds(0, 32, 34, 34);
+		infoName.setBorderPainted(false);
+		infoName.setToolTipText("G");
+		ImageIcon imageInfo = new ImageIcon("Images\\infoButtons\\1.png");
+		Image scaledInfo = imageInfo.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+		infoName.setIcon(new ImageIcon(scaledInfo));
+		infoPanel.add(infoName);
+
+		infospecialty = new JButton();
+		infospecialty.setBounds(0, 74, 34, 34);
+		infospecialty.setBorderPainted(false);
+		infospecialty.setToolTipText("H");
+		infospecialty.setIcon(new ImageIcon(scaledInfo));
+		infoPanel.add(infospecialty);
+
+		infoTreatment = new JButton();
+		infoTreatment.setBounds(0, 113, 34, 34);
+		infoTreatment.setBorderPainted(false);
+		infoTreatment.setToolTipText("K");
+		infoTreatment.setIcon(new ImageIcon(scaledInfo));
+		infoPanel.add(infoTreatment);
+
+		infoStatus = new JButton();
+		infoStatus.setBounds(0, 155, 34, 34);
+		infoStatus.setBorderPainted(false);
+		infoStatus.setToolTipText("L");
+		infoStatus.setIcon(new ImageIcon(scaledInfo));
+		infoPanel.add(infoStatus);
+
+	}
+
 	private void backgrounds() {
 		background1 = new JLabel();
 		ImageIcon imagen = new ImageIcon("Images\\menuTratamientos\\menuTratamientosC.png");
@@ -91,8 +165,18 @@ public class Treatments extends JFrame {
 		finishTreatmentPanel.add(background4);
 
 	}
+
 	public void inputs() {
-		// TODO Auto-generated method stub
+		name1 = new JTextField();
+		name1.setBorder(null);
+		name1.setBounds(356, 206, 250, 29);
+		newTreatmentPanel.add(name1);
+		
+		treatmentTxt = new JTextField();
+		treatmentTxt.setBorder(null);
+		treatmentTxt.setBounds(356, 289, 250, 29);
+		newTreatmentPanel.add(treatmentTxt);
+
 
 	}
 
@@ -114,9 +198,39 @@ public class Treatments extends JFrame {
 		Image scaled5 = image5.getImage().getScaledInstance(79, 79, Image.SCALE_REPLICATE);
 		home.setIcon(new ImageIcon(scaled5));
 		mainPanel.add(home);
-		
+
+		homeTreatments1 = new JButton();
+		homeTreatments1.setBounds(565, 409, 42, 42);
+		homeTreatments1.setBorderPainted(false);
+		homeTreatments1.setToolTipText("Menú principal");
+		ImageIcon imageHome = new ImageIcon("Images\\backButtons\\m1.png");
+		Image scaledHome = imageHome.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
+		homeTreatments1.setIcon(new ImageIcon(scaledHome));
+		newTreatmentPanel.add(homeTreatments1);
+
+		homeTreatments2 = new JButton();
+		homeTreatments2.setBounds(565, 409, 42, 42);
+		homeTreatments2.setBorderPainted(false);
+		homeTreatments2.setToolTipText("Menú principal");
+		homeTreatments2.setIcon(new ImageIcon(scaledHome));
+		searchTreatmentPanel.add(homeTreatments2);
+
+		homeTreatments3 = new JButton();
+		homeTreatments3.setBounds(565, 409, 42, 42);
+		homeTreatments3.setBorderPainted(false);
+		homeTreatments3.setToolTipText("Menú principal");
+		homeTreatments3.setIcon(new ImageIcon(scaledHome));
+		finishTreatmentPanel.add(homeTreatments3);
+
+		searchButton = new JButton();
+		searchButton.setBounds(0, 30, 100, 35);
+		searchButton.setToolTipText("");
+		searchButton.setBorderPainted(false);
+		ImageIcon imageSearch = new ImageIcon("Images\\menuTratamientos\\buscarC.png");
+		searchButton.setIcon(imageSearch);
+		infoPanel.add(searchButton);
 //entrar a cada funcion de ese menu 
-		
+
 		initTreatment = new JButton();
 		initTreatment.setBounds(273, 102, 252, 120);
 		ImageIcon image6 = new ImageIcon("Images\\menuTratamientos\\bNewClear.png");
@@ -138,6 +252,14 @@ public class Treatments extends JFrame {
 		initFinishTreatment.setIcon(new ImageIcon(scaled8));
 		mainPanel.add(initFinishTreatment);
 
+		register=new JButton();
+		register.setBounds(356, 409, 157, 41);
+		register.setBorderPainted(false);
+		register.setToolTipText("Registrar Tratamiento");
+		ImageIcon imageRegister = new ImageIcon("Images\\menuTratamientos\\registrarC.png");
+		Image scaledRegister = imageRegister.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
+		register.setIcon(new ImageIcon(scaledRegister));
+		newTreatmentPanel.add(register);
 	}
 
 	public void textFields() {
@@ -163,6 +285,14 @@ public class Treatments extends JFrame {
 
 	public JPanel getSearchTreatmentPanel() {
 		return searchTreatmentPanel;
+	}
+
+	public JButton getSearchButton() {
+		return searchButton;
+	}
+
+	public void setSearchButton(JButton searchButton) {
+		this.searchButton = searchButton;
 	}
 
 	public void setSearchTreatmentPanel(JPanel searchTreatmentPanel) {
@@ -247,6 +377,78 @@ public class Treatments extends JFrame {
 
 	public void setInitFinishTreatment(JButton initFinishTreatment) {
 		this.initFinishTreatment = initFinishTreatment;
+	}
+
+	public JPanel getInfoPanel() {
+		return infoPanel;
+	}
+
+	public void setInfoPanel(JPanel infoPanel) {
+		this.infoPanel = infoPanel;
+	}
+
+	public JButton getInfoName() {
+		return infoName;
+	}
+
+	public void setInfoName(JButton infoName) {
+		this.infoName = infoName;
+	}
+
+	public JButton getInfospecialty() {
+		return infospecialty;
+	}
+
+	public void setInfospecialty(JButton infospecialty) {
+		this.infospecialty = infospecialty;
+	}
+
+	public JButton getInfoTreatment() {
+		return infoTreatment;
+	}
+
+	public void setInfoTreatment(JButton infoTreatment) {
+		this.infoTreatment = infoTreatment;
+	}
+
+	public JButton getInfoStatus() {
+		return infoStatus;
+	}
+
+	public void setInfoStatus(JButton infoStatus) {
+		this.infoStatus = infoStatus;
+	}
+
+	public JButton getInfoSearchName() {
+		return infoSearchName;
+	}
+
+	public void setInfoSearchName(JButton infoSearchName) {
+		this.infoSearchName = infoSearchName;
+	}
+
+	public JButton getHomeTreatments1() {
+		return homeTreatments1;
+	}
+
+	public void setHomeTreatments1(JButton homeTreatments1) {
+		this.homeTreatments1 = homeTreatments1;
+	}
+
+	public JButton getHomeTreatments2() {
+		return homeTreatments2;
+	}
+
+	public void setHomeTreatments2(JButton homeTreatments2) {
+		this.homeTreatments2 = homeTreatments2;
+	}
+
+	public JButton getHomeTreatments3() {
+		return homeTreatments3;
+	}
+
+	public void setHomeTreatments3(JButton homeTreatments3) {
+		this.homeTreatments3 = homeTreatments3;
 	}
 
 }
