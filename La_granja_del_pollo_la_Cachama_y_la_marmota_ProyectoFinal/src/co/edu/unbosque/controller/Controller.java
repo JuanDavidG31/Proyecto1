@@ -12,18 +12,21 @@ import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
 	private PatientDTO pa;
+	private TreatmentDTO tr;
 	boolean darkMode = false;
 
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
 		pa = new PatientDTO();
+		tr = new TreatmentDTO();
 
 		assignReaders();
 		vf.getHome().setVisible(true);
@@ -123,6 +126,10 @@ public class Controller implements ActionListener {
 
 		vf.getTreatments().getHomeTreatments3().addActionListener(this);
 		vf.getTreatments().getHomeTreatments3().setActionCommand("homeTreatments");
+
+		vf.getTreatments().getRegister().addActionListener(this);
+		vf.getTreatments().getRegister().setActionCommand("registerTre");
+		
 	}
 
 	@Override
@@ -131,6 +138,7 @@ public class Controller implements ActionListener {
 		case "theme":
 			changeTheme();
 			break;
+
 		case "homeTreatments":
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible() == true) {
 
@@ -222,6 +230,57 @@ public class Controller implements ActionListener {
 
 			break;
 
+		case "registerTre":
+
+			boolean enter = true;
+
+			if (vf.getTreatments().getName1().getText().toString().equals("")
+					|| vf.getTreatments().getSpecialty().getSelectedItem().toString().equals("")
+					|| vf.getTreatments().getTreatmentTxt().getText().toString().equals("")
+					|| vf.getTreatments().getStatus().getSelectedItem().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				String name = vf.getTreatments().getName1().getText().toString();
+
+				ArrayList<PatientDTO> newPat;
+				newPat = new ArrayList<>();
+				newPat = mf.getPatient().getAll();
+
+				newP: for (int i = 0; i < newPat.size(); i++) {
+
+					String oldName = newPat.get(i).getName();
+
+					if (name.equals(oldName)) {
+
+						enter = false;
+
+						String specialty = vf.getTreatments().getSpecialty().getSelectedItem().toString();
+						String treatment = vf.getTreatments().getTreatmentTxt().getText().toString();
+						String status = vf.getTreatments().getStatus().getSelectedItem().toString();
+
+						if (mf.getTreatment().add(tr = new TreatmentDTO(name, specialty, treatment, status))) {
+							JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
+
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo crear");
+						}
+
+						break newP;
+					} else {
+						continue newP;
+					}
+				}
+
+			}
+
+			if (enter) {
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
+			}
+
+			break;
+
 		case "generatedPatient":
 
 			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
@@ -233,9 +292,9 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 
+				String name = vf.getSchedule().getName1().getText().toString();
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
-				String name = vf.getSchedule().getName1().getText().toString();
 				String gmail = vf.getSchedule().getEmail().getText().toString();
 
 				Date tDate = vf.getSchedule().getDate1().getDate();
@@ -507,7 +566,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setVisible(false);
 			vf.getTreatments().getInfoName().setVisible(false);
 			vf.getTreatments().getInfoStatus().setVisible(false);
-			
+
 		}
 
 		if (vf.getTreatments().getNewTreatmentPanel().isVisible() == true) {
@@ -531,10 +590,10 @@ public class Controller implements ActionListener {
 		if (vf.getTreatments().getSearchTreatmentPanel().isVisible() == true) {
 
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
-			
+
 			vf.getTreatments().getSearchButton().setVisible(true);
 			vf.getTreatments().getSearchButton().setBounds(0, 30, 100, 35);
-			
+
 			vf.getTreatments().getInfoTreatment().setVisible(true);
 			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
 

@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.model.Patient;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.Treatment;
+import co.edu.unbosque.model.TreatmentDTO;
 
 public class DataMapper {
+
+	// Paciente
 
 	public static Patient PatientDTOToPatient(PatientDTO dto) {
 		Patient entity;
@@ -38,4 +42,35 @@ public class DataMapper {
 		}
 		return entityList;
 	}
+
+	// Tratamiento
+
+	public static Treatment TreatmentDTOToTreatment(TreatmentDTO dto) {
+		Treatment entity;
+		entity = new Treatment(dto.getName(), dto.getSpecialty(), dto.getTreatment(), dto.getVerified());
+		return entity;
+	}
+
+	public static TreatmentDTO TreatmentToTreatmentDTO(Treatment entity) {
+		TreatmentDTO dto;
+		dto = new TreatmentDTO(entity.getName(), entity.getSpecialty(), entity.getTreatment(), entity.getVerified());
+		return dto;
+	}
+
+	public static ArrayList<TreatmentDTO> listaTreatmentToListaTreatmentDTO(ArrayList<Treatment> entityList) {
+		ArrayList<TreatmentDTO> dtoList = new ArrayList<>();
+		for (Treatment m : entityList) {
+			dtoList.add(new TreatmentDTO(m.getName(), m.getSpecialty(), m.getTreatment(), m.getVerified()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<Treatment> listaTreatmentDTOToListaTreatment(ArrayList<TreatmentDTO> dtoList) {
+		ArrayList<Treatment> entityList = new ArrayList<>();
+		for (TreatmentDTO d : dtoList) {
+			entityList.add(new Treatment(d.getName(), d.getSpecialty(), d.getTreatment(), d.getVerified()));
+		}
+		return entityList;
+	}
+
 }

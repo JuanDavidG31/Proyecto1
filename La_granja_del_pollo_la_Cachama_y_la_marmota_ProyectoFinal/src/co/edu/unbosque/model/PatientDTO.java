@@ -13,17 +13,22 @@ public class PatientDTO extends Person implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientDTO(String doctor, String specialty, String date, int appointmentNum) {
-		super();
+	public PatientDTO(String name, String gmail, int age, int id) {
+		super(name, gmail, age, id);
+		// TODO Auto-generated constructor stub
+	}
+
+	public PatientDTO(String name, String gmail, int age, int id, String doctor, String specialty, String date,
+			int appointmentNum) {
+		super(name, gmail, age, id);
 		this.doctor = doctor;
 		this.specialty = specialty;
 		this.date = date;
 		this.appointmentNum = appointmentNum;
 	}
 
-	public PatientDTO(String name, String gmail, int age, int id, String doctor, String specialty, String date,
-			int appointmentNum) {
-		super(name, gmail, age, id);
+	public PatientDTO(String doctor, String specialty, String date, int appointmentNum) {
+		super();
 		this.doctor = doctor;
 		this.specialty = specialty;
 		this.date = date;

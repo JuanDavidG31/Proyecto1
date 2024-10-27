@@ -16,12 +16,12 @@ public class Treatments extends JFrame {
 	private JLabel background1, background2, background3, background4;
 	// botones de accion
 	private JButton home, searchButton, homeTreatments1, homeTreatments2, homeTreatments3, themeMain, initTreatment,
-			initSearchTreatment, initFinishTreatment,register;
+			initSearchTreatment, initFinishTreatment, register;
 	// Botones de info
 	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName;
 
 	JComboBox<String> status, specialty;
-	private JTextField name1,treatmentTxt;
+	private JTextField name1, treatmentTxt;
 
 	public Treatments() {
 		window();
@@ -47,12 +47,12 @@ public class Treatments extends JFrame {
 	private void comboBox() {
 		status = new JComboBox<String>();
 		status.setToolTipText("Seleccione el estado del Tratamiento");
-		status.setBounds(356, 329, 250,30);
+		status.setBounds(356, 329, 250, 30);
 		status.addItem("");
 		status.addItem("En tratamiento");
 		status.addItem("Finalizado");
 		newTreatmentPanel.add(status);
-		
+
 		specialty = new JComboBox<String>();
 		specialty.setToolTipText("Seleccione Una especialidad");
 		specialty.setBounds(356, 246, 250, 30);
@@ -65,7 +65,7 @@ public class Treatments extends JFrame {
 		specialty.addItem("6");
 		specialty.addItem("7");
 		newTreatmentPanel.add(specialty);
-	
+
 	}
 
 	public void window() {
@@ -171,12 +171,11 @@ public class Treatments extends JFrame {
 		name1.setBorder(null);
 		name1.setBounds(356, 206, 250, 29);
 		newTreatmentPanel.add(name1);
-		
+
 		treatmentTxt = new JTextField();
 		treatmentTxt.setBorder(null);
 		treatmentTxt.setBounds(356, 289, 250, 29);
 		newTreatmentPanel.add(treatmentTxt);
-
 
 	}
 
@@ -252,7 +251,7 @@ public class Treatments extends JFrame {
 		initFinishTreatment.setIcon(new ImageIcon(scaled8));
 		mainPanel.add(initFinishTreatment);
 
-		register=new JButton();
+		register = new JButton();
 		register.setBounds(356, 409, 157, 41);
 		register.setBorderPainted(false);
 		register.setToolTipText("Registrar Tratamiento");
@@ -260,6 +259,14 @@ public class Treatments extends JFrame {
 		Image scaledRegister = imageRegister.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		register.setIcon(new ImageIcon(scaledRegister));
 		newTreatmentPanel.add(register);
+	}
+
+	public JButton getRegister() {
+		return register;
+	}
+
+	public void setRegister(JButton register) {
+		this.register = register;
 	}
 
 	public void textFields() {
@@ -449,6 +456,38 @@ public class Treatments extends JFrame {
 
 	public void setHomeTreatments3(JButton homeTreatments3) {
 		this.homeTreatments3 = homeTreatments3;
+	}
+
+	public JTextField getName1() {
+		return name1;
+	}
+
+	public void setName1(JTextField name1) {
+		this.name1 = name1;
+	}
+
+	public JTextField getTreatmentTxt() {
+		return treatmentTxt;
+	}
+
+	public void setTreatmentTxt(JTextField treatmentTxt) {
+		this.treatmentTxt = treatmentTxt;
+	}
+
+	public JComboBox<String> getStatus() {
+		return status;
+	}
+
+	public void setStatus(JComboBox<String> status) {
+		this.status = status;
+	}
+
+	public JComboBox<String> getSpecialty() {
+		return specialty;
+	}
+
+	public void setSpecialty(JComboBox<String> specialty) {
+		this.specialty = specialty;
 	}
 
 }
