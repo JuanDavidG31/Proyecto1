@@ -16,12 +16,12 @@ public class Treatments extends JFrame {
 	private JLabel background1, background2, background3, background4;
 	// botones de accion
 	private JButton home, searchButton, homeTreatments1, homeTreatments2, homeTreatments3, themeMain, initTreatment,
-			initSearchTreatment, initFinishTreatment, register;
+			initSearchTreatment, initFinishTreatment, register,updateTreatment,finishTreatment;
 	// Botones de info
 	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName;
 
-	JComboBox<String> status, specialty;
-	private JTextField name1, treatmentTxt;
+	JComboBox<String> status, specialty,status2, specialty2,status3;
+	private JTextField name1, treatmentTxt,nameS,treatmentS,nameF,treatmentF;
 
 	public Treatments() {
 		window();
@@ -53,6 +53,22 @@ public class Treatments extends JFrame {
 		status.addItem("Finalizado");
 		newTreatmentPanel.add(status);
 
+		status2 = new JComboBox<String>();
+		status2.setToolTipText("Seleccione el estado del Tratamiento");
+		status2.setBounds(356, 329, 250, 30);
+		status2.addItem("");
+		status2.addItem("En tratamiento");
+		status2.addItem("Finalizado");
+		searchTreatmentPanel.add(status2);
+
+		status3 = new JComboBox<String>();
+		status3.setToolTipText("Seleccione el estado del Tratamiento");
+		status3.setBounds(356, 307, 250, 30);
+		status3.addItem("");
+		status3.addItem("En tratamiento");
+		status3.addItem("Finalizado");
+		finishTreatmentPanel.add(status3);
+
 		specialty = new JComboBox<String>();
 		specialty.setToolTipText("Seleccione Una especialidad");
 		specialty.setBounds(356, 246, 250, 30);
@@ -65,6 +81,19 @@ public class Treatments extends JFrame {
 		specialty.addItem("6");
 		specialty.addItem("7");
 		newTreatmentPanel.add(specialty);
+
+		specialty2 = new JComboBox<String>();
+		specialty2.setToolTipText("Seleccione Una especialidad");
+		specialty2.setBounds(356, 246, 250, 30);
+		specialty2.addItem("");
+		specialty2.addItem("1");
+		specialty2.addItem("2");
+		specialty2.addItem("3");
+		specialty2.addItem("4");
+		specialty2.addItem("5");
+		specialty2.addItem("6");
+		specialty2.addItem("7");
+		searchTreatmentPanel.add(specialty2);
 
 	}
 
@@ -171,13 +200,33 @@ public class Treatments extends JFrame {
 		name1.setBorder(null);
 		name1.setBounds(356, 206, 250, 29);
 		newTreatmentPanel.add(name1);
-
+		
 		treatmentTxt = new JTextField();
 		treatmentTxt.setBorder(null);
 		treatmentTxt.setBounds(356, 289, 250, 29);
 		newTreatmentPanel.add(treatmentTxt);
+		
+		nameS= new JTextField();
+		nameS.setBorder(null);
+		nameS.setBounds(356, 206, 250, 29);
+		searchTreatmentPanel.add(nameS);
+		
+		treatmentS= new JTextField();
+		treatmentS.setBorder(null);
+		treatmentS.setBounds(356, 289, 250, 29);
+		searchTreatmentPanel.add(treatmentS);
+		
+		nameF= new JTextField();
+		nameF.setBorder(null);
+		nameF.setBounds(356, 229, 250, 29);
+		finishTreatmentPanel.add(nameF);
+		
+		treatmentF= new JTextField();
+		treatmentF.setBorder(null);
+		treatmentF.setBounds(356, 266, 250, 30);
+		finishTreatmentPanel.add(treatmentF);
 
-	}
+		}
 
 	public void buttons() {
 		themeMain = new JButton();
@@ -223,7 +272,7 @@ public class Treatments extends JFrame {
 
 		searchButton = new JButton();
 		searchButton.setBounds(0, 30, 100, 35);
-		searchButton.setToolTipText("");
+		searchButton.setToolTipText("Buscar paciente");
 		searchButton.setBorderPainted(false);
 		ImageIcon imageSearch = new ImageIcon("Images\\menuTratamientos\\buscarC.png");
 		searchButton.setIcon(imageSearch);
@@ -259,6 +308,24 @@ public class Treatments extends JFrame {
 		Image scaledRegister = imageRegister.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		register.setIcon(new ImageIcon(scaledRegister));
 		newTreatmentPanel.add(register);
+		
+		updateTreatment = new JButton();
+		updateTreatment.setBounds(360, 408, 157, 41);
+		updateTreatment.setBorderPainted(false);
+		updateTreatment.setToolTipText("Actualizar tratamiento del paciente");
+		ImageIcon imageUpdate = new ImageIcon("Images\\menuTratamientos\\actualizarC.png");
+		Image scaledUpdate = imageUpdate.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
+		updateTreatment.setIcon(new ImageIcon(scaledUpdate));
+		searchTreatmentPanel.add(updateTreatment);
+	
+		finishTreatment = new JButton();
+		finishTreatment.setBounds(356, 410, 157, 41);
+		finishTreatment.setBorderPainted(false);
+		finishTreatment.setToolTipText("finalizar tratamiento del paciente");
+		ImageIcon imageFinish = new ImageIcon("Images\\menuTratamientos\\finalizarC.png");
+		Image scaledFinish = imageFinish.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
+		finishTreatment.setIcon(new ImageIcon(scaledFinish));
+		finishTreatmentPanel.add(finishTreatment);
 	}
 
 	public JButton getRegister() {
