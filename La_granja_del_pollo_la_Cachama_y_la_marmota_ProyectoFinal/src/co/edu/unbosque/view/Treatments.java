@@ -16,12 +16,12 @@ public class Treatments extends JFrame {
 	private JLabel background1, background2, background3, background4;
 	// botones de accion
 	private JButton home, searchButton, homeTreatments1, homeTreatments2, homeTreatments3, themeMain, initTreatment,
-			initSearchTreatment, initFinishTreatment, register,updateTreatment,finishTreatment;
+			initSearchTreatment, initFinishTreatment, register, updateTreatment, finishTreatment;
 	// Botones de info
 	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName;
 
-	JComboBox<String> status, specialty,status2, specialty2,status3;
-	private JTextField name1, treatmentTxt,nameS,treatmentS,nameF,treatmentF;
+	JComboBox<String> status, specialty, status2, specialty2, status3;
+	private JTextField name1, treatmentTxt, nameS, treatmentS, nameF, treatmentF;
 
 	public Treatments() {
 		window();
@@ -200,33 +200,33 @@ public class Treatments extends JFrame {
 		name1.setBorder(null);
 		name1.setBounds(356, 206, 250, 29);
 		newTreatmentPanel.add(name1);
-		
+
 		treatmentTxt = new JTextField();
 		treatmentTxt.setBorder(null);
 		treatmentTxt.setBounds(356, 289, 250, 29);
 		newTreatmentPanel.add(treatmentTxt);
-		
-		nameS= new JTextField();
+
+		nameS = new JTextField();
 		nameS.setBorder(null);
 		nameS.setBounds(356, 206, 250, 29);
 		searchTreatmentPanel.add(nameS);
-		
-		treatmentS= new JTextField();
+
+		treatmentS = new JTextField();
 		treatmentS.setBorder(null);
 		treatmentS.setBounds(356, 289, 250, 29);
 		searchTreatmentPanel.add(treatmentS);
-		
-		nameF= new JTextField();
+
+		nameF = new JTextField();
 		nameF.setBorder(null);
 		nameF.setBounds(356, 229, 250, 29);
 		finishTreatmentPanel.add(nameF);
-		
-		treatmentF= new JTextField();
+
+		treatmentF = new JTextField();
 		treatmentF.setBorder(null);
 		treatmentF.setBounds(356, 266, 250, 30);
 		finishTreatmentPanel.add(treatmentF);
 
-		}
+	}
 
 	public void buttons() {
 		themeMain = new JButton();
@@ -308,7 +308,7 @@ public class Treatments extends JFrame {
 		Image scaledRegister = imageRegister.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		register.setIcon(new ImageIcon(scaledRegister));
 		newTreatmentPanel.add(register);
-		
+
 		updateTreatment = new JButton();
 		updateTreatment.setBounds(360, 408, 157, 41);
 		updateTreatment.setBorderPainted(false);
@@ -317,7 +317,7 @@ public class Treatments extends JFrame {
 		Image scaledUpdate = imageUpdate.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		updateTreatment.setIcon(new ImageIcon(scaledUpdate));
 		searchTreatmentPanel.add(updateTreatment);
-	
+
 		finishTreatment = new JButton();
 		finishTreatment.setBounds(356, 410, 157, 41);
 		finishTreatment.setBorderPainted(false);
@@ -555,6 +555,78 @@ public class Treatments extends JFrame {
 
 	public void setSpecialty(JComboBox<String> specialty) {
 		this.specialty = specialty;
+	}
+
+	public JButton getUpdateTreatment() {
+		return updateTreatment;
+	}
+
+	public void setUpdateTreatment(JButton updateTreatment) {
+		this.updateTreatment = updateTreatment;
+	}
+
+	public JButton getFinishTreatment() {
+		return finishTreatment;
+	}
+
+	public void setFinishTreatment(JButton finishTreatment) {
+		this.finishTreatment = finishTreatment;
+	}
+
+	public JComboBox<String> getStatus2() {
+		return status2;
+	}
+
+	public void setStatus2(JComboBox<String> status2) {
+		this.status2 = status2;
+	}
+
+	public JComboBox<String> getSpecialty2() {
+		return specialty2;
+	}
+
+	public void setSpecialty2(JComboBox<String> specialty2) {
+		this.specialty2 = specialty2;
+	}
+
+	public JComboBox<String> getStatus3() {
+		return status3;
+	}
+
+	public void setStatus3(JComboBox<String> status3) {
+		this.status3 = status3;
+	}
+
+	public JTextField getNameS() {
+		return nameS;
+	}
+
+	public void setNameS(JTextField nameS) {
+		this.nameS = nameS;
+	}
+
+	public JTextField getTreatmentS() {
+		return treatmentS;
+	}
+
+	public void setTreatmentS(JTextField treatmentS) {
+		this.treatmentS = treatmentS;
+	}
+
+	public JTextField getNameF() {
+		return nameF;
+	}
+
+	public void setNameF(JTextField nameF) {
+		this.nameF = nameF;
+	}
+
+	public JTextField getTreatmentF() {
+		return treatmentF;
+	}
+
+	public void setTreatmentF(JTextField treatmentF) {
+		this.treatmentF = treatmentF;
 	}
 
 }
