@@ -1,9 +1,7 @@
 package co.edu.unbosque.model;
 
-import java.io.Serializable;
+public class PatientDTO extends Person {
 
-public class PatientDTO extends Person implements Serializable {
-	private static final long serialVersionUID = 1L;
 	private String doctor;
 	private String specialty;
 	private String date;

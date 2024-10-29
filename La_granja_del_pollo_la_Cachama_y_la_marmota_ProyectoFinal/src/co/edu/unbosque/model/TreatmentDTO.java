@@ -1,12 +1,8 @@
 package co.edu.unbosque.model;
 
-import java.io.Serializable;
 
-public class TreatmentDTO implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class TreatmentDTO{
+
 	private String name;
 	private String specialty;
 	private String treatment;
