@@ -57,6 +57,9 @@ public class Controller implements ActionListener {
 		vf.getHome().getReport().addActionListener(this);
 		vf.getHome().getReport().setActionCommand("homeReport");
 
+		vf.getHome().getTurn().addActionListener(this);
+		vf.getHome().getTurn().setActionCommand("initGenerateTurns");
+
 		// schedule Buttons
 
 		vf.getSchedule().getScheduleButton().addActionListener(this);
@@ -139,6 +142,11 @@ public class Controller implements ActionListener {
 		vf.getTreatments().getFinishTreatment().addActionListener(this);
 		vf.getTreatments().getFinishTreatment().setActionCommand("finishTre");
 
+		// Turnos
+
+		vf.getShifts().getHome().addActionListener(this);
+		vf.getShifts().getHome().setActionCommand("backMainMenu");
+
 	}
 
 	@Override
@@ -147,7 +155,10 @@ public class Controller implements ActionListener {
 		case "theme":
 			changeTheme();
 			break;
-
+		case "initGenerateTurns":
+			vf.getHome().setVisible(false);
+			vf.getShifts().setVisible(true);
+			break;
 		case "homeTreatments":
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
@@ -288,16 +299,13 @@ public class Controller implements ActionListener {
 					String status2 = t2.get(i).getVerified();
 					String name2 = t2.get(i).getName();
 					speciality = t2.get(i).getSpecialty();
-					if (!status.equals(status2) && !name.equals(name2)) {
+					if (status.equals(status2) && !name.equals(name2)) {
 						JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
 								JOptionPane.ERROR_MESSAGE);
 						verf2 = false;
 
 						break main;
 
-					} else if (!treatment.equals(treatment2)) {
-
-						break main;
 					} else {
 						continue main;
 					}
@@ -494,7 +502,10 @@ public class Controller implements ActionListener {
 
 						if (mf.getTreatment().add(tr = new TreatmentDTO(name, specialty, treatment, status))) {
 							JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
-
+							vf.getTreatments().getName1().setText(null);
+							vf.getTreatments().getSpecialty().setSelectedItem("");
+							vf.getTreatments().getTreatmentTxt().setText(null);
+							vf.getTreatments().getStatus().setSelectedItem("");
 						} else {
 							JOptionPane.showMessageDialog(null, "No se pudo crear");
 						}
