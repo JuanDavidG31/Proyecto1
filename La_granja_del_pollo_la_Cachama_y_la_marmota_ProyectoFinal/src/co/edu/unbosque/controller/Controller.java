@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -359,15 +360,18 @@ public class Controller implements ActionListener {
 					ArrayList<TreatmentDTO> tre;
 					tre = new ArrayList<>();
 					tre = mf.getTreatment().getAll();
-					
+
 					for (int i = 0; i < tre.size(); i++) {
 						String tName = tre.get(i).getName();
 
 						if (name.equals(tName)) {
 
-							int frecuency = Collections.frequency(tre, name);
+							ArrayList<String> nameToSearch = new ArrayList<>();
+							for (TreatmentDTO t : tre) {
+								nameToSearch.add(t.getName());
+							}
 
-							System.out.println(frecuency);
+							int frecuency = Collections.frequency(nameToSearch, name);
 
 							if (frecuency == 1) {
 
@@ -431,16 +435,47 @@ public class Controller implements ActionListener {
 						String tName = tr.get(i).getName();
 
 						if (name.equals(tName)) {
-							String treatment = tr.get(i).getTreatment();
-							String status = tr.get(i).getVerified();
 
-							vf.getTreatments().getTreatmentF().setText(treatment);
-							vf.getTreatments().getStatus3().setSelectedItem(status);
+							ArrayList<String> nameToSearch = new ArrayList<>();
+							for (TreatmentDTO t : tr) {
+								nameToSearch.add(t.getName());
+							}
 
-							vf.getTreatments().getTreatmentF().setVisible(true);
-							vf.getTreatments().getStatus3().setVisible(true);
+							int frecuency = Collections.frequency(nameToSearch, name);
 
-							break;
+							if (frecuency == 1) {
+								String treatment = tr.get(i).getTreatment();
+								String status = tr.get(i).getVerified();
+
+								vf.getTreatments().getTreatmentF().setText(treatment);
+								vf.getTreatments().getStatus3().setSelectedItem(status);
+
+								vf.getTreatments().getTreatmentF().setVisible(true);
+								vf.getTreatments().getStatus3().setVisible(true);
+
+								break;
+							} else {
+
+								String content = "";
+								for (int n = 0; n < tr.size(); n++) {
+
+									String na = tr.get(n).getName().toString();
+
+									if (na.equals(name)) {
+
+										content += tr.get(n).getTreatment() + " ";
+
+									} else {
+										continue;
+									}
+
+								}
+
+								String[] con = content.split(" ");
+								System.out.println(Arrays.toString(con));
+
+								break;
+							}
 
 						} else {
 							continue;
