@@ -9,9 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class WorkShifts extends JFrame {
-	private JPanel mainPanel;
-	private JLabel background1;
-	private JButton home;
+	private JPanel mainPanel,panelSelect,panelChange;
+	private JLabel background1,background2,background3;
+	private JButton home,changeTurn,homeTurn,themeMain;
+
 
 	public WorkShifts() {
 		window();
@@ -21,8 +22,13 @@ public class WorkShifts extends JFrame {
 		buttons();
 		backgrounds();
 		
+		panelChange.setVisible(false);
+		panelSelect.setVisible(false);
 
 		add(mainPanel);
+		add(panelSelect);
+		add(panelChange);
+	
 	}
 
 	private void backgrounds() {
@@ -32,6 +38,20 @@ public class WorkShifts extends JFrame {
 		background1.setBounds(0, 0, 790, 565);
 		background1.setLayout(null);
 		mainPanel.add(background1);
+		
+		background2 = new JLabel();
+		ImageIcon imagen2 = new ImageIcon("Images\\menuTurnos\\seleccionarFechaC.png");
+		background2.setIcon(imagen2);
+		background2.setBounds(0, 0, 790, 565);
+		background2.setLayout(null);
+		panelSelect.add(background2);
+		
+		background3 = new JLabel();
+		ImageIcon imagen3 = new ImageIcon("Images\\menuTurnos\\cambioTurnoC.png");
+		background3.setIcon(imagen3);
+		background3.setBounds(0, 0, 790, 565);
+		background3.setLayout(null);
+		panelChange.add(background3);
 		
 	}
 
@@ -49,9 +69,14 @@ public class WorkShifts extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setBounds(0, 0, 800, 600);
 		mainPanel.setLayout(null);
-		
-		
 
+		panelSelect = new JPanel();
+		panelSelect.setBounds(0, 0, 800, 600);
+		panelSelect.setLayout(null);
+		
+		panelChange= new JPanel();
+		panelChange.setBounds(0, 0, 800, 600);
+		panelChange.setLayout(null);
 	}
 
 	public void inputs() {
@@ -68,6 +93,31 @@ public class WorkShifts extends JFrame {
 		Image scaled5 = image5.getImage().getScaledInstance(79, 79, Image.SCALE_REPLICATE);
 		home.setIcon(new ImageIcon(scaled5));
 		mainPanel.add(home);
+		
+		changeTurn= new JButton();
+		changeTurn.setToolTipText("A");
+		changeTurn.setBounds(274, 290, 252, 120);
+		ImageIcon imageChange = new ImageIcon("Images\\menuTurnos\\3.png");
+		Image scaledChange = imageChange.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
+		changeTurn.setIcon(new ImageIcon(scaledChange));
+		mainPanel.add(changeTurn);
+		
+		homeTurn= new JButton();
+		homeTurn.setBounds(274, 157, 252, 121);
+		homeTurn.setToolTipText("D");
+		ImageIcon imageTurn = new ImageIcon("Images\\menuTurnos\\1.png");
+		Image scaledTurn = imageTurn.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
+		homeTurn.setIcon(new ImageIcon(scaledTurn));
+		mainPanel.add(homeTurn);
+		
+		themeMain = new JButton();
+		themeMain.setBounds(41, 465, 82, 79);
+		themeMain.setBorderPainted(false);
+		themeMain.setToolTipText("Cambiar a tema oscuro");
+		ImageIcon image1 = new ImageIcon("Images\\CambioTema\\cambioOscuro.png");
+		Image scaled1 = image1.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
+		themeMain.setIcon(new ImageIcon(scaled1));
+		mainPanel.add(themeMain);
 
 	}
 
@@ -103,6 +153,54 @@ public class WorkShifts extends JFrame {
 
 	public void setHome(JButton home) {
 		this.home = home;
+	}
+
+	public JPanel getPanelSelect() {
+		return panelSelect;
+	}
+
+	public void setPanelSelect(JPanel panelSelect) {
+		this.panelSelect = panelSelect;
+	}
+
+	public JPanel getPanelChange() {
+		return panelChange;
+	}
+
+	public void setPanelChange(JPanel panelChange) {
+		this.panelChange = panelChange;
+	}
+
+	public JLabel getBackground2() {
+		return background2;
+	}
+
+	public void setBackground2(JLabel background2) {
+		this.background2 = background2;
+	}
+
+	public JButton getChangeTurn() {
+		return changeTurn;
+	}
+
+	public void setChangeTurn(JButton changeTurn) {
+		this.changeTurn = changeTurn;
+	}
+
+	public JButton getHomeTurn() {
+		return homeTurn;
+	}
+
+	public void setHomeTurn(JButton homeTurn) {
+		this.homeTurn = homeTurn;
+	}
+
+	public JButton getThemeMain() {
+		return themeMain;
+	}
+
+	public void setThemeMain(JButton themeMain) {
+		this.themeMain = themeMain;
 	}
 
 }
