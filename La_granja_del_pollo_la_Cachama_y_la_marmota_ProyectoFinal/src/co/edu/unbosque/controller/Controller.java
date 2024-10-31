@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.Treatment;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
 
@@ -500,7 +501,7 @@ public class Controller implements ActionListener {
 						String treatment = vf.getTreatments().getTreatmentTxt().getText().toString();
 						String status = vf.getTreatments().getStatus().getSelectedItem().toString();
 
-						if (mf.getTreatment().add(tr = new TreatmentDTO(name, specialty, treatment, status))) {
+						if (mf.getTreatment().add(new TreatmentDTO(name, specialty, treatment, status))) {
 							JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
 							vf.getTreatments().getName1().setText(null);
 							vf.getTreatments().getSpecialty().setSelectedItem("");
