@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -205,12 +207,11 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getNameS().setText(null);
-			vf.getTreatments().getSpecialty2().setEditable(false);
 			vf.getTreatments().getSpecialty2().setVisible(false);
 			vf.getTreatments().getTreatmentS().setEditable(false);
 			vf.getTreatments().getTreatmentS().setVisible(false);
-			vf.getTreatments().getStatus2().setEditable(false);
-			vf.getTreatments().getStatus2().setVisible(false);
+			// vf.getTreatments().getStatus2().setVisible(false);
+			vf.getTreatments().getStatus2().enable(false);
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 
@@ -224,7 +225,6 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getTreatmentF().setEditable(false);
 			vf.getTreatments().getTreatmentF().setVisible(false);
-			vf.getTreatments().getStatus3().setEditable(false);
 			vf.getTreatments().getStatus3().setVisible(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
@@ -359,25 +359,52 @@ public class Controller implements ActionListener {
 					ArrayList<TreatmentDTO> tre;
 					tre = new ArrayList<>();
 					tre = mf.getTreatment().getAll();
-
+					
 					for (int i = 0; i < tre.size(); i++) {
 						String tName = tre.get(i).getName();
 
 						if (name.equals(tName)) {
-							String treatment = tre.get(i).getTreatment();
-							String speciality = tre.get(i).getSpecialty();
-							String status = tre.get(i).getVerified();
 
-							vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
-							vf.getTreatments().getTreatmentS().setText(treatment);
-							vf.getTreatments().getStatus2().setSelectedItem(status);
+							int frecuency = Collections.frequency(tre, name);
 
-							vf.getTreatments().getSpecialty2().setVisible(true);
-							vf.getTreatments().getSpecialty2().setEditable(true);
-							vf.getTreatments().getTreatmentS().setEditable(true);
-							vf.getTreatments().getTreatmentS().setVisible(true);
-							vf.getTreatments().getStatus2().setEditable(true);
-							vf.getTreatments().getStatus2().setVisible(true);
+							System.out.println(frecuency);
+
+							if (frecuency == 1) {
+
+								String treatment = tre.get(i).getTreatment();
+								String speciality = tre.get(i).getSpecialty();
+								String status = tre.get(i).getVerified();
+
+								vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
+								vf.getTreatments().getTreatmentS().setText(treatment);
+								vf.getTreatments().getStatus2().setSelectedItem(status);
+
+								vf.getTreatments().getSpecialty2().setVisible(true);
+								vf.getTreatments().getTreatmentS().setEditable(true);
+								vf.getTreatments().getTreatmentS().setVisible(true);
+								vf.getTreatments().getStatus2().enable(true);
+							} else {
+
+								String content = "";
+								for (int n = 0; n < tre.size(); n++) {
+
+									String na = tre.get(n).getName().toString();
+
+									if (na.equals(name)) {
+
+										content += tre.get(n).getTreatment() + " ";
+
+									} else {
+										continue;
+									}
+
+								}
+
+								String[] con = content.split(" ");
+
+								// System.out.println(Arrays.toString(con));
+
+							}
 
 							break;
 
@@ -412,7 +439,6 @@ public class Controller implements ActionListener {
 
 							vf.getTreatments().getTreatmentF().setVisible(true);
 							vf.getTreatments().getStatus3().setVisible(true);
-							vf.getTreatments().getStatus3().setEditable(false);
 
 							break;
 
