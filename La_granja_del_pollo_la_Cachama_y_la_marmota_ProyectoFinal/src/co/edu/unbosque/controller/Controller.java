@@ -154,8 +154,14 @@ public class Controller implements ActionListener {
 		vf.getShifts().getChangeTurn().addActionListener(this);
 		vf.getShifts().getChangeTurn().setActionCommand("initChangeTurn");
 
-		vf.getShifts().getHomeTurn().addActionListener(this);
-		vf.getShifts().getHomeTurn().setActionCommand("initMakeTurns");
+		vf.getShifts().getInitTurn().addActionListener(this);
+		vf.getShifts().getInitTurn().setActionCommand("initMakeTurns");
+
+		vf.getShifts().getHomeTurn1().addActionListener(this);
+		vf.getShifts().getHomeTurn1().setActionCommand("homeTurn");
+
+		vf.getShifts().getSelectTurnTheme().addActionListener(this);
+		vf.getShifts().getSelectTurnTheme().setActionCommand("theme");
 	}
 
 	@Override
@@ -163,6 +169,15 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "theme":
 			changeTheme();
+			break;
+		case "homeTurn":
+			if (vf.getShifts().getPanelSelect().isVisible()) {
+				vf.getShifts().getPanelSelect().setVisible(false);
+				vf.getShifts().getMainPanel().setVisible(true);
+			} else if (vf.getShifts().getPanelChange().isVisible()) {
+				vf.getShifts().getPanelChange().setVisible(false);
+				vf.getShifts().getMainPanel().setVisible(true);
+			}
 			break;
 		case "initMakeTurns":
 			vf.getShifts().getMainPanel().setVisible(false);
@@ -243,6 +258,7 @@ public class Controller implements ActionListener {
 			} else if (vf.getShifts().isVisible()) {
 				vf.getShifts().setVisible(false);
 				vf.getHome().setVisible(true);
+
 			}
 
 			break;
