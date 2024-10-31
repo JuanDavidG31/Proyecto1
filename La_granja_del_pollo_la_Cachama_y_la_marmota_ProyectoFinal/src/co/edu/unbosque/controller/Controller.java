@@ -147,6 +147,11 @@ public class Controller implements ActionListener {
 		vf.getShifts().getHome().addActionListener(this);
 		vf.getShifts().getHome().setActionCommand("backMainMenu");
 
+		vf.getShifts().getChangeTurn().addActionListener(this);
+		vf.getShifts().getChangeTurn().setActionCommand("initChangeTurn");
+
+		vf.getShifts().getHomeTurn().addActionListener(this);
+		vf.getShifts().getHomeTurn().setActionCommand("initMakeTurns");
 	}
 
 	@Override
@@ -155,6 +160,15 @@ public class Controller implements ActionListener {
 		case "theme":
 			changeTheme();
 			break;
+		case "initMakeTurns":
+			vf.getShifts().getMainPanel().setVisible(false);
+			vf.getShifts().getPanelSelect().setVisible(true);
+			break;
+		case "initChangeTurn":
+			vf.getShifts().getMainPanel().setVisible(false);
+			vf.getShifts().getPanelChange().setVisible(true);
+			break;
+
 		case "initGenerateTurns":
 			vf.getHome().setVisible(false);
 			vf.getShifts().setVisible(true);
