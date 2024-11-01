@@ -16,7 +16,6 @@ public class ShowTreatment extends JFrame {
 	private JComboBox<String> treatment;
 	private JLabel background1;
 	private JButton selectTreatment, home;
-	
 
 	public ShowTreatment() {
 		window();
@@ -123,5 +122,5 @@ public class ShowTreatment extends JFrame {
 	public void setHome(JButton home) {
 		this.home = home;
 	}
-	
+
 }
