@@ -175,6 +175,7 @@ public class Controller implements ActionListener {
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 	}
 
+	@SuppressWarnings({ "deprecation", "deprecation", "deprecation" })
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
