@@ -24,6 +24,7 @@ public class Controller implements ActionListener {
 	private PatientDTO pa;
 	private TreatmentDTO tr;
 	boolean darkMode = false;
+	int checkWindow=0;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -601,7 +602,6 @@ public class Controller implements ActionListener {
 				ArrayList<PatientDTO> newPat;
 				newPat = new ArrayList<>();
 				newPat = mf.getPatient().getAll();
-
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
