@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -25,6 +24,7 @@ public class Controller implements ActionListener {
 	private PatientDTO pa;
 	private TreatmentDTO tr;
 	boolean darkMode = false;
+	int checkWindow=0;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -146,6 +146,9 @@ public class Controller implements ActionListener {
 		vf.getTreatments().getFinishTreatment().addActionListener(this);
 		vf.getTreatments().getFinishTreatment().setActionCommand("finishTre");
 
+		vf.getShowTreatment().getHome().addActionListener(this);
+		vf.getShowTreatment().getHome().setActionCommand("sTreatmentBack");
+
 		// Turnos
 
 		vf.getShifts().getHome().addActionListener(this);
@@ -159,11 +162,21 @@ public class Controller implements ActionListener {
 
 		vf.getShifts().getHomeTurn1().addActionListener(this);
 		vf.getShifts().getHomeTurn1().setActionCommand("homeTurn");
-
+	
 		vf.getShifts().getSelectTurnTheme().addActionListener(this);
 		vf.getShifts().getSelectTurnTheme().setActionCommand("theme");
+
+		vf.getShifts().getSelectTurnTheme2().addActionListener(this);
+		vf.getShifts().getSelectTurnTheme2().setActionCommand("theme");
+		
+		vf.getShifts().getGenerateChange().addActionListener(this);
+		vf.getShifts().getGenerateChange().setActionCommand("cambio");
+		
+		vf.getShifts().getHomeTurn2().addActionListener(this);
+		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 	}
 
+	@SuppressWarnings({ "deprecation", "deprecation", "deprecation" })
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -211,6 +224,13 @@ public class Controller implements ActionListener {
 				vf.getTreatments().getMainPanel().setVisible(true);
 				infoTreatment();
 			}
+
+			break;
+		case "sTreatmentBack":
+			vf.getShowTreatment().setVisible(false);
+			vf.getTreatments().setVisible(true);
+			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
+			infoTreatment();
 			break;
 		case "initTreatment":
 			vf.getTreatments().getMainPanel().setVisible(false);
@@ -405,6 +425,9 @@ public class Controller implements ActionListener {
 								vf.getTreatments().getStatus2().enable(true);
 							} else {
 
+								vf.getShowTreatment().setVisible(true);
+								vf.getTreatments().setVisible(false);
+
 								String content = "";
 								for (int n = 0; n < tre.size(); n++) {
 
@@ -579,7 +602,6 @@ public class Controller implements ActionListener {
 				ArrayList<PatientDTO> newPat;
 				newPat = new ArrayList<>();
 				newPat = mf.getPatient().getAll();
-
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
@@ -756,6 +778,7 @@ public class Controller implements ActionListener {
 		if (darkMode) {
 
 			// Home
+
 			ImageIcon homeClear = new ImageIcon("Images\\menuInicial\\Menu.png");
 			vf.getHome().getBackground1().setIcon(homeClear);
 
@@ -778,6 +801,7 @@ public class Controller implements ActionListener {
 			vf.getHome().getExit().setIcon(exitCl);
 
 			// Agendar
+
 			ImageIcon scheduleHomeClear = new ImageIcon("Images\\menuCitas\\menuControlCitasClaro.png");
 			vf.getSchedule().getBackground1().setIcon(scheduleHomeClear);
 
@@ -809,7 +833,9 @@ public class Controller implements ActionListener {
 			darkMode = false;
 
 		} else {
+
 			// Home
+
 			ImageIcon homeDark = new ImageIcon("Images\\menuInicial\\MenuOscuro.png");
 			vf.getHome().getBackground1().setIcon(homeDark);
 
@@ -832,6 +858,7 @@ public class Controller implements ActionListener {
 			vf.getHome().getExit().setIcon(exitOS);
 
 			// Agendar
+
 			ImageIcon scheduleHomeDark = new ImageIcon("Images\\menuCitas\\menuAgendarOscuro.png");
 			vf.getSchedule().getBackground1().setIcon(scheduleHomeDark);
 

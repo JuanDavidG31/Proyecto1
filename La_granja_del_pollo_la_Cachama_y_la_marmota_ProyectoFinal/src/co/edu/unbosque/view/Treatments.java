@@ -41,6 +41,7 @@ public class Treatments extends JFrame {
 		newTreatmentPanel.setVisible(false);
 		searchTreatmentPanel.setVisible(false);
 		finishTreatmentPanel.setVisible(false);
+		
 		infoPanel.setVisible(true);
 	}
 
@@ -127,6 +128,8 @@ public class Treatments extends JFrame {
 		infoPanel.setBounds(614, 170, 40, 210);
 		infoPanel.setBackground(new Color(0, 74, 173));
 		infoPanel.setLayout(null);
+
+		
 		// new Color(0, 74, 173)
 	}
 
