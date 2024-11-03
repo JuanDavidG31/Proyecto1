@@ -21,9 +21,8 @@ public class Controller implements ActionListener {
 	private ViewFacade vf;
 	private PatientDTO pa;
 	private TreatmentDTO tr;
-	private int checkWindow=0;
+	private int checkWindow = 0;
 	private boolean darkMode = false;
-	
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -208,6 +207,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
+			checkWindow = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
 				vf.getTreatments().getNewTreatmentPanel().setVisible(false);
@@ -230,14 +230,14 @@ public class Controller implements ActionListener {
 			break;
 		case "sTreatmentBack":
 
-			if (open) {
+			if (checkWindow == 1) {
 
 				vf.getShowTreatment().setVisible(false);
 				vf.getTreatments().setVisible(true);
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 				infoTreatment();
 
-			} else if (open == false) {
+			} else if (checkWindow == 2) {
 
 				vf.getShowTreatment().setVisible(false);
 				vf.getTreatments().setVisible(true);
@@ -247,13 +247,14 @@ public class Controller implements ActionListener {
 
 			break;
 		case "initTreatment":
-
+			checkWindow = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
 
 			infoTreatment();
 			break;
 		case "searchTreatment":
+			checkWindow = 2;
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
@@ -269,7 +270,7 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			break;
 		case "finishTreatment":
-			open = false;
+			checkWindow = 3;
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
 			vf.getTreatments().getNameF().setText(null);
@@ -309,7 +310,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().setVisible(true);
 			break;
 		case "homeTreatment":
-
+			checkWindow = 0;
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getStatus2().setSelectedItem(null);
@@ -1035,46 +1036,19 @@ public class Controller implements ActionListener {
 	}
 
 	public void infoTreatment() {
+		/*
+		 * if (vf.getTreatments().getMainPanel().isVisible()) {
+		 * vf.getTreatments().getSearchButton().setVisible(false);
+		 * vf.getTreatments().getInfoTreatment().setVisible(false);
+		 * vf.getTreatments().getInfospecialty().setVisible(false);
+		 * vf.getTreatments().getInfoName().setVisible(false);
+		 * vf.getTreatments().getInfoStatus().setVisible(false);
+		 * 
+		 * }
+		 */
 
-		if (vf.getTreatments().getMainPanel().isVisible()) {
-			vf.getTreatments().getSearchButton().setVisible(false);
-			vf.getTreatments().getInfoTreatment().setVisible(false);
-			vf.getTreatments().getInfospecialty().setVisible(false);
-			vf.getTreatments().getInfoName().setVisible(false);
-			vf.getTreatments().getInfoStatus().setVisible(false);
+		if (checkWindow == 1) {// Principal
 
-		}
-
-		if (open) {
-
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
-
-			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
-			vf.getTreatments().getSearchButton().setVisible(true);
-
-			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 93, 34, 34);
-
-			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
-
-		} else if (open == false) {
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
-
-			vf.getTreatments().getSearchButton().setVisible(true);
-			vf.getTreatments().getSearchButton().setBounds(0, 30, 100, 35);
-
-			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
-
-			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 155, 34, 34);
-
-			vf.getTreatments().getInfospecialty().setVisible(true);
-			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
-		}
-
-		if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 40, 210);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -1090,10 +1064,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
 
 			// vf.getTreatments().getInfoSearchName().setVisible(false);
-
-		}
-		if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
-
+		} else if (checkWindow == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setVisible(true);
@@ -1109,8 +1080,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
 
 			// vf.getTreatments().getInfoName().setVisible(false);
-		}
-		if (vf.getTreatments().getFinishTreatmentPanel().isVisible()) {
+
+		} else if (checkWindow == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -1121,6 +1092,12 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
+		} else if (checkWindow == 0) {
+			vf.getTreatments().getSearchButton().setVisible(false);
+			vf.getTreatments().getInfoTreatment().setVisible(false);
+			vf.getTreatments().getInfospecialty().setVisible(false);
+			vf.getTreatments().getInfoName().setVisible(false);
+			vf.getTreatments().getInfoStatus().setVisible(false);
 
 		}
 
