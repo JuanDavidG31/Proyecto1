@@ -21,8 +21,9 @@ public class Controller implements ActionListener {
 	private ViewFacade vf;
 	private PatientDTO pa;
 	private TreatmentDTO tr;
+	private int checkWindow=0;
 	private boolean darkMode = false;
-	private boolean open = true;
+	
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -177,6 +178,7 @@ public class Controller implements ActionListener {
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 	}
 
+	@SuppressWarnings({ "deprecation", "deprecation", "deprecation" })
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -714,7 +716,6 @@ public class Controller implements ActionListener {
 				ArrayList<PatientDTO> newPat;
 				newPat = new ArrayList<>();
 				newPat = mf.getPatient().getAll();
-
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
