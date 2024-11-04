@@ -8,10 +8,42 @@ import co.edu.unbosque.model.Doctor;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.Patient;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.Shifts;
+import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.Treatment;
 import co.edu.unbosque.model.TreatmentDTO;
 
 public class DataMapper {
+
+	// Turnos
+
+	public static Shifts ShiftsDTOToShifts(ShiftsDTO dto) {
+		Shifts entity;
+		entity = new Shifts(dto.getDate(), dto.getSpecialty(), dto.getId(), dto.getName());
+		return entity;
+	}
+
+	public static ShiftsDTO ShiftsToShiftsDTO(Shifts entity) {
+		ShiftsDTO dto;
+		dto = new ShiftsDTO(entity.getDate(), entity.getSpecialty(), entity.getId(), entity.getName());
+		return dto;
+	}
+
+	public static ArrayList<ShiftsDTO> listaShiftsToListaShiftsDTO(ArrayList<Shifts> entityList) {
+		ArrayList<ShiftsDTO> dtoList = new ArrayList<>();
+		for (Shifts m : entityList) {
+			dtoList.add(new ShiftsDTO(m.getDate(), m.getSpecialty(), m.getId(), m.getName()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<Shifts> listaShiftsDTOToListaShifts(ArrayList<ShiftsDTO> dtoList) {
+		ArrayList<Shifts> entityList = new ArrayList<>();
+		for (ShiftsDTO d : dtoList) {
+			entityList.add(new Shifts(d.getDate(), d.getSpecialty(), d.getId(), d.getName()));
+		}
+		return entityList;
+	}
 
 	// Doctor
 
