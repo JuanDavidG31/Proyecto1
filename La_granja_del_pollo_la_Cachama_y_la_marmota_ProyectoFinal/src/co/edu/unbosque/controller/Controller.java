@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -13,23 +12,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
-import co.edu.unbosque.model.PatientDTO;
-import co.edu.unbosque.model.Treatment;
+import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private PatientDTO pa;
+	private AppointmentDTO pa;
 	private TreatmentDTO tr;
-	boolean darkMode = false;
-	int checkWindow=0;
+	private int checkWindow = 0;
+	private boolean darkMode = false;
 
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
-		pa = new PatientDTO();
+		pa = new AppointmentDTO();
 		tr = new TreatmentDTO();
 
 		assignReaders();
@@ -76,7 +74,7 @@ public class Controller implements ActionListener {
 		vf.getSchedule().getCancelButton().setActionCommand("cancelMenu");
 
 		vf.getSchedule().getGenerate().addActionListener(this);
-		vf.getSchedule().getGenerate().setActionCommand("generatedPatient");
+		vf.getSchedule().getGenerate().setActionCommand("generatedAppointment");
 
 		vf.getSchedule().getReGenerate().addActionListener(this);
 		vf.getSchedule().getReGenerate().setActionCommand("reGenerated");
@@ -149,6 +147,9 @@ public class Controller implements ActionListener {
 		vf.getShowTreatment().getHome().addActionListener(this);
 		vf.getShowTreatment().getHome().setActionCommand("sTreatmentBack");
 
+		vf.getShowTreatment().getSelectTreatment().addActionListener(this);
+		vf.getShowTreatment().getSelectTreatment().setActionCommand("selectTreatments");
+
 		// Turnos
 
 		vf.getShifts().getHome().addActionListener(this);
@@ -162,16 +163,16 @@ public class Controller implements ActionListener {
 
 		vf.getShifts().getHomeTurn1().addActionListener(this);
 		vf.getShifts().getHomeTurn1().setActionCommand("homeTurn");
-	
+
 		vf.getShifts().getSelectTurnTheme().addActionListener(this);
 		vf.getShifts().getSelectTurnTheme().setActionCommand("theme");
 
 		vf.getShifts().getSelectTurnTheme2().addActionListener(this);
 		vf.getShifts().getSelectTurnTheme2().setActionCommand("theme");
-		
+
 		vf.getShifts().getGenerateChange().addActionListener(this);
 		vf.getShifts().getGenerateChange().setActionCommand("cambio");
-		
+
 		vf.getShifts().getHomeTurn2().addActionListener(this);
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 	}
@@ -206,6 +207,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
+			checkWindow = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
 				vf.getTreatments().getNewTreatmentPanel().setVisible(false);
@@ -227,26 +229,38 @@ public class Controller implements ActionListener {
 
 			break;
 		case "sTreatmentBack":
-			vf.getShowTreatment().setVisible(false);
-			vf.getTreatments().setVisible(true);
-			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
-			infoTreatment();
+
+			if (checkWindow == 1) {
+
+				vf.getShowTreatment().setVisible(false);
+				vf.getTreatments().setVisible(true);
+				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
+				infoTreatment();
+
+			} else if (checkWindow == 2) {
+
+				vf.getShowTreatment().setVisible(false);
+				vf.getTreatments().setVisible(true);
+				vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
+				infoTreatment();
+			}
+
 			break;
 		case "initTreatment":
+			checkWindow = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
 
 			infoTreatment();
 			break;
 		case "searchTreatment":
+			checkWindow = 2;
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getNameS().setText(null);
-			vf.getTreatments().getSpecialty2().setVisible(false);
-			vf.getTreatments().getTreatmentS().setEditable(false);
-			vf.getTreatments().getTreatmentS().setVisible(false);
-			// vf.getTreatments().getStatus2().setVisible(false);
+			vf.getTreatments().getSpecialty2().enable(false);
+			vf.getTreatments().getTreatmentS().enable(false);
 			vf.getTreatments().getStatus2().enable(false);
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
@@ -254,14 +268,14 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			break;
 		case "finishTreatment":
-
+			checkWindow = 3;
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
 			vf.getTreatments().getNameF().setText(null);
 
 			vf.getTreatments().getTreatmentF().setEditable(false);
 			vf.getTreatments().getTreatmentF().setVisible(false);
-			vf.getTreatments().getStatus3().setVisible(false);
+			vf.getTreatments().getStatus3().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
@@ -294,7 +308,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().setVisible(true);
 			break;
 		case "homeTreatment":
-
+			checkWindow = 0;
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getStatus2().setSelectedItem(null);
@@ -347,16 +361,20 @@ public class Controller implements ActionListener {
 
 				main: for (int i = 0; i < t2.size(); i++) {
 
-					String treatment2 = t2.get(i).getTreatment();
-					String status2 = t2.get(i).getVerified();
 					String name2 = t2.get(i).getName();
 					speciality = t2.get(i).getSpecialty();
-					if (status.equals(status2) && !name.equals(name2)) {
-						JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
-								JOptionPane.ERROR_MESSAGE);
-						verf2 = false;
+					if (name.equals(name2)) {
 
-						break main;
+						if (status.equals("Finalizado")) {
+							JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							verf2 = false;
+
+							break main;
+
+						} else {
+							verf2 = true;
+						}
 
 					} else {
 						continue main;
@@ -366,10 +384,11 @@ public class Controller implements ActionListener {
 
 				if (verf2) {
 
+					vf.getTreatments().getStatus3().enable(true);
 					vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
 					status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 
-					if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
+					if (mf.getTreatment().update(new TreatmentDTO(null, null, treatment, null),
 							new TreatmentDTO(name, speciality, treatment, status))) {
 						JOptionPane.showMessageDialog(null, "Tratamiento finalizado correctamente");
 						vf.getTreatments().getTreatmentF().setText(null);
@@ -380,6 +399,97 @@ public class Controller implements ActionListener {
 						JOptionPane.showMessageDialog(null, "No se pudo finalizar el tratamiento ");
 					}
 				}
+			}
+
+			break;
+
+		case "selectTreatments":
+
+			if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
+
+				if (vf.getShowTreatment().getTreatment().getSelectedItem().toString().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					String item = vf.getShowTreatment().getTreatment().getSelectedItem().toString();
+
+					ArrayList<TreatmentDTO> tItem;
+					tItem = new ArrayList<>();
+					tItem = mf.getTreatment().getAll();
+
+					for (int it = 0; it < tItem.size(); it++) {
+
+						String item2 = tItem.get(it).getTreatment();
+
+						if (item.equals(item2)) {
+
+							String speciality = tItem.get(it).getSpecialty();
+							String status = tItem.get(it).getVerified();
+
+							vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
+							vf.getTreatments().getTreatmentS().setText(item);
+							vf.getTreatments().getStatus2().setSelectedItem(status);
+
+							vf.getTreatments().getSpecialty2().enable(true);
+							vf.getTreatments().getTreatmentS().enable(true);
+							vf.getTreatments().getStatus2().enable(false);
+
+							vf.getShowTreatment().setVisible(false);
+							vf.getTreatments().setVisible(true);
+
+							vf.getTreatments().getSpecialty2().setVisible(true);
+							vf.getTreatments().getTreatmentS().setEditable(true);
+							vf.getTreatments().getTreatmentS().setVisible(true);
+							// vf.getTreatments().getStatus2().enable(false);
+
+							break;
+						} else {
+							continue;
+						}
+
+					}
+
+				}
+			} else if (vf.getTreatments().getFinishTreatmentPanel().isVisible()) {
+
+				if (vf.getShowTreatment().getTreatment().getSelectedItem().toString().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					String item = vf.getShowTreatment().getTreatment().getSelectedItem().toString();
+
+					ArrayList<TreatmentDTO> tItem;
+					tItem = new ArrayList<>();
+					tItem = mf.getTreatment().getAll();
+
+					for (int it = 0; it < tItem.size(); it++) {
+
+						String item2 = tItem.get(it).getTreatment();
+
+						if (item.equals(item2)) {
+
+							String status = tItem.get(it).getVerified();
+
+							vf.getTreatments().getTreatmentF().setText(item);
+							vf.getTreatments().getStatus3().setSelectedItem(status);
+
+							vf.getShowTreatment().setVisible(false);
+							vf.getTreatments().setVisible(true);
+
+							vf.getTreatments().getTreatmentF().setEditable(true);
+							vf.getTreatments().getTreatmentF().setVisible(true);
+							vf.getTreatments().getStatus3().enable(true);
+							break;
+						} else {
+							continue;
+						}
+
+					}
+
+				}
+
 			}
 
 			break;
@@ -423,6 +533,7 @@ public class Controller implements ActionListener {
 								vf.getTreatments().getTreatmentS().setEditable(true);
 								vf.getTreatments().getTreatmentS().setVisible(true);
 								vf.getTreatments().getStatus2().enable(true);
+
 							} else {
 
 								vf.getShowTreatment().setVisible(true);
@@ -435,7 +546,7 @@ public class Controller implements ActionListener {
 
 									if (na.equals(name)) {
 
-										content += tre.get(n).getTreatment() + " ";
+										content += tre.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -443,9 +554,14 @@ public class Controller implements ActionListener {
 
 								}
 
-								String[] con = content.split(" ");
+								String[] con = content.split(",");
+								vf.getShowTreatment().getTreatment().removeAllItems();
+								vf.getShowTreatment().getTreatment().addItem("");
+								for (int t = 0; t < con.length; t++) {
 
-								// System.out.println(Arrays.toString(con));
+									vf.getShowTreatment().getTreatment().addItem(con[t]);
+
+								}
 
 							}
 
@@ -495,6 +611,9 @@ public class Controller implements ActionListener {
 								break;
 							} else {
 
+								vf.getShowTreatment().setVisible(true);
+								vf.getTreatments().setVisible(false);
+
 								String content = "";
 								for (int n = 0; n < tr.size(); n++) {
 
@@ -502,7 +621,7 @@ public class Controller implements ActionListener {
 
 									if (na.equals(name)) {
 
-										content += tr.get(n).getTreatment() + " ";
+										content += tr.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -510,8 +629,14 @@ public class Controller implements ActionListener {
 
 								}
 
-								String[] con = content.split(" ");
-								System.out.println(Arrays.toString(con));
+								String[] con = content.split(",");
+								vf.getShowTreatment().getTreatment().removeAllItems();
+								vf.getShowTreatment().getTreatment().addItem("");
+								for (int t = 0; t < con.length; t++) {
+
+									vf.getShowTreatment().getTreatment().addItem(con[t]);
+
+								}
 
 								break;
 							}
@@ -599,9 +724,9 @@ public class Controller implements ActionListener {
 
 				String name = vf.getTreatments().getName1().getText().toString();
 
-				ArrayList<PatientDTO> newPat;
+				ArrayList<AppointmentDTO> newPat;
 				newPat = new ArrayList<>();
-				newPat = mf.getPatient().getAll();
+				newPat = mf.getAppointment().getAll();
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
@@ -637,10 +762,9 @@ public class Controller implements ActionListener {
 			}
 			break;
 
-		case "generatedPatient":
+		case "generatedAppointment":
 
 			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
-					|| vf.getSchedule().getEmail().getText().toString().equals("")
 					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getName1().getText().toString().equals("")
 					|| vf.getSchedule().getDate1().getDate() == null) {
@@ -651,7 +775,6 @@ public class Controller implements ActionListener {
 				String name = vf.getSchedule().getName1().getText().toString();
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
-				String gmail = vf.getSchedule().getEmail().getText().toString();
 
 				Date tDate = vf.getSchedule().getDate1().getDate();
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -659,7 +782,7 @@ public class Controller implements ActionListener {
 
 				int appoitment = appoitment();
 
-				if (mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment))) {
+				if (mf.getAppointment().add(new AppointmentDTO(name, doctor, specialty, date, appoitment))) {
 
 					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
 
@@ -685,9 +808,9 @@ public class Controller implements ActionListener {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 				String date = formatoFecha.format(vf.getSchedule().getDate2().getDate());
-				ArrayList<PatientDTO> pat;
+				ArrayList<AppointmentDTO> pat;
 				pat = new ArrayList<>();
-				pat = mf.getPatient().getAll();
+				pat = mf.getAppointment().getAll();
 
 				p: for (int i = 0; i < pat.size(); i++) {
 					int ap = pat.get(i).getAppointmentNum();
@@ -696,10 +819,9 @@ public class Controller implements ActionListener {
 						String doctor = pat.get(i).getDoctor();
 						String specialty = pat.get(i).getSpecialty();
 						String name = pat.get(i).getName();
-						String gmail = pat.get(i).getGmail();
 
-						if (mf.getPatient().update(new PatientDTO(null, null, 0, 0, null, null, null, appoint),
-								new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoint))) {
+						if (mf.getAppointment().update(new AppointmentDTO(null, null, null, null, appoint),
+								new AppointmentDTO(name, doctor, specialty, date, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " actualizado exitosamente");
@@ -730,16 +852,16 @@ public class Controller implements ActionListener {
 			} else {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
 
-				ArrayList<PatientDTO> pat;
+				ArrayList<AppointmentDTO> pat;
 				pat = new ArrayList<>();
-				pat = mf.getPatient().getAll();
+				pat = mf.getAppointment().getAll();
 
 				p: for (int i = 0; i < pat.size(); i++) {
 					int ap = pat.get(i).getAppointmentNum();
 
 					if (ap == appoint) {
 
-						if (mf.getPatient().delete(new PatientDTO(null, null, 0, 0, null, null, null, appoint))) {
+						if (mf.getAppointment().delete(new AppointmentDTO(null, null, null, null, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " eliminado exitosamente");
@@ -921,16 +1043,19 @@ public class Controller implements ActionListener {
 	}
 
 	public void infoTreatment() {
-		if (vf.getTreatments().getMainPanel().isVisible()) {
-			vf.getTreatments().getSearchButton().setVisible(false);
-			vf.getTreatments().getInfoTreatment().setVisible(false);
-			vf.getTreatments().getInfospecialty().setVisible(false);
-			vf.getTreatments().getInfoName().setVisible(false);
-			vf.getTreatments().getInfoStatus().setVisible(false);
+		/*
+		 * if (vf.getTreatments().getMainPanel().isVisible()) {
+		 * vf.getTreatments().getSearchButton().setVisible(false);
+		 * vf.getTreatments().getInfoTreatment().setVisible(false);
+		 * vf.getTreatments().getInfospecialty().setVisible(false);
+		 * vf.getTreatments().getInfoName().setVisible(false);
+		 * vf.getTreatments().getInfoStatus().setVisible(false);
+		 * 
+		 * }
+		 */
 
-		}
+		if (checkWindow == 1) {// Principal
 
-		if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 40, 210);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -946,10 +1071,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
 
 			// vf.getTreatments().getInfoSearchName().setVisible(false);
-
-		}
-		if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
-
+		} else if (checkWindow == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setVisible(true);
@@ -965,8 +1087,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
 
 			// vf.getTreatments().getInfoName().setVisible(false);
-		}
-		if (vf.getTreatments().getFinishTreatmentPanel().isVisible() == true) {
+
+		} else if (checkWindow == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -977,6 +1099,12 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
+		} else if (checkWindow == 0) {
+			vf.getTreatments().getSearchButton().setVisible(false);
+			vf.getTreatments().getInfoTreatment().setVisible(false);
+			vf.getTreatments().getInfospecialty().setVisible(false);
+			vf.getTreatments().getInfoName().setVisible(false);
+			vf.getTreatments().getInfoStatus().setVisible(false);
 
 		}
 
@@ -988,9 +1116,9 @@ public class Controller implements ActionListener {
 			boolean frist = false;
 			num = random();
 
-			ArrayList<PatientDTO> in;
+			ArrayList<AppointmentDTO> in;
 			in = new ArrayList<>();
-			in = mf.getPatient().getAll();
+			in = mf.getAppointment().getAll();
 			second: for (int i = 0; i < in.size(); i++) {
 
 				if (in.isEmpty()) {

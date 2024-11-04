@@ -9,18 +9,16 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String gmail;
-	private int age;
 	private int id;
 
 	public Person() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Person(String name, String gmail, int age, int id) {
+	public Person(String name, String gmail, int id) {
 		super();
 		this.name = name;
 		this.gmail = gmail;
-		this.age = age;
 		this.id = id;
 	}
 
@@ -40,14 +38,6 @@ public class Person implements Serializable {
 		this.gmail = gmail;
 	}
 
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -58,7 +48,7 @@ public class Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", gmail=" + gmail + ", age=" + age + ", id=" + id + "]";
+		return "Person [name=" + name + ", gmail=" + gmail + ", id=" + id + "]";
 	}
 
 }
