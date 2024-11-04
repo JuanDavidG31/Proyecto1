@@ -12,13 +12,13 @@ public class PatientDTO extends Person {
 		this.age = age;
 	}
 
-	public PatientDTO(String name, String gmail, int id, int age) {
-		super(name, gmail, id);
+	public PatientDTO(String name, String email, int id, int age) {
+		super(name, email, id);
 		this.age = age;
 	}
 
-	public PatientDTO(String name, String gmail, int id) {
-		super(name, gmail, id);
+	public PatientDTO(String name, String email, int id) {
+		super(name, email, id);
 		// TODO Auto-generated constructor stub
 	}
 

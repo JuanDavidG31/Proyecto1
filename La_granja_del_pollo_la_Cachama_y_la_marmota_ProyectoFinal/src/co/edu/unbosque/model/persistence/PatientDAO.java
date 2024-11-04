@@ -118,7 +118,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 		String content = "";
 		for (Patient m : patientList) {
 			content += m.getName() + ";";
-			content += m.getGmail() + ";";
+			content += m.getEmail() + ";";
 			content += m.getId() + ";";
 			content += m.getAge() + ";";
 			content += "\n";
@@ -138,7 +138,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 				String[] cols = row.split(";");
 				Patient tempo = new Patient();
 				tempo.setName(cols[0]);
-				tempo.setGmail(cols[1]);
+				tempo.setEmail(cols[1]);
 				int id = Integer.parseInt(cols[2]);
 				tempo.setId(id);
 				int age = Integer.parseInt(cols[3]);

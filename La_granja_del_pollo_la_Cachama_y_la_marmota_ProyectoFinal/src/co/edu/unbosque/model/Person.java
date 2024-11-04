@@ -8,17 +8,17 @@ public class Person implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private String gmail;
+	private String email;
 	private int id;
 
 	public Person() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Person(String name, String gmail, int id) {
+	public Person(String name, String email, int id) {
 		super();
 		this.name = name;
-		this.gmail = gmail;
+		this.email = email;
 		this.id = id;
 	}
 
@@ -30,12 +30,12 @@ public class Person implements Serializable {
 		this.name = name;
 	}
 
-	public String getGmail() {
-		return gmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setGmail(String gmail) {
-		this.gmail = gmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getId() {
@@ -48,7 +48,7 @@ public class Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", gmail=" + gmail + ", id=" + id + "]";
+		return "Person [name=" + name + ", email=" + email + ", id=" + id + "]";
 	}
 
 }

@@ -19,13 +19,13 @@ public class Patient extends Person implements Serializable {
 		this.age = age;
 	}
 
-	public Patient(String name, String gmail, int id, int age) {
-		super(name, gmail, id);
+	public Patient(String name, String email, int id, int age) {
+		super(name, email, id);
 		this.age = age;
 	}
 
-	public Patient(String name, String gmail, int id) {
-		super(name, gmail, id);
+	public Patient(String name, String email, int id) {
+		super(name, email, id);
 		// TODO Auto-generated constructor stub
 	}
 

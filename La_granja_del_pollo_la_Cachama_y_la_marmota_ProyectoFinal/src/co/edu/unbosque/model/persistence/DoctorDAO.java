@@ -119,7 +119,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 		String content = "";
 		for (Doctor m : doctorList) {
 			content += m.getName() + ";";
-			content += m.getGmail() + ";";
+			content += m.getEmail() + ";";
 			content += m.getId() + ";";
 			content += m.getSpecialty() + ";";
 			content += m.isDirector() + ";";
@@ -140,7 +140,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 				String[] cols = row.split(";");
 				Doctor tempo = new Doctor();
 				tempo.setName(cols[0]);
-				tempo.setGmail(cols[1]);
+				tempo.setEmail(cols[1]);
 				int id = Integer.parseInt(cols[2]);
 				tempo.setId(id);
 				tempo.setSpecialty(cols[3]);

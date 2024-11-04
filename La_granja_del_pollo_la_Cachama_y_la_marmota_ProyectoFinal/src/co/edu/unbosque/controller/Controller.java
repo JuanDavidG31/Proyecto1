@@ -771,6 +771,8 @@ public class Controller implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
+				
+				
 
 				String name = vf.getSchedule().getName1().getText().toString();
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
