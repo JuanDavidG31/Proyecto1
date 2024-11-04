@@ -259,10 +259,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getNameS().setText(null);
-			vf.getTreatments().getSpecialty2().setVisible(false);
-			vf.getTreatments().getTreatmentS().setEditable(false);
-			vf.getTreatments().getTreatmentS().setVisible(false);
-			// vf.getTreatments().getStatus2().setVisible(false);
+			vf.getTreatments().getSpecialty2().enable(false);
+			vf.getTreatments().getTreatmentS().enable(false);
 			vf.getTreatments().getStatus2().enable(false);
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
@@ -277,7 +275,7 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getTreatmentF().setEditable(false);
 			vf.getTreatments().getTreatmentF().setVisible(false);
-			vf.getTreatments().getStatus3().setVisible(false);
+			vf.getTreatments().getStatus3().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
@@ -382,6 +380,7 @@ public class Controller implements ActionListener {
 				if (verf2) {
 
 					vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
+					vf.getTreatments().getStatus3().setVisible(true);
 					status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 
 					if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
@@ -427,13 +426,18 @@ public class Controller implements ActionListener {
 							vf.getTreatments().getTreatmentS().setText(item);
 							vf.getTreatments().getStatus2().setSelectedItem(status);
 
+							vf.getTreatments().getSpecialty2().enable(true);
+							vf.getTreatments().getTreatmentS().enable(true);
+							vf.getTreatments().getStatus2().enable(false);
+
 							vf.getShowTreatment().setVisible(false);
 							vf.getTreatments().setVisible(true);
 
 							vf.getTreatments().getSpecialty2().setVisible(true);
 							vf.getTreatments().getTreatmentS().setEditable(true);
 							vf.getTreatments().getTreatmentS().setVisible(true);
-							vf.getTreatments().getStatus2().enable(true);
+							// vf.getTreatments().getStatus2().enable(false);
+
 							break;
 						} else {
 							continue;
@@ -524,6 +528,7 @@ public class Controller implements ActionListener {
 								vf.getTreatments().getTreatmentS().setEditable(true);
 								vf.getTreatments().getTreatmentS().setVisible(true);
 								vf.getTreatments().getStatus2().enable(true);
+
 							} else {
 
 								vf.getShowTreatment().setVisible(true);
