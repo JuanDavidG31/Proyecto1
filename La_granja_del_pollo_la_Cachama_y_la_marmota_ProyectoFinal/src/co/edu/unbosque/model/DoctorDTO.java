@@ -2,22 +2,19 @@ package co.edu.unbosque.model;
 
 public class DoctorDTO extends Person {
 	private String specialty;
-	private boolean director;
 
 	public DoctorDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DoctorDTO(String specialty, boolean director) {
+	public DoctorDTO(String specialty) {
 		super();
 		this.specialty = specialty;
-		this.director = director;
 	}
 
-	public DoctorDTO(String name, String gmail, int id, String specialty, boolean director) {
+	public DoctorDTO(String name, String gmail, int id, String specialty) {
 		super(name, gmail, id);
 		this.specialty = specialty;
-		this.director = director;
 	}
 
 	public DoctorDTO(String name, String gmail, int id) {
@@ -33,16 +30,8 @@ public class DoctorDTO extends Person {
 		this.specialty = specialty;
 	}
 
-	public boolean isDirector() {
-		return director;
-	}
-
-	public void setDirector(boolean director) {
-		this.director = director;
-	}
-
 	@Override
 	public String toString() {
-		return super.toString() + "Doctor [specialty=" + specialty + ", director=" + director + "]";
+		return super.toString() + "Doctor [specialty=" + specialty + "]";
 	}
 }

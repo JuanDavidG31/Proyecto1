@@ -10,22 +10,19 @@ public class Doctor extends Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String specialty;
-	private boolean director;
 
 	public Doctor() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Doctor(String specialty, boolean director) {
+	public Doctor(String specialty) {
 		super();
 		this.specialty = specialty;
-		this.director = director;
 	}
 
-	public Doctor(String name, String gmail, int id, String specialty, boolean director) {
+	public Doctor(String name, String gmail, int id, String specialty) {
 		super(name, gmail, id);
 		this.specialty = specialty;
-		this.director = director;
 	}
 
 	public Doctor(String name, String gmail, int id) {
@@ -41,17 +38,9 @@ public class Doctor extends Person implements Serializable {
 		this.specialty = specialty;
 	}
 
-	public boolean isDirector() {
-		return director;
-	}
-
-	public void setDirector(boolean director) {
-		this.director = director;
-	}
-
 	@Override
 	public String toString() {
-		return super.toString() + "Doctor [specialty=" + specialty + ", director=" + director + "]";
+		return super.toString() + "Doctor [specialty=" + specialty + "]";
 	}
 
 }

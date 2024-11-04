@@ -49,21 +49,20 @@ public class DataMapper {
 
 	public static Doctor DoctorDTOToDoctor(DoctorDTO dto) {
 		Doctor entity;
-		entity = new Doctor(dto.getName(), dto.getEmail(), dto.getId(), dto.getSpecialty(), dto.isDirector());
+		entity = new Doctor(dto.getName(), dto.getEmail(), dto.getId(), dto.getSpecialty());
 		return entity;
 	}
 
 	public static DoctorDTO DoctorToDoctorDTO(Doctor entity) {
 		DoctorDTO dto;
-		dto = new DoctorDTO(entity.getName(), entity.getEmail(), entity.getId(), entity.getSpecialty(),
-				entity.isDirector());
+		dto = new DoctorDTO(entity.getName(), entity.getEmail(), entity.getId(), entity.getSpecialty());
 		return dto;
 	}
 
 	public static ArrayList<DoctorDTO> listaDoctorToListaDoctorDTO(ArrayList<Doctor> entityList) {
 		ArrayList<DoctorDTO> dtoList = new ArrayList<>();
 		for (Doctor m : entityList) {
-			dtoList.add(new DoctorDTO(m.getName(), m.getEmail(), m.getId(), m.getSpecialty(), m.isDirector()));
+			dtoList.add(new DoctorDTO(m.getName(), m.getEmail(), m.getId(), m.getSpecialty()));
 		}
 		return dtoList;
 	}
@@ -71,7 +70,7 @@ public class DataMapper {
 	public static ArrayList<Doctor> listaDoctorDTOToListaDoctor(ArrayList<DoctorDTO> dtoList) {
 		ArrayList<Doctor> entityList = new ArrayList<>();
 		for (DoctorDTO d : dtoList) {
-			entityList.add(new Doctor(d.getName(), d.getEmail(), d.getId(), d.getSpecialty(), d.isDirector()));
+			entityList.add(new Doctor(d.getName(), d.getEmail(), d.getId(), d.getSpecialty()));
 		}
 		return entityList;
 	}
