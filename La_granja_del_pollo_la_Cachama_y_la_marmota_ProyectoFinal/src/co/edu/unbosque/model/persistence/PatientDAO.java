@@ -21,7 +21,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 	public String showAll() {
 		String rta = "";
 		if (patientList.isEmpty()) {
-			return "No hay citas en la lista";
+			return "No hay pacientes en la lista";
 		} else {
 			for (Patient Patient : patientList) {
 				rta += Patient;

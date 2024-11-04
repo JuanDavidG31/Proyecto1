@@ -1,6 +1,7 @@
 package co.edu.unbosque.model;
 
 import co.edu.unbosque.model.persistence.AppointmentDAO;
+import co.edu.unbosque.model.persistence.DoctorDAO;
 import co.edu.unbosque.model.persistence.PatientDAO;
 import co.edu.unbosque.model.persistence.TreatmentDAO;
 
@@ -8,11 +9,13 @@ public class ModelFacade {
 	private AppointmentDAO appointment;
 	private TreatmentDAO treatment;
 	private PatientDAO patient;
+	private DoctorDAO doctor;
 
 	public ModelFacade() {
 		appointment = new AppointmentDAO();
 		treatment = new TreatmentDAO();
 		patient = new PatientDAO();
+		doctor = new DoctorDAO();
 	}
 
 	public AppointmentDAO getAppointment() {
@@ -37,6 +40,14 @@ public class ModelFacade {
 
 	public void setPatient(PatientDAO patient) {
 		this.patient = patient;
+	}
+
+	public DoctorDAO getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorDAO doctor) {
+		this.doctor = doctor;
 	}
 
 }

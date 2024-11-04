@@ -4,12 +4,45 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.model.Appointment;
 import co.edu.unbosque.model.AppointmentDTO;
+import co.edu.unbosque.model.Doctor;
+import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.Patient;
 import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.Treatment;
 import co.edu.unbosque.model.TreatmentDTO;
 
 public class DataMapper {
+
+	// Doctor
+
+	public static Doctor DoctorDTOToDoctor(DoctorDTO dto) {
+		Doctor entity;
+		entity = new Doctor(dto.getName(), dto.getGmail(), dto.getId(), dto.getSpecialty(), dto.isDirector());
+		return entity;
+	}
+
+	public static DoctorDTO DoctorToDoctorDTO(Doctor entity) {
+		DoctorDTO dto;
+		dto = new DoctorDTO(entity.getName(), entity.getGmail(), entity.getId(), entity.getSpecialty(),
+				entity.isDirector());
+		return dto;
+	}
+
+	public static ArrayList<DoctorDTO> listaDoctorToListaDoctorDTO(ArrayList<Doctor> entityList) {
+		ArrayList<DoctorDTO> dtoList = new ArrayList<>();
+		for (Doctor m : entityList) {
+			dtoList.add(new DoctorDTO(m.getName(), m.getGmail(), m.getId(), m.getSpecialty(), m.isDirector()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<Doctor> listaDoctorDTOToListaDoctor(ArrayList<DoctorDTO> dtoList) {
+		ArrayList<Doctor> entityList = new ArrayList<>();
+		for (DoctorDTO d : dtoList) {
+			entityList.add(new Doctor(d.getName(), d.getGmail(), d.getId(), d.getSpecialty(), d.isDirector()));
+		}
+		return entityList;
+	}
 
 	// Paciente
 
