@@ -21,7 +21,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 	public String showAll() {
 		String rta = "";
 		if (patientList.isEmpty()) {
-			return "No hay Patients en la lista";
+			return "No hay pacientes en la lista";
 		} else {
 			for (Patient Patient : patientList) {
 				rta += Patient;
@@ -87,7 +87,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 		Patient found = null;
 		if (!patientList.isEmpty()) {
 			for (Patient Patient : patientList) {
-				if (Patient.getAppointmentNum() == toFind.getAppointmentNum()) {
+				if (Patient.getId() == toFind.getId()) {
 					found = Patient;
 					return found;
 				} else {
@@ -118,13 +118,9 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 		String content = "";
 		for (Patient m : patientList) {
 			content += m.getName() + ";";
-			content += m.getGmail() + ";";
-			content += m.getAge() + ";";
+			content += m.getEmail() + ";";
 			content += m.getId() + ";";
-			content += m.getDoctor() + ";";
-			content += m.getSpecialty() + ";";
-			content += m.getDate() + ";";
-			content += m.getAppointmentNum() + ";";
+			content += m.getAge() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
@@ -141,17 +137,12 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Patient tempo = new Patient();
-				int id = Integer.parseInt(cols[3]);
-				int age = Integer.parseInt(cols[2]);
-				int appointment = Integer.parseInt(cols[7]);
 				tempo.setName(cols[0]);
-				tempo.setGmail(cols[1]);
-				tempo.setAge(age);
+				tempo.setEmail(cols[1]);
+				int id = Integer.parseInt(cols[2]);
 				tempo.setId(id);
-				tempo.setDoctor(cols[4]);
-				tempo.setSpecialty(cols[5]);
-				tempo.setDate(cols[6]);
-				tempo.setAppointmentNum(appointment);
+				int age = Integer.parseInt(cols[3]);
+				tempo.setAge(age);
 				patientList.add(tempo);
 			}
 		}
