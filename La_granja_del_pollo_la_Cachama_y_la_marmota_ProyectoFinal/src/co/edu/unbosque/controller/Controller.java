@@ -12,14 +12,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
-import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private PatientDTO pa;
+	private AppointmentDTO pa;
 	private TreatmentDTO tr;
 	private int checkWindow = 0;
 	private boolean darkMode = false;
@@ -27,7 +27,7 @@ public class Controller implements ActionListener {
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
-		pa = new PatientDTO();
+		pa = new AppointmentDTO();
 		tr = new TreatmentDTO();
 
 		assignReaders();
@@ -74,7 +74,7 @@ public class Controller implements ActionListener {
 		vf.getSchedule().getCancelButton().setActionCommand("cancelMenu");
 
 		vf.getSchedule().getGenerate().addActionListener(this);
-		vf.getSchedule().getGenerate().setActionCommand("generatedPatient");
+		vf.getSchedule().getGenerate().setActionCommand("generatedAppointment");
 
 		vf.getSchedule().getReGenerate().addActionListener(this);
 		vf.getSchedule().getReGenerate().setActionCommand("reGenerated");
@@ -361,15 +361,20 @@ public class Controller implements ActionListener {
 
 				main: for (int i = 0; i < t2.size(); i++) {
 
-					String status2 = t2.get(i).getVerified();
 					String name2 = t2.get(i).getName();
 					speciality = t2.get(i).getSpecialty();
-					if (status.equals(status2) && !name.equals(name2)) {
-						JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
-								JOptionPane.ERROR_MESSAGE);
-						verf2 = false;
+					if (name.equals(name2)) {
 
-						break main;
+						if (status.equals("Finalizado")) {
+							JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							verf2 = false;
+
+							break main;
+
+						} else {
+							verf2 = true;
+						}
 
 					} else {
 						continue main;
@@ -379,11 +384,11 @@ public class Controller implements ActionListener {
 
 				if (verf2) {
 
+					vf.getTreatments().getStatus3().enable(true);
 					vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
-					vf.getTreatments().getStatus3().setVisible(true);
 					status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 
-					if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
+					if (mf.getTreatment().update(new TreatmentDTO(null, null, treatment, null),
 							new TreatmentDTO(name, speciality, treatment, status))) {
 						JOptionPane.showMessageDialog(null, "Tratamiento finalizado correctamente");
 						vf.getTreatments().getTreatmentF().setText(null);
@@ -541,7 +546,7 @@ public class Controller implements ActionListener {
 
 									if (na.equals(name)) {
 
-										content += tre.get(n).getTreatment() + " ";
+										content += tre.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -549,7 +554,7 @@ public class Controller implements ActionListener {
 
 								}
 
-								String[] con = content.split(" ");
+								String[] con = content.split(",");
 								vf.getShowTreatment().getTreatment().removeAllItems();
 								vf.getShowTreatment().getTreatment().addItem("");
 								for (int t = 0; t < con.length; t++) {
@@ -616,7 +621,7 @@ public class Controller implements ActionListener {
 
 									if (na.equals(name)) {
 
-										content += tr.get(n).getTreatment() + " ";
+										content += tr.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -624,7 +629,7 @@ public class Controller implements ActionListener {
 
 								}
 
-								String[] con = content.split(" ");
+								String[] con = content.split(",");
 								vf.getShowTreatment().getTreatment().removeAllItems();
 								vf.getShowTreatment().getTreatment().addItem("");
 								for (int t = 0; t < con.length; t++) {
@@ -719,9 +724,9 @@ public class Controller implements ActionListener {
 
 				String name = vf.getTreatments().getName1().getText().toString();
 
-				ArrayList<PatientDTO> newPat;
+				ArrayList<AppointmentDTO> newPat;
 				newPat = new ArrayList<>();
-				newPat = mf.getPatient().getAll();
+				newPat = mf.getAppointment().getAll();
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
@@ -757,10 +762,9 @@ public class Controller implements ActionListener {
 			}
 			break;
 
-		case "generatedPatient":
+		case "generatedAppointment":
 
 			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
-					|| vf.getSchedule().getEmail().getText().toString().equals("")
 					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getName1().getText().toString().equals("")
 					|| vf.getSchedule().getDate1().getDate() == null) {
@@ -771,7 +775,6 @@ public class Controller implements ActionListener {
 				String name = vf.getSchedule().getName1().getText().toString();
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
-				String gmail = vf.getSchedule().getEmail().getText().toString();
 
 				Date tDate = vf.getSchedule().getDate1().getDate();
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -779,7 +782,7 @@ public class Controller implements ActionListener {
 
 				int appoitment = appoitment();
 
-				if (mf.getPatient().add(pa = new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoitment))) {
+				if (mf.getAppointment().add(new AppointmentDTO(name, doctor, specialty, date, appoitment))) {
 
 					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
 
@@ -805,9 +808,9 @@ public class Controller implements ActionListener {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 				String date = formatoFecha.format(vf.getSchedule().getDate2().getDate());
-				ArrayList<PatientDTO> pat;
+				ArrayList<AppointmentDTO> pat;
 				pat = new ArrayList<>();
-				pat = mf.getPatient().getAll();
+				pat = mf.getAppointment().getAll();
 
 				p: for (int i = 0; i < pat.size(); i++) {
 					int ap = pat.get(i).getAppointmentNum();
@@ -816,10 +819,9 @@ public class Controller implements ActionListener {
 						String doctor = pat.get(i).getDoctor();
 						String specialty = pat.get(i).getSpecialty();
 						String name = pat.get(i).getName();
-						String gmail = pat.get(i).getGmail();
 
-						if (mf.getPatient().update(new PatientDTO(null, null, 0, 0, null, null, null, appoint),
-								new PatientDTO(name, gmail, 0, 0, doctor, specialty, date, appoint))) {
+						if (mf.getAppointment().update(new AppointmentDTO(null, null, null, null, appoint),
+								new AppointmentDTO(name, doctor, specialty, date, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " actualizado exitosamente");
@@ -850,16 +852,16 @@ public class Controller implements ActionListener {
 			} else {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
 
-				ArrayList<PatientDTO> pat;
+				ArrayList<AppointmentDTO> pat;
 				pat = new ArrayList<>();
-				pat = mf.getPatient().getAll();
+				pat = mf.getAppointment().getAll();
 
 				p: for (int i = 0; i < pat.size(); i++) {
 					int ap = pat.get(i).getAppointmentNum();
 
 					if (ap == appoint) {
 
-						if (mf.getPatient().delete(new PatientDTO(null, null, 0, 0, null, null, null, appoint))) {
+						if (mf.getAppointment().delete(new AppointmentDTO(null, null, null, null, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " eliminado exitosamente");
@@ -1114,9 +1116,9 @@ public class Controller implements ActionListener {
 			boolean frist = false;
 			num = random();
 
-			ArrayList<PatientDTO> in;
+			ArrayList<AppointmentDTO> in;
 			in = new ArrayList<>();
-			in = mf.getPatient().getAll();
+			in = mf.getAppointment().getAll();
 			second: for (int i = 0; i < in.size(); i++) {
 
 				if (in.isEmpty()) {
