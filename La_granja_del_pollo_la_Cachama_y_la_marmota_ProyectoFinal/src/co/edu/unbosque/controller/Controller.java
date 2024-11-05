@@ -291,6 +291,7 @@ public class Controller implements ActionListener {
 			if (checkWindow == 1) {
 
 				vf.getShowOptions().setVisible(false);
+				vf.getShowOptions().getMainPanel().setVisible(false);
 				vf.getTreatments().setVisible(true);
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 				infoTreatment();
@@ -298,7 +299,9 @@ public class Controller implements ActionListener {
 			} else if (checkWindow == 2) {
 
 				vf.getShowOptions().setVisible(false);
+				vf.getShowOptions().getMainPanel().setVisible(false);
 				vf.getTreatments().setVisible(true);
+
 				vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
 				infoTreatment();
 			}
@@ -356,7 +359,7 @@ public class Controller implements ActionListener {
 			break;
 		case "backHomeSchedule":
 			vf.getSchedule().getMainPanel().setVisible(true);
-			vf.getSchedule().getReschedulePanel().setVisible(false);
+			vf.getSchedule().getReSchedulePanel().setVisible(false);
 			vf.getSchedule().getSchedulePanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(false);
 			vf.getSchedule().getInfoPanel().setVisible(false);
@@ -386,7 +389,7 @@ public class Controller implements ActionListener {
 			break;
 		case "reSchedleMenu":
 			vf.getSchedule().getMainPanel().setVisible(false);
-			vf.getSchedule().getReschedulePanel().setVisible(true);
+			vf.getSchedule().getReSchedulePanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
 
 			showScheduleInfo();
@@ -549,7 +552,7 @@ public class Controller implements ActionListener {
 				}
 
 			}
-
+			vf.getShowOptions().getMainPanel().setVisible(false);
 			break;
 
 		case "search":
@@ -594,6 +597,7 @@ public class Controller implements ActionListener {
 							} else {
 
 								vf.getShowOptions().setVisible(true);
+								vf.getShowOptions().getMainPanel().setVisible(true);
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
@@ -668,6 +672,7 @@ public class Controller implements ActionListener {
 							} else {
 
 								vf.getShowOptions().setVisible(true);
+								vf.getShowOptions().getMainPanel().setVisible(true);
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
@@ -1209,27 +1214,31 @@ public class Controller implements ActionListener {
 
 	public void showScheduleInfo() {
 		if (vf.getSchedule().getSchedulePanel().isVisible()) {
+			vf.getSchedule().getSelectPatient().setBounds(0, 0, 111, 40);
 			vf.getSchedule().getInfoDate().setVisible(true);
 			vf.getSchedule().getInfoDoctor().setVisible(true);
 			vf.getSchedule().getInfoEmail().setVisible(true);
 			vf.getSchedule().getInfoName().setVisible(true);
 			vf.getSchedule().getInfospecialty().setVisible(true);
 		} else if (vf.getSchedule().getSchedulePanel().isVisible() == false) {
+			
 			vf.getSchedule().getInfoDate().setVisible(false);
 			vf.getSchedule().getInfoDoctor().setVisible(false);
 			vf.getSchedule().getInfoEmail().setVisible(false);
 			vf.getSchedule().getInfoName().setVisible(false);
 			vf.getSchedule().getInfospecialty().setVisible(false);
 		}
-		if (vf.getSchedule().getReschedulePanel().isVisible()) {
+		if (vf.getSchedule().getReSchedulePanel().isVisible()) {
+			vf.getSchedule().getSelectPatient().setBounds(0, 27, 111, 40);
 			vf.getSchedule().getInfoNDate().setVisible(true);
 			vf.getSchedule().getInfoNum().setVisible(true);
-		} else if (vf.getSchedule().getReschedulePanel().isVisible() == false) {
+		} else if (vf.getSchedule().getReSchedulePanel().isVisible() == false) {
 			vf.getSchedule().getInfoNDate().setVisible(false);
 			vf.getSchedule().getInfoNum().setVisible(false);
 		}
 		if (vf.getSchedule().getCancelPanel().isVisible() == true) {
 			vf.getSchedule().getInfoNumCancel().setVisible(true);
+			vf.getSchedule().getSelectPatient().setBounds(0, 70, 111, 40);
 		} else if (vf.getSchedule().getCancelPanel().isVisible() == false) {
 			vf.getSchedule().getInfoNumCancel().setVisible(false);
 
@@ -1237,16 +1246,6 @@ public class Controller implements ActionListener {
 	}
 
 	public void infoTreatment() {
-		/*
-		 * if (vf.getTreatments().getMainPanel().isVisible()) {
-		 * vf.getTreatments().getSearchButton().setVisible(false);
-		 * vf.getTreatments().getInfoTreatment().setVisible(false);
-		 * vf.getTreatments().getInfospecialty().setVisible(false);
-		 * vf.getTreatments().getInfoName().setVisible(false);
-		 * vf.getTreatments().getInfoStatus().setVisible(false);
-		 * 
-		 * }
-		 */
 
 		if (checkWindow == 1) {// Principal
 

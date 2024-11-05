@@ -15,8 +15,8 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 public class Schedule extends JFrame {
-	private JPanel mainPanel, schedulePanel, reschedulePanel, cancelPanel, infoPanel;
-	private JTextField name1, id, email, appointmentNumber, appointmentNumbers;
+	private JPanel mainPanel, schedulePanel, reSchedulePanel, cancelPanel, infoPanel;
+	private JTextField name1, id, id2, id3, email, appointmentNumber, appointmentNumbers;
 	private JComboBox<String> doctor, specialty;
 	private JButton generate, home, selectPatient, scheduleButton, rescheduleButton, cancelButton, reGenerate, cancel,
 			homeSchedule, homeReschedule, homeCancel;
@@ -38,11 +38,11 @@ public class Schedule extends JFrame {
 		add(mainPanel);
 		add(infoPanel);
 		add(schedulePanel);
-		add(reschedulePanel);
+		add(reSchedulePanel);
 		add(cancelPanel);
 
 		schedulePanel.setVisible(false);
-		reschedulePanel.setVisible(false);
+		reSchedulePanel.setVisible(false);
 		cancelPanel.setVisible(false);
 		infoPanel.setVisible(false);
 	}
@@ -61,7 +61,7 @@ public class Schedule extends JFrame {
 		date2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		date2.setBounds(354, 289, 251, 30);
 		date2.setBorder(null);
-		reschedulePanel.add(date2);
+		reSchedulePanel.add(date2);
 	}
 
 	private void info() {
@@ -108,26 +108,26 @@ public class Schedule extends JFrame {
 		infoPanel.add(infoDate);
 
 		infoNDate = new JButton();
-		infoNDate.setBounds(0, 74, 34, 34);
+		infoNDate.setBounds(0, 117, 34, 34);
 		infoNDate.setBorderPainted(false);
 		infoNDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		infoNDate.setToolTipText("");
+		infoNDate.setToolTipText("Esta es la nueva fecha de la cita del paciente");
 		infoNDate.setIcon(new ImageIcon(scaled12));
 		infoPanel.add(infoNDate);
 
 		infoNum = new JButton();
-		infoNum.setBounds(0, 117, 34, 34);
+		infoNum.setBounds(0, 74, 34, 34);
 		infoNum.setBorderPainted(false);
 		infoNum.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		infoNum.setToolTipText("");
+		infoNum.setToolTipText("Este es el numero de cita del paciente");
 		infoNum.setIcon(new ImageIcon(scaled12));
 		infoPanel.add(infoNum);
 
 		infoNumCancel = new JButton();
-		infoNumCancel.setBounds(0, 90, 34, 34);
+		infoNumCancel.setBounds(0, 113, 34, 34);
 		infoNumCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoNumCancel.setBorderPainted(false);
-		infoNumCancel.setToolTipText("");
+		infoNumCancel.setToolTipText("Este es el numero de cita del paciente a cancelar");
 		infoNumCancel.setIcon(new ImageIcon(scaled12));
 		infoPanel.add(infoNumCancel);
 
@@ -153,7 +153,7 @@ public class Schedule extends JFrame {
 		background3.setIcon(imagen2);
 		background3.setBounds(0, 0, 790, 565);
 		background3.setLayout(null);
-		reschedulePanel.add(background3);
+		reSchedulePanel.add(background3);
 
 		background4 = new JLabel();
 		ImageIcon imagen3 = new ImageIcon("Images\\menuCitas\\cancelarCita.png");
@@ -166,7 +166,7 @@ public class Schedule extends JFrame {
 
 	public void window() {
 		setBounds(0, 0, 800, 600);
-		setTitle(""); 
+		setTitle("");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -183,9 +183,9 @@ public class Schedule extends JFrame {
 		schedulePanel.setBounds(0, 0, 800, 600);
 		schedulePanel.setLayout(null);
 
-		reschedulePanel = new JPanel();
-		reschedulePanel.setBounds(0, 0, 800, 600);
-		reschedulePanel.setLayout(null);
+		reSchedulePanel = new JPanel();
+		reSchedulePanel.setBounds(0, 0, 800, 600);
+		reSchedulePanel.setLayout(null);
 
 		cancelPanel = new JPanel();
 		cancelPanel.setBounds(0, 0, 800, 600);
@@ -249,15 +249,27 @@ public class Schedule extends JFrame {
 		appointmentNumber = new JTextField();
 		appointmentNumber.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		appointmentNumber.setBorder(null);
-		appointmentNumber.setBounds(354, 262, 251, 30);
+		appointmentNumber.setBounds(357, 285, 251, 30);
 		cancelPanel.add(appointmentNumber);
+
+		id3 = new JTextField();
+		id3.setBorder(null);
+		id3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id3.setBounds(356, 247, 251, 30);
+		cancelPanel.add(id3);
 
 		// numero de cita para el reagendar
 		appointmentNumbers = new JTextField();
 		appointmentNumbers.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		appointmentNumbers.setBorder(null);
 		appointmentNumbers.setBounds(354, 246, 251, 30);
-		reschedulePanel.add(appointmentNumbers);
+		reSchedulePanel.add(appointmentNumbers);
+
+		id2 = new JTextField();
+		id2.setBorder(null);
+		id2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id2.setBounds(354, 205, 251, 30);
+		reSchedulePanel.add(id2);
 
 	}
 
@@ -291,7 +303,7 @@ public class Schedule extends JFrame {
 		ImageIcon image3 = new ImageIcon("Images\\CambioTema\\cambioOscuro.png");
 		Image scaled3 = image3.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
 		reTheme.setIcon(new ImageIcon(scaled3));
-		reschedulePanel.add(reTheme);
+		reSchedulePanel.add(reTheme);
 
 		canTheme = new JButton();
 		canTheme.setBounds(41, 465, 82, 79);
@@ -359,10 +371,10 @@ public class Schedule extends JFrame {
 		reGenerate.setToolTipText("Reagendar cita medica");
 		ImageIcon image10 = new ImageIcon("Images\\botonesCitas\\reagendarClaro.png");
 		reGenerate.setIcon(image10);
-		reschedulePanel.add(reGenerate);
+		reSchedulePanel.add(reGenerate);
 
 		cancel = new JButton();
-		cancel.setBounds(348, 375, 160, 40);
+		cancel.setBounds(348, 359, 160, 40);
 		cancel.setBorderPainted(false);
 		cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		cancel.setToolTipText("Cancelar cita medica");
@@ -381,17 +393,17 @@ public class Schedule extends JFrame {
 		schedulePanel.add(homeSchedule);
 
 		homeReschedule = new JButton();
-		homeReschedule.setBounds(560, 373, 42, 42);
+		homeReschedule.setBounds(540, 373, 42, 42);
 		homeReschedule.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeReschedule.setBorderPainted(false);
 		homeReschedule.setToolTipText("Menú principal");
 		ImageIcon image14 = new ImageIcon("Images\\backButtons\\m1.png");
 		Image scaled14 = image14.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 		homeReschedule.setIcon(new ImageIcon(scaled14));
-		reschedulePanel.add(homeReschedule);
+		reSchedulePanel.add(homeReschedule);
 
 		homeCancel = new JButton();
-		homeCancel.setBounds(560, 373, 42, 42);
+		homeCancel.setBounds(560, 359, 42, 42);
 		homeCancel.setBorderPainted(false);
 		homeCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeCancel.setToolTipText("Menú principal");
@@ -467,12 +479,12 @@ public class Schedule extends JFrame {
 		this.schedulePanel = schedulePanel;
 	}
 
-	public JPanel getReschedulePanel() {
-		return reschedulePanel;
+	public JPanel getReSchedulePanel() {
+		return reSchedulePanel;
 	}
 
-	public void setReschedulePanel(JPanel reschedulePanel) {
-		this.reschedulePanel = reschedulePanel;
+	public void setReSchedulePanel(JPanel reSchedulePanel) {
+		this.reSchedulePanel = reSchedulePanel;
 	}
 
 	public JPanel getCancelPanel() {
