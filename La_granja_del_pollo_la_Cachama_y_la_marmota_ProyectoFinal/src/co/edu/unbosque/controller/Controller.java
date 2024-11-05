@@ -24,20 +24,18 @@ import co.edu.unbosque.view.ViewFacade;
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private AppointmentDTO pa;
-	private TreatmentDTO tr;
 	private int checkWindow = 0;
 	private boolean darkMode = false;
+	private ArrayList<DoctorDTO> doctor;
+	private ArrayList<TreatmentDTO> treat;
+	private ArrayList<PatientDTO> patient;
+	private ArrayList<AppointmentDTO> appointment;
 
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
-		pa = new AppointmentDTO();
-		tr = new TreatmentDTO();
-
 		assignReaders();
 		vf.getHome().setVisible(true);
-
 		showScheduleInfo();
 		infoTreatment();
 
@@ -420,14 +418,14 @@ public class Controller implements ActionListener {
 				String status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 				String name = vf.getTreatments().getNameF().getText().toString();
 				String speciality = "";
-				ArrayList<TreatmentDTO> t2;
-				t2 = new ArrayList<>();
-				t2 = mf.getTreatment().getAll();
 
-				main: for (int i = 0; i < t2.size(); i++) {
+				treat = new ArrayList<>();
+				treat = mf.getTreatment().getAll();
 
-					String name2 = t2.get(i).getName();
-					speciality = t2.get(i).getSpecialty();
+				main: for (int i = 0; i < treat.size(); i++) {
+
+					String name2 = treat.get(i).getName();
+					speciality = treat.get(i).getSpecialty();
 					if (name.equals(name2)) {
 
 						if (status.equals("Finalizado")) {
@@ -479,18 +477,17 @@ public class Controller implements ActionListener {
 
 					String item = vf.getShowOptions().getTreatment().getSelectedItem().toString();
 
-					ArrayList<TreatmentDTO> tItem;
-					tItem = new ArrayList<>();
-					tItem = mf.getTreatment().getAll();
+					treat = new ArrayList<>();
+					treat = mf.getTreatment().getAll();
 
-					for (int it = 0; it < tItem.size(); it++) {
+					for (int it = 0; it < treat.size(); it++) {
 
-						String item2 = tItem.get(it).getTreatment();
+						String item2 = treat.get(it).getTreatment();
 
 						if (item.equals(item2)) {
 
-							String speciality = tItem.get(it).getSpecialty();
-							String status = tItem.get(it).getVerified();
+							String speciality = treat.get(it).getSpecialty();
+							String status = treat.get(it).getVerified();
 
 							vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
 							vf.getTreatments().getTreatmentS().setText(item);
@@ -525,17 +522,16 @@ public class Controller implements ActionListener {
 
 					String item = vf.getShowOptions().getTreatment().getSelectedItem().toString();
 
-					ArrayList<TreatmentDTO> tItem;
-					tItem = new ArrayList<>();
-					tItem = mf.getTreatment().getAll();
+					treat = new ArrayList<>();
+					treat = mf.getTreatment().getAll();
 
-					for (int it = 0; it < tItem.size(); it++) {
+					for (int it = 0; it < treat.size(); it++) {
 
-						String item2 = tItem.get(it).getTreatment();
+						String item2 = treat.get(it).getTreatment();
 
 						if (item.equals(item2)) {
 
-							String status = tItem.get(it).getVerified();
+							String status = treat.get(it).getVerified();
 
 							vf.getTreatments().getTreatmentF().setText(item);
 							vf.getTreatments().getStatus3().setSelectedItem(status);
@@ -568,17 +564,16 @@ public class Controller implements ActionListener {
 
 					String name = vf.getTreatments().getNameS().getText().toString();
 
-					ArrayList<TreatmentDTO> tre;
-					tre = new ArrayList<>();
-					tre = mf.getTreatment().getAll();
+					treat = new ArrayList<>();
+					treat = mf.getTreatment().getAll();
 
-					for (int i = 0; i < tre.size(); i++) {
-						String tName = tre.get(i).getName();
+					for (int i = 0; i < treat.size(); i++) {
+						String tName = treat.get(i).getName();
 
 						if (name.equals(tName)) {
 
 							ArrayList<String> nameToSearch = new ArrayList<>();
-							for (TreatmentDTO t : tre) {
+							for (TreatmentDTO t : treat) {
 								nameToSearch.add(t.getName());
 							}
 
@@ -586,9 +581,9 @@ public class Controller implements ActionListener {
 
 							if (frecuency == 1) {
 
-								String treatment = tre.get(i).getTreatment();
-								String speciality = tre.get(i).getSpecialty();
-								String status = tre.get(i).getVerified();
+								String treatment = treat.get(i).getTreatment();
+								String speciality = treat.get(i).getSpecialty();
+								String status = treat.get(i).getVerified();
 
 								vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
 								vf.getTreatments().getTreatmentS().setText(treatment);
@@ -605,13 +600,13 @@ public class Controller implements ActionListener {
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
-								for (int n = 0; n < tre.size(); n++) {
+								for (int n = 0; n < treat.size(); n++) {
 
-									String na = tre.get(n).getName().toString();
+									String na = treat.get(n).getName().toString();
 
 									if (na.equals(name)) {
 
-										content += tre.get(n).getTreatment() + ",";
+										content += treat.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -647,25 +642,24 @@ public class Controller implements ActionListener {
 
 					String name = vf.getTreatments().getNameF().getText().toString();
 
-					ArrayList<TreatmentDTO> tr;
-					tr = new ArrayList<>();
-					tr = mf.getTreatment().getAll();
+					treat = new ArrayList<>();
+					treat = mf.getTreatment().getAll();
 
-					for (int i = 0; i < tr.size(); i++) {
-						String tName = tr.get(i).getName();
+					for (int i = 0; i < treat.size(); i++) {
+						String tName = treat.get(i).getName();
 
 						if (name.equals(tName)) {
 
 							ArrayList<String> nameToSearch = new ArrayList<>();
-							for (TreatmentDTO t : tr) {
+							for (TreatmentDTO t : treat) {
 								nameToSearch.add(t.getName());
 							}
 
 							int frecuency = Collections.frequency(nameToSearch, name);
 
 							if (frecuency == 1) {
-								String treatment = tr.get(i).getTreatment();
-								String status = tr.get(i).getVerified();
+								String treatment = treat.get(i).getTreatment();
+								String status = treat.get(i).getVerified();
 
 								vf.getTreatments().getTreatmentF().setText(treatment);
 								vf.getTreatments().getStatus3().setSelectedItem(status);
@@ -680,13 +674,13 @@ public class Controller implements ActionListener {
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
-								for (int n = 0; n < tr.size(); n++) {
+								for (int n = 0; n < treat.size(); n++) {
 
-									String na = tr.get(n).getName().toString();
+									String na = treat.get(n).getName().toString();
 
 									if (na.equals(name)) {
 
-										content += tr.get(n).getTreatment() + ",";
+										content += treat.get(n).getTreatment() + ",";
 
 									} else {
 										continue;
@@ -732,16 +726,15 @@ public class Controller implements ActionListener {
 				String status = vf.getTreatments().getStatus2().getSelectedItem().toString();
 				String name = vf.getTreatments().getNameS().getText().toString();
 
-				ArrayList<TreatmentDTO> t;
-				t = new ArrayList<>();
-				t = mf.getTreatment().getAll();
+				treat = new ArrayList<>();
+				treat = mf.getTreatment().getAll();
 
-				main: for (int i = 0; i < t.size(); i++) {
+				main: for (int i = 0; i < treat.size(); i++) {
 
-					String treatment2 = t.get(i).getTreatment();
-					String speciality2 = t.get(i).getSpecialty();
-					String status2 = t.get(i).getVerified();
-					String name2 = t.get(i).getName();
+					String treatment2 = treat.get(i).getTreatment();
+					String speciality2 = treat.get(i).getSpecialty();
+					String status2 = treat.get(i).getVerified();
+					String name2 = treat.get(i).getName();
 
 					if (treatment.equals(treatment2) && speciality.equals(speciality2) && status.equals(status2)
 							&& name.equals(name2)) {
@@ -789,12 +782,11 @@ public class Controller implements ActionListener {
 
 				String name = vf.getTreatments().getName1().getText().toString();
 
-				ArrayList<PatientDTO> newPat;
-				newPat = new ArrayList<>();
-				newPat = mf.getPatient().getAll();
-				newP: for (int i = 0; i < newPat.size(); i++) {
+				patient = new ArrayList<>();
+				patient = mf.getPatient().getAll();
+				newP: for (int i = 0; i < patient.size(); i++) {
 
-					String oldName = newPat.get(i).getName();
+					String oldName = patient.get(i).getName();
 
 					if (name.equals(oldName)) {
 
@@ -831,17 +823,16 @@ public class Controller implements ActionListener {
 			boolean enter3 = true;
 			int id2 = Integer.parseInt(vf.getSchedule().getId().getText().toString());
 
-			ArrayList<PatientDTO> pk2;
-			pk2 = new ArrayList<>();
-			pk2 = mf.getPatient().getAll();
+			patient = new ArrayList<>();
+			patient = mf.getPatient().getAll();
 
-			for (int i = 0; i < pk2.size(); i++) {
-				int oldI = pk2.get(i).getId();
+			for (int i = 0; i < patient.size(); i++) {
+				int oldI = patient.get(i).getId();
 
 				if (oldI == id2) {
 
-					vf.getSchedule().getName1().setText(pk2.get(i).getName());
-					vf.getSchedule().getEmail().setText(pk2.get(i).getEmail());
+					vf.getSchedule().getName1().setText(patient.get(i).getName());
+					vf.getSchedule().getEmail().setText(patient.get(i).getEmail());
 					enter3 = false;
 					JOptionPane.showMessageDialog(null,
 							"Verifica que el nombre y el correo sean correctos, si no actualizalos");
@@ -901,13 +892,12 @@ public class Controller implements ActionListener {
 			} else {
 				String speciality = vf.getPersonMenu().getSpeciality().getSelectedItem().toString();
 
-				ArrayList<DoctorDTO> doc;
-				doc = new ArrayList<>();
-				doc = mf.getDoctor().getAll();
+				doctor = new ArrayList<>();
+				doctor = mf.getDoctor().getAll();
 
-				for (int i = 0; i < doc.size(); i++) {
+				for (int i = 0; i < doctor.size(); i++) {
 
-					String spe = doc.get(i).getSpecialty();
+					String spe = doctor.get(i).getSpecialty();
 
 					if (spe.equals(speciality)) {
 						contador++;
@@ -954,12 +944,11 @@ public class Controller implements ActionListener {
 				String id = vf.getSchedule().getId().getText().toString();
 				int tId = Integer.parseInt(id);
 
-				ArrayList<PatientDTO> pk;
-				pk = new ArrayList<>();
-				pk = mf.getPatient().getAll();
-				for (int i = 0; i < pk.size(); i++) {
+				patient = new ArrayList<>();
+				patient = mf.getPatient().getAll();
+				for (int i = 0; i < patient.size(); i++) {
 
-					int oldId = pk.get(i).getId();
+					int oldId = patient.get(i).getId();
 
 					if (oldId == tId) {
 						enter2 = false;
@@ -1017,17 +1006,17 @@ public class Controller implements ActionListener {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 				String date = formatoFecha.format(vf.getSchedule().getDate2().getDate());
-				ArrayList<AppointmentDTO> pat;
-				pat = new ArrayList<>();
-				pat = mf.getAppointment().getAll();
 
-				p: for (int i = 0; i < pat.size(); i++) {
-					int ap = pat.get(i).getAppointmentNum();
+				appointment = new ArrayList<>();
+				appointment = mf.getAppointment().getAll();
+
+				p: for (int i = 0; i < appointment.size(); i++) {
+					int ap = appointment.get(i).getAppointmentNum();
 
 					if (ap == appoint) {
-						String doctor = pat.get(i).getDoctor();
-						String specialty = pat.get(i).getSpecialty();
-						int id = pat.get(i).getId();
+						String doctor = appointment.get(i).getDoctor();
+						String specialty = appointment.get(i).getSpecialty();
+						int id = appointment.get(i).getId();
 
 						if (mf.getAppointment().update(new AppointmentDTO(0, null, null, null, appoint),
 								new AppointmentDTO(id, doctor, specialty, date, appoint))) {
@@ -1061,12 +1050,11 @@ public class Controller implements ActionListener {
 			} else {
 				int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
 
-				ArrayList<AppointmentDTO> pat;
-				pat = new ArrayList<>();
-				pat = mf.getAppointment().getAll();
+				appointment = new ArrayList<>();
+				appointment = mf.getAppointment().getAll();
 
-				p: for (int i = 0; i < pat.size(); i++) {
-					int ap = pat.get(i).getAppointmentNum();
+				p: for (int i = 0; i < appointment.size(); i++) {
+					int ap = appointment.get(i).getAppointmentNum();
 
 					if (ap == appoint) {
 
@@ -1325,16 +1313,15 @@ public class Controller implements ActionListener {
 			boolean frist = false;
 			num = random();
 
-			ArrayList<AppointmentDTO> in;
-			in = new ArrayList<>();
-			in = mf.getAppointment().getAll();
-			second: for (int i = 0; i < in.size(); i++) {
+			appointment = new ArrayList<>();
+			appointment = mf.getAppointment().getAll();
+			second: for (int i = 0; i < appointment.size(); i++) {
 
-				if (in.isEmpty()) {
+				if (appointment.isEmpty()) {
 					break main;
 				} else {
 
-					if (in.get(i).getAppointmentNum() == num) {
+					if (appointment.get(i).getAppointmentNum() == num) {
 						frist = true;
 						break second;
 					} else {
