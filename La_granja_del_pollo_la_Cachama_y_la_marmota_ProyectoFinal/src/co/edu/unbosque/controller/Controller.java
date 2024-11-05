@@ -3,6 +3,9 @@ package co.edu.unbosque.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.AppointmentDTO;
+import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
 
@@ -200,6 +204,9 @@ public class Controller implements ActionListener {
 
 		vf.getPersonMenu().getCreatePerson().addActionListener(this);
 		vf.getPersonMenu().getCreatePerson().setActionCommand("createPatient");
+
+		vf.getPersonMenu().getCreateDoctor().addActionListener(this);
+		vf.getPersonMenu().getCreateDoctor().setActionCommand("createDoctor");
 	}
 
 	@Override
@@ -881,6 +888,36 @@ public class Controller implements ActionListener {
 
 			break;
 
+		case "createDoctor":
+
+			if (vf.getPersonMenu().getDoctorId().getText().toString().equals("")
+					|| vf.getPersonMenu().getDoctorName().getText().toString().equals("")
+					|| vf.getPersonMenu().getEmailDoctor().getText().toString().equals("")
+					|| vf.getPersonMenu().getSpeciality().getSelectedItem().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				String speciality = vf.getPersonMenu().getSpeciality().getSelectedItem().toString();
+
+				int id = Integer.parseInt(vf.getPersonMenu().getDoctorId().getText().toString());
+				String name = vf.getPersonMenu().getDoctorName().getText().toString();
+				String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
+
+				if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality))) {
+					JOptionPane.showMessageDialog(null, "Doctor creado con exito");
+					vf.getPersonMenu().getDoctorId().setText(null);
+					vf.getPersonMenu().getDoctorName().setText(null);
+					vf.getPersonMenu().getEmailDoctor().setText(null);
+					vf.getPersonMenu().getSpeciality().setSelectedItem("");
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo crear");
+				}
+
+			}
+
+			break;
+
 		case "generatedAppointment":
 
 			boolean enter2 = true;
@@ -920,7 +957,7 @@ public class Controller implements ActionListener {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoitment + " creado exitosamente");
-							
+
 							vf.getSchedule().getId().setText(null);
 							vf.getSchedule().getName1().setText(null);
 							vf.getSchedule().getEmail().setText(null);
