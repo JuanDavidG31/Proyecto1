@@ -62,6 +62,8 @@ public class Controller implements ActionListener {
 		vf.getHome().getTurn().addActionListener(this);
 		vf.getHome().getTurn().setActionCommand("initGenerateTurns");
 
+		vf.getHome().getCreate().addActionListener(this);
+		vf.getHome().getCreate().setActionCommand("initAddPerson");
 		// schedule Buttons
 
 		vf.getSchedule().getScheduleButton().addActionListener(this);
@@ -144,11 +146,11 @@ public class Controller implements ActionListener {
 		vf.getTreatments().getFinishTreatment().addActionListener(this);
 		vf.getTreatments().getFinishTreatment().setActionCommand("finishTre");
 
-		vf.getShowTreatment().getHome().addActionListener(this);
-		vf.getShowTreatment().getHome().setActionCommand("sTreatmentBack");
+		vf.getShowOptions().getHome().addActionListener(this);
+		vf.getShowOptions().getHome().setActionCommand("sTreatmentBack");
 
-		vf.getShowTreatment().getSelectTreatment().addActionListener(this);
-		vf.getShowTreatment().getSelectTreatment().setActionCommand("selectTreatments");
+		vf.getShowOptions().getSelectTreatment().addActionListener(this);
+		vf.getShowOptions().getSelectTreatment().setActionCommand("selectTreatments");
 
 		// Turnos
 
@@ -175,14 +177,61 @@ public class Controller implements ActionListener {
 
 		vf.getShifts().getHomeTurn2().addActionListener(this);
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
+
+		// popups
+		vf.getShowOptions().getPerson().addActionListener(this);
+		vf.getShowOptions().getPerson().setActionCommand("initMenuPerson");
+
+		vf.getShowOptions().getDoctor().addActionListener(this);
+		vf.getShowOptions().getDoctor().setActionCommand("initMenuDoctor");
+
+		vf.getShowOptions().getReturnMenu().addActionListener(this);
+		vf.getShowOptions().getReturnMenu().setActionCommand("backHome");
+		// add Person
+		vf.getPersonMenu().getHomeD().addActionListener(this);
+		vf.getPersonMenu().getHomeD().setActionCommand("backHomeD");
+
+		vf.getPersonMenu().getHomeP().addActionListener(this);
+		vf.getPersonMenu().getHomeP().setActionCommand("backHomeP");
 	}
 
-	@SuppressWarnings({ "deprecation", "deprecation", "deprecation" })
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "theme":
 			changeTheme();
+			break;
+		case "backHomeP":
+			vf.getPersonMenu().setVisible(false);
+			vf.getPersonMenu().getPersonPanel().setVisible(false);
+			vf.getShowOptions().setVisible(true);
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			break;
+		case "backHomeD":
+			vf.getPersonMenu().setVisible(false);
+			vf.getPersonMenu().getDoctorPanel().setVisible(false);
+			vf.getShowOptions().setVisible(true);
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			break;
+		case "backHome":
+			vf.getShowOptions().setVisible(false);
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getHome().setVisible(true);
+			break;
+		case "initMenuDoctor":
+			vf.getPersonMenu().getDoctorPanel().setVisible(true);
+			vf.getShowOptions().setVisible(false);
+			vf.getPersonMenu().setVisible(true);
+			break;
+		case "initMenuPerson":
+			vf.getPersonMenu().getPersonPanel().setVisible(true);
+			vf.getShowOptions().setVisible(false);
+			vf.getPersonMenu().setVisible(true);
+			break;
+		case "initAddPerson":
+			vf.getHome().setVisible(false);
+			vf.getShowOptions().setVisible(true);
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			break;
 		case "homeTurn":
 			if (vf.getShifts().getPanelSelect().isVisible()) {
@@ -232,14 +281,14 @@ public class Controller implements ActionListener {
 
 			if (checkWindow == 1) {
 
-				vf.getShowTreatment().setVisible(false);
+				vf.getShowOptions().setVisible(false);
 				vf.getTreatments().setVisible(true);
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 				infoTreatment();
 
 			} else if (checkWindow == 2) {
 
-				vf.getShowTreatment().setVisible(false);
+				vf.getShowOptions().setVisible(false);
 				vf.getTreatments().setVisible(true);
 				vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
 				infoTreatment();
@@ -407,12 +456,12 @@ public class Controller implements ActionListener {
 
 			if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
 
-				if (vf.getShowTreatment().getTreatment().getSelectedItem().toString().equals("")) {
+				if (vf.getShowOptions().getTreatment().getSelectedItem().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					String item = vf.getShowTreatment().getTreatment().getSelectedItem().toString();
+					String item = vf.getShowOptions().getTreatment().getSelectedItem().toString();
 
 					ArrayList<TreatmentDTO> tItem;
 					tItem = new ArrayList<>();
@@ -435,7 +484,7 @@ public class Controller implements ActionListener {
 							vf.getTreatments().getTreatmentS().enable(true);
 							vf.getTreatments().getStatus2().enable(false);
 
-							vf.getShowTreatment().setVisible(false);
+							vf.getShowOptions().setVisible(false);
 							vf.getTreatments().setVisible(true);
 
 							vf.getTreatments().getSpecialty2().setVisible(true);
@@ -453,12 +502,12 @@ public class Controller implements ActionListener {
 				}
 			} else if (vf.getTreatments().getFinishTreatmentPanel().isVisible()) {
 
-				if (vf.getShowTreatment().getTreatment().getSelectedItem().toString().equals("")) {
+				if (vf.getShowOptions().getTreatment().getSelectedItem().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					String item = vf.getShowTreatment().getTreatment().getSelectedItem().toString();
+					String item = vf.getShowOptions().getTreatment().getSelectedItem().toString();
 
 					ArrayList<TreatmentDTO> tItem;
 					tItem = new ArrayList<>();
@@ -475,7 +524,7 @@ public class Controller implements ActionListener {
 							vf.getTreatments().getTreatmentF().setText(item);
 							vf.getTreatments().getStatus3().setSelectedItem(status);
 
-							vf.getShowTreatment().setVisible(false);
+							vf.getShowOptions().setVisible(false);
 							vf.getTreatments().setVisible(true);
 
 							vf.getTreatments().getTreatmentF().setEditable(true);
@@ -536,7 +585,7 @@ public class Controller implements ActionListener {
 
 							} else {
 
-								vf.getShowTreatment().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
@@ -555,11 +604,11 @@ public class Controller implements ActionListener {
 								}
 
 								String[] con = content.split(",");
-								vf.getShowTreatment().getTreatment().removeAllItems();
-								vf.getShowTreatment().getTreatment().addItem("");
+								vf.getShowOptions().getTreatment().removeAllItems();
+								vf.getShowOptions().getTreatment().addItem("");
 								for (int t = 0; t < con.length; t++) {
 
-									vf.getShowTreatment().getTreatment().addItem(con[t]);
+									vf.getShowOptions().getTreatment().addItem(con[t]);
 
 								}
 
@@ -611,7 +660,7 @@ public class Controller implements ActionListener {
 								break;
 							} else {
 
-								vf.getShowTreatment().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								vf.getTreatments().setVisible(false);
 
 								String content = "";
@@ -630,11 +679,11 @@ public class Controller implements ActionListener {
 								}
 
 								String[] con = content.split(",");
-								vf.getShowTreatment().getTreatment().removeAllItems();
-								vf.getShowTreatment().getTreatment().addItem("");
+								vf.getShowOptions().getTreatment().removeAllItems();
+								vf.getShowOptions().getTreatment().addItem("");
 								for (int t = 0; t < con.length; t++) {
 
-									vf.getShowTreatment().getTreatment().addItem(con[t]);
+									vf.getShowOptions().getTreatment().addItem(con[t]);
 
 								}
 
@@ -771,8 +820,6 @@ public class Controller implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-				
-				
 
 				String name = vf.getSchedule().getName1().getText().toString();
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();

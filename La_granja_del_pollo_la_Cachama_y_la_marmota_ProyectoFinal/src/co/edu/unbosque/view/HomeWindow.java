@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -11,14 +12,12 @@ import javax.swing.JPanel;
 
 public class HomeWindow extends JFrame {
 	private JPanel mainPanel;
-	private JButton schedule,exit, turn, treatment, report, theme;
+	private JButton schedule, exit, turn, treatment, report, theme, create;
 	private JLabel background1;
 
 	public HomeWindow() {
 		window();
 		panels();
-		inputs();
-		headlines();
 		buttons();
 		images();
 
@@ -26,10 +25,10 @@ public class HomeWindow extends JFrame {
 	}
 
 	public void window() {
-		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
-									// wide,high)
-		setTitle(""); // tittle on window
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // Close window and close the software
+		setBounds(0, 0, 800, 600); 
+		setTitle(""); 
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
 
@@ -52,49 +51,55 @@ public class HomeWindow extends JFrame {
 		mainPanel.add(background1);
 	}
 
-	public void inputs() {
-
-	}
-
 	public void buttons() {
+
+		create = new JButton();
+		create.setBounds(262, 75, 124, 124);
+		create.setBorderPainted(false);
+		create.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		create.setToolTipText("Añadir un nuevo usuario");
+		ImageIcon image6 = new ImageIcon("Images\\menuInicial\\agregarClaro.png");
+		create.setIcon(image6);
+		mainPanel.add(create);
+
 		schedule = new JButton();
-		schedule.setBounds(244, 140, 124, 124);
+		schedule.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		schedule.setBounds(414, 75, 124, 124);
 		schedule.setBorderPainted(false);
 		schedule.setToolTipText("Menú de citas medicas");
 		ImageIcon image1 = new ImageIcon("Images\\menuInicial\\agendarClaro.png");
-		//Image scaled1 = image1.getImage().getScaledInstance(137, 137, Image.SCALE_REPLICATE);
-		//schedule.setIcon(new ImageIcon(scaled1));
 		schedule.setIcon(image1);
 		mainPanel.add(schedule);
 
 		turn = new JButton();
-		turn.setBounds(432, 140, 124, 124);
+		turn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		turn.setBounds(263, 226, 124, 124);
 		turn.setBorderPainted(false);
 		turn.setToolTipText("Menú de turnos para especialistas");
 		ImageIcon image2 = new ImageIcon("Images\\menuInicial\\turnoClaro.png");
-		Image scaled2 = image2.getImage().getScaledInstance(137, 137, Image.SCALE_REPLICATE);
-		turn.setIcon(new ImageIcon(scaled2));
+		turn.setIcon(image2);
 		mainPanel.add(turn);
 
 		treatment = new JButton();
-		treatment.setBounds(243, 315, 124, 124);
+		treatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		treatment.setBounds(416, 226, 124, 124);
 		treatment.setBorderPainted(false);
 		treatment.setToolTipText("Menú de tratamientos de pacientes");
 		ImageIcon image3 = new ImageIcon("Images\\menuInicial\\tratamientoClaro.png");
-		Image scaled3 = image3.getImage().getScaledInstance(137, 137, Image.SCALE_REPLICATE);
-		treatment.setIcon(new ImageIcon(scaled3));
+		treatment.setIcon(image3);
 		mainPanel.add(treatment);
 
 		report = new JButton();
-		report.setBounds(432, 315, 124, 124);
+		report.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		report.setBounds(340, 375, 124, 124);
 		report.setBorderPainted(false);
 		report.setToolTipText("Generar reporte semanal");
 		ImageIcon image4 = new ImageIcon("Images\\menuInicial\\reporteClaro.png");
-		Image scaled4 = image4.getImage().getScaledInstance(137, 137, Image.SCALE_REPLICATE);
-		report.setIcon(new ImageIcon(scaled4));
+		report.setIcon(image4);
 		mainPanel.add(report);
 
 		theme = new JButton();
+		theme.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		theme.setBounds(41, 465, 82, 79);
 		theme.setBorderPainted(false);
 		theme.setToolTipText("Cambiar a tema oscuro");
@@ -102,8 +107,9 @@ public class HomeWindow extends JFrame {
 		Image scaled5 = image5.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
 		theme.setIcon(new ImageIcon(scaled5));
 		mainPanel.add(theme);
-		
-		exit= new JButton();
+
+		exit = new JButton();
+		exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		exit.setBounds(655, 450, 79, 79);
 		exit.setBorderPainted(false);
 		exit.setToolTipText("Salir del programa");
@@ -111,16 +117,6 @@ public class HomeWindow extends JFrame {
 		Image scaledE = imageE.getImage().getScaledInstance(79, 79, Image.SCALE_REPLICATE);
 		exit.setIcon(new ImageIcon(scaledE));
 		mainPanel.add(exit);
-
-	}
-
-	public void textFields() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void headlines() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -188,6 +184,12 @@ public class HomeWindow extends JFrame {
 		this.exit = exit;
 	}
 
-	
+	public JButton getCreate() {
+		return create;
+	}
+
+	public void setCreate(JButton create) {
+		this.create = create;
+	}
 
 }

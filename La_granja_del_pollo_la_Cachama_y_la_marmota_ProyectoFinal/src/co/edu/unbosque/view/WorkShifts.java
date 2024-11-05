@@ -13,10 +13,11 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 public class WorkShifts extends JFrame {
-	private JPanel mainPanel,panelSelect,panelChange;
-	private JLabel background1,background2,background3;
-	private JButton home,changeTurn,initTurn,themeMain,generateTurns,homeTurn1,selectTurnTheme,generateChange,selectTurnTheme2,homeTurn2;
-	private JDateChooser startDate,finishDate;
+	private JPanel mainPanel, panelSelect, panelChange;
+	private JLabel background1, background2, background3;
+	private JButton home, changeTurn, initTurn, themeMain, generateTurns, homeTurn1, selectTurnTheme, generateChange,
+			selectTurnTheme2, homeTurn2;
+	private JDateChooser startDate, finishDate;
 
 	public WorkShifts() {
 		window();
@@ -25,28 +26,30 @@ public class WorkShifts extends JFrame {
 		buttons();
 		calendar();
 		backgrounds();
-		
+
 		panelChange.setVisible(false);
 		panelSelect.setVisible(false);
 
 		add(mainPanel);
 		add(panelSelect);
 		add(panelChange);
-	
+
 	}
 
 	private void calendar() {
-		startDate= new JDateChooser();
+		startDate = new JDateChooser();
 		startDate.setBounds(106, 241, 251, 30);
 		startDate.setBorder(null);
+		startDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panelSelect.add(startDate);
-		
-		//fecha de cita para el reagendar
-		finishDate= new JDateChooser();
+
+		// fecha de cita para el reagendar
+		finishDate = new JDateChooser();
 		finishDate.setBounds(440, 241, 251, 30);
 		finishDate.setBorder(null);
+		finishDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panelSelect.add(finishDate);
-		
+
 	}
 
 	private void backgrounds() {
@@ -56,28 +59,28 @@ public class WorkShifts extends JFrame {
 		background1.setBounds(0, 0, 790, 565);
 		background1.setLayout(null);
 		mainPanel.add(background1);
-		
+
 		background2 = new JLabel();
 		ImageIcon imagen2 = new ImageIcon("Images\\menuTurnos\\seleccionarFechaC.png");
 		background2.setIcon(imagen2);
 		background2.setBounds(0, 0, 790, 565);
 		background2.setLayout(null);
 		panelSelect.add(background2);
-		
+
 		background3 = new JLabel();
 		ImageIcon imagen3 = new ImageIcon("Images\\menuTurnos\\cambioTurnoC.png");
 		background3.setIcon(imagen3);
 		background3.setBounds(0, 0, 790, 565);
 		background3.setLayout(null);
 		panelChange.add(background3);
-		
+
 	}
 
 	public void window() {
-		setBounds(0, 0, 800, 600); // Window position and size (where it starts in x, where it starts in y,
-										// wide,high)
-		setTitle(""); // tittle on window
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // Close window and close the software
+		setBounds(0, 0, 800, 600);
+		setLocationRelativeTo(null);
+		setTitle(""); 
+		setDefaultCloseOperation(EXIT_ON_CLOSE); 
 		setResizable(false);
 		setLayout(null);
 
@@ -91,8 +94,8 @@ public class WorkShifts extends JFrame {
 		panelSelect = new JPanel();
 		panelSelect.setBounds(0, 0, 800, 600);
 		panelSelect.setLayout(null);
-		
-		panelChange= new JPanel();
+
+		panelChange = new JPanel();
 		panelChange.setBounds(0, 0, 800, 600);
 		panelChange.setLayout(null);
 	}
@@ -107,12 +110,14 @@ public class WorkShifts extends JFrame {
 		home.setBounds(655, 465, 79, 79);
 		home.setBorderPainted(false);
 		home.setToolTipText("Menú principal");
+		home.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ImageIcon image5 = new ImageIcon("Images\\backButtons\\1.png");
 		Image scaled5 = image5.getImage().getScaledInstance(79, 79, Image.SCALE_REPLICATE);
 		home.setIcon(new ImageIcon(scaled5));
 		mainPanel.add(home);
-		
-		changeTurn= new JButton();
+
+		changeTurn = new JButton();
+		changeTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		changeTurn.setToolTipText("A");
 		changeTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		changeTurn.setBounds(274, 290, 252, 120);
@@ -120,8 +125,9 @@ public class WorkShifts extends JFrame {
 		Image scaledInitChange = imageInitChange.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
 		changeTurn.setIcon(new ImageIcon(scaledInitChange));
 		mainPanel.add(changeTurn);
-		
-		initTurn= new JButton();
+
+		initTurn = new JButton();
+		initTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		initTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		initTurn.setBounds(274, 157, 252, 121);
 		initTurn.setToolTipText("D");
@@ -129,17 +135,19 @@ public class WorkShifts extends JFrame {
 		Image scaledTurn = imageTurn.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
 		initTurn.setIcon(new ImageIcon(scaledTurn));
 		mainPanel.add(initTurn);
-		
+
 		themeMain = new JButton();
 		themeMain.setBounds(41, 465, 82, 79);
 		themeMain.setBorderPainted(false);
+		themeMain.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		themeMain.setToolTipText("Cambiar a tema oscuro");
 		ImageIcon image1 = new ImageIcon("Images\\CambioTema\\cambioOscuro.png");
 		Image scaled1 = image1.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
 		themeMain.setIcon(new ImageIcon(scaled1));
 		mainPanel.add(themeMain);
-		
+
 		generateTurns = new JButton();
+		generateTurns.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		generateTurns.setBounds(311, 421, 157, 41);
 		generateTurns.setBorderPainted(false);
 		generateTurns.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -148,8 +156,9 @@ public class WorkShifts extends JFrame {
 		Image scaledRegister = imageRegister.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		generateTurns.setIcon(new ImageIcon(scaledRegister));
 		panelSelect.add(generateTurns);
-		
+
 		generateChange = new JButton();
+		generateChange.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		generateChange.setBounds(311, 421, 157, 41);
 		generateChange.setBorderPainted(false);
 		generateChange.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -158,7 +167,7 @@ public class WorkShifts extends JFrame {
 		Image scaledChange = imageChange.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		generateChange.setIcon(new ImageIcon(scaledChange));
 		panelChange.add(generateChange);
-		
+
 		homeTurn1 = new JButton();
 		homeTurn1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeTurn1.setBounds(486, 420, 42, 42);
@@ -168,7 +177,7 @@ public class WorkShifts extends JFrame {
 		Image scaledHome = imageHome.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 		homeTurn1.setIcon(new ImageIcon(scaledHome));
 		panelSelect.add(homeTurn1);
-		
+
 		homeTurn2 = new JButton();
 		homeTurn2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeTurn2.setBounds(486, 418, 42, 42);
@@ -176,7 +185,7 @@ public class WorkShifts extends JFrame {
 		homeTurn2.setToolTipText("Menú principal");
 		homeTurn2.setIcon(new ImageIcon(scaledHome));
 		panelChange.add(homeTurn2);
-		
+
 		selectTurnTheme = new JButton();
 		selectTurnTheme.setBounds(41, 465, 82, 79);
 		selectTurnTheme.setBorderPainted(false);
@@ -186,7 +195,7 @@ public class WorkShifts extends JFrame {
 		Image scaled2 = image2.getImage().getScaledInstance(82, 79, Image.SCALE_REPLICATE);
 		selectTurnTheme.setIcon(new ImageIcon(scaled2));
 		panelSelect.add(selectTurnTheme);
-		
+
 		selectTurnTheme2 = new JButton();
 		selectTurnTheme2.setBounds(41, 465, 82, 79);
 		selectTurnTheme2.setBorderPainted(false);
@@ -196,8 +205,6 @@ public class WorkShifts extends JFrame {
 		panelChange.add(selectTurnTheme2);
 
 	}
-
-
 
 	public JPanel getMainPanel() {
 		return mainPanel;
@@ -254,7 +261,6 @@ public class WorkShifts extends JFrame {
 	public void setChangeTurn(JButton changeTurn) {
 		this.changeTurn = changeTurn;
 	}
-
 
 	public JButton getInitTurn() {
 		return initTurn;

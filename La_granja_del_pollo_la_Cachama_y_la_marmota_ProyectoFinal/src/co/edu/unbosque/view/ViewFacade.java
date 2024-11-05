@@ -5,14 +5,16 @@ public class ViewFacade {
 	private Schedule schedule;
 	private WorkShifts shifts;
 	private Treatments treatments;
-	private ShowTreatment showTreatment;
+	private ShowOptions ShowOptions;
+	private AddMenu personMenu;
 
 	public ViewFacade() {
 		home = new HomeWindow();
 		schedule = new Schedule();
 		shifts = new WorkShifts();
 		treatments = new Treatments();
-		showTreatment = new ShowTreatment();
+		ShowOptions = new ShowOptions();
+		personMenu= new AddMenu();
 	}
 
 	public HomeWindow getHome() {
@@ -47,12 +49,20 @@ public class ViewFacade {
 		this.treatments = treatments;
 	}
 
-	public ShowTreatment getShowTreatment() {
-		return showTreatment;
+	public ShowOptions getShowOptions() {
+		return ShowOptions;
 	}
 
-	public void setShowTreatment(ShowTreatment showTreatment) {
-		this.showTreatment = showTreatment;
+	public void setShowOptions(ShowOptions ShowOptions) {
+		this.ShowOptions = ShowOptions;
+	}
+
+	public AddMenu getPersonMenu() {
+		return personMenu;
+	}
+
+	public void setPersonMenu(AddMenu personMenu) {
+		this.personMenu = personMenu;
 	}
 
 }
