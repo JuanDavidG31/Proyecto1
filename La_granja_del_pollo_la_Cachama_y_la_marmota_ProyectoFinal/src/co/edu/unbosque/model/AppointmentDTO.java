@@ -1,7 +1,7 @@
 package co.edu.unbosque.model;
 
 public class AppointmentDTO {
-	private String name;
+	private int id;
 	private String doctor;
 	private String specialty;
 	private String date;
@@ -11,21 +11,21 @@ public class AppointmentDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AppointmentDTO(String name, String doctor, String specialty, String date, int appointmentNum) {
+	public AppointmentDTO(int id, String doctor, String specialty, String date, int appointmentNum) {
 		super();
-		this.name = name;
+		this.id = id;
 		this.doctor = doctor;
 		this.specialty = specialty;
 		this.date = date;
 		this.appointmentNum = appointmentNum;
 	}
 
-	public String getName() {
-		return name;
+	public int getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDoctor() {
@@ -62,7 +62,7 @@ public class AppointmentDTO {
 
 	@Override
 	public String toString() {
-		return "Appointment [name=" + name + ", doctor=" + doctor + ", specialty=" + specialty + ", date=" + date
+		return "Appointment [id=" + id + ", doctor=" + doctor + ", specialty=" + specialty + ", date=" + date
 				+ ", appointmentNum=" + appointmentNum + "]";
 	}
 }

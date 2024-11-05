@@ -38,7 +38,7 @@ public class AppointmentDAO implements CRUDOperation<AppointmentDTO, Appointment
 
 	@Override
 	public boolean add(AppointmentDTO newData) {
-		if (find(DataMapper.AppoitmentDTOToAppoitment(newData)) == null) {
+		if (find2(DataMapper.AppoitmentDTOToAppoitment(newData)) == null) {
 			appointmentList.add(DataMapper.AppoitmentDTOToAppoitment(newData));
 			writeFile();
 			writeSerialized();
@@ -68,7 +68,7 @@ public class AppointmentDAO implements CRUDOperation<AppointmentDTO, Appointment
 		Appointment found = null;
 		if (!appointmentList.isEmpty()) {
 			for (Appointment Appoitment : appointmentList) {
-				if (Appoitment.getName().equals(toFind.getName())) {
+				if (Appoitment.getId() == toFind.getId()) {
 					found = Appoitment;
 					return found;
 				} else {
@@ -117,7 +117,7 @@ public class AppointmentDAO implements CRUDOperation<AppointmentDTO, Appointment
 	public void writeFile() {
 		String content = "";
 		for (Appointment m : appointmentList) {
-			content += m.getName() + ";";
+			content += m.getId() + ";";
 			content += m.getDoctor() + ";";
 			content += m.getSpecialty() + ";";
 			content += m.getDate() + ";";
@@ -138,7 +138,8 @@ public class AppointmentDAO implements CRUDOperation<AppointmentDTO, Appointment
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Appointment tempo = new Appointment();
-				tempo.setName(cols[0]);
+				int id = Integer.parseInt(cols[0]);
+				tempo.setId(id);
 				tempo.setDoctor(cols[1]);
 				tempo.setSpecialty(cols[2]);
 				tempo.setDate(cols[3]);

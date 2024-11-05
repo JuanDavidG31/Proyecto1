@@ -109,14 +109,14 @@ public class DataMapper {
 
 	public static Appointment AppoitmentDTOToAppoitment(AppointmentDTO dto) {
 		Appointment entity;
-		entity = new Appointment(dto.getName(), dto.getDoctor(), dto.getSpecialty(), dto.getDate(),
+		entity = new Appointment(dto.getId(), dto.getDoctor(), dto.getSpecialty(), dto.getDate(),
 				dto.getAppointmentNum());
 		return entity;
 	}
 
 	public static AppointmentDTO AppoitmentToAppoitmentDTO(Appointment entity) {
 		AppointmentDTO dto;
-		dto = new AppointmentDTO(entity.getName(), entity.getDoctor(), entity.getSpecialty(), entity.getDate(),
+		dto = new AppointmentDTO(entity.getId(), entity.getDoctor(), entity.getSpecialty(), entity.getDate(),
 				entity.getAppointmentNum());
 		return dto;
 	}
@@ -124,8 +124,8 @@ public class DataMapper {
 	public static ArrayList<AppointmentDTO> listaAppoitmentToListaAppoitmentDTO(ArrayList<Appointment> entityList) {
 		ArrayList<AppointmentDTO> dtoList = new ArrayList<>();
 		for (Appointment m : entityList) {
-			dtoList.add(new AppointmentDTO(m.getName(), m.getDoctor(), m.getSpecialty(), m.getDate(),
-					m.getAppointmentNum()));
+			dtoList.add(
+					new AppointmentDTO(m.getId(), m.getDoctor(), m.getSpecialty(), m.getDate(), m.getAppointmentNum()));
 		}
 		return dtoList;
 	}
@@ -134,7 +134,7 @@ public class DataMapper {
 		ArrayList<Appointment> entityList = new ArrayList<>();
 		for (AppointmentDTO d : dtoList) {
 			entityList.add(
-					new Appointment(d.getName(), d.getDoctor(), d.getSpecialty(), d.getDate(), d.getAppointmentNum()));
+					new Appointment(d.getId(), d.getDoctor(), d.getSpecialty(), d.getDate(), d.getAppointmentNum()));
 		}
 		return entityList;
 	}

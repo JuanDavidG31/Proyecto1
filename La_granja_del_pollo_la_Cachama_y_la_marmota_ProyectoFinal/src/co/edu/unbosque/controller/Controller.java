@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
+import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.view.ViewFacade;
@@ -65,6 +66,9 @@ public class Controller implements ActionListener {
 		vf.getHome().getCreate().addActionListener(this);
 		vf.getHome().getCreate().setActionCommand("initAddPerson");
 		// schedule Buttons
+
+		vf.getSchedule().getSelectPatient().addActionListener(this);
+		vf.getSchedule().getSelectPatient().setActionCommand("selectPat");
 
 		vf.getSchedule().getScheduleButton().addActionListener(this);
 		vf.getSchedule().getScheduleButton().setActionCommand("scheduleMenu");
@@ -193,6 +197,9 @@ public class Controller implements ActionListener {
 
 		vf.getPersonMenu().getHomeP().addActionListener(this);
 		vf.getPersonMenu().getHomeP().setActionCommand("backHomeP");
+
+		vf.getPersonMenu().getCreatePerson().addActionListener(this);
+		vf.getPersonMenu().getCreatePerson().setActionCommand("createPatient");
 	}
 
 	@Override
@@ -366,6 +373,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().setVisible(true);
 			break;
 		case "scheduleMenu":
+			vf.getSchedule().getName1().setEditable(false);
+			vf.getSchedule().getEmail().setEditable(false);
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getSchedulePanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -773,9 +782,9 @@ public class Controller implements ActionListener {
 
 				String name = vf.getTreatments().getName1().getText().toString();
 
-				ArrayList<AppointmentDTO> newPat;
+				ArrayList<PatientDTO> newPat;
 				newPat = new ArrayList<>();
-				newPat = mf.getAppointment().getAll();
+				newPat = mf.getPatient().getAll();
 				newP: for (int i = 0; i < newPat.size(); i++) {
 
 					String oldName = newPat.get(i).getName();
@@ -811,38 +820,132 @@ public class Controller implements ActionListener {
 			}
 			break;
 
-		case "generatedAppointment":
+		case "selectPat":
+			boolean enter3 = true;
+			int id2 = Integer.parseInt(vf.getSchedule().getId().getText().toString());
 
-			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
-					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
-					|| vf.getSchedule().getName1().getText().toString().equals("")
-					|| vf.getSchedule().getDate1().getDate() == null) {
+			ArrayList<PatientDTO> pk2;
+			pk2 = new ArrayList<>();
+			pk2 = mf.getPatient().getAll();
+
+			for (int i = 0; i < pk2.size(); i++) {
+				int oldI = pk2.get(i).getId();
+
+				if (oldI == id2) {
+
+					vf.getSchedule().getName1().setText(pk2.get(i).getName());
+					vf.getSchedule().getEmail().setText(pk2.get(i).getEmail());
+					enter3 = false;
+					JOptionPane.showMessageDialog(null,
+							"Verifica que el nombre y el correo sean correctos, si no actualizalos");
+
+					break;
+				} else {
+					continue;
+				}
+
+			}
+			if (enter3) {
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
+			}
+
+			break;
+
+		case "createPatient":
+
+			if (vf.getPersonMenu().getPatientId().getText().toString().equals("")
+					|| vf.getPersonMenu().getPatientName().getText().toString().equals("")
+					|| vf.getPersonMenu().getPatientAge().getText().toString().equals("")
+					|| vf.getPersonMenu().getEmailPatient().getText().toString().equals("")) {
+
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 
-				String name = vf.getSchedule().getName1().getText().toString();
-				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
-				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
+				int identi = Integer.parseInt(vf.getPersonMenu().getPatientId().getText().toString());
+				String name = vf.getPersonMenu().getPatientName().getText().toString();
+				int age = Integer.parseInt(vf.getPersonMenu().getPatientAge().getText().toString());
+				String email = vf.getPersonMenu().getEmailPatient().getText().toString();
 
-				Date tDate = vf.getSchedule().getDate1().getDate();
-				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-				String date = formatoFecha.format(tDate);
-
-				int appoitment = appoitment();
-
-				if (mf.getAppointment().add(new AppointmentDTO(name, doctor, specialty, date, appoitment))) {
-
-					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
-
-					// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAIL
-
+				if (mf.getPatient().add(new PatientDTO(name, email, identi, age))) {
+					vf.getPersonMenu().getPatientId().setText(null);
+					vf.getPersonMenu().getPatientName().setText(null);
+					vf.getPersonMenu().getPatientAge().setText(null);
+					vf.getPersonMenu().getEmailPatient().setText(null);
+					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 				} else {
-
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
+				}
+
+			}
+
+			break;
+
+		case "generatedAppointment":
+
+			boolean enter2 = true;
+
+			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
+					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
+					|| vf.getSchedule().getName1().getText().toString().equals("")
+					|| vf.getSchedule().getDate1().getDate() == null
+					|| vf.getSchedule().getId().getText().toString().equals("")
+					|| vf.getSchedule().getEmail().getText().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				String id = vf.getSchedule().getId().getText().toString();
+				int tId = Integer.parseInt(id);
+
+				ArrayList<PatientDTO> pk;
+				pk = new ArrayList<>();
+				pk = mf.getPatient().getAll();
+				for (int i = 0; i < pk.size(); i++) {
+
+					int oldId = pk.get(i).getId();
+
+					if (oldId == tId) {
+						enter2 = false;
+
+						String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
+						String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
+
+						Date tDate = vf.getSchedule().getDate1().getDate();
+						SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+						String date = formatoFecha.format(tDate);
+
+						int appoitment = appoitment();
+
+						if (mf.getAppointment().add(new AppointmentDTO(tId, doctor, specialty, date, appoitment))) {
+
+							JOptionPane.showMessageDialog(null,
+									"Cita de numero " + appoitment + " creado exitosamente");
+							
+							vf.getSchedule().getId().setText(null);
+							vf.getSchedule().getName1().setText(null);
+							vf.getSchedule().getEmail().setText(null);
+							vf.getSchedule().getSpecialty().setSelectedItem("");
+							vf.getSchedule().getDoctor().setSelectedItem("");
+							vf.getSchedule().getDate1().setCalendar(null);
+							// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAIL
+
+						} else {
+
+							JOptionPane.showMessageDialog(null, "No se pudo crear");
+
+						}
+
+						break;
+					} else {
+						continue;
+					}
 
 				}
 
+			}
+
+			if (enter2) {
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
 			}
 
 			break;
@@ -867,10 +970,10 @@ public class Controller implements ActionListener {
 					if (ap == appoint) {
 						String doctor = pat.get(i).getDoctor();
 						String specialty = pat.get(i).getSpecialty();
-						String name = pat.get(i).getName();
+						int id = pat.get(i).getId();
 
-						if (mf.getAppointment().update(new AppointmentDTO(null, null, null, null, appoint),
-								new AppointmentDTO(name, doctor, specialty, date, appoint))) {
+						if (mf.getAppointment().update(new AppointmentDTO(0, null, null, null, appoint),
+								new AppointmentDTO(id, doctor, specialty, date, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " actualizado exitosamente");
@@ -910,7 +1013,7 @@ public class Controller implements ActionListener {
 
 					if (ap == appoint) {
 
-						if (mf.getAppointment().delete(new AppointmentDTO(null, null, null, null, appoint))) {
+						if (mf.getAppointment().delete(new AppointmentDTO(0, null, null, null, appoint))) {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " eliminado exitosamente");

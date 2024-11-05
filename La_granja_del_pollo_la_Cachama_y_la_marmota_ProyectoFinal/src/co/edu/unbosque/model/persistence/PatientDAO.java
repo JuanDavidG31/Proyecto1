@@ -38,7 +38,7 @@ public class PatientDAO implements CRUDOperation<PatientDTO, Patient> {
 
 	@Override
 	public boolean add(PatientDTO newData) {
-		if (find(DataMapper.PatientDTOToPatient(newData)) == null) {
+		if (find2(DataMapper.PatientDTOToPatient(newData)) == null) {
 			patientList.add(DataMapper.PatientDTOToPatient(newData));
 			writeFile();
 			writeSerialized();

@@ -7,7 +7,7 @@ public class Appointment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
+	private int id;
 	private String doctor;
 	private String specialty;
 	private String date;
@@ -17,21 +17,21 @@ public class Appointment implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Appointment(String name, String doctor, String specialty, String date, int appointmentNum) {
+	public Appointment(int id, String doctor, String specialty, String date, int appointmentNum) {
 		super();
-		this.name = name;
+		this.id = id;
 		this.doctor = doctor;
 		this.specialty = specialty;
 		this.date = date;
 		this.appointmentNum = appointmentNum;
 	}
 
-	public String getName() {
-		return name;
+	public int getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDoctor() {
@@ -68,7 +68,7 @@ public class Appointment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Appointment [name=" + name + ", doctor=" + doctor + ", specialty=" + specialty + ", date=" + date
+		return "Appointment [id=" + id + ", doctor=" + doctor + ", specialty=" + specialty + ", date=" + date
 				+ ", appointmentNum=" + appointmentNum + "]";
 	}
 
