@@ -890,6 +890,8 @@ public class Controller implements ActionListener {
 
 		case "createDoctor":
 
+			int contador = 0;
+
 			if (vf.getPersonMenu().getDoctorId().getText().toString().equals("")
 					|| vf.getPersonMenu().getDoctorName().getText().toString().equals("")
 					|| vf.getPersonMenu().getEmailDoctor().getText().toString().equals("")
@@ -897,23 +899,41 @@ public class Controller implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-
 				String speciality = vf.getPersonMenu().getSpeciality().getSelectedItem().toString();
 
-				int id = Integer.parseInt(vf.getPersonMenu().getDoctorId().getText().toString());
-				String name = vf.getPersonMenu().getDoctorName().getText().toString();
-				String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
+				ArrayList<DoctorDTO> doc;
+				doc = new ArrayList<>();
+				doc = mf.getDoctor().getAll();
 
-				if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality))) {
-					JOptionPane.showMessageDialog(null, "Doctor creado con exito");
-					vf.getPersonMenu().getDoctorId().setText(null);
-					vf.getPersonMenu().getDoctorName().setText(null);
-					vf.getPersonMenu().getEmailDoctor().setText(null);
-					vf.getPersonMenu().getSpeciality().setSelectedItem("");
-				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo crear");
+				for (int i = 0; i < doc.size(); i++) {
+
+					String spe = doc.get(i).getSpecialty();
+
+					if (spe.equals(speciality)) {
+						contador++;
+						continue;
+					}
+
 				}
 
+				if (contador < 7) {
+
+					int id = Integer.parseInt(vf.getPersonMenu().getDoctorId().getText().toString());
+					String name = vf.getPersonMenu().getDoctorName().getText().toString();
+					String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
+
+					if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality))) {
+						JOptionPane.showMessageDialog(null, "Doctor creado con exito");
+						vf.getPersonMenu().getDoctorId().setText(null);
+						vf.getPersonMenu().getDoctorName().setText(null);
+						vf.getPersonMenu().getEmailDoctor().setText(null);
+						vf.getPersonMenu().getSpeciality().setSelectedItem("");
+					} else {
+						JOptionPane.showMessageDialog(null, "No se pudo crear");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "No pueden existir mas de 7 doctores por especialidad");
+				}
 			}
 
 			break;

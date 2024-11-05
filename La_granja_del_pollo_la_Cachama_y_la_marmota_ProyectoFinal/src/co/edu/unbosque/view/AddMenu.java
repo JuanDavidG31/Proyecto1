@@ -44,6 +44,8 @@ public class AddMenu extends JFrame {
 		speciality.setBounds(356, 305, 251, 30);
 		speciality.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		speciality.addItem("");
+		speciality.addItem("1");
+		speciality.addItem("2");
 		doctorPanel.add(speciality);
 
 	}
