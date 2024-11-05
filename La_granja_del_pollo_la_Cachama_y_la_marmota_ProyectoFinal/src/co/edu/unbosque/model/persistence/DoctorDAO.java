@@ -39,7 +39,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 
 	@Override
 	public boolean add(DoctorDTO newData) {
-		if (find(DataMapper.DoctorDTOToDoctor(newData)) == null) {
+		if (find2(DataMapper.DoctorDTOToDoctor(newData)) == null) {
 			doctorList.add(DataMapper.DoctorDTOToDoctor(newData));
 			writeFile();
 			writeSerialized();

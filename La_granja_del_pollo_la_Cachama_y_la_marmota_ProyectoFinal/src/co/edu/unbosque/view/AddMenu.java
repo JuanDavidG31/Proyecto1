@@ -1,6 +1,5 @@
 package co.edu.unbosque.view;
 
-
 import java.awt.Cursor;
 
 import javax.swing.ImageIcon;
@@ -17,7 +16,7 @@ public class AddMenu extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel personPanel, doctorPanel;
 	private JLabel background1, background2;
 	private JTextField patientId, doctorId, doctorName, patientName, patientAge, emailDoctor, emailPatient;
@@ -45,6 +44,8 @@ public class AddMenu extends JFrame {
 		speciality.setBounds(356, 305, 251, 30);
 		speciality.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		speciality.addItem("");
+		speciality.addItem("1");
+		speciality.addItem("2");
 		doctorPanel.add(speciality);
 
 	}
