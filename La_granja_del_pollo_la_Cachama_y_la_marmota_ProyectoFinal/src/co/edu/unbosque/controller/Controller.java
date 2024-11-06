@@ -452,7 +452,7 @@ public class Controller implements ActionListener {
 							}
 						} else if (name.equals(nombreEspe2)) {
 
-							if (t2 = false) {
+							if (t2 == false) {
 
 							} else {
 
@@ -476,7 +476,7 @@ public class Controller implements ActionListener {
 
 						} else if (name.equals(nombreEspe3)) {
 
-							if (t3 = false) {
+							if (t3 == false) {
 
 							} else {
 
@@ -499,7 +499,7 @@ public class Controller implements ActionListener {
 							}
 
 						} else if (name.equals(nombreEspe4)) {
-							if (t4 = false) {
+							if (t4 == false) {
 
 							} else {
 
@@ -523,7 +523,7 @@ public class Controller implements ActionListener {
 
 						} else if (name.equals(nombreEspe5)) {
 
-							if (t5 = false) {
+							if (t5 == false) {
 
 							} else {
 
@@ -547,7 +547,7 @@ public class Controller implements ActionListener {
 
 						} else if (name.equals(nombreEspe6)) {
 
-							if (t6 = false) {
+							if (t6 == false) {
 
 							} else {
 
@@ -571,7 +571,7 @@ public class Controller implements ActionListener {
 
 						} else if (name.equals(nombreEspe7)) {
 
-							if (t7 = false) {
+							if (t7 == false) {
 
 							} else {
 
@@ -628,8 +628,6 @@ public class Controller implements ActionListener {
 									}
 									if (shift.isEmpty()) {
 										break f;
-									} else {
-										continue f;
 									}
 
 								} else {
