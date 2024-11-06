@@ -218,6 +218,24 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "generateTurn":
+			boolean tShift = false;
+
+			List<Integer> ids = new ArrayList<>();
+
+			shift = new ArrayList<>();
+			shift = mf.getShift().getAll();
+
+			if (!shift.isEmpty()) {
+
+				for (ShiftsDTO sh : shift) {
+
+					ids.add(sh.getId());
+
+				}
+
+				tShift = true;
+
+			}
 
 			List<String> especialidad1 = new ArrayList<>();
 			List<String> especialidad2 = new ArrayList<>();
@@ -365,10 +383,11 @@ public class Controller implements ActionListener {
 				}
 
 			}
+
 			boolean t1 = true, t2 = true, t3 = true, t4 = true, t5 = true, t6 = true, t7 = true;
 
+			Random random = new Random();
 			while (t1 || t2 || t3 || t4 || t5 || t6 || t7) {
-				Random random = new Random();
 
 				int indice1 = random.nextInt(especialidad1.size());
 				String nombreEspe1 = especialidad1.get(indice1);
@@ -400,181 +419,223 @@ public class Controller implements ActionListener {
 
 					if (name.equals(nombreEspe1)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t1 == false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe1))) {
-								t1 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe1))) {
+									t1 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 					} else if (name.equals(nombreEspe2)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t2 = false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe2))) {
-								t2 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe2))) {
+									t2 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					} else if (name.equals(nombreEspe3)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t3 = false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe3))) {
-								t3 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe3))) {
+									t3 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					} else if (name.equals(nombreEspe4)) {
+						if (t4 = false) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						} else {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe4))) {
-								t4 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe4))) {
+									t4 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					} else if (name.equals(nombreEspe5)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t5 = false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe5))) {
-								t5 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe5))) {
+									t5 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					} else if (name.equals(nombreEspe6)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t6 = false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe6))) {
-								t6 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe6))) {
+									t6 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					} else if (name.equals(nombreEspe7)) {
 
-						if (doctor.get(t).getStatus().equals("inactivo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
+						if (t7 = false) {
 
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "activo"));
+						} else {
 
-							if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe7))) {
-								t7 = false;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+							if (doctor.get(t).getStatus().equals("inactivo")) {
+								int ident = doctor.get(t).getId();
+								String email = doctor.get(t).getEmail();
+								String speciality = doctor.get(t).getSpecialty();
+
+								mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+										new DoctorDTO(name, email, ident, speciality, "activo"));
+
+								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe7))) {
+									t7 = false;
+									JOptionPane.showMessageDialog(null, "turno creado ");
+								} else {
+									JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+								}
+
 							}
-
-						} else if (doctor.get(t).getStatus().equals("activo")) {
-							int ident = doctor.get(t).getId();
-							String email = doctor.get(t).getEmail();
-							String speciality = doctor.get(t).getSpecialty();
-
-							mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-									new DoctorDTO(name, email, ident, speciality, "inactivo"));
 						}
 
 					}
 
 				}
+			}
+
+			if (tShift) {
+
+				shift = new ArrayList<>();
+				shift = mf.getShift().getAll();
+
+				for (int i = 0; i < shift.size(); i++) {
+
+					int id = shift.get(i).getId();
+
+					if (ids.get(i) == id) {
+
+						doctor = new ArrayList<>();
+						doctor = mf.getDoctor().getAll();
+
+						for (int n = 0; n < doctor.size(); n++) {
+
+							int tId = doctor.get(n).getId();
+
+							if (tId == id) {
+
+								String status = doctor.get(n).getStatus();
+
+								if (status.equals("activo")) {
+
+									String name = doctor.get(n).getName();
+									String email = doctor.get(n).getEmail();
+									String speciality = doctor.get(n).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, id, null, null),
+											new DoctorDTO(name, email, id, speciality, "inactivo"));
+
+									mf.getShift().delete(new ShiftsDTO(null, null, null, id, null));
+
+									JOptionPane.showMessageDialog(null, "Cambio de turno");
+								}
+
+							} else {
+								continue;
+							}
+
+						}
+
+					} else {
+						continue;
+					}
+
+				}
+
 			}
 
 			break;

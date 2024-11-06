@@ -39,7 +39,7 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 
 	@Override
 	public boolean add(ShiftsDTO newData) {
-		if (find(DataMapper.ShiftsDTOToShifts(newData)) == null) {
+		if (find2(DataMapper.ShiftsDTOToShifts(newData)) == null) {
 			shiftsList.add(DataMapper.ShiftsDTOToShifts(newData));
 			writeFile();
 			writeSerialized();
