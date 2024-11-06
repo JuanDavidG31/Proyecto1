@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -18,10 +19,10 @@ public class Treatments extends JFrame {
 	private JButton home, searchButton, homeTreatments1, homeTreatments2, homeTreatments3, themeMain, initTreatment,
 			initSearchTreatment, initFinishTreatment, register, updateTreatment, finishTreatment;
 	// Botones de info
-	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName;
+	private JButton infoName, infospecialty, infoTreatment, infoStatus, infoSearchName, selectPatient;
 
 	JComboBox<String> status, specialty, status2, specialty2, status3;
-	private JTextField name1, treatmentTxt, nameS, treatmentS, nameF, treatmentF;
+	private JTextField name1, name2, treatmentTxt, nameS, treatmentS, nameF, treatmentF, id1, id2, id3;
 
 	public Treatments() {
 		window();
@@ -48,21 +49,24 @@ public class Treatments extends JFrame {
 	private void comboBox() {
 		status = new JComboBox<String>();
 		status.setToolTipText("Seleccione el estado del Tratamiento");
-		status.setBounds(356, 329, 250, 30);
+		status.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		status.setBounds(350, 355, 250, 30);
 		status.addItem("");
 		status.addItem("En tratamiento");
 		status.addItem("Finalizado");
 		newTreatmentPanel.add(status);
 
 		status2 = new JComboBox<String>();
+		status2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		status2.setToolTipText("Seleccione el estado del Tratamiento");
-		status2.setBounds(356, 329, 250, 30);
+		status2.setBounds(353, 357, 250, 30);
 		status2.addItem("");
 		status2.addItem("En tratamiento");
 		status2.addItem("Finalizado");
 		searchTreatmentPanel.add(status2);
 
 		status3 = new JComboBox<String>();
+		status3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		status3.setToolTipText("Seleccione el estado del Tratamiento");
 		status3.setBounds(356, 307, 250, 30);
 		status3.addItem("");
@@ -71,8 +75,10 @@ public class Treatments extends JFrame {
 		finishTreatmentPanel.add(status3);
 
 		specialty = new JComboBox<String>();
+		specialty.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		specialty.setToolTipText("Seleccione Una especialidad");
-		specialty.setBounds(356, 246, 250, 30);
+		specialty.setBounds(350, 280, 250, 30);
+		specialty.setBorder(null);
 		specialty.addItem("");
 		specialty.addItem("1");
 		specialty.addItem("2");
@@ -84,8 +90,10 @@ public class Treatments extends JFrame {
 		newTreatmentPanel.add(specialty);
 
 		specialty2 = new JComboBox<String>();
+		specialty2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		specialty2.setToolTipText("Seleccione Una especialidad");
-		specialty2.setBounds(356, 246, 250, 30);
+		specialty2.setBounds(353, 275, 250, 30);
+		specialty2.setBorder(null);
 		specialty2.addItem("");
 		specialty2.addItem("1");
 		specialty2.addItem("2");
@@ -126,7 +134,7 @@ public class Treatments extends JFrame {
 		finishTreatmentPanel.setLayout(null);
 
 		infoPanel = new JPanel();
-		infoPanel.setBounds(614, 170, 40, 210);
+		infoPanel.setBounds(614, 175, 40, 210);
 		infoPanel.setBackground(new Color(0, 74, 173));
 		infoPanel.setLayout(null);
 
@@ -136,32 +144,36 @@ public class Treatments extends JFrame {
 	private void info() {
 		// INFO CREAR TRATAMIENTO
 		infoName = new JButton();
+		infoName.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoName.setBounds(0, 32, 34, 34);
 		infoName.setBorderPainted(false);
-		infoName.setToolTipText("G");
+		infoName.setToolTipText("Nombre del Paciente");
 		ImageIcon imageInfo = new ImageIcon("Images\\infoButtons\\1.png");
 		Image scaledInfo = imageInfo.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
 		infoName.setIcon(new ImageIcon(scaledInfo));
 		infoPanel.add(infoName);
 
 		infospecialty = new JButton();
+		infospecialty.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infospecialty.setBounds(0, 74, 34, 34);
 		infospecialty.setBorderPainted(false);
-		infospecialty.setToolTipText("H");
+		infospecialty.setToolTipText("Epecialidad del tratamiento");
 		infospecialty.setIcon(new ImageIcon(scaledInfo));
 		infoPanel.add(infospecialty);
 
 		infoTreatment = new JButton();
+		infoTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoTreatment.setBounds(0, 113, 34, 34);
 		infoTreatment.setBorderPainted(false);
-		infoTreatment.setToolTipText("K");
+		infoTreatment.setToolTipText("Este es el tratamiento a seguir para el paciente");
 		infoTreatment.setIcon(new ImageIcon(scaledInfo));
 		infoPanel.add(infoTreatment);
 
 		infoStatus = new JButton();
+		infoStatus.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoStatus.setBounds(0, 155, 34, 34);
 		infoStatus.setBorderPainted(false);
-		infoStatus.setToolTipText("L");
+		infoStatus.setToolTipText("Estado del tratamiento");
 		infoStatus.setIcon(new ImageIcon(scaledInfo));
 		infoPanel.add(infoStatus);
 
@@ -199,32 +211,54 @@ public class Treatments extends JFrame {
 	}
 
 	public void inputs() {
+
+		id1 = new JTextField();
+		id1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id1.setBorder(null);
+		id1.setBounds(350, 205, 250, 29);
+		newTreatmentPanel.add(id1);
+
 		name1 = new JTextField();
+		name1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		name1.setBorder(null);
-		name1.setBounds(356, 206, 250, 29);
+		name1.setBounds(350, 242, 250, 29);
 		newTreatmentPanel.add(name1);
 
 		treatmentTxt = new JTextField();
+		treatmentTxt.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		treatmentTxt.setBorder(null);
-		treatmentTxt.setBounds(356, 289, 250, 29);
+		treatmentTxt.setBounds(350, 318, 250, 29);
 		newTreatmentPanel.add(treatmentTxt);
+//----------------------------------------------------------------------------
+
+		id2 = new JTextField();
+		id2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id2.setBorder(null);
+		id2.setBounds(352, 196, 250, 29);
+		searchTreatmentPanel.add(id2);
 
 		nameS = new JTextField();
+		nameS.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		nameS.setBorder(null);
-		nameS.setBounds(356, 206, 250, 29);
+		nameS.setBounds(353, 235, 250, 29);
 		searchTreatmentPanel.add(nameS);
 
 		treatmentS = new JTextField();
+		treatmentS.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		treatmentS.setBorder(null);
-		treatmentS.setBounds(356, 289, 250, 29);
+		treatmentS.setBounds(352, 316, 250, 29);
 		searchTreatmentPanel.add(treatmentS);
 
-		nameF = new JTextField();
-		nameF.setBorder(null);
-		nameF.setBounds(356, 229, 250, 29);
-		finishTreatmentPanel.add(nameF);
+//---------------------------------------------------------------------
+
+		id3 = new JTextField();
+		id3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id3.setBorder(null);
+		id3.setBounds(356, 228, 250, 29);
+		finishTreatmentPanel.add(id3);
 
 		treatmentF = new JTextField();
+		treatmentF.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		treatmentF.setBorder(null);
 		treatmentF.setBounds(356, 266, 250, 30);
 		finishTreatmentPanel.add(treatmentF);
@@ -233,6 +267,7 @@ public class Treatments extends JFrame {
 
 	public void buttons() {
 		themeMain = new JButton();
+		themeMain.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		themeMain.setBounds(41, 465, 82, 79);
 		themeMain.setBorderPainted(false);
 		themeMain.setToolTipText("Cambiar a tema oscuro");
@@ -242,6 +277,7 @@ public class Treatments extends JFrame {
 		mainPanel.add(themeMain);
 
 		home = new JButton();
+		home.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		home.setBounds(655, 465, 79, 79);
 		home.setBorderPainted(false);
 		home.setToolTipText("Menú principal");
@@ -251,7 +287,8 @@ public class Treatments extends JFrame {
 		mainPanel.add(home);
 
 		homeTreatments1 = new JButton();
-		homeTreatments1.setBounds(565, 409, 42, 42);
+		homeTreatments1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		homeTreatments1.setBounds(560, 413, 42, 42);
 		homeTreatments1.setBorderPainted(false);
 		homeTreatments1.setToolTipText("Menú principal");
 		ImageIcon imageHome = new ImageIcon("Images\\backButtons\\m1.png");
@@ -260,13 +297,15 @@ public class Treatments extends JFrame {
 		newTreatmentPanel.add(homeTreatments1);
 
 		homeTreatments2 = new JButton();
-		homeTreatments2.setBounds(565, 409, 42, 42);
+		homeTreatments2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		homeTreatments2.setBounds(545, 420, 42, 42);
 		homeTreatments2.setBorderPainted(false);
 		homeTreatments2.setToolTipText("Menú principal");
 		homeTreatments2.setIcon(new ImageIcon(scaledHome));
 		searchTreatmentPanel.add(homeTreatments2);
 
 		homeTreatments3 = new JButton();
+		homeTreatments3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeTreatments3.setBounds(565, 409, 42, 42);
 		homeTreatments3.setBorderPainted(false);
 		homeTreatments3.setToolTipText("Menú principal");
@@ -274,6 +313,7 @@ public class Treatments extends JFrame {
 		finishTreatmentPanel.add(homeTreatments3);
 
 		searchButton = new JButton();
+		searchButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		searchButton.setBounds(0, 30, 100, 35);
 		searchButton.setToolTipText("Buscar paciente");
 		searchButton.setBorderPainted(false);
@@ -283,6 +323,7 @@ public class Treatments extends JFrame {
 //entrar a cada funcion de ese menu 
 
 		initTreatment = new JButton();
+		initTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		initTreatment.setBounds(273, 102, 252, 120);
 		ImageIcon image6 = new ImageIcon("Images\\menuTratamientos\\bNewClear.png");
 		Image scaled6 = image6.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
@@ -290,6 +331,7 @@ public class Treatments extends JFrame {
 		mainPanel.add(initTreatment);
 
 		initSearchTreatment = new JButton();
+		initSearchTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		initSearchTreatment.setBounds(273, 234, 252, 120);
 		ImageIcon image7 = new ImageIcon("Images\\menuTratamientos\\bSearchClear.png");
 		Image scaled7 = image7.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
@@ -298,13 +340,15 @@ public class Treatments extends JFrame {
 
 		initFinishTreatment = new JButton();
 		initFinishTreatment.setBounds(273, 366, 252, 120);
+		initFinishTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ImageIcon image8 = new ImageIcon("Images\\menuTratamientos\\bFinishClear.png");
 		Image scaled8 = image8.getImage().getScaledInstance(252, 120, Image.SCALE_REPLICATE);
 		initFinishTreatment.setIcon(new ImageIcon(scaled8));
 		mainPanel.add(initFinishTreatment);
 
 		register = new JButton();
-		register.setBounds(356, 409, 157, 41);
+		register.setBounds(351, 412, 157, 41);
+		register.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		register.setBorderPainted(false);
 		register.setToolTipText("Registrar Tratamiento");
 		ImageIcon imageRegister = new ImageIcon("Images\\menuTratamientos\\registrarC.png");
@@ -313,7 +357,8 @@ public class Treatments extends JFrame {
 		newTreatmentPanel.add(register);
 
 		updateTreatment = new JButton();
-		updateTreatment.setBounds(360, 408, 157, 41);
+		updateTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		updateTreatment.setBounds(340, 421, 157, 41);
 		updateTreatment.setBorderPainted(false);
 		updateTreatment.setToolTipText("Actualizar tratamiento del paciente");
 		ImageIcon imageUpdate = new ImageIcon("Images\\menuTratamientos\\actualizarC.png");
@@ -322,6 +367,7 @@ public class Treatments extends JFrame {
 		searchTreatmentPanel.add(updateTreatment);
 
 		finishTreatment = new JButton();
+		finishTreatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		finishTreatment.setBounds(356, 410, 157, 41);
 		finishTreatment.setBorderPainted(false);
 		finishTreatment.setToolTipText("finalizar tratamiento del paciente");
@@ -329,10 +375,60 @@ public class Treatments extends JFrame {
 		Image scaledFinish = imageFinish.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		finishTreatment.setIcon(new ImageIcon(scaledFinish));
 		finishTreatmentPanel.add(finishTreatment);
+
+		selectPatient = new JButton();
+		selectPatient.setBounds(0, 0, 111, 40);
+		selectPatient.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		selectPatient.setToolTipText("Hacer busqueda del numero de identificación");
+		selectPatient.setBorderPainted(false);
+		ImageIcon image16 = new ImageIcon("Images\\menuCitas\\selectC.png");
+		Image scaled16 = image16.getImage().getScaledInstance(111, 40, Image.SCALE_SMOOTH);
+		selectPatient.setIcon(new ImageIcon(scaled16));
+		infoPanel.add(selectPatient);
 	}
 
 	public JButton getRegister() {
 		return register;
+	}
+
+	public JButton getSelectPatient() {
+		return selectPatient;
+	}
+
+	public void setSelectPatient(JButton selectPatient) {
+		this.selectPatient = selectPatient;
+	}
+
+	public JTextField getName2() {
+		return name2;
+	}
+
+	public void setName2(JTextField name2) {
+		this.name2 = name2;
+	}
+
+	public JTextField getId1() {
+		return id1;
+	}
+
+	public void setId1(JTextField id1) {
+		this.id1 = id1;
+	}
+
+	public JTextField getId2() {
+		return id2;
+	}
+
+	public void setId2(JTextField id2) {
+		this.id2 = id2;
+	}
+
+	public JTextField getId3() {
+		return id3;
+	}
+
+	public void setId3(JTextField id3) {
+		this.id3 = id3;
 	}
 
 	public void setRegister(JButton register) {

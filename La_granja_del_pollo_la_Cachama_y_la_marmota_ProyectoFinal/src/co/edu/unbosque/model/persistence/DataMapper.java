@@ -19,20 +19,21 @@ public class DataMapper {
 
 	public static Shifts ShiftsDTOToShifts(ShiftsDTO dto) {
 		Shifts entity;
-		entity = new Shifts(dto.getDate(), dto.getSpecialty(), dto.getId(), dto.getName());
+		entity = new Shifts(dto.getDate1(), dto.getDate2(), dto.getSpecialty(), dto.getId(), dto.getName());
 		return entity;
 	}
 
 	public static ShiftsDTO ShiftsToShiftsDTO(Shifts entity) {
 		ShiftsDTO dto;
-		dto = new ShiftsDTO(entity.getDate(), entity.getSpecialty(), entity.getId(), entity.getName());
+		dto = new ShiftsDTO(entity.getDate1(), entity.getDate2(), entity.getSpecialty(), entity.getId(),
+				entity.getName());
 		return dto;
 	}
 
 	public static ArrayList<ShiftsDTO> listaShiftsToListaShiftsDTO(ArrayList<Shifts> entityList) {
 		ArrayList<ShiftsDTO> dtoList = new ArrayList<>();
 		for (Shifts m : entityList) {
-			dtoList.add(new ShiftsDTO(m.getDate(), m.getSpecialty(), m.getId(), m.getName()));
+			dtoList.add(new ShiftsDTO(m.getDate1(), m.getDate2(), m.getSpecialty(), m.getId(), m.getName()));
 		}
 		return dtoList;
 	}
@@ -40,7 +41,7 @@ public class DataMapper {
 	public static ArrayList<Shifts> listaShiftsDTOToListaShifts(ArrayList<ShiftsDTO> dtoList) {
 		ArrayList<Shifts> entityList = new ArrayList<>();
 		for (ShiftsDTO d : dtoList) {
-			entityList.add(new Shifts(d.getDate(), d.getSpecialty(), d.getId(), d.getName()));
+			entityList.add(new Shifts(d.getDate1(), d.getDate2(), d.getSpecialty(), d.getId(), d.getName()));
 		}
 		return entityList;
 	}
@@ -49,20 +50,21 @@ public class DataMapper {
 
 	public static Doctor DoctorDTOToDoctor(DoctorDTO dto) {
 		Doctor entity;
-		entity = new Doctor(dto.getName(), dto.getEmail(), dto.getId(), dto.getSpecialty());
+		entity = new Doctor(dto.getName(), dto.getEmail(), dto.getId(), dto.getSpecialty(), dto.getStatus());
 		return entity;
 	}
 
 	public static DoctorDTO DoctorToDoctorDTO(Doctor entity) {
 		DoctorDTO dto;
-		dto = new DoctorDTO(entity.getName(), entity.getEmail(), entity.getId(), entity.getSpecialty());
+		dto = new DoctorDTO(entity.getName(), entity.getEmail(), entity.getId(), entity.getSpecialty(),
+				entity.getStatus());
 		return dto;
 	}
 
 	public static ArrayList<DoctorDTO> listaDoctorToListaDoctorDTO(ArrayList<Doctor> entityList) {
 		ArrayList<DoctorDTO> dtoList = new ArrayList<>();
 		for (Doctor m : entityList) {
-			dtoList.add(new DoctorDTO(m.getName(), m.getEmail(), m.getId(), m.getSpecialty()));
+			dtoList.add(new DoctorDTO(m.getName(), m.getEmail(), m.getId(), m.getSpecialty(), m.getStatus()));
 		}
 		return dtoList;
 	}
@@ -70,7 +72,7 @@ public class DataMapper {
 	public static ArrayList<Doctor> listaDoctorDTOToListaDoctor(ArrayList<DoctorDTO> dtoList) {
 		ArrayList<Doctor> entityList = new ArrayList<>();
 		for (DoctorDTO d : dtoList) {
-			entityList.add(new Doctor(d.getName(), d.getEmail(), d.getId(), d.getSpecialty()));
+			entityList.add(new Doctor(d.getName(), d.getEmail(), d.getId(), d.getSpecialty(), d.getStatus()));
 		}
 		return entityList;
 	}

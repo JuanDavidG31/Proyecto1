@@ -3,16 +3,21 @@ package co.edu.unbosque.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
@@ -27,6 +32,7 @@ public class Controller implements ActionListener {
 	private ArrayList<TreatmentDTO> treat;
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
+	private ArrayList<ShiftsDTO> shift;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -181,6 +187,9 @@ public class Controller implements ActionListener {
 		vf.getShifts().getHomeTurn2().addActionListener(this);
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 
+		vf.getShifts().getGenerateTurns().addActionListener(this);
+		vf.getShifts().getGenerateTurns().setActionCommand("generateTurn");
+
 		// popups
 		vf.getShowOptions().getPerson().addActionListener(this);
 		vf.getShowOptions().getPerson().setActionCommand("initMenuPerson");
@@ -207,6 +216,446 @@ public class Controller implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+
+		case "generateTurn":
+
+			if (vf.getShifts().getStartDate().getDate() == null) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				boolean tShift = false;
+
+				doctor = new ArrayList<>();
+				doctor = mf.getDoctor().getAll();
+
+				List<Integer> ids = new ArrayList<>();
+
+				shift = new ArrayList<>();
+				shift = mf.getShift().getAll();
+
+				if (!shift.isEmpty()) {
+
+					for (ShiftsDTO sh : shift) {
+
+						ids.add(sh.getId());
+
+					}
+
+					tShift = true;
+
+				}
+
+				List<String> especialidad1 = new ArrayList<>();
+				List<String> especialidad2 = new ArrayList<>();
+				List<String> especialidad3 = new ArrayList<>();
+				List<String> especialidad4 = new ArrayList<>();
+				List<String> especialidad5 = new ArrayList<>();
+				List<String> especialidad6 = new ArrayList<>();
+				List<String> especialidad7 = new ArrayList<>();
+
+				String espe1 = "1";
+				String espe2 = "2";
+				String espe3 = "3";
+				String espe4 = "4";
+				String espe5 = "5";
+				String espe6 = "6";
+				String espe7 = "7";
+
+				Date d = vf.getShifts().getStartDate().getDate();
+				SimpleDateFormat formatoF = new SimpleDateFormat("dd/MM/yyyy");
+				String dat = formatoF.format(d);
+
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(d);
+				calendar.add(Calendar.DAY_OF_MONTH, 30);
+
+				Date nuevaFecha = calendar.getTime();
+				SimpleDateFormat formatoF2 = new SimpleDateFormat("dd/MM/yyyy");
+				String dat2 = formatoF2.format(nuevaFecha);
+
+				vf.getShifts().getFinishDate().setDate(nuevaFecha);
+
+				for (int i = 0; i < doctor.size(); i++) {
+
+					f: for (int n = 0; n < vf.getPersonMenu().getSpeciality().getItemCount(); n++) {
+						String item = vf.getPersonMenu().getSpeciality().getItemAt(n);
+						if (item.equals("")) {
+
+							continue f;
+
+						}
+						if (item.equals(espe1)) {
+
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe1)) {
+
+									if (especialidad1.contains(doc.getName())) {
+
+									} else {
+
+										especialidad1.add(doc.getName());
+									}
+
+								}
+
+							}
+
+						} else if (item.equals(espe2)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe2)) {
+
+									if (especialidad2.contains(doc.getName())) {
+
+									} else {
+
+										especialidad2.add(doc.getName());
+									}
+
+								}
+
+							}
+						} else if (item.equals(espe3)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe3)) {
+
+									if (especialidad3.contains(doc.getName())) {
+
+									} else {
+
+										especialidad3.add(doc.getName());
+									}
+
+								}
+
+							}
+						} else if (item.equals(espe4)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe4)) {
+
+									if (especialidad4.contains(doc.getName())) {
+
+									} else {
+
+										especialidad4.add(doc.getName());
+									}
+
+								}
+
+							}
+						} else if (item.equals(espe5)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe5)) {
+
+									if (especialidad5.contains(doc.getName())) {
+
+									} else {
+
+										especialidad5.add(doc.getName());
+									}
+
+								}
+
+							}
+						} else if (item.equals(espe6)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe6)) {
+
+									if (especialidad6.contains(doc.getName())) {
+
+									} else {
+
+										especialidad6.add(doc.getName());
+									}
+
+								}
+
+							}
+						} else if (item.equals(espe7)) {
+							for (DoctorDTO doc : doctor) {
+
+								if (doc.getSpecialty().equals(espe7)) {
+
+									if (especialidad7.contains(doc.getName())) {
+
+									} else {
+
+										especialidad7.add(doc.getName());
+									}
+
+								}
+
+							}
+						}
+					}
+
+				}
+
+				boolean t1 = true, t2 = true, t3 = true, t4 = true, t5 = true, t6 = true, t7 = true;
+
+				Random random = new Random();
+				while (t1 || t2 || t3 || t4 || t5 || t6 || t7) {
+
+					int indice1 = random.nextInt(especialidad1.size());
+					String nombreEspe1 = especialidad1.get(indice1);
+
+					int indice2 = random.nextInt(especialidad2.size());
+					String nombreEspe2 = especialidad2.get(indice2);
+
+					int indice3 = random.nextInt(especialidad3.size());
+					String nombreEspe3 = especialidad3.get(indice3);
+
+					int indice4 = random.nextInt(especialidad4.size());
+					String nombreEspe4 = especialidad4.get(indice4);
+
+					int indice5 = random.nextInt(especialidad5.size());
+					String nombreEspe5 = especialidad5.get(indice5);
+
+					int indice6 = random.nextInt(especialidad6.size());
+					String nombreEspe6 = especialidad6.get(indice6);
+
+					int indice7 = random.nextInt(especialidad7.size());
+					String nombreEspe7 = especialidad7.get(indice7);
+
+					for (int t = 0; t < doctor.size(); t++) {
+
+						String name = doctor.get(t).getName();
+
+						if (name.equals(nombreEspe1)) {
+
+							if (t1 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe1))) {
+										t1 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+						} else if (name.equals(nombreEspe2)) {
+
+							if (t2 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe2))) {
+										t2 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						} else if (name.equals(nombreEspe3)) {
+
+							if (t3 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe3))) {
+										t3 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						} else if (name.equals(nombreEspe4)) {
+							if (t4 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe4))) {
+										t4 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						} else if (name.equals(nombreEspe5)) {
+
+							if (t5 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe5))) {
+										t5 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						} else if (name.equals(nombreEspe6)) {
+
+							if (t6 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe6))) {
+										t6 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						} else if (name.equals(nombreEspe7)) {
+
+							if (t7 == false) {
+
+							} else {
+
+								if (doctor.get(t).getStatus().equals("inactivo")) {
+									int ident = doctor.get(t).getId();
+									String email = doctor.get(t).getEmail();
+									String speciality = doctor.get(t).getSpecialty();
+
+									mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
+											new DoctorDTO(name, email, ident, speciality, "activo"));
+
+									if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe7))) {
+										t7 = false;
+
+									} else {
+										JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
+									}
+
+								}
+							}
+
+						}
+
+					}
+				}
+
+				if (tShift) {
+
+					f: for (int i = 0; i < shift.size(); i++) {
+
+						int id = shift.get(i).getId();
+
+						if (ids.get(i) == id) {
+
+							p: for (int n = 0; n < doctor.size(); n++) {
+
+								int tId = doctor.get(n).getId();
+
+								if (tId == ids.get(i)) {
+
+									String status = doctor.get(n).getStatus();
+
+									if (status.equals("activo")) {
+
+										String name = doctor.get(n).getName();
+										String email = doctor.get(n).getEmail();
+										String speciality = doctor.get(n).getSpecialty();
+
+										mf.getDoctor().update(new DoctorDTO(null, null, ids.get(i), null, null),
+												new DoctorDTO(name, email, ids.get(i), speciality, "inactivo"));
+
+										mf.getShift().delete(new ShiftsDTO(null, null, null, ids.get(i), null));
+
+									}
+									if (shift.isEmpty()) {
+										break f;
+									}
+
+								} else {
+									continue p;
+								}
+
+							}
+
+						} else {
+							continue f;
+						}
+
+					}
+
+				}
+
+				if (tShift) {
+					JOptionPane.showMessageDialog(null, "Cambio de turno");
+				}
+
+				if (t1 == false || t2 == false || t3 == false || t4 == false || t5 == false || t6 == false
+						|| t7 == false) {
+					JOptionPane.showMessageDialog(null, "Turno creado en la fecha " + dat);
+				}
+			}
+
+			break;
+
 		case "theme":
 			changeTheme();
 			break;
@@ -316,6 +765,7 @@ public class Controller implements ActionListener {
 			break;
 		case "searchTreatment":
 			checkWindow = 2;
+			
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
@@ -323,6 +773,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSpecialty2().enable(false);
 			vf.getTreatments().getTreatmentS().enable(false);
 			vf.getTreatments().getStatus2().enable(false);
+			
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 
@@ -330,9 +781,10 @@ public class Controller implements ActionListener {
 			break;
 		case "finishTreatment":
 			checkWindow = 3;
+			
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
-			vf.getTreatments().getNameF().setText(null);
+			vf.getTreatments().getId3().setText(null);
 
 			vf.getTreatments().getTreatmentF().setEditable(false);
 			vf.getTreatments().getTreatmentF().setVisible(false);
@@ -914,7 +1366,7 @@ public class Controller implements ActionListener {
 					String name = vf.getPersonMenu().getDoctorName().getText().toString();
 					String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
 
-					if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality))) {
+					if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality, "inactivo"))) {
 						JOptionPane.showMessageDialog(null, "Doctor creado con exito");
 						vf.getPersonMenu().getDoctorId().setText(null);
 						vf.getPersonMenu().getDoctorName().setText(null);
@@ -1221,7 +1673,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().getInfoName().setVisible(true);
 			vf.getSchedule().getInfospecialty().setVisible(true);
 		} else if (vf.getSchedule().getSchedulePanel().isVisible() == false) {
-			
+
 			vf.getSchedule().getInfoDate().setVisible(false);
 			vf.getSchedule().getInfoDoctor().setVisible(false);
 			vf.getSchedule().getInfoEmail().setVisible(false);
@@ -1249,35 +1701,40 @@ public class Controller implements ActionListener {
 
 		if (checkWindow == 1) {// Principal
 
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 40, 210);
+			vf.getTreatments().getInfoPanel().setBounds(610, 170, 123, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
-			vf.getTreatments().getInfoName().setBounds(0, 32, 34, 34);
+			vf.getTreatments().getInfoName().setBounds(0, 70, 34, 34);
 
 			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
+			vf.getTreatments().getInfoTreatment().setBounds(0, 144, 34, 34);
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 155, 34, 34);
+			vf.getTreatments().getInfoStatus().setBounds(0, 181, 34, 34);
 
 			vf.getTreatments().getInfospecialty().setVisible(true);
-			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
+			vf.getTreatments().getInfospecialty().setBounds(0, 107, 34, 34);
 
-			// vf.getTreatments().getInfoSearchName().setVisible(false);
+			vf.getTreatments().getSelectPatient().setVisible(true);
+			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
+
 		} else if (checkWindow == 2) {// Buscar
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
+			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
+			vf.getTreatments().getInfoName().setVisible(true);
+			vf.getTreatments().getInfoName().setBounds(0, 62, 34, 34);
+			
 			vf.getTreatments().getSearchButton().setVisible(true);
-			vf.getTreatments().getSearchButton().setBounds(0, 30, 100, 35);
+			vf.getTreatments().getSearchButton().setBounds(0, 24, 100, 35);
 
 			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
+			vf.getTreatments().getInfoTreatment().setBounds(0, 144, 34, 34);
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 155, 34, 34);
+			vf.getTreatments().getInfoStatus().setBounds(0, 183, 34, 34);
 
 			vf.getTreatments().getInfospecialty().setVisible(true);
-			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
+			vf.getTreatments().getInfospecialty().setBounds(0, 104, 34, 34);
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
@@ -1298,6 +1755,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setVisible(false);
 			vf.getTreatments().getInfoName().setVisible(false);
 			vf.getTreatments().getInfoStatus().setVisible(false);
+			vf.getTreatments().getSelectPatient().setVisible(false);
 
 		}
 
