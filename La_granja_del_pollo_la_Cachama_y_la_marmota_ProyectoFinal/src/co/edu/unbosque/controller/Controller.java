@@ -268,7 +268,7 @@ public class Controller implements ActionListener {
 
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTime(d);
-				calendar.add(Calendar.DAY_OF_MONTH, 1);
+				calendar.add(Calendar.DAY_OF_MONTH, 30);
 
 				Date nuevaFecha = calendar.getTime();
 				SimpleDateFormat formatoF2 = new SimpleDateFormat("dd/MM/yyyy");
