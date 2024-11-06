@@ -316,6 +316,7 @@ public class Controller implements ActionListener {
 			break;
 		case "searchTreatment":
 			checkWindow = 2;
+			
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
@@ -323,6 +324,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSpecialty2().enable(false);
 			vf.getTreatments().getTreatmentS().enable(false);
 			vf.getTreatments().getStatus2().enable(false);
+			
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 
@@ -330,9 +332,10 @@ public class Controller implements ActionListener {
 			break;
 		case "finishTreatment":
 			checkWindow = 3;
+			
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
-			vf.getTreatments().getNameF().setText(null);
+			vf.getTreatments().getId3().setText(null);
 
 			vf.getTreatments().getTreatmentF().setEditable(false);
 			vf.getTreatments().getTreatmentF().setVisible(false);
@@ -1221,7 +1224,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().getInfoName().setVisible(true);
 			vf.getSchedule().getInfospecialty().setVisible(true);
 		} else if (vf.getSchedule().getSchedulePanel().isVisible() == false) {
-			
+
 			vf.getSchedule().getInfoDate().setVisible(false);
 			vf.getSchedule().getInfoDoctor().setVisible(false);
 			vf.getSchedule().getInfoEmail().setVisible(false);
@@ -1249,35 +1252,40 @@ public class Controller implements ActionListener {
 
 		if (checkWindow == 1) {// Principal
 
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 40, 210);
+			vf.getTreatments().getInfoPanel().setBounds(610, 170, 123, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
-			vf.getTreatments().getInfoName().setBounds(0, 32, 34, 34);
+			vf.getTreatments().getInfoName().setBounds(0, 70, 34, 34);
 
 			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
+			vf.getTreatments().getInfoTreatment().setBounds(0, 144, 34, 34);
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 155, 34, 34);
+			vf.getTreatments().getInfoStatus().setBounds(0, 181, 34, 34);
 
 			vf.getTreatments().getInfospecialty().setVisible(true);
-			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
+			vf.getTreatments().getInfospecialty().setBounds(0, 107, 34, 34);
 
-			// vf.getTreatments().getInfoSearchName().setVisible(false);
+			vf.getTreatments().getSelectPatient().setVisible(true);
+			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
+
 		} else if (checkWindow == 2) {// Buscar
-			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
+			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
+			vf.getTreatments().getInfoName().setVisible(true);
+			vf.getTreatments().getInfoName().setBounds(0, 62, 34, 34);
+			
 			vf.getTreatments().getSearchButton().setVisible(true);
-			vf.getTreatments().getSearchButton().setBounds(0, 30, 100, 35);
+			vf.getTreatments().getSearchButton().setBounds(0, 24, 100, 35);
 
 			vf.getTreatments().getInfoTreatment().setVisible(true);
-			vf.getTreatments().getInfoTreatment().setBounds(0, 113, 34, 34);
+			vf.getTreatments().getInfoTreatment().setBounds(0, 144, 34, 34);
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
-			vf.getTreatments().getInfoStatus().setBounds(0, 155, 34, 34);
+			vf.getTreatments().getInfoStatus().setBounds(0, 183, 34, 34);
 
 			vf.getTreatments().getInfospecialty().setVisible(true);
-			vf.getTreatments().getInfospecialty().setBounds(0, 74, 34, 34);
+			vf.getTreatments().getInfospecialty().setBounds(0, 104, 34, 34);
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
@@ -1298,6 +1306,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getInfospecialty().setVisible(false);
 			vf.getTreatments().getInfoName().setVisible(false);
 			vf.getTreatments().getInfoStatus().setVisible(false);
+			vf.getTreatments().getSelectPatient().setVisible(false);
 
 		}
 
