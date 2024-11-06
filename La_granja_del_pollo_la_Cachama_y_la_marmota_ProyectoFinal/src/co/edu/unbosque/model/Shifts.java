@@ -7,7 +7,8 @@ public class Shifts implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String date;
+	private String date1;
+	private String date2;
 	private String specialty;
 	private int id;
 	private String name;
@@ -16,20 +17,29 @@ public class Shifts implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Shifts(String date, String specialty, int id, String name) {
+	public Shifts(String date1, String date2, String specialty, int id, String name) {
 		super();
-		this.date = date;
+		this.date1 = date1;
+		this.date2 = date2;
 		this.specialty = specialty;
 		this.id = id;
 		this.name = name;
 	}
 
-	public String getDate() {
-		return date;
+	public String getDate1() {
+		return date1;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setDate1(String date1) {
+		this.date1 = date1;
+	}
+
+	public String getDate2() {
+		return date2;
+	}
+
+	public void setDate2(String date2) {
+		this.date2 = date2;
 	}
 
 	public String getSpecialty() {
@@ -58,7 +68,8 @@ public class Shifts implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Shifts [date=" + date + ", specialty=" + specialty + ", id=" + id + ", name=" + name + "]";
+		return "Shifts [date1=" + date1 + ", date2=" + date2 + ", specialty=" + specialty + ", id=" + id + ", name="
+				+ name + "]";
 	}
 
 }

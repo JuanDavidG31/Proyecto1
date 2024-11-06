@@ -122,6 +122,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 			content += m.getEmail() + ";";
 			content += m.getId() + ";";
 			content += m.getSpecialty() + ";";
+			content += m.getStatus() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
@@ -143,6 +144,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 				int id = Integer.parseInt(cols[2]);
 				tempo.setId(id);
 				tempo.setSpecialty(cols[3]);
+				tempo.setStatus(cols[4]);
 				doctorList.add(tempo);
 			}
 		}

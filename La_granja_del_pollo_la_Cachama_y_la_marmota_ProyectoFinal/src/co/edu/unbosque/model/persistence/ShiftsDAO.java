@@ -118,7 +118,8 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 	public void writeFile() {
 		String content = "";
 		for (Shifts m : shiftsList) {
-			content += m.getDate() + ";";
+			content += m.getDate1() + ";";
+			content += m.getDate2() + ";";
 			content += m.getSpecialty() + ";";
 			content += m.getId() + ";";
 			content += m.getName() + ";";
@@ -138,11 +139,12 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Shifts tempo = new Shifts();
-				tempo.setDate(cols[0]);
-				tempo.setSpecialty(cols[1]);
-				int id = Integer.parseInt(cols[2]);
+				tempo.setDate1(cols[0]);
+				tempo.setDate2(cols[1]);
+				tempo.setSpecialty(cols[2]);
+				int id = Integer.parseInt(cols[3]);
 				tempo.setId(id);
-				tempo.setName(cols[3]);
+				tempo.setName(cols[4]);
 				shiftsList.add(tempo);
 			}
 		}

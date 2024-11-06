@@ -46,6 +46,11 @@ public class AddMenu extends JFrame {
 		speciality.addItem("");
 		speciality.addItem("1");
 		speciality.addItem("2");
+		speciality.addItem("3");
+		speciality.addItem("4");
+		speciality.addItem("5");
+		speciality.addItem("6");
+		speciality.addItem("7");
 		doctorPanel.add(speciality);
 
 	}
