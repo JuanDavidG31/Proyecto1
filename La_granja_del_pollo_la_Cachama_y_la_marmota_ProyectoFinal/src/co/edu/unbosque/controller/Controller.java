@@ -220,6 +220,9 @@ public class Controller implements ActionListener {
 		case "generateTurn":
 			boolean tShift = false;
 
+			doctor = new ArrayList<>();
+			doctor = mf.getDoctor().getAll();
+
 			List<Integer> ids = new ArrayList<>();
 
 			shift = new ArrayList<>();
@@ -387,7 +390,7 @@ public class Controller implements ActionListener {
 			boolean t1 = true, t2 = true, t3 = true, t4 = true, t5 = true, t6 = true, t7 = true;
 
 			Random random = new Random();
-			while (t1 || t2 || t3 || t4 || t5 || t6 || t7) {
+			p: while (t1 || t2 || t3 || t4 || t5 || t6 || t7) {
 
 				int indice1 = random.nextInt(especialidad1.size());
 				String nombreEspe1 = especialidad1.get(indice1);
@@ -590,19 +593,13 @@ public class Controller implements ActionListener {
 
 			if (tShift) {
 
-				shift = new ArrayList<>();
-				shift = mf.getShift().getAll();
-
-				for (int i = 0; i < shift.size(); i++) {
+				f: for (int i = 0; i < shift.size() ; i++) {
 
 					int id = shift.get(i).getId();
 
 					if (ids.get(i) == id) {
 
-						doctor = new ArrayList<>();
-						doctor = mf.getDoctor().getAll();
-
-						for (int n = 0; n < doctor.size(); n++) {
+						p: for (int n = 0; n < doctor.size(); n++) {
 
 							int tId = doctor.get(n).getId();
 
@@ -622,16 +619,23 @@ public class Controller implements ActionListener {
 									mf.getShift().delete(new ShiftsDTO(null, null, null, id, null));
 
 									JOptionPane.showMessageDialog(null, "Cambio de turno");
+
+									if (shift.isEmpty()) {
+										break f;
+									} else {
+										continue f;
+									}
+
 								}
 
 							} else {
-								continue;
+								continue p;
 							}
 
 						}
 
 					} else {
-						continue;
+						continue f;
 					}
 
 				}
