@@ -264,6 +264,7 @@ public class Schedule extends JFrame {
 		appointmentNumbers.setBorder(null);
 		appointmentNumbers.setBounds(354, 246, 251, 30);
 		reSchedulePanel.add(appointmentNumbers);
+		appointmentNumbers.setEditable(false);
 
 		id2 = new JTextField();
 		id2.setBorder(null);
@@ -629,6 +630,22 @@ public class Schedule extends JFrame {
 
 	public void setInfoName(JButton infoName) {
 		this.infoName = infoName;
+	}
+
+	public JTextField getId2() {
+		return id2;
+	}
+
+	public void setId2(JTextField id2) {
+		this.id2 = id2;
+	}
+
+	public JTextField getId3() {
+		return id3;
+	}
+
+	public void setId3(JTextField id3) {
+		this.id3 = id3;
 	}
 
 	public JButton getInfoEmail() {

@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class ShowOptions extends JFrame {
 
 	private JPanel mainPanel, datePanel, newPersonPanel;
-	private JComboBox<String> treatment;
+	private JComboBox<String> treatment, fechasDeReagendarCita, fechasDeCancelarCita;
 	private JLabel background1, backgroundD, backgroundP;
 	private JButton selectTreatment, home, person, doctor, returnMenu;
 
@@ -115,6 +115,17 @@ public class ShowOptions extends JFrame {
 		treatment.setBorder(null);
 		treatment.addItem("");
 		mainPanel.add(treatment);
+
+		fechasDeReagendarCita = new JComboBox<String>();
+		fechasDeReagendarCita.setBounds(176, 70, 251, 30);
+		fechasDeReagendarCita.setBorder(null);
+		fechasDeReagendarCita.addItem("");
+
+		fechasDeCancelarCita = new JComboBox<String>();
+		fechasDeCancelarCita.setBounds(176, 70, 251, 30);
+		fechasDeCancelarCita.setBorder(null);
+		fechasDeCancelarCita.addItem("");
+
 	}
 
 	private void panels() {
@@ -177,6 +188,22 @@ public class ShowOptions extends JFrame {
 
 	public JButton getHome() {
 		return home;
+	}
+
+	public JComboBox<String> getFechasDeReagendarCita() {
+		return fechasDeReagendarCita;
+	}
+
+	public void setFechasDeReagendarCita(JComboBox<String> fechasDeReagendarCita) {
+		this.fechasDeReagendarCita = fechasDeReagendarCita;
+	}
+
+	public JComboBox<String> getFechasDeCancelarCita() {
+		return fechasDeCancelarCita;
+	}
+
+	public void setFechasDeCancelarCita(JComboBox<String> fechasDeCancelarCita) {
+		this.fechasDeCancelarCita = fechasDeCancelarCita;
 	}
 
 	public void setHome(JButton home) {

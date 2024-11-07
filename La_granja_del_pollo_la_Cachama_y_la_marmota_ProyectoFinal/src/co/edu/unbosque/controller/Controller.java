@@ -765,7 +765,7 @@ public class Controller implements ActionListener {
 			break;
 		case "searchTreatment":
 			checkWindow = 2;
-			
+
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
@@ -773,7 +773,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSpecialty2().enable(false);
 			vf.getTreatments().getTreatmentS().enable(false);
 			vf.getTreatments().getStatus2().enable(false);
-			
+
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 
@@ -781,7 +781,7 @@ public class Controller implements ActionListener {
 			break;
 		case "finishTreatment":
 			checkWindow = 3;
-			
+
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
 			vf.getTreatments().getId3().setText(null);
@@ -1274,33 +1274,175 @@ public class Controller implements ActionListener {
 			break;
 
 		case "selectPat":
-			boolean enter3 = true;
-			int id2 = Integer.parseInt(vf.getSchedule().getId().getText().toString());
 
-			patient = new ArrayList<>();
-			patient = mf.getPatient().getAll();
+			if (vf.getSchedule().getSchedulePanel().isVisible()) {
 
-			for (int i = 0; i < patient.size(); i++) {
-				int oldI = patient.get(i).getId();
-
-				if (oldI == id2) {
-
-					vf.getSchedule().getName1().setText(patient.get(i).getName());
-					vf.getSchedule().getEmail().setText(patient.get(i).getEmail());
-					enter3 = false;
-					JOptionPane.showMessageDialog(null,
-							"Verifica que el nombre y el correo sean correctos, si no actualizalos");
-
-					break;
+				if (vf.getSchedule().getId().getText().toString().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
-					continue;
+
+					boolean enter3 = true;
+					int id2 = Integer.parseInt(vf.getSchedule().getId().getText().toString());
+
+					patient = new ArrayList<>();
+					patient = mf.getPatient().getAll();
+
+					for (int i = 0; i < patient.size(); i++) {
+						int oldI = patient.get(i).getId();
+
+						if (oldI == id2) {
+
+							vf.getSchedule().getName1().setText(patient.get(i).getName());
+							vf.getSchedule().getEmail().setText(patient.get(i).getEmail());
+							enter3 = false;
+							JOptionPane.showMessageDialog(null,
+									"Verifica que el nombre y el correo sean correctos, si no actualizalos");
+
+							break;
+						} else {
+							continue;
+						}
+
+					}
+					if (enter3) {
+						JOptionPane.showMessageDialog(null, "El paciente no existe");
+					}
+				}
+			} else if (vf.getSchedule().getReSchedulePanel().isVisible()) {
+
+				if (vf.getSchedule().getId2().getText().toString().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					int id = Integer.parseInt(vf.getSchedule().getId2().getText().toString());
+
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
+
+					for (int i = 0; i < appointment.size(); i++) {
+						int tID = appointment.get(i).getId();
+
+						if (tID == id) {
+
+							ArrayList<Integer> ids = new ArrayList<>();
+							for (AppointmentDTO ap : appointment) {
+								ids.add(ap.getId());
+							}
+							System.out.println(ids.toString());
+
+							int frecuency = Collections.frequency(ids, id);
+
+							if (frecuency == 1) {
+
+								vf.getSchedule().getAppointmentNumbers()
+										.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
+
+								JOptionPane.showMessageDialog(null,
+										"La fecha de la cita es " + appointment.get(i).getDate());
+
+							} else {
+
+								String content = "";
+								for (int n = 0; n < appointment.size(); n++) {
+
+									int tIds = appointment.get(n).getId();
+
+									if (tIds == id) {
+
+										content += appointment.get(n).getDate() + ",";
+
+									} else {
+										continue;
+									}
+
+								}
+
+								String[] con = content.split(",");
+								vf.getShowOptions().getFechasDeReagendarCita().removeAllItems();
+								vf.getShowOptions().getFechasDeReagendarCita().addItem("");
+								for (int t = 0; t < con.length; t++) {
+
+									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
+
+								}
+
+							}
+
+							break;
+
+						} else {
+							continue;
+						}
+					}
+
+				}
+
+			} else if (vf.getSchedule().getCancelPanel().isVisible()) {
+
+				int id = Integer.parseInt(vf.getSchedule().getId3().getText().toString());
+
+				appointment = new ArrayList<>();
+				appointment = mf.getAppointment().getAll();
+
+				for (int i = 0; i < appointment.size(); i++) {
+					int tID = appointment.get(i).getId();
+
+					if (tID == id) {
+
+						ArrayList<Integer> ids = new ArrayList<>();
+						for (AppointmentDTO ap : appointment) {
+							ids.add(ap.getId());
+						}
+						System.out.println(ids.toString());
+
+						int frecuency = Collections.frequency(ids, id);
+
+						if (frecuency == 1) {
+
+							vf.getSchedule().getAppointmentNumber()
+									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
+
+							JOptionPane.showMessageDialog(null,
+									"La fecha de la cita es " + appointment.get(i).getDate());
+
+						} else {
+
+							String content = "";
+							for (int n = 0; n < appointment.size(); n++) {
+
+								int tIds = appointment.get(n).getId();
+
+								if (tIds == id) {
+
+									content += appointment.get(n).getDate() + ",";
+
+								} else {
+									continue;
+								}
+
+							}
+
+							String[] con = content.split(",");
+							vf.getShowOptions().getFechasDeCancelarCita().removeAllItems();
+							vf.getShowOptions().getFechasDeCancelarCita().addItem("");
+							for (int t = 0; t < con.length; t++) {
+
+								vf.getShowOptions().getFechasDeCancelarCita().addItem(con[t]);
+
+							}
+
+						}
+
+						break;
+
+					} else {
+						continue;
+					}
 				}
 
 			}
-			if (enter3) {
-				JOptionPane.showMessageDialog(null, "El paciente no existe");
-			}
-
 			break;
 
 		case "createPatient":
@@ -1391,7 +1533,8 @@ public class Controller implements ActionListener {
 					|| vf.getSchedule().getName1().getText().toString().equals("")
 					|| vf.getSchedule().getDate1().getDate() == null
 					|| vf.getSchedule().getId().getText().toString().equals("")
-					|| vf.getSchedule().getEmail().getText().toString().equals("")) {
+					|| vf.getSchedule().getEmail().getText().toString().equals("")
+					|| vf.getSchedule().getId().getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -1453,7 +1596,8 @@ public class Controller implements ActionListener {
 		case "reGenerated":
 
 			if (vf.getSchedule().getAppointmentNumbers().getText().toString().equals("")
-					|| vf.getSchedule().getDate2().getDate() == null) {
+					|| vf.getSchedule().getDate2().getDate() == null
+					|| vf.getSchedule().getId2().getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -1723,7 +1867,7 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoName().setVisible(true);
 			vf.getTreatments().getInfoName().setBounds(0, 62, 34, 34);
-			
+
 			vf.getTreatments().getSearchButton().setVisible(true);
 			vf.getTreatments().getSearchButton().setBounds(0, 24, 100, 35);
 
