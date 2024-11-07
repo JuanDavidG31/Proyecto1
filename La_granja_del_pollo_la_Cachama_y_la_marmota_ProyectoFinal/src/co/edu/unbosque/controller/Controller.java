@@ -1602,7 +1602,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("1")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 						}
@@ -1628,7 +1638,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("2")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
@@ -1655,7 +1675,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("3")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
@@ -1682,7 +1712,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("4")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
@@ -1709,7 +1749,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("5")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
@@ -1735,7 +1785,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("6")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
@@ -1761,7 +1821,17 @@ public class Controller implements ActionListener {
 
 							if (sh.getSpecialty().equals("7")) {
 
-								vf.getSchedule().getDoctor().addItem(sh.getName());
+								boolean exists = false;
+								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
+									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
+										exists = true;
+										break;
+									}
+								}
+
+								if (!exists) {
+									vf.getSchedule().getDoctor().addItem(sh.getName());
+								}
 
 							}
 
