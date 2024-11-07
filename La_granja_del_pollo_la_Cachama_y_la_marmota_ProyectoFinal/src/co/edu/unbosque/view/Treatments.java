@@ -222,6 +222,7 @@ public class Treatments extends JFrame {
 		name1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		name1.setBorder(null);
 		name1.setBounds(350, 242, 250, 29);
+		name1.setEditable(false);
 		newTreatmentPanel.add(name1);
 
 		treatmentTxt = new JTextField();

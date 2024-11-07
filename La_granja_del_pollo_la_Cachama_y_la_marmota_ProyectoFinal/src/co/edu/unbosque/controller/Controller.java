@@ -119,6 +119,9 @@ public class Controller implements ActionListener {
 
 		// Treatments
 
+		vf.getTreatments().getSelectPatient().addActionListener(this);
+		vf.getTreatments().getSelectPatient().setActionCommand("selectCreateTre");
+
 		vf.getTreatments().getThemeMain().addActionListener(this);
 		vf.getTreatments().getThemeMain().setActionCommand("theme");
 
@@ -770,8 +773,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getNameS().setText(null);
-			vf.getTreatments().getSpecialty2().enable(false);
-			vf.getTreatments().getTreatmentS().enable(false);
+			vf.getTreatments().getNameS().setEditable(false);
+
 			vf.getTreatments().getStatus2().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
@@ -859,16 +862,33 @@ public class Controller implements ActionListener {
 		case "finishTre":
 			boolean verf2 = true;
 
-			if (vf.getTreatments().getNameF().getText().equals("")
+			if (vf.getTreatments().getId3().getText().equals("")
 					|| vf.getTreatments().getTreatmentF().getText().equals("")
 					|| vf.getTreatments().getStatus3().getSelectedItem().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 
+				String name = null;
 				String treatment = vf.getTreatments().getTreatmentF().getText().toString();
 				String status = vf.getTreatments().getStatus3().getSelectedItem().toString();
-				String name = vf.getTreatments().getNameF().getText().toString();
+				int id = Integer.parseInt(vf.getTreatments().getId3().getText().toString());
+				patient = new ArrayList<>();
+				patient = mf.getPatient().getAll();
+
+				for (int pa = 0; pa < patient.size(); pa++) {
+
+					int tIds = patient.get(pa).getId();
+
+					if (tIds == id) {
+
+						name = patient.get(pa).getName();
+
+					} else {
+						continue;
+					}
+
+				}
 				String speciality = "";
 
 				treat = new ArrayList<>();
@@ -899,16 +919,15 @@ public class Controller implements ActionListener {
 
 				if (verf2) {
 
-					vf.getTreatments().getStatus3().enable(true);
 					vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
 					status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 
-					if (mf.getTreatment().update(new TreatmentDTO(null, null, treatment, null),
+					if (mf.getTreatment().update2(new TreatmentDTO(null, null, treatment, null),
 							new TreatmentDTO(name, speciality, treatment, status))) {
 						JOptionPane.showMessageDialog(null, "Tratamiento finalizado correctamente");
 						vf.getTreatments().getTreatmentF().setText(null);
 						vf.getTreatments().getStatus3().setSelectedItem(null);
-						vf.getTreatments().getNameF().setText(null);
+						vf.getTreatments().getId3().setText(null);
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo finalizar el tratamiento ");
@@ -1009,158 +1028,234 @@ public class Controller implements ActionListener {
 
 		case "search":
 			if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
-				if (vf.getTreatments().getNameS().getText().toString().equals("")) {
+				if (vf.getTreatments().getId2().getText().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
+					boolean en = false;
+					int id = Integer.parseInt(vf.getTreatments().getId2().getText().toString());
 
-					String name = vf.getTreatments().getNameS().getText().toString();
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
 
-					treat = new ArrayList<>();
-					treat = mf.getTreatment().getAll();
+					for (int p = 0; p < appointment.size(); p++) {
 
-					for (int i = 0; i < treat.size(); i++) {
-						String tName = treat.get(i).getName();
+						int tId = appointment.get(p).getId();
+						if (id == tId) {
+							patient = new ArrayList<>();
+							patient = mf.getPatient().getAll();
 
-						if (name.equals(tName)) {
+							for (int pa = 0; pa < patient.size(); pa++) {
 
-							ArrayList<String> nameToSearch = new ArrayList<>();
-							for (TreatmentDTO t : treat) {
-								nameToSearch.add(t.getName());
+								int tIds = patient.get(pa).getId();
+
+								if (tIds == id) {
+
+									vf.getTreatments().getNameS().setText(patient.get(pa).getName());
+									en = true;
+								} else {
+									continue;
+								}
+
 							}
+						} else {
+							continue;
+						}
 
-							int frecuency = Collections.frequency(nameToSearch, name);
+					}
 
-							if (frecuency == 1) {
+					if (en) {
 
-								String treatment = treat.get(i).getTreatment();
-								String speciality = treat.get(i).getSpecialty();
-								String status = treat.get(i).getVerified();
+						String name = vf.getTreatments().getNameS().getText().toString();
 
-								vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
-								vf.getTreatments().getTreatmentS().setText(treatment);
-								vf.getTreatments().getStatus2().setSelectedItem(status);
+						treat = new ArrayList<>();
+						treat = mf.getTreatment().getAll();
 
-								vf.getTreatments().getSpecialty2().setVisible(true);
-								vf.getTreatments().getTreatmentS().setEditable(true);
-								vf.getTreatments().getTreatmentS().setVisible(true);
-								vf.getTreatments().getStatus2().enable(true);
+						for (int i = 0; i < treat.size(); i++) {
+							String tName = treat.get(i).getName();
 
-							} else {
+							if (name.equals(tName)) {
 
-								vf.getShowOptions().setVisible(true);
-								vf.getShowOptions().getMainPanel().setVisible(true);
-								vf.getTreatments().setVisible(false);
+								ArrayList<String> nameToSearch = new ArrayList<>();
+								for (TreatmentDTO t : treat) {
+									nameToSearch.add(t.getName());
+								}
 
-								String content = "";
-								for (int n = 0; n < treat.size(); n++) {
+								int frecuency = Collections.frequency(nameToSearch, name);
 
-									String na = treat.get(n).getName().toString();
+								if (frecuency == 1) {
 
-									if (na.equals(name)) {
+									String treatment = treat.get(i).getTreatment();
+									String speciality = treat.get(i).getSpecialty();
+									String status = treat.get(i).getVerified();
 
-										content += treat.get(n).getTreatment() + ",";
+									vf.getTreatments().getSpecialty2().setSelectedItem(speciality);
+									vf.getTreatments().getTreatmentS().setText(treatment);
+									vf.getTreatments().getStatus2().setSelectedItem(status);
 
-									} else {
-										continue;
+									vf.getTreatments().getSpecialty2().setVisible(true);
+									vf.getTreatments().getTreatmentS().setVisible(true);
+									vf.getTreatments().getSpecialty2().setEditable(true);
+									vf.getTreatments().getTreatmentS().setEditable(true);
+									vf.getTreatments().getStatus2().enable(false);
+
+								} else {
+
+									vf.getShowOptions().setVisible(true);
+									vf.getShowOptions().getMainPanel().setVisible(true);
+									vf.getTreatments().setVisible(false);
+
+									String content = "";
+									for (int n = 0; n < treat.size(); n++) {
+
+										String na = treat.get(n).getName().toString();
+
+										if (na.equals(name)) {
+
+											content += treat.get(n).getTreatment() + ",";
+
+										} else {
+											continue;
+										}
+
+									}
+
+									String[] con = content.split(",");
+									vf.getShowOptions().getTreatment().removeAllItems();
+									vf.getShowOptions().getTreatment().addItem("");
+									for (int t = 0; t < con.length; t++) {
+
+										vf.getShowOptions().getTreatment().addItem(con[t]);
+
 									}
 
 								}
 
-								String[] con = content.split(",");
-								vf.getShowOptions().getTreatment().removeAllItems();
-								vf.getShowOptions().getTreatment().addItem("");
-								for (int t = 0; t < con.length; t++) {
+								break;
 
-									vf.getShowOptions().getTreatment().addItem(con[t]);
-
-								}
-
+							} else {
+								continue;
 							}
-
-							break;
-
-						} else {
-							continue;
 						}
-					}
 
+					} else {
+						JOptionPane.showMessageDialog(null, "No existe la cedula");
+						vf.getTreatments().getId2().setText(null);
+					}
 				}
 			} else if (vf.getTreatments().getFinishTreatmentPanel().isVisible()) {
 
-				if (vf.getTreatments().getNameF().getText().toString().equals("")) {
+				if (vf.getTreatments().getId3().getText().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					String name = vf.getTreatments().getNameF().getText().toString();
+					boolean en = false;
+					int id = Integer.parseInt(vf.getTreatments().getId3().getText().toString());
 
-					treat = new ArrayList<>();
-					treat = mf.getTreatment().getAll();
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
 
-					for (int i = 0; i < treat.size(); i++) {
-						String tName = treat.get(i).getName();
+					for (int p = 0; p < appointment.size(); p++) {
 
-						if (name.equals(tName)) {
-
-							ArrayList<String> nameToSearch = new ArrayList<>();
-							for (TreatmentDTO t : treat) {
-								nameToSearch.add(t.getName());
-							}
-
-							int frecuency = Collections.frequency(nameToSearch, name);
-
-							if (frecuency == 1) {
-								String treatment = treat.get(i).getTreatment();
-								String status = treat.get(i).getVerified();
-
-								vf.getTreatments().getTreatmentF().setText(treatment);
-								vf.getTreatments().getStatus3().setSelectedItem(status);
-
-								vf.getTreatments().getTreatmentF().setVisible(true);
-								vf.getTreatments().getStatus3().setVisible(true);
-
-								break;
-							} else {
-
-								vf.getShowOptions().setVisible(true);
-								vf.getShowOptions().getMainPanel().setVisible(true);
-								vf.getTreatments().setVisible(false);
-
-								String content = "";
-								for (int n = 0; n < treat.size(); n++) {
-
-									String na = treat.get(n).getName().toString();
-
-									if (na.equals(name)) {
-
-										content += treat.get(n).getTreatment() + ",";
-
-									} else {
-										continue;
-									}
-
-								}
-
-								String[] con = content.split(",");
-								vf.getShowOptions().getTreatment().removeAllItems();
-								vf.getShowOptions().getTreatment().addItem("");
-								for (int t = 0; t < con.length; t++) {
-
-									vf.getShowOptions().getTreatment().addItem(con[t]);
-
-								}
-
-								break;
-							}
-
+						int tId = appointment.get(p).getId();
+						if (id == tId) {
+							en = true;
 						} else {
 							continue;
 						}
+
 					}
 
-				}
+					if (en) {
+						String name = null;
 
+						patient = new ArrayList<>();
+						patient = mf.getPatient().getAll();
+
+						for (int pa = 0; pa < patient.size(); pa++) {
+
+							int tIds = patient.get(pa).getId();
+
+							if (tIds == id) {
+
+								name = patient.get(pa).getName();
+
+							} else {
+								continue;
+							}
+
+						}
+
+						treat = new ArrayList<>();
+						treat = mf.getTreatment().getAll();
+
+						for (int i = 0; i < treat.size(); i++) {
+							String tName = treat.get(i).getName();
+
+							if (name.equals(tName)) {
+
+								ArrayList<String> nameToSearch = new ArrayList<>();
+								for (TreatmentDTO t : treat) {
+									nameToSearch.add(t.getName());
+								}
+
+								int frecuency = Collections.frequency(nameToSearch, name);
+
+								if (frecuency == 1) {
+									String treatment = treat.get(i).getTreatment();
+									String status = treat.get(i).getVerified();
+
+									vf.getTreatments().getTreatmentF().setText(treatment);
+									vf.getTreatments().getStatus3().setSelectedItem(status);
+
+									vf.getTreatments().getTreatmentF().setVisible(true);
+									vf.getTreatments().getStatus3().setVisible(true);
+
+									break;
+								} else {
+
+									vf.getShowOptions().setVisible(true);
+									vf.getShowOptions().getMainPanel().setVisible(true);
+									vf.getTreatments().setVisible(false);
+
+									String content = "";
+									for (int n = 0; n < treat.size(); n++) {
+
+										String na = treat.get(n).getName().toString();
+
+										if (na.equals(name)) {
+
+											content += treat.get(n).getTreatment() + ",";
+
+										} else {
+											continue;
+										}
+
+									}
+
+									String[] con = content.split(",");
+									vf.getShowOptions().getTreatment().removeAllItems();
+									vf.getShowOptions().getTreatment().addItem("");
+									for (int t = 0; t < con.length; t++) {
+
+										vf.getShowOptions().getTreatment().addItem(con[t]);
+
+									}
+
+									break;
+								}
+
+							} else {
+								continue;
+							}
+						}
+
+					} else {
+						JOptionPane.showMessageDialog(null, "No existe la cedula");
+						vf.getTreatments().getId3().setText(null);
+					}
+				}
 			}
 			break;
 
@@ -1168,7 +1263,9 @@ public class Controller implements ActionListener {
 
 			boolean verf = true;
 
-			if (vf.getTreatments().getSpecialty2().getSelectedItem().toString().equals("")
+			if (vf.getTreatments().getId2().getText().toString().equals("")
+					|| vf.getTreatments().getNameS().getText().toString().equals("")
+					|| vf.getTreatments().getSpecialty2().getSelectedItem().toString().equals("")
 					|| vf.getTreatments().getTreatmentS().getText().toString().equals("")
 					|| vf.getTreatments().getStatus2().getSelectedItem().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
@@ -1210,7 +1307,7 @@ public class Controller implements ActionListener {
 					if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
 							new TreatmentDTO(name, speciality, treatment, status))) {
 						JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
-
+						vf.getTreatments().getId2().setText(null);
 						vf.getTreatments().getTreatmentS().setText(null);
 						vf.getTreatments().getSpecialty2().setSelectedItem(null);
 						vf.getTreatments().getStatus2().setSelectedItem(null);
@@ -1222,6 +1319,38 @@ public class Controller implements ActionListener {
 			}
 
 			break;
+
+		case "selectCreateTre":
+			appointment = new ArrayList<>();
+			appointment = mf.getAppointment().getAll();
+			int id3 = Integer.parseInt(vf.getTreatments().getId1().getText().toString());
+
+			for (int a = 0; a < appointment.size(); a++) {
+				int tId = appointment.get(a).getId();
+
+				if (id3 == tId) {
+
+					patient = new ArrayList<>();
+					patient = mf.getPatient().getAll();
+
+					for (int pa = 0; pa < patient.size(); pa++) {
+
+						int tIds = patient.get(pa).getId();
+
+						if (tIds == id3) {
+
+							vf.getTreatments().getName1().setText(patient.get(pa).getName());
+
+						}
+
+					}
+
+				} else {
+					continue;
+				}
+			}
+			break;
+
 		case "registerTre":
 
 			boolean enter = true;
@@ -1229,7 +1358,8 @@ public class Controller implements ActionListener {
 			if (vf.getTreatments().getName1().getText().toString().equals("")
 					|| vf.getTreatments().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getTreatments().getTreatmentTxt().getText().toString().equals("")
-					|| vf.getTreatments().getStatus().getSelectedItem().toString().equals("")) {
+					|| vf.getTreatments().getStatus().getSelectedItem().toString().equals("")
+					|| vf.getTreatments().getId1().getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -1252,6 +1382,7 @@ public class Controller implements ActionListener {
 
 						if (mf.getTreatment().add(new TreatmentDTO(name, specialty, treatment, status))) {
 							JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
+							vf.getTreatments().getId1().setText(null);
 							vf.getTreatments().getName1().setText(null);
 							vf.getTreatments().getSpecialty().setSelectedItem("");
 							vf.getTreatments().getTreatmentTxt().setText(null);
@@ -1267,9 +1398,10 @@ public class Controller implements ActionListener {
 
 				}
 
-			}
-			if (enter) {
-				JOptionPane.showMessageDialog(null, "El paciente no existe");
+				if (enter) {
+					JOptionPane.showMessageDialog(null, "El paciente no existe");
+				}
+
 			}
 			break;
 
@@ -1307,6 +1439,7 @@ public class Controller implements ActionListener {
 					}
 					if (enter3) {
 						JOptionPane.showMessageDialog(null, "El paciente no existe");
+						vf.getSchedule().getId().setText(null);
 					}
 				}
 			} else if (vf.getSchedule().getReSchedulePanel().isVisible()) {
@@ -1543,8 +1676,7 @@ public class Controller implements ActionListener {
 					|| vf.getSchedule().getName1().getText().toString().equals("")
 					|| vf.getSchedule().getDate1().getDate() == null
 					|| vf.getSchedule().getId().getText().toString().equals("")
-					|| vf.getSchedule().getEmail().getText().toString().equals("")
-					|| vf.getSchedule().getId().getText().toString().equals("")) {
+					|| vf.getSchedule().getEmail().getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
@@ -1599,6 +1731,7 @@ public class Controller implements ActionListener {
 
 			if (enter2) {
 				JOptionPane.showMessageDialog(null, "El paciente no existe");
+
 			}
 
 			break;

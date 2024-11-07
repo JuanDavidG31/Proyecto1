@@ -102,6 +102,19 @@ public class TreatmentDAO implements CRUDOperation<TreatmentDTO, Treatment> {
 
 	@Override
 	public boolean update(TreatmentDTO previous, TreatmentDTO newData) {
+		Treatment found = find(DataMapper.TreatmentDTOToTreatment(previous));
+		if (found != null) {
+			TreatmentList.remove(found);
+			TreatmentList.add(DataMapper.TreatmentDTOToTreatment(newData));
+			writeFile();
+			writeSerialized();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean update2(TreatmentDTO previous, TreatmentDTO newData) {
 		Treatment found = find2(DataMapper.TreatmentDTOToTreatment(previous));
 		if (found != null) {
 			TreatmentList.remove(found);
