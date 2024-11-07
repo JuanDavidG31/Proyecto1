@@ -42,6 +42,9 @@ public class Controller implements ActionListener {
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
 	private ArrayList<ShiftsDTO> shift;
+
+	// correo
+
 	String d = "juandavidgonzalezh@gmail.com";
 	String a = "Hola putosssss";
 	String c = "Hola Topo";
@@ -789,9 +792,10 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().setVisible(true);
 			break;
 		case "initMenuPerson":
-			vf.getPersonMenu().getPersonPanel().setVisible(true);
-			vf.getShowOptions().setVisible(false);
-			vf.getPersonMenu().setVisible(true);
+
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getShowOptions().getPersonPanel().setVisible(true);
+			
 			break;
 		case "initAddPerson":
 			vf.getHome().setVisible(false);
@@ -2249,36 +2253,36 @@ public class Controller implements ActionListener {
 	}
 
 	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
-		
+
 		String remitente = "clinicaelbosque306@gmail.com";
-		
+
 		String claveemail = "chgf lzuy wipa lleu";
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.user", remitente);
-		props.put("mail.smtp.clave", claveemail); 
-		props.put("mail.smtp.auth", "true"); 
-		props.put("mail.smtp.starttls.enable", "true"); 
-		props.put("mail.smtp.port", "587"); 
+		props.put("mail.smtp.clave", claveemail);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", "587");
 
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);
 
 		try {
 			message.setFrom(new InternetAddress(remitente));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario)); 
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
 			message.setSubject(asunto);
 			message.setText(cuerpo);
 			Transport transport = session.getTransport("smtp");
 			transport.connect("smtp.gmail.com", remitente, claveemail);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			//mensaje de envio
+			// mensaje de envio
 		} catch (MessagingException me) {
-			me.printStackTrace(); 
-			
-			//Joption
+			me.printStackTrace();
+
+			// Joption
 		}
 	}
 }
