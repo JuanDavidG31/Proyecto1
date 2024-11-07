@@ -1012,7 +1012,7 @@ public class Controller implements ActionListener {
 
 							vf.getTreatments().getTreatmentF().setEditable(true);
 							vf.getTreatments().getTreatmentF().setVisible(true);
-							vf.getTreatments().getStatus3().enable(true);
+							vf.getTreatments().getStatus3().enable(false);
 							break;
 						} else {
 							continue;
