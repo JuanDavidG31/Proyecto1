@@ -36,6 +36,7 @@ public class Controller implements ActionListener {
 	private ViewFacade vf;
 	private int checkWindowTreatment = 0;
 	private int schedule = 0;
+	private int person = 0;
 	private boolean darkMode = false;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
@@ -211,6 +212,12 @@ public class Controller implements ActionListener {
 		vf.getShifts().getGenerateTurns().addActionListener(this);
 		vf.getShifts().getGenerateTurns().setActionCommand("generateTurn");
 
+		vf.getShowOptions().getNewPerson().addActionListener(this);
+		vf.getShowOptions().getNewPerson().setActionCommand("initNewPerson");
+
+		vf.getShowOptions().getUpdatePerson().addActionListener(this);
+		vf.getShowOptions().getUpdatePerson().setActionCommand("initUpdatePerson");
+
 		// popups
 		vf.getShowOptions().getPerson().addActionListener(this);
 		vf.getShowOptions().getPerson().setActionCommand("initMenuPerson");
@@ -223,6 +230,9 @@ public class Controller implements ActionListener {
 		// add Person
 		vf.getPersonMenu().getHomeD().addActionListener(this);
 		vf.getPersonMenu().getHomeD().setActionCommand("backHomeD");
+
+		vf.getPersonMenu().getHomeUPerson().addActionListener(this);
+		vf.getPersonMenu().getHomeUPerson().setActionCommand("backHomeP");
 
 		vf.getPersonMenu().getHomeP().addActionListener(this);
 		vf.getPersonMenu().getHomeP().setActionCommand("backHomeP");
@@ -254,6 +264,20 @@ public class Controller implements ActionListener {
 			showScheduleInfo();
 			infoTreatment();
 			changeTheme();
+			break;
+		case "initUpdatePerson":
+			person = 2;
+			vf.getShowOptions().setVisible(false);
+			vf.getShowOptions().getPersonPanel().setVisible(false);
+			vf.getPersonMenu().getPersonUpdatePanel().setVisible(true);
+			vf.getPersonMenu().setVisible(true);
+			break;
+		case "initNewPerson":
+			person = 1;
+			vf.getShowOptions().setVisible(false);
+			vf.getShowOptions().getPersonPanel().setVisible(false);
+			vf.getPersonMenu().getPersonPanel().setVisible(true);
+			vf.getPersonMenu().setVisible(true);
 			break;
 		case "selectDate":
 			if (schedule == 2) {
@@ -979,16 +1003,35 @@ public class Controller implements ActionListener {
 
 			break;
 		case "backHomeP":
-			vf.getPersonMenu().setVisible(false);
-			vf.getPersonMenu().getPersonPanel().setVisible(false);
-			vf.getShowOptions().setVisible(true);
-			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			if (person == 1) {
+
+				vf.getPersonMenu().setVisible(false);
+				vf.getPersonMenu().getPersonPanel().setVisible(false);
+				vf.getShowOptions().getNewPersonPanel().setVisible(true);
+				vf.getShowOptions().setVisible(true);
+
+			} else if (person == 2) {
+				vf.getPersonMenu().setVisible(false);
+				vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
+				vf.getShowOptions().getNewPersonPanel().setVisible(true);
+				vf.getShowOptions().setVisible(true);
+			}
+
 			break;
 		case "backHomeD":
-			vf.getPersonMenu().setVisible(false);
-			vf.getPersonMenu().getDoctorPanel().setVisible(false);
-			vf.getShowOptions().setVisible(true);
-			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
+				vf.getPersonMenu().setVisible(false);
+				vf.getPersonMenu().getDoctorPanel().setVisible(false);
+				vf.getShowOptions().setVisible(true);
+				vf.getShowOptions().getNewPersonPanel().setVisible(true);
+
+			} else if (vf.getPersonMenu().getDoctorUpdatePanel().isVisible()) {
+				vf.getPersonMenu().setVisible(false);
+				vf.getPersonMenu().getDoctorUpdatePanel().setVisible(false);
+				vf.getShowOptions().setVisible(true);
+				vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			}
+
 			break;
 		case "backHome":
 			vf.getShowOptions().setVisible(false);
