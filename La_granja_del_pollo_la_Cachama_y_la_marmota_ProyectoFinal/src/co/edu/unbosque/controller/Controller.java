@@ -1,6 +1,7 @@
 package co.edu.unbosque.controller;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +27,8 @@ import co.edu.unbosque.view.ViewFacade;
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private int checkWindow = 0;
+	private int checkWindowSchedule = 0;
+	private int checkWindowTreatment = 0;
 	private boolean darkMode = false;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
@@ -216,7 +218,10 @@ public class Controller implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-
+		case "theme":
+			showScheduleInfo();
+			changeTheme();
+			break;
 		case "generateTurn":
 
 			if (vf.getShifts().getStartDate().getDate() == null) {
@@ -655,10 +660,6 @@ public class Controller implements ActionListener {
 			}
 
 			break;
-
-		case "theme":
-			changeTheme();
-			break;
 		case "backHomeP":
 			vf.getPersonMenu().setVisible(false);
 			vf.getPersonMenu().getPersonPanel().setVisible(false);
@@ -714,7 +715,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
-			checkWindow = 0;
+			checkWindowTreatment = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
 				vf.getTreatments().getNewTreatmentPanel().setVisible(false);
@@ -737,7 +738,7 @@ public class Controller implements ActionListener {
 			break;
 		case "sTreatmentBack":
 
-			if (checkWindow == 1) {
+			if (checkWindowTreatment == 1) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
@@ -745,7 +746,7 @@ public class Controller implements ActionListener {
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 				infoTreatment();
 
-			} else if (checkWindow == 2) {
+			} else if (checkWindowTreatment == 2) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
@@ -757,14 +758,14 @@ public class Controller implements ActionListener {
 
 			break;
 		case "initTreatment":
-			checkWindow = 1;
+			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
 
 			infoTreatment();
 			break;
 		case "searchTreatment":
-			checkWindow = 2;
+			checkWindowTreatment = 2;
 
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
@@ -780,7 +781,7 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			break;
 		case "finishTreatment":
-			checkWindow = 3;
+			checkWindowTreatment = 3;
 
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
@@ -821,7 +822,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().setVisible(true);
 			break;
 		case "homeTreatment":
-			checkWindow = 0;
+			checkWindowTreatment = 0;
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getStatus2().setSelectedItem(null);
@@ -1736,7 +1737,7 @@ public class Controller implements ActionListener {
 			ImageIcon homeBClear = new ImageIcon("Images\\backButtons\\1.png");
 			vf.getSchedule().getHome().setIcon(homeBClear);
 
-			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarCita.png");
+			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarClaro.png");
 			vf.getSchedule().getBackground2().setIcon(schedulePanelClear);
 
 			ImageIcon reSchedulePanelClear = new ImageIcon("Images\\menuCitas\\reagendarCita.png");
@@ -1744,6 +1745,19 @@ public class Controller implements ActionListener {
 
 			ImageIcon cancelPanelClear = new ImageIcon("Images\\menuCitas\\cancelarCita.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelClear);
+
+			showScheduleInfo();
+
+			ImageIcon infoClear = new ImageIcon("Images\\infoButtons\\1.png");
+			Image scaledInfoClear = infoClear.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoClear));
 
 			darkMode = false;
 
@@ -1802,6 +1816,20 @@ public class Controller implements ActionListener {
 			ImageIcon cancelPanelDark = new ImageIcon("Images\\menuCitas\\cancelarOscuro.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelDark);
 
+			showScheduleInfo();
+
+			ImageIcon infoDark = new ImageIcon("Images\\infoButtons\\2.png");
+			Image scaledInfoDark = infoDark.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+
+			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoDark));
+
 			darkMode = true;
 		}
 	}
@@ -1841,7 +1869,7 @@ public class Controller implements ActionListener {
 
 	public void infoTreatment() {
 
-		if (checkWindow == 1) {// Principal
+		if (checkWindowTreatment == 1) {// Principal
 
 			vf.getTreatments().getInfoPanel().setBounds(610, 170, 123, 220);
 
@@ -1860,7 +1888,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSelectPatient().setVisible(true);
 			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
 
-		} else if (checkWindow == 2) {// Buscar
+		} else if (checkWindowTreatment == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -1880,7 +1908,7 @@ public class Controller implements ActionListener {
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
-		} else if (checkWindow == 3) {// Finish
+		} else if (checkWindowTreatment == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -1891,7 +1919,7 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
-		} else if (checkWindow == 0) {
+		} else if (checkWindowTreatment == 0) {
 			vf.getTreatments().getSearchButton().setVisible(false);
 			vf.getTreatments().getInfoTreatment().setVisible(false);
 			vf.getTreatments().getInfospecialty().setVisible(false);
