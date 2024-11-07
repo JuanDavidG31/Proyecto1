@@ -1330,7 +1330,6 @@ public class Controller implements ActionListener {
 							for (AppointmentDTO ap : appointment) {
 								ids.add(ap.getId());
 							}
-							System.out.println(ids.toString());
 
 							int frecuency = Collections.frequency(ids, id);
 
@@ -1395,7 +1394,6 @@ public class Controller implements ActionListener {
 						for (AppointmentDTO ap : appointment) {
 							ids.add(ap.getId());
 						}
-						System.out.println(ids.toString());
 
 						int frecuency = Collections.frequency(ids, id);
 
