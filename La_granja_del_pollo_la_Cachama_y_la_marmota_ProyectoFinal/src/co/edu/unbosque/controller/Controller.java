@@ -227,6 +227,10 @@ public class Controller implements ActionListener {
 
 		vf.getShowOptions().getReturnMenu().addActionListener(this);
 		vf.getShowOptions().getReturnMenu().setActionCommand("backHome");
+		
+		vf.getShowOptions().getHome2().addActionListener(this);
+		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
+		
 		// add Person
 
 		vf.getPersonMenu().getUpdatePerson().addActionListener(this);
@@ -307,6 +311,10 @@ public class Controller implements ActionListener {
 			showScheduleInfo();
 			infoTreatment();
 			changeTheme();
+			break;
+		case"backInitPerson":
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			vf.getShowOptions().getPersonPanel().setVisible(true);
 			break;
 		case "initUpdatePerson":
 			person = 2;
