@@ -227,7 +227,15 @@ public class Controller implements ActionListener {
 
 		vf.getShowOptions().getReturnMenu().addActionListener(this);
 		vf.getShowOptions().getReturnMenu().setActionCommand("backHome");
+		
+		vf.getShowOptions().getHome2().addActionListener(this);
+		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
+		
 		// add Person
+
+		vf.getPersonMenu().getUpdatePerson().addActionListener(this);
+		vf.getPersonMenu().getUpdatePerson().setActionCommand("updatePerson");
+
 		vf.getPersonMenu().getHomeD().addActionListener(this);
 		vf.getPersonMenu().getHomeD().setActionCommand("backHomeD");
 
@@ -260,10 +268,53 @@ public class Controller implements ActionListener {
 		case "holi":
 			enviarConGMail(d, a, c);
 			break;
+
+		case "updatePerson":
+
+			if (vf.getPersonMenu().getPatientUpdateId().getText().toString().equals("")
+					|| vf.getPersonMenu().getPatientUpdateName().getText().toString().equals("")
+					|| vf.getPersonMenu().getPatientUpdateAge().getText().toString().equals("")
+					|| vf.getPersonMenu().getEmailUpdatePatient().getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				boolean ent = true;
+				int id = Integer.parseInt(vf.getPersonMenu().getPatientUpdateId().getText().toString());
+
+				patient = new ArrayList<>();
+				patient = mf.getPatient().getAll();
+
+				for (int i = 0; i < patient.size(); i++) {
+
+					int tId = patient.get(i).getId();
+
+					if (id == tId) {
+						
+						
+						
+
+						ent = false;
+					} else {
+						continue;
+					}
+
+				}
+
+				if (ent) {
+					JOptionPane.showMessageDialog(null, "El paciente no existe", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+
+			break;
 		case "theme":
 			showScheduleInfo();
 			infoTreatment();
 			changeTheme();
+			break;
+		case"backInitPerson":
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			vf.getShowOptions().getPersonPanel().setVisible(true);
 			break;
 		case "initUpdatePerson":
 			person = 2;
