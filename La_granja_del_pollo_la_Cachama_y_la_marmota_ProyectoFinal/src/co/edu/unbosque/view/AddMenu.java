@@ -49,13 +49,12 @@ public class AddMenu extends JFrame {
 		speciality.setBounds(356, 305, 251, 30);
 		speciality.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		speciality.addItem("");
-		speciality.addItem("1");
-		speciality.addItem("2");
-		speciality.addItem("3");
-		speciality.addItem("4");
-		speciality.addItem("5");
-		speciality.addItem("6");
-		speciality.addItem("7");
+		speciality.addItem("Cirujia");
+		speciality.addItem("Oncologia");
+		speciality.addItem("Dermatologia");
+		speciality.addItem("Neumologia");
+		speciality.addItem("Cardiologia");
+		speciality.addItem("MedicinaInterna");
 		doctorPanel.add(speciality);
 
 	}
@@ -170,7 +169,7 @@ public class AddMenu extends JFrame {
 		background4.setIcon(doctorUpdate);
 		background4.setBounds(0, 0, 790, 565);
 		background4.setLayout(null);
-		personUpdatePanel.add(background4);
+		doctorUpdatePanel.add(background4);
 
 	}
 

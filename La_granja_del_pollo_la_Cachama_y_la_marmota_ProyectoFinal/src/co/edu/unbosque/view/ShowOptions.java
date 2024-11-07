@@ -12,10 +12,11 @@ import javax.swing.JPanel;
 
 public class ShowOptions extends JFrame {
 
-	private JPanel mainPanel, datePanel, newPersonPanel, personPanel,idPanel;
+	private JPanel mainPanel, datePanel, newPersonPanel, personPanel, idPanel, doctorPanel;
 	private JComboBox<String> treatment, fechasDeReagendarCita;
-	private JLabel background1, backgroundD, backgroundP, backgroundM;
-	private JButton selectTreatment, home, person, doctor, menu2,newPerson,updatePerson,home2, returnMenu, selectDate;
+	private JLabel background1, backgroundD, backgroundP, backgroundM, backgroundMD;
+	private JButton selectTreatment, home, home3, person, doctor, menu2, newPerson, updateDoctor, newDoctor,
+			updatePerson, home2, returnMenu, selectDate;
 
 	public ShowOptions() {
 		window();
@@ -28,11 +29,14 @@ public class ShowOptions extends JFrame {
 		add(datePanel);
 		add(newPersonPanel);
 		add(personPanel);
+		add(doctorPanel);
 
 		mainPanel.setVisible(false);
+		personPanel.setVisible(false);
+		doctorPanel.setVisible(false);
 		datePanel.setVisible(false);
 		newPersonPanel.setVisible(false);
-		personPanel.setVisible(false);
+
 	}
 
 	private void backgorunds() {
@@ -63,6 +67,13 @@ public class ShowOptions extends JFrame {
 		backgroundM.setBounds(0, 0, 470, 180);
 		backgroundM.setLayout(null);
 		personPanel.add(backgroundM);
+
+		backgroundMD = new JLabel();
+		ImageIcon menuD = new ImageIcon("Images\\menuAniadir\\menuDoctorC.png");
+		backgroundMD.setIcon(menuD);
+		backgroundMD.setBounds(0, 0, 470, 180);
+		backgroundMD.setLayout(null);
+		doctorPanel.add(backgroundMD);
 
 	}
 
@@ -134,7 +145,7 @@ public class ShowOptions extends JFrame {
 		Image scaledDate = imageDate.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		selectDate.setIcon(new ImageIcon(scaledDate));
 		datePanel.add(selectDate);
-		
+
 		newPerson = new JButton();
 		newPerson.setBounds(106, 51, 110, 110);
 		newPerson.setToolTipText("Añadir un nuevo paciente");
@@ -144,7 +155,7 @@ public class ShowOptions extends JFrame {
 		Image scaledPerson = imagePerson.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
 		newPerson.setIcon(new ImageIcon(scaledPerson));
 		personPanel.add(newPerson);
-		
+
 		updatePerson = new JButton();
 		updatePerson.setBounds(266, 51, 110, 110);
 		updatePerson.setToolTipText("Actualizar un paciente existente");
@@ -154,7 +165,7 @@ public class ShowOptions extends JFrame {
 		Image scaledUP = imageUP.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
 		updatePerson.setIcon(new ImageIcon(scaledUP));
 		personPanel.add(updatePerson);
-		
+
 		home2 = new JButton();
 		home2.setBounds(417, 135, 42, 42);
 		home2.setBorderPainted(false);
@@ -162,7 +173,35 @@ public class ShowOptions extends JFrame {
 		home2.setToolTipText("Menú principal de tratamientos");
 		home2.setIcon(new ImageIcon(scaled5));
 		personPanel.add(home2);
-		
+
+		home3 = new JButton();
+		home3.setBounds(417, 135, 42, 42);
+		home3.setBorderPainted(false);
+		home3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		home3.setToolTipText("Menú principal de tratamientos");
+		home3.setIcon(new ImageIcon(scaled5));
+		doctorPanel.add(home3);
+
+		newDoctor = new JButton();
+		newDoctor.setBounds(106, 51, 110, 110);
+		newDoctor.setToolTipText("Añadir un nuevo Doctor");
+		newDoctor.setBorderPainted(false);
+		newDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ImageIcon imageNewPerson = new ImageIcon("Images\\menuAniadir\\crearDoctorC.png");
+		Image scaledNewPerson = imageNewPerson.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
+		newDoctor.setIcon(new ImageIcon(scaledNewPerson));
+		doctorPanel.add(newDoctor);
+
+		updateDoctor = new JButton();
+		updateDoctor.setBounds(266, 51, 110, 110);
+		updateDoctor.setToolTipText("Actualizar un Doctor existente");
+		updateDoctor.setBorderPainted(false);
+		updateDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ImageIcon imageUD = new ImageIcon("Images\\menuAniadir\\actualizarDoctorC.png");
+		Image scaledUD = imageUD.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
+		updateDoctor.setIcon(new ImageIcon(scaledUD));
+		doctorPanel.add(updateDoctor);
+
 	}
 
 	private void comboBox() {
@@ -198,8 +237,12 @@ public class ShowOptions extends JFrame {
 		personPanel = new JPanel();
 		personPanel.setBounds(0, 0, 480, 215);
 		personPanel.setLayout(null);
-		
-		idPanel= new JPanel();
+
+		doctorPanel = new JPanel();
+		doctorPanel.setBounds(0, 0, 480, 215);
+		doctorPanel.setLayout(null);
+
+		idPanel = new JPanel();
 		idPanel.setBounds(0, 0, 480, 215);
 		idPanel.setLayout(null);
 
@@ -384,6 +427,44 @@ public class ShowOptions extends JFrame {
 		this.home2 = home2;
 	}
 
+	public JPanel getDoctorPanel() {
+		return doctorPanel;
+	}
 
+	public void setDoctorPanel(JPanel doctorPanel) {
+		this.doctorPanel = doctorPanel;
+	}
+
+	public JLabel getBackgroundMD() {
+		return backgroundMD;
+	}
+
+	public void setBackgroundMD(JLabel backgroundMD) {
+		this.backgroundMD = backgroundMD;
+	}
+
+	public JButton getUpdateDoctor() {
+		return updateDoctor;
+	}
+
+	public void setUpdateDoctor(JButton updateDoctor) {
+		this.updateDoctor = updateDoctor;
+	}
+
+	public JButton getNewDoctor() {
+		return newDoctor;
+	}
+
+	public void setNewDoctor(JButton newDoctor) {
+		this.newDoctor = newDoctor;
+	}
+
+	public JButton getHome3() {
+		return home3;
+	}
+
+	public void setHome3(JButton home3) {
+		this.home3 = home3;
+	}
 
 }

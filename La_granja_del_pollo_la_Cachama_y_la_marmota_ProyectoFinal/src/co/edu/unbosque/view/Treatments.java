@@ -80,13 +80,12 @@ public class Treatments extends JFrame {
 		specialty.setBounds(350, 280, 250, 30);
 		specialty.setBorder(null);
 		specialty.addItem("");
-		specialty.addItem("1");
-		specialty.addItem("2");
-		specialty.addItem("3");
-		specialty.addItem("4");
-		specialty.addItem("5");
-		specialty.addItem("6");
-		specialty.addItem("7");
+		specialty.addItem("Cirugia");
+		specialty.addItem("Oncologia");
+		specialty.addItem("Dermatologia");
+		specialty.addItem("Neomologia");
+		specialty.addItem("Cardiologia");
+		specialty.addItem("MedicinaInterna");
 		newTreatmentPanel.add(specialty);
 
 		specialty2 = new JComboBox<String>();
@@ -95,13 +94,12 @@ public class Treatments extends JFrame {
 		specialty2.setBounds(353, 275, 250, 30);
 		specialty2.setBorder(null);
 		specialty2.addItem("");
-		specialty2.addItem("1");
-		specialty2.addItem("2");
-		specialty2.addItem("3");
-		specialty2.addItem("4");
-		specialty2.addItem("5");
-		specialty2.addItem("6");
-		specialty2.addItem("7");
+		specialty2.addItem("Cirugia");
+		specialty2.addItem("Oncologia");
+		specialty2.addItem("Dermatologia");
+		specialty2.addItem("Neomologia");
+		specialty2.addItem("Cardiologia");
+		specialty2.addItem("MedicinaInterna");
 		searchTreatmentPanel.add(specialty2);
 
 	}
