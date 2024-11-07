@@ -212,13 +212,20 @@ public class Controller implements ActionListener {
 		vf.getShifts().getGenerateTurns().addActionListener(this);
 		vf.getShifts().getGenerateTurns().setActionCommand("generateTurn");
 
+		// popups
+
 		vf.getShowOptions().getNewPerson().addActionListener(this);
 		vf.getShowOptions().getNewPerson().setActionCommand("initNewPerson");
 
 		vf.getShowOptions().getUpdatePerson().addActionListener(this);
 		vf.getShowOptions().getUpdatePerson().setActionCommand("initUpdatePerson");
 
-		// popups
+		vf.getShowOptions().getNewDoctor().addActionListener(this);
+		vf.getShowOptions().getNewDoctor().setActionCommand("initNewDoctor");
+
+		vf.getShowOptions().getUpdateDoctor().addActionListener(this);
+		vf.getShowOptions().getUpdateDoctor().setActionCommand("initUpdateDoctor");
+
 		vf.getShowOptions().getPerson().addActionListener(this);
 		vf.getShowOptions().getPerson().setActionCommand("initMenuPerson");
 
@@ -227,10 +234,10 @@ public class Controller implements ActionListener {
 
 		vf.getShowOptions().getReturnMenu().addActionListener(this);
 		vf.getShowOptions().getReturnMenu().setActionCommand("backHome");
-		
+
 		vf.getShowOptions().getHome2().addActionListener(this);
 		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
-		
+
 		// add Person
 
 		vf.getPersonMenu().getUpdatePerson().addActionListener(this);
@@ -268,6 +275,16 @@ public class Controller implements ActionListener {
 		case "holi":
 			enviarConGMail(d, a, c);
 			break;
+		case "initNewDoctor":
+			vf.getShowOptions().setVisible(false);
+			vf.getPersonMenu().getDoctorPanel().setVisible(true);
+			vf.getPersonMenu().setVisible(true);
+			break;
+		case "initUpdateDoctor":
+			vf.getShowOptions().setVisible(false);
+			vf.getPersonMenu().getDoctorUpdatePanel().setVisible(true);
+			vf.getPersonMenu().setVisible(true);
+			break;
 
 		case "updatePerson":
 
@@ -289,9 +306,6 @@ public class Controller implements ActionListener {
 					int tId = patient.get(i).getId();
 
 					if (id == tId) {
-						
-						
-						
 
 						ent = false;
 					} else {
@@ -299,6 +313,8 @@ public class Controller implements ActionListener {
 					}
 
 				}
+				vf.getShowOptions().setVisible(false);
+				vf.getShowOptions().getUpdatePerson().setVisible(false);
 
 				if (ent) {
 					JOptionPane.showMessageDialog(null, "El paciente no existe", "Error", JOptionPane.ERROR_MESSAGE);
@@ -312,7 +328,7 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			changeTheme();
 			break;
-		case"backInitPerson":
+		case "backInitPerson":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			vf.getShowOptions().getPersonPanel().setVisible(true);
 			break;
@@ -1014,9 +1030,10 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(true);
 			break;
 		case "initMenuDoctor":
-			vf.getPersonMenu().getDoctorPanel().setVisible(true);
-			vf.getShowOptions().setVisible(false);
-			vf.getPersonMenu().setVisible(true);
+
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getShowOptions().getDoctorPanel().setVisible(true);
+
 			break;
 		case "initMenuPerson":
 
@@ -1976,6 +1993,9 @@ public class Controller implements ActionListener {
 			break;
 
 		case "selectPat":
+			vf.getShowOptions().getDoctorPanel().setVisible(false);
+			vf.getShowOptions().getIdPanel().setVisible(false);
+			vf.getShowOptions().getMainPanel().setVisible(false);
 
 			if (vf.getSchedule().getSchedulePanel().isVisible()) {
 
@@ -2187,6 +2207,9 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getPatientAge().setText(null);
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
+					
+					vf.getShowOptions().setVisible(false);
+					vf.getShowOptions().getNewPerson().setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
 				}

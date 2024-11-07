@@ -170,7 +170,7 @@ public class AddMenu extends JFrame {
 		background4.setIcon(doctorUpdate);
 		background4.setBounds(0, 0, 790, 565);
 		background4.setLayout(null);
-		personUpdatePanel.add(background4);
+		doctorUpdatePanel.add(background4);
 
 	}
 
