@@ -369,15 +369,13 @@ public class Controller implements ActionListener {
 				List<String> especialidad4 = new ArrayList<>();
 				List<String> especialidad5 = new ArrayList<>();
 				List<String> especialidad6 = new ArrayList<>();
-				List<String> especialidad7 = new ArrayList<>();
 
-				String espe1 = "1";
-				String espe2 = "2";
-				String espe3 = "3";
-				String espe4 = "4";
-				String espe5 = "5";
-				String espe6 = "6";
-				String espe7 = "7";
+				String espe1 = "Cirujia";
+				String espe2 = "Oncologia";
+				String espe3 = "Dermatologia";
+				String espe4 = "Neumologia";
+				String espe5 = "Cardiologia";
+				String espe6 = "MedicinaInterna";
 
 				Date d = vf.getShifts().getStartDate().getDate();
 				SimpleDateFormat formatoF = new SimpleDateFormat("dd/MM/yyyy");
@@ -494,31 +492,16 @@ public class Controller implements ActionListener {
 								}
 
 							}
-						} else if (item.equals(espe7)) {
-							for (DoctorDTO doc : doctor) {
-
-								if (doc.getSpecialty().equals(espe7)) {
-
-									if (especialidad7.contains(doc.getName())) {
-
-									} else {
-
-										especialidad7.add(doc.getName());
-									}
-
-								}
-
-							}
 						}
 					}
 
 				}
 
-				boolean t1 = true, t2 = true, t3 = true, t4 = true, t5 = true, t6 = true, t7 = true;
-				boolean t11 = true, t22 = true, t33 = true, t44 = true, t55 = true, t66 = true, t77 = true;
+				boolean t1 = true, t2 = true, t3 = true, t4 = true, t5 = true, t6 = true;
+				boolean t11 = true, t22 = true, t33 = true, t44 = true, t55 = true, t66 = true;
 
 				Random random = new Random();
-				wh: while (t1 || t2 || t3 || t4 || t5 || t6 || t7 || t11 || t22 || t33 || t44 || t55 || t66 || t77) {
+				wh: while (t1 || t2 || t3 || t4 || t5 || t6 || t11 || t22 || t33 || t44 || t55 || t66) {
 
 					int indice1 = random.nextInt(especialidad1.size());
 					int indice11 = random.nextInt(especialidad1.size());
@@ -550,15 +533,9 @@ public class Controller implements ActionListener {
 					String nombreEspe6 = especialidad6.get(indice6);
 					String nombreEspe66 = especialidad6.get(indice66);
 
-					int indice7 = random.nextInt(especialidad7.size());
-					int indice77 = random.nextInt(especialidad7.size());
-					String nombreEspe7 = especialidad7.get(indice7);
-					String nombreEspe77 = especialidad7.get(indice77);
-
 					if (nombreEspe11.equals(nombreEspe1) || nombreEspe22.equals(nombreEspe2)
 							|| nombreEspe33.equals(nombreEspe3) || nombreEspe44.equals(nombreEspe4)
-							|| nombreEspe55.equals(nombreEspe5) || nombreEspe66.equals(nombreEspe6)
-							|| nombreEspe77.equals(nombreEspe7)) {
+							|| nombreEspe55.equals(nombreEspe5) || nombreEspe66.equals(nombreEspe6)) {
 						continue wh;
 					} else {
 
@@ -863,59 +840,6 @@ public class Controller implements ActionListener {
 									}
 								}
 							}
-
-							else if (name.equals(nombreEspe7)) {
-
-								if (t7 == false) {
-
-								} else {
-
-									if (doctor.get(t).getStatus().equals("inactivo")) {
-										int ident = doctor.get(t).getId();
-										String email = doctor.get(t).getEmail();
-										String speciality = doctor.get(t).getSpecialty();
-
-										mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-												new DoctorDTO(name, email, ident, speciality, "activo"));
-
-										if (mf.getShift()
-												.add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe7))) {
-											t7 = false;
-
-										} else {
-											// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
-										}
-
-									}
-								}
-
-							} else if (name.equals(nombreEspe77)) {
-
-								if (t77 == false) {
-
-								} else {
-
-									if (doctor.get(t).getStatus().equals("inactivo")) {
-										int ident = doctor.get(t).getId();
-										String email = doctor.get(t).getEmail();
-										String speciality = doctor.get(t).getSpecialty();
-
-										mf.getDoctor().update(new DoctorDTO(null, null, ident, null, null),
-												new DoctorDTO(name, email, ident, speciality, "activo"));
-
-										if (mf.getShift()
-												.add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe77))) {
-											t77 = false;
-
-										} else {
-											// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
-										}
-
-									}
-								}
-
-							}
-
 						}
 					}
 				}
@@ -971,8 +895,8 @@ public class Controller implements ActionListener {
 				}
 
 				if (t1 == false || t2 == false || t3 == false || t4 == false || t5 == false || t6 == false
-						|| t7 == false || t11 == false || t22 == false || t33 == false || t44 == false || t55 == false
-						|| t66 == false || t77 == false) {
+						|| t11 == false || t22 == false || t33 == false || t44 == false || t55 == false
+						|| t66 == false) {
 					JOptionPane.showMessageDialog(null, "Turno creado en la fecha " + dat);
 				}
 			}
@@ -1587,7 +1511,7 @@ public class Controller implements ActionListener {
 
 			String item = vf.getSchedule().getSpecialty().getSelectedItem().toString();
 
-			if (item.equals("1")) {
+			if (item.equals("Cirujia")) {
 
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
@@ -1600,7 +1524,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("1")) {
+							if (sh.getSpecialty().equals("Cirujia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
@@ -1623,7 +1547,7 @@ public class Controller implements ActionListener {
 
 				}
 
-			} else if (item.equals("2")) {
+			} else if (item.equals("Oncologia")) {
 
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
@@ -1636,44 +1560,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("2")) {
-
-								boolean exists = false;
-								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
-									if (vf.getSchedule().getDoctor().getItemAt(j).equals(sh.getName())) {
-										exists = true;
-										break;
-									}
-								}
-
-								if (!exists) {
-									vf.getSchedule().getDoctor().addItem(sh.getName());
-								}
-
-							}
-
-						}
-
-					} else {
-						continue;
-					}
-
-				}
-
-			} else if (item.equals("3")) {
-
-				shift = new ArrayList<>();
-				shift = mf.getShift().getAll();
-
-				for (int i = 0; i < shift.size(); i++) {
-
-					String speciality = shift.get(i).getSpecialty();
-
-					if (item.equals(speciality)) {
-
-						for (ShiftsDTO sh : shift) {
-
-							if (sh.getSpecialty().equals("3")) {
+							if (sh.getSpecialty().equals("Oncologia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
@@ -1697,7 +1584,7 @@ public class Controller implements ActionListener {
 
 				}
 
-			} else if (item.equals("4")) {
+			} else if (item.equals("Dermatologia")) {
 
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
@@ -1710,7 +1597,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("4")) {
+							if (sh.getSpecialty().equals("Dermatologia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
@@ -1734,7 +1621,7 @@ public class Controller implements ActionListener {
 
 				}
 
-			} else if (item.equals("5")) {
+			} else if (item.equals("Neumologia")) {
 
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
@@ -1747,7 +1634,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("5")) {
+							if (sh.getSpecialty().equals("Neumologia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
@@ -1771,7 +1658,8 @@ public class Controller implements ActionListener {
 
 				}
 
-			} else if (item.equals("6")) {
+			} else if (item.equals("Cardiologia")) {
+
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
 
@@ -1783,7 +1671,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("6")) {
+							if (sh.getSpecialty().equals("Cardiologia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {
@@ -1807,7 +1695,7 @@ public class Controller implements ActionListener {
 
 				}
 
-			} else if (item.equals("7")) {
+			} else if (item.equals("MedicinaInterna")) {
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
 
@@ -1819,7 +1707,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("7")) {
+							if (sh.getSpecialty().equals("MedicinaInterna")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
@@ -18,6 +19,7 @@ public class WorkShifts extends JFrame {
 	private JButton home, changeTurn, initTurn, themeMain, generateTurns, homeTurn1, selectTurnTheme, generateChange,
 			selectTurnTheme2, homeTurn2;
 	private JDateChooser startDate, finishDate;
+	private JTextField especialista1, especialista2, turnoActual;
 
 	public WorkShifts() {
 		window();
@@ -79,8 +81,8 @@ public class WorkShifts extends JFrame {
 	public void window() {
 		setBounds(0, 0, 800, 600);
 		setLocationRelativeTo(null);
-		setTitle(""); 
-		setDefaultCloseOperation(EXIT_ON_CLOSE); 
+		setTitle("");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
 
@@ -101,7 +103,11 @@ public class WorkShifts extends JFrame {
 	}
 
 	public void inputs() {
-		// TODO Auto-generated method stub
+		especialista1 = new JTextField();
+
+		especialista2 = new JTextField();
+
+		turnoActual = new JTextField();
 
 	}
 

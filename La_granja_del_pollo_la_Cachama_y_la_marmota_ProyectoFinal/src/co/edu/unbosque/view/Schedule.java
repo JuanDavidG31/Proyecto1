@@ -208,13 +208,12 @@ public class Schedule extends JFrame {
 		specialty.setBounds(356, 292, 251, 30);
 		specialty.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		specialty.addItem("");
-		specialty.addItem("1");
-		specialty.addItem("2");
-		specialty.addItem("3");
-		specialty.addItem("4");
-		specialty.addItem("5");
-		specialty.addItem("6");
-		specialty.addItem("7");
+		specialty.addItem("Cirujia");
+		specialty.addItem("Oncologia");
+		specialty.addItem("Dermatologia");
+		specialty.addItem("Neumologia");
+		specialty.addItem("Cardiologia");
+		specialty.addItem("MedicinaInterna");
 		schedulePanel.add(specialty);
 
 	}
