@@ -1315,7 +1315,7 @@ public class Controller implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-
+					boolean enter1 = true;
 					int id = Integer.parseInt(vf.getSchedule().getId2().getText().toString());
 
 					appointment = new ArrayList<>();
@@ -1340,7 +1340,7 @@ public class Controller implements ActionListener {
 
 								JOptionPane.showMessageDialog(null,
 										"La fecha de la cita es " + appointment.get(i).getDate());
-
+								enter1 = false;
 							} else {
 
 								String content = "";
@@ -1366,7 +1366,7 @@ public class Controller implements ActionListener {
 									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
 
 								}
-
+								enter1 = false;
 							}
 
 							break;
@@ -1375,71 +1375,83 @@ public class Controller implements ActionListener {
 							continue;
 						}
 					}
-
+					if (enter1) {
+						JOptionPane.showMessageDialog(null, "No existe cita con la cedula digitada ");
+						vf.getSchedule().getId2().setText(null);
+					}
 				}
 
 			} else if (vf.getSchedule().getCancelPanel().isVisible()) {
 
-				int id = Integer.parseInt(vf.getSchedule().getId3().getText().toString());
+				if (vf.getSchedule().getId3().getText().toString().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					boolean enter1 = true;
+					int id = Integer.parseInt(vf.getSchedule().getId3().getText().toString());
 
-				appointment = new ArrayList<>();
-				appointment = mf.getAppointment().getAll();
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
 
-				for (int i = 0; i < appointment.size(); i++) {
-					int tID = appointment.get(i).getId();
+					for (int i = 0; i < appointment.size(); i++) {
+						int tID = appointment.get(i).getId();
 
-					if (tID == id) {
+						if (tID == id) {
 
-						ArrayList<Integer> ids = new ArrayList<>();
-						for (AppointmentDTO ap : appointment) {
-							ids.add(ap.getId());
-						}
+							ArrayList<Integer> ids = new ArrayList<>();
+							for (AppointmentDTO ap : appointment) {
+								ids.add(ap.getId());
+							}
 
-						int frecuency = Collections.frequency(ids, id);
+							int frecuency = Collections.frequency(ids, id);
 
-						if (frecuency == 1) {
+							if (frecuency == 1) {
 
-							vf.getSchedule().getAppointmentNumber()
-									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
+								vf.getSchedule().getAppointmentNumber()
+										.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
 
-							JOptionPane.showMessageDialog(null,
-									"La fecha de la cita es " + appointment.get(i).getDate());
+								JOptionPane.showMessageDialog(null,
+										"La fecha de la cita es " + appointment.get(i).getDate());
+								enter1 = false;
+							} else {
 
-						} else {
+								String content = "";
+								for (int n = 0; n < appointment.size(); n++) {
 
-							String content = "";
-							for (int n = 0; n < appointment.size(); n++) {
+									int tIds = appointment.get(n).getId();
 
-								int tIds = appointment.get(n).getId();
+									if (tIds == id) {
 
-								if (tIds == id) {
+										content += appointment.get(n).getDate() + ",";
 
-									content += appointment.get(n).getDate() + ",";
+									} else {
+										continue;
+									}
 
-								} else {
-									continue;
 								}
 
+								String[] con = content.split(",");
+								vf.getShowOptions().getFechasDeCancelarCita().removeAllItems();
+								vf.getShowOptions().getFechasDeCancelarCita().addItem("");
+								for (int t = 0; t < con.length; t++) {
+
+									vf.getShowOptions().getFechasDeCancelarCita().addItem(con[t]);
+
+								}
+								enter1 = false;
 							}
 
-							String[] con = content.split(",");
-							vf.getShowOptions().getFechasDeCancelarCita().removeAllItems();
-							vf.getShowOptions().getFechasDeCancelarCita().addItem("");
-							for (int t = 0; t < con.length; t++) {
+							break;
 
-								vf.getShowOptions().getFechasDeCancelarCita().addItem(con[t]);
-
-							}
-
+						} else {
+							continue;
 						}
-
-						break;
-
-					} else {
-						continue;
+					}
+					if (enter1) {
+						JOptionPane.showMessageDialog(null, "No existe cita con la cedula digitada ");
+						vf.getSchedule().getId3().setText(null);
 					}
 				}
-
 			}
 			break;
 
@@ -1619,8 +1631,9 @@ public class Controller implements ActionListener {
 
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " actualizado exitosamente");
-
-							vf.getSchedule().getAppointmentNumber().setText("");
+							vf.getSchedule().getId2().setText(null);
+							vf.getSchedule().getAppointmentNumbers().setText(null);
+							vf.getSchedule().getDate2().setDate(null);
 
 							break p;
 						} else {
@@ -1659,7 +1672,8 @@ public class Controller implements ActionListener {
 							JOptionPane.showMessageDialog(null,
 									"Cita de numero " + appoint + " eliminado exitosamente");
 
-							vf.getSchedule().getAppointmentNumber().setText("");
+							vf.getSchedule().getAppointmentNumber().setText(null);
+							vf.getSchedule().getId3().setText(null);
 
 							break p;
 						} else {
