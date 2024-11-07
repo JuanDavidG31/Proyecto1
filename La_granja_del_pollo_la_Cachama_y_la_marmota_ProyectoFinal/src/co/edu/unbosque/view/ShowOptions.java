@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 public class ShowOptions extends JFrame {
 
 	private JPanel mainPanel, datePanel, newPersonPanel;
-	private JComboBox<String> treatment, fechasDeReagendarCita, fechasDeCancelarCita;
+	private JComboBox<String> treatment, fechasDeReagendarCita;
 	private JLabel background1, backgroundD, backgroundP;
-	private JButton selectTreatment, home, person, doctor, returnMenu;
+	private JButton selectTreatment, home, person, doctor, menu2, returnMenu, selectDate;
 
 	public ShowOptions() {
 		window();
@@ -107,24 +107,40 @@ public class ShowOptions extends JFrame {
 		Image scaledR = imageR.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 		returnMenu.setIcon(new ImageIcon(scaledR));
 		newPersonPanel.add(returnMenu);
+
+		menu2 = new JButton();
+		menu2.setBounds(334, 128, 42, 42);
+		menu2.setBorderPainted(false);
+		menu2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		menu2.setToolTipText("Menú principal");
+		menu2.setIcon(new ImageIcon(scaledR));
+		datePanel.add(menu2);
+
+		selectDate = new JButton();
+		selectDate.setBounds(167, 130, 157, 41);
+		selectDate.setBorderPainted(false);
+		selectDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		selectDate.setToolTipText("Seleccionar fecha de la cita medica");
+		ImageIcon imageDate = new ImageIcon("Images\\menuCitas\\seleccionarFechaC.png");
+		Image scaledDate = imageDate.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
+		selectDate.setIcon(new ImageIcon(scaledDate));
+		datePanel.add(selectDate);
 	}
 
 	private void comboBox() {
 		treatment = new JComboBox<String>();
+		treatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		treatment.setBounds(176, 70, 251, 30);
 		treatment.setBorder(null);
 		treatment.addItem("");
 		mainPanel.add(treatment);
 
 		fechasDeReagendarCita = new JComboBox<String>();
+		fechasDeReagendarCita.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		fechasDeReagendarCita.setBounds(176, 70, 251, 30);
 		fechasDeReagendarCita.setBorder(null);
 		fechasDeReagendarCita.addItem("");
-
-		fechasDeCancelarCita = new JComboBox<String>();
-		fechasDeCancelarCita.setBounds(176, 70, 251, 30);
-		fechasDeCancelarCita.setBorder(null);
-		fechasDeCancelarCita.addItem("");
+		datePanel.add(fechasDeReagendarCita);
 
 	}
 
@@ -198,14 +214,6 @@ public class ShowOptions extends JFrame {
 		this.fechasDeReagendarCita = fechasDeReagendarCita;
 	}
 
-	public JComboBox<String> getFechasDeCancelarCita() {
-		return fechasDeCancelarCita;
-	}
-
-	public void setFechasDeCancelarCita(JComboBox<String> fechasDeCancelarCita) {
-		this.fechasDeCancelarCita = fechasDeCancelarCita;
-	}
-
 	public void setHome(JButton home) {
 		this.home = home;
 	}
@@ -264,6 +272,22 @@ public class ShowOptions extends JFrame {
 
 	public void setReturnMenu(JButton returnMenu) {
 		this.returnMenu = returnMenu;
+	}
+
+	public JButton getMenu2() {
+		return menu2;
+	}
+
+	public void setMenu2(JButton menu2) {
+		this.menu2 = menu2;
+	}
+
+	public JButton getSelectDate() {
+		return selectDate;
+	}
+
+	public void setSelectDate(JButton selectDate) {
+		this.selectDate = selectDate;
 	}
 
 }

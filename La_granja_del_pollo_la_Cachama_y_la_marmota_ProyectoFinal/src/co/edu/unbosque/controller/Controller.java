@@ -27,8 +27,8 @@ import co.edu.unbosque.view.ViewFacade;
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private int checkWindowSchedule = 0;
 	private int checkWindowTreatment = 0;
+	private int schedule = 0;
 	private boolean darkMode = false;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
@@ -216,6 +216,14 @@ public class Controller implements ActionListener {
 
 		vf.getPersonMenu().getCreateDoctor().addActionListener(this);
 		vf.getPersonMenu().getCreateDoctor().setActionCommand("createDoctor");
+
+		vf.getShowOptions().getMenu2().addActionListener(this);
+		vf.getShowOptions().getMenu2().setActionCommand("backSelectDate");
+
+		// Para seleccionar la fecha
+		vf.getShowOptions().getSelectDate().addActionListener(this);
+		vf.getShowOptions().getSelectDate().setActionCommand("selectDate");
+
 	}
 
 	@Override
@@ -223,7 +231,37 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "theme":
 			showScheduleInfo();
+			infoTreatment();
 			changeTheme();
+			break;
+		case "selectDate":
+			if (schedule == 2) {
+				// para llenar la info de reagendar
+
+				showScheduleInfo();
+
+				// deja ese metodo ahi, preferiblemete al inicio
+				// es para reiniciar los botones de informacion
+			} else if (schedule == 3) {
+
+				// para llenar la info de cancelar
+
+				showScheduleInfo();
+				// deja ese metodo ahi, preferiblemete al inicio
+			}
+			break;
+		case "backSelectDate":
+			if (schedule == 2) {
+				vf.getShowOptions().setVisible(false);
+				vf.getSchedule().getReSchedulePanel().setVisible(true);
+				vf.getSchedule().setVisible(true);
+				showScheduleInfo();
+			} else if (schedule == 3) {
+				vf.getShowOptions().setVisible(false);
+				vf.getSchedule().getCancelPanel().setVisible(true);
+				vf.getSchedule().setVisible(true);
+				showScheduleInfo();
+			}
 			break;
 		case "generateTurn":
 
@@ -834,6 +872,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().setVisible(true);
 			break;
 		case "scheduleMenu":
+			schedule = 1;
 			vf.getSchedule().getName1().setEditable(false);
 			vf.getSchedule().getEmail().setEditable(false);
 			vf.getSchedule().getMainPanel().setVisible(false);
@@ -844,6 +883,7 @@ public class Controller implements ActionListener {
 
 			break;
 		case "reSchedleMenu":
+			schedule = 2;
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getReSchedulePanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -852,6 +892,8 @@ public class Controller implements ActionListener {
 
 			break;
 		case "cancelMenu":
+			schedule = 3;
+
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -1500,7 +1542,11 @@ public class Controller implements ActionListener {
 									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
 
 								}
+								vf.getSchedule().setVisible(false);
+								vf.getShowOptions().getDatePanel().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								enter1 = false;
+
 							}
 
 							break;
@@ -1565,13 +1611,16 @@ public class Controller implements ActionListener {
 								}
 
 								String[] con = content.split(",");
-								vf.getShowOptions().getFechasDeCancelarCita().removeAllItems();
-								vf.getShowOptions().getFechasDeCancelarCita().addItem("");
+								vf.getShowOptions().getFechasDeReagendarCita().removeAllItems();
+								vf.getShowOptions().getFechasDeReagendarCita().addItem("");
 								for (int t = 0; t < con.length; t++) {
 
-									vf.getShowOptions().getFechasDeCancelarCita().addItem(con[t]);
+									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
 
 								}
+								vf.getSchedule().setVisible(false);
+								vf.getShowOptions().getDatePanel().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								enter1 = false;
 							}
 
@@ -1839,7 +1888,8 @@ public class Controller implements ActionListener {
 		showScheduleInfo();
 		infoTreatment();
 		if (darkMode) {
-
+			showScheduleInfo();
+			infoTreatment();
 			// Home
 
 			ImageIcon homeClear = new ImageIcon("Images\\menuInicial\\Menu.png");
@@ -1909,7 +1959,8 @@ public class Controller implements ActionListener {
 			darkMode = false;
 
 		} else {
-
+			showScheduleInfo();
+			infoTreatment();
 			// Home
 
 			ImageIcon homeDark = new ImageIcon("Images\\menuInicial\\MenuOscuro.png");
@@ -1982,36 +2033,51 @@ public class Controller implements ActionListener {
 	}
 
 	public void showScheduleInfo() {
-		if (vf.getSchedule().getSchedulePanel().isVisible()) {
+		if (schedule == 1) {
+			vf.getSchedule().getInfoNumCancel().setVisible(false);
+			vf.getSchedule().getInfoNDate().setVisible(false);
+			vf.getSchedule().getInfoNum().setVisible(false);
+
 			vf.getSchedule().getSelectPatient().setBounds(0, 0, 111, 40);
+
 			vf.getSchedule().getInfoDate().setVisible(true);
 			vf.getSchedule().getInfoDoctor().setVisible(true);
 			vf.getSchedule().getInfoEmail().setVisible(true);
 			vf.getSchedule().getInfoName().setVisible(true);
 			vf.getSchedule().getInfospecialty().setVisible(true);
-		} else if (vf.getSchedule().getSchedulePanel().isVisible() == false) {
-
+		} else if (schedule == 2) {
+			vf.getSchedule().getInfoNumCancel().setVisible(false);
 			vf.getSchedule().getInfoDate().setVisible(false);
 			vf.getSchedule().getInfoDoctor().setVisible(false);
 			vf.getSchedule().getInfoEmail().setVisible(false);
 			vf.getSchedule().getInfoName().setVisible(false);
 			vf.getSchedule().getInfospecialty().setVisible(false);
-		}
-		if (vf.getSchedule().getReSchedulePanel().isVisible()) {
 			vf.getSchedule().getSelectPatient().setBounds(0, 27, 111, 40);
 			vf.getSchedule().getInfoNDate().setVisible(true);
 			vf.getSchedule().getInfoNum().setVisible(true);
-		} else if (vf.getSchedule().getReSchedulePanel().isVisible() == false) {
+		} else if (schedule == 3) {
 			vf.getSchedule().getInfoNDate().setVisible(false);
 			vf.getSchedule().getInfoNum().setVisible(false);
-		}
-		if (vf.getSchedule().getCancelPanel().isVisible() == true) {
-			vf.getSchedule().getInfoNumCancel().setVisible(true);
+			vf.getSchedule().getInfoDate().setVisible(false);
+			vf.getSchedule().getInfoDoctor().setVisible(false);
+			vf.getSchedule().getInfoEmail().setVisible(false);
+			vf.getSchedule().getInfoName().setVisible(false);
+			vf.getSchedule().getInfospecialty().setVisible(false);
+
 			vf.getSchedule().getSelectPatient().setBounds(0, 70, 111, 40);
-		} else if (vf.getSchedule().getCancelPanel().isVisible() == false) {
+			vf.getSchedule().getInfoNumCancel().setVisible(true);
+		} else if (schedule == 0) {
 			vf.getSchedule().getInfoNumCancel().setVisible(false);
+			vf.getSchedule().getInfoNDate().setVisible(false);
+			vf.getSchedule().getInfoNum().setVisible(false);
+			vf.getSchedule().getInfoDate().setVisible(false);
+			vf.getSchedule().getInfoDoctor().setVisible(false);
+			vf.getSchedule().getInfoEmail().setVisible(false);
+			vf.getSchedule().getInfoName().setVisible(false);
+			vf.getSchedule().getInfospecialty().setVisible(false);
 
 		}
+
 	}
 
 	public void infoTreatment() {
