@@ -1,6 +1,7 @@
 package co.edu.unbosque.controller;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,8 +11,15 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -26,13 +34,20 @@ import co.edu.unbosque.view.ViewFacade;
 public class Controller implements ActionListener {
 	private ModelFacade mf;
 	private ViewFacade vf;
-	private int checkWindow = 0;
+	private int checkWindowTreatment = 0;
+	private int schedule = 0;
 	private boolean darkMode = false;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
 	private ArrayList<ShiftsDTO> shift;
+
+	// correo
+
+	String d = "juandavidgonzalezh@gmail.com";
+	String a = "Hola putosssss";
+	String c = "Hola Topo";
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -214,12 +229,58 @@ public class Controller implements ActionListener {
 
 		vf.getPersonMenu().getCreateDoctor().addActionListener(this);
 		vf.getPersonMenu().getCreateDoctor().setActionCommand("createDoctor");
+
+		vf.getShowOptions().getMenu2().addActionListener(this);
+		vf.getShowOptions().getMenu2().setActionCommand("backSelectDate");
+
+		// Para seleccionar la fecha
+		vf.getShowOptions().getSelectDate().addActionListener(this);
+		vf.getShowOptions().getSelectDate().setActionCommand("selectDate");
+
+		vf.getHome().getReport().addActionListener(this);
+		vf.getHome().getReport().setActionCommand("holi");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "holi":
+			enviarConGMail(d, a, c);
+			break;
+		case "theme":
+			showScheduleInfo();
+			infoTreatment();
+			changeTheme();
+			break;
+		case "selectDate":
+			if (schedule == 2) {
+				// para llenar la info de reagendar
 
+				showScheduleInfo();
+
+				// deja ese metodo ahi, preferiblemete al inicio
+				// es para reiniciar los botones de informacion
+			} else if (schedule == 3) {
+
+				// para llenar la info de cancelar
+
+				showScheduleInfo();
+				// deja ese metodo ahi, preferiblemete al inicio
+			}
+			break;
+		case "backSelectDate":
+			if (schedule == 2) {
+				vf.getShowOptions().setVisible(false);
+				vf.getSchedule().getReSchedulePanel().setVisible(true);
+				vf.getSchedule().setVisible(true);
+				showScheduleInfo();
+			} else if (schedule == 3) {
+				vf.getShowOptions().setVisible(false);
+				vf.getSchedule().getCancelPanel().setVisible(true);
+				vf.getSchedule().setVisible(true);
+				showScheduleInfo();
+			}
+			break;
 		case "generateTurn":
 
 			if (vf.getShifts().getStartDate().getDate() == null) {
@@ -658,10 +719,6 @@ public class Controller implements ActionListener {
 			}
 
 			break;
-
-		case "theme":
-			changeTheme();
-			break;
 		case "backHomeP":
 			vf.getPersonMenu().setVisible(false);
 			vf.getPersonMenu().getPersonPanel().setVisible(false);
@@ -685,9 +742,10 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().setVisible(true);
 			break;
 		case "initMenuPerson":
-			vf.getPersonMenu().getPersonPanel().setVisible(true);
-			vf.getShowOptions().setVisible(false);
-			vf.getPersonMenu().setVisible(true);
+
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getShowOptions().getPersonPanel().setVisible(true);
+			
 			break;
 		case "initAddPerson":
 			vf.getHome().setVisible(false);
@@ -717,7 +775,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
-			checkWindow = 0;
+			checkWindowTreatment = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
 				vf.getTreatments().getNewTreatmentPanel().setVisible(false);
@@ -740,7 +798,7 @@ public class Controller implements ActionListener {
 			break;
 		case "sTreatmentBack":
 
-			if (checkWindow == 1) {
+			if (checkWindowTreatment == 1) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
@@ -748,7 +806,7 @@ public class Controller implements ActionListener {
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
 				infoTreatment();
 
-			} else if (checkWindow == 2) {
+			} else if (checkWindowTreatment == 2) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
@@ -760,14 +818,14 @@ public class Controller implements ActionListener {
 
 			break;
 		case "initTreatment":
-			checkWindow = 1;
+			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
 
 			infoTreatment();
 			break;
 		case "searchTreatment":
-			checkWindow = 2;
+			checkWindowTreatment = 2;
 
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
@@ -783,7 +841,7 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			break;
 		case "finishTreatment":
-			checkWindow = 3;
+			checkWindowTreatment = 3;
 
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
@@ -824,7 +882,7 @@ public class Controller implements ActionListener {
 			vf.getSchedule().setVisible(true);
 			break;
 		case "homeTreatment":
-			checkWindow = 0;
+			checkWindowTreatment = 0;
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getStatus2().setSelectedItem(null);
@@ -833,6 +891,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().setVisible(true);
 			break;
 		case "scheduleMenu":
+			schedule = 1;
 			vf.getSchedule().getName1().setEditable(false);
 			vf.getSchedule().getEmail().setEditable(false);
 			vf.getSchedule().getMainPanel().setVisible(false);
@@ -843,6 +902,7 @@ public class Controller implements ActionListener {
 
 			break;
 		case "reSchedleMenu":
+			schedule = 2;
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getReSchedulePanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -851,6 +911,8 @@ public class Controller implements ActionListener {
 
 			break;
 		case "cancelMenu":
+			schedule = 3;
+
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -1499,7 +1561,11 @@ public class Controller implements ActionListener {
 									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
 
 								}
+								vf.getSchedule().setVisible(false);
+								vf.getShowOptions().getDatePanel().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								enter1 = false;
+
 							}
 
 							break;
@@ -1564,13 +1630,16 @@ public class Controller implements ActionListener {
 								}
 
 								String[] con = content.split(",");
-								vf.getShowOptions().getFechasDeCancelarCita().removeAllItems();
-								vf.getShowOptions().getFechasDeCancelarCita().addItem("");
+								vf.getShowOptions().getFechasDeReagendarCita().removeAllItems();
+								vf.getShowOptions().getFechasDeReagendarCita().addItem("");
 								for (int t = 0; t < con.length; t++) {
 
-									vf.getShowOptions().getFechasDeCancelarCita().addItem(con[t]);
+									vf.getShowOptions().getFechasDeReagendarCita().addItem(con[t]);
 
 								}
+								vf.getSchedule().setVisible(false);
+								vf.getShowOptions().getDatePanel().setVisible(true);
+								vf.getShowOptions().setVisible(true);
 								enter1 = false;
 							}
 
@@ -1838,7 +1907,8 @@ public class Controller implements ActionListener {
 		showScheduleInfo();
 		infoTreatment();
 		if (darkMode) {
-
+			showScheduleInfo();
+			infoTreatment();
 			// Home
 
 			ImageIcon homeClear = new ImageIcon("Images\\menuInicial\\Menu.png");
@@ -1883,7 +1953,7 @@ public class Controller implements ActionListener {
 			ImageIcon homeBClear = new ImageIcon("Images\\backButtons\\1.png");
 			vf.getSchedule().getHome().setIcon(homeBClear);
 
-			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarCita.png");
+			ImageIcon schedulePanelClear = new ImageIcon("Images\\menuCitas\\agendarClaro.png");
 			vf.getSchedule().getBackground2().setIcon(schedulePanelClear);
 
 			ImageIcon reSchedulePanelClear = new ImageIcon("Images\\menuCitas\\reagendarCita.png");
@@ -1892,10 +1962,24 @@ public class Controller implements ActionListener {
 			ImageIcon cancelPanelClear = new ImageIcon("Images\\menuCitas\\cancelarCita.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelClear);
 
+			showScheduleInfo();
+
+			ImageIcon infoClear = new ImageIcon("Images\\infoButtons\\1.png");
+			Image scaledInfoClear = infoClear.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoClear));
+			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoClear));
+
 			darkMode = false;
 
 		} else {
-
+			showScheduleInfo();
+			infoTreatment();
 			// Home
 
 			ImageIcon homeDark = new ImageIcon("Images\\menuInicial\\MenuOscuro.png");
@@ -1949,46 +2033,75 @@ public class Controller implements ActionListener {
 			ImageIcon cancelPanelDark = new ImageIcon("Images\\menuCitas\\cancelarOscuro.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelDark);
 
+			showScheduleInfo();
+
+			ImageIcon infoDark = new ImageIcon("Images\\infoButtons\\2.png");
+			Image scaledInfoDark = infoDark.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+
+			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoDark));
+			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoDark));
+
 			darkMode = true;
 		}
 	}
 
 	public void showScheduleInfo() {
-		if (vf.getSchedule().getSchedulePanel().isVisible()) {
+		if (schedule == 1) {
+			vf.getSchedule().getInfoNumCancel().setVisible(false);
+			vf.getSchedule().getInfoNDate().setVisible(false);
+			vf.getSchedule().getInfoNum().setVisible(false);
+
 			vf.getSchedule().getSelectPatient().setBounds(0, 0, 111, 40);
+
 			vf.getSchedule().getInfoDate().setVisible(true);
 			vf.getSchedule().getInfoDoctor().setVisible(true);
 			vf.getSchedule().getInfoEmail().setVisible(true);
 			vf.getSchedule().getInfoName().setVisible(true);
 			vf.getSchedule().getInfospecialty().setVisible(true);
-		} else if (vf.getSchedule().getSchedulePanel().isVisible() == false) {
-
+		} else if (schedule == 2) {
+			vf.getSchedule().getInfoNumCancel().setVisible(false);
 			vf.getSchedule().getInfoDate().setVisible(false);
 			vf.getSchedule().getInfoDoctor().setVisible(false);
 			vf.getSchedule().getInfoEmail().setVisible(false);
 			vf.getSchedule().getInfoName().setVisible(false);
 			vf.getSchedule().getInfospecialty().setVisible(false);
-		}
-		if (vf.getSchedule().getReSchedulePanel().isVisible()) {
 			vf.getSchedule().getSelectPatient().setBounds(0, 27, 111, 40);
 			vf.getSchedule().getInfoNDate().setVisible(true);
 			vf.getSchedule().getInfoNum().setVisible(true);
-		} else if (vf.getSchedule().getReSchedulePanel().isVisible() == false) {
+		} else if (schedule == 3) {
 			vf.getSchedule().getInfoNDate().setVisible(false);
 			vf.getSchedule().getInfoNum().setVisible(false);
-		}
-		if (vf.getSchedule().getCancelPanel().isVisible() == true) {
-			vf.getSchedule().getInfoNumCancel().setVisible(true);
+			vf.getSchedule().getInfoDate().setVisible(false);
+			vf.getSchedule().getInfoDoctor().setVisible(false);
+			vf.getSchedule().getInfoEmail().setVisible(false);
+			vf.getSchedule().getInfoName().setVisible(false);
+			vf.getSchedule().getInfospecialty().setVisible(false);
+
 			vf.getSchedule().getSelectPatient().setBounds(0, 70, 111, 40);
-		} else if (vf.getSchedule().getCancelPanel().isVisible() == false) {
+			vf.getSchedule().getInfoNumCancel().setVisible(true);
+		} else if (schedule == 0) {
 			vf.getSchedule().getInfoNumCancel().setVisible(false);
+			vf.getSchedule().getInfoNDate().setVisible(false);
+			vf.getSchedule().getInfoNum().setVisible(false);
+			vf.getSchedule().getInfoDate().setVisible(false);
+			vf.getSchedule().getInfoDoctor().setVisible(false);
+			vf.getSchedule().getInfoEmail().setVisible(false);
+			vf.getSchedule().getInfoName().setVisible(false);
+			vf.getSchedule().getInfospecialty().setVisible(false);
 
 		}
+
 	}
 
 	public void infoTreatment() {
 
-		if (checkWindow == 1) {// Principal
+		if (checkWindowTreatment == 1) {// Principal
 
 			vf.getTreatments().getInfoPanel().setBounds(610, 170, 123, 220);
 
@@ -2007,7 +2120,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSelectPatient().setVisible(true);
 			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
 
-		} else if (checkWindow == 2) {// Buscar
+		} else if (checkWindowTreatment == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -2027,7 +2140,7 @@ public class Controller implements ActionListener {
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
-		} else if (checkWindow == 3) {// Finish
+		} else if (checkWindowTreatment == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -2038,7 +2151,7 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
-		} else if (checkWindow == 0) {
+		} else if (checkWindowTreatment == 0) {
 			vf.getTreatments().getSearchButton().setVisible(false);
 			vf.getTreatments().getInfoTreatment().setVisible(false);
 			vf.getTreatments().getInfospecialty().setVisible(false);
@@ -2089,4 +2202,37 @@ public class Controller implements ActionListener {
 		return (int) (Math.random() * 10000 + 100);
 	}
 
+	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+
+		String remitente = "clinicaelbosque306@gmail.com";
+
+		String claveemail = "chgf lzuy wipa lleu";
+
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.user", remitente);
+		props.put("mail.smtp.clave", claveemail);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getDefaultInstance(props);
+		MimeMessage message = new MimeMessage(session);
+
+		try {
+			message.setFrom(new InternetAddress(remitente));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+			message.setSubject(asunto);
+			message.setText(cuerpo);
+			Transport transport = session.getTransport("smtp");
+			transport.connect("smtp.gmail.com", remitente, claveemail);
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+			// mensaje de envio
+		} catch (MessagingException me) {
+			me.printStackTrace();
+
+			// Joption
+		}
+	}
 }

@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 
 public class ShowOptions extends JFrame {
 
-	private JPanel mainPanel, datePanel, newPersonPanel;
-	private JComboBox<String> treatment, fechasDeReagendarCita, fechasDeCancelarCita;
-	private JLabel background1, backgroundD, backgroundP;
-	private JButton selectTreatment, home, person, doctor, returnMenu;
+	private JPanel mainPanel, datePanel, newPersonPanel, personPanel,idPanel;
+	private JComboBox<String> treatment, fechasDeReagendarCita;
+	private JLabel background1, backgroundD, backgroundP, backgroundM;
+	private JButton selectTreatment, home, person, doctor, menu2,newPerson,updatePerson, returnMenu, selectDate;
 
 	public ShowOptions() {
 		window();
@@ -27,10 +27,12 @@ public class ShowOptions extends JFrame {
 		add(mainPanel);
 		add(datePanel);
 		add(newPersonPanel);
+		add(personPanel);
 
 		mainPanel.setVisible(false);
 		datePanel.setVisible(false);
 		newPersonPanel.setVisible(false);
+		personPanel.setVisible(false);
 	}
 
 	private void backgorunds() {
@@ -49,11 +51,18 @@ public class ShowOptions extends JFrame {
 		datePanel.add(backgroundD);
 
 		backgroundP = new JLabel();
-		ImageIcon person = new ImageIcon("Images\\\\menuCitas\\\\mPacienteC.png");
+		ImageIcon person = new ImageIcon("Images\\menuCitas\\mPacienteC.png");
 		backgroundP.setIcon(person);
 		backgroundP.setBounds(0, 0, 470, 180);
 		backgroundP.setLayout(null);
 		newPersonPanel.add(backgroundP);
+
+		backgroundM = new JLabel();
+		ImageIcon menu = new ImageIcon("Images\\menuAniadir\\menuPacienteC.png");
+		backgroundM.setIcon(menu);
+		backgroundM.setBounds(0, 0, 470, 180);
+		backgroundM.setLayout(null);
+		personPanel.add(backgroundM);
 
 	}
 
@@ -107,24 +116,60 @@ public class ShowOptions extends JFrame {
 		Image scaledR = imageR.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 		returnMenu.setIcon(new ImageIcon(scaledR));
 		newPersonPanel.add(returnMenu);
+
+		menu2 = new JButton();
+		menu2.setBounds(334, 128, 42, 42);
+		menu2.setBorderPainted(false);
+		menu2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		menu2.setToolTipText("Menú principal");
+		menu2.setIcon(new ImageIcon(scaledR));
+		datePanel.add(menu2);
+
+		selectDate = new JButton();
+		selectDate.setBounds(167, 130, 157, 41);
+		selectDate.setBorderPainted(false);
+		selectDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		selectDate.setToolTipText("Seleccionar fecha de la cita medica");
+		ImageIcon imageDate = new ImageIcon("Images\\menuCitas\\seleccionarFechaC.png");
+		Image scaledDate = imageDate.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
+		selectDate.setIcon(new ImageIcon(scaledDate));
+		datePanel.add(selectDate);
+		
+		newPerson = new JButton();
+		newPerson.setBounds(106, 51, 110, 110);
+		newPerson.setToolTipText("Añadir un nuevo paciente");
+		newPerson.setBorderPainted(false);
+		newPerson.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ImageIcon imagePerson = new ImageIcon("Images\\menuAniadir\\crearPacienteC.png");
+		Image scaledPerson = imagePerson.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
+		newPerson.setIcon(new ImageIcon(scaledPerson));
+		personPanel.add(newPerson);
+		
+		updatePerson = new JButton();
+		updatePerson.setBounds(266, 51, 110, 110);
+		updatePerson.setToolTipText("Actualizar un paciente existente");
+		updatePerson.setBorderPainted(false);
+		updatePerson.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ImageIcon imageUP = new ImageIcon("Images\\menuAniadir\\actualizarPacienteC.png");
+		Image scaledUP = imageUP.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
+		updatePerson.setIcon(new ImageIcon(scaledUP));
+		personPanel.add(updatePerson);
 	}
 
 	private void comboBox() {
 		treatment = new JComboBox<String>();
+		treatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		treatment.setBounds(176, 70, 251, 30);
 		treatment.setBorder(null);
 		treatment.addItem("");
 		mainPanel.add(treatment);
 
 		fechasDeReagendarCita = new JComboBox<String>();
+		fechasDeReagendarCita.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		fechasDeReagendarCita.setBounds(176, 70, 251, 30);
 		fechasDeReagendarCita.setBorder(null);
 		fechasDeReagendarCita.addItem("");
-
-		fechasDeCancelarCita = new JComboBox<String>();
-		fechasDeCancelarCita.setBounds(176, 70, 251, 30);
-		fechasDeCancelarCita.setBorder(null);
-		fechasDeCancelarCita.addItem("");
+		datePanel.add(fechasDeReagendarCita);
 
 	}
 
@@ -140,6 +185,14 @@ public class ShowOptions extends JFrame {
 		newPersonPanel = new JPanel();
 		newPersonPanel.setBounds(0, 0, 480, 215);
 		newPersonPanel.setLayout(null);
+
+		personPanel = new JPanel();
+		personPanel.setBounds(0, 0, 480, 215);
+		personPanel.setLayout(null);
+		
+		idPanel= new JPanel();
+		idPanel.setBounds(0, 0, 480, 215);
+		idPanel.setLayout(null);
 
 	}
 
@@ -162,54 +215,6 @@ public class ShowOptions extends JFrame {
 		this.mainPanel = mainPanel;
 	}
 
-	public JComboBox<String> getTreatment() {
-		return treatment;
-	}
-
-	public void setTreatment(JComboBox<String> treatment) {
-		this.treatment = treatment;
-	}
-
-	public JLabel getBackground1() {
-		return background1;
-	}
-
-	public void setBackground1(JLabel background1) {
-		this.background1 = background1;
-	}
-
-	public JButton getSelectTreatment() {
-		return selectTreatment;
-	}
-
-	public void setSelectTreatment(JButton selectTreatment) {
-		this.selectTreatment = selectTreatment;
-	}
-
-	public JButton getHome() {
-		return home;
-	}
-
-	public JComboBox<String> getFechasDeReagendarCita() {
-		return fechasDeReagendarCita;
-	}
-
-	public void setFechasDeReagendarCita(JComboBox<String> fechasDeReagendarCita) {
-		this.fechasDeReagendarCita = fechasDeReagendarCita;
-	}
-
-	public JComboBox<String> getFechasDeCancelarCita() {
-		return fechasDeCancelarCita;
-	}
-
-	public void setFechasDeCancelarCita(JComboBox<String> fechasDeCancelarCita) {
-		this.fechasDeCancelarCita = fechasDeCancelarCita;
-	}
-
-	public void setHome(JButton home) {
-		this.home = home;
-	}
-
 	public JPanel getDatePanel() {
 		return datePanel;
 	}
@@ -224,6 +229,46 @@ public class ShowOptions extends JFrame {
 
 	public void setNewPersonPanel(JPanel newPersonPanel) {
 		this.newPersonPanel = newPersonPanel;
+	}
+
+	public JPanel getPersonPanel() {
+		return personPanel;
+	}
+
+	public void setPersonPanel(JPanel personPanel) {
+		this.personPanel = personPanel;
+	}
+
+	public JPanel getIdPanel() {
+		return idPanel;
+	}
+
+	public void setIdPanel(JPanel idPanel) {
+		this.idPanel = idPanel;
+	}
+
+	public JComboBox<String> getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(JComboBox<String> treatment) {
+		this.treatment = treatment;
+	}
+
+	public JComboBox<String> getFechasDeReagendarCita() {
+		return fechasDeReagendarCita;
+	}
+
+	public void setFechasDeReagendarCita(JComboBox<String> fechasDeReagendarCita) {
+		this.fechasDeReagendarCita = fechasDeReagendarCita;
+	}
+
+	public JLabel getBackground1() {
+		return background1;
+	}
+
+	public void setBackground1(JLabel background1) {
+		this.background1 = background1;
 	}
 
 	public JLabel getBackgroundD() {
@@ -242,6 +287,30 @@ public class ShowOptions extends JFrame {
 		this.backgroundP = backgroundP;
 	}
 
+	public JLabel getBackgroundM() {
+		return backgroundM;
+	}
+
+	public void setBackgroundM(JLabel backgroundM) {
+		this.backgroundM = backgroundM;
+	}
+
+	public JButton getSelectTreatment() {
+		return selectTreatment;
+	}
+
+	public void setSelectTreatment(JButton selectTreatment) {
+		this.selectTreatment = selectTreatment;
+	}
+
+	public JButton getHome() {
+		return home;
+	}
+
+	public void setHome(JButton home) {
+		this.home = home;
+	}
+
 	public JButton getPerson() {
 		return person;
 	}
@@ -258,6 +327,30 @@ public class ShowOptions extends JFrame {
 		this.doctor = doctor;
 	}
 
+	public JButton getMenu2() {
+		return menu2;
+	}
+
+	public void setMenu2(JButton menu2) {
+		this.menu2 = menu2;
+	}
+
+	public JButton getNewPerson() {
+		return newPerson;
+	}
+
+	public void setNewPerson(JButton newPerson) {
+		this.newPerson = newPerson;
+	}
+
+	public JButton getUpdatePerson() {
+		return updatePerson;
+	}
+
+	public void setUpdatePerson(JButton updatePerson) {
+		this.updatePerson = updatePerson;
+	}
+
 	public JButton getReturnMenu() {
 		return returnMenu;
 	}
@@ -265,5 +358,15 @@ public class ShowOptions extends JFrame {
 	public void setReturnMenu(JButton returnMenu) {
 		this.returnMenu = returnMenu;
 	}
+
+	public JButton getSelectDate() {
+		return selectDate;
+	}
+
+	public void setSelectDate(JButton selectDate) {
+		this.selectDate = selectDate;
+	}
+
+
 
 }
