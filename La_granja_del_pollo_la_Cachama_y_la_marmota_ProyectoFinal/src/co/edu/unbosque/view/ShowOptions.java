@@ -15,7 +15,7 @@ public class ShowOptions extends JFrame {
 	private JPanel mainPanel, datePanel, newPersonPanel, personPanel,idPanel;
 	private JComboBox<String> treatment, fechasDeReagendarCita;
 	private JLabel background1, backgroundD, backgroundP, backgroundM;
-	private JButton selectTreatment, home, person, doctor, menu2,newPerson,updatePerson, returnMenu, selectDate;
+	private JButton selectTreatment, home, person, doctor, menu2,newPerson,updatePerson,home2, returnMenu, selectDate;
 
 	public ShowOptions() {
 		window();
@@ -154,6 +154,15 @@ public class ShowOptions extends JFrame {
 		Image scaledUP = imageUP.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
 		updatePerson.setIcon(new ImageIcon(scaledUP));
 		personPanel.add(updatePerson);
+		
+		home2 = new JButton();
+		home2.setBounds(417, 135, 42, 42);
+		home2.setBorderPainted(false);
+		home2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		home2.setToolTipText("Menú principal de tratamientos");
+		home2.setIcon(new ImageIcon(scaled5));
+		personPanel.add(home2);
+		
 	}
 
 	private void comboBox() {
@@ -365,6 +374,14 @@ public class ShowOptions extends JFrame {
 
 	public void setSelectDate(JButton selectDate) {
 		this.selectDate = selectDate;
+	}
+
+	public JButton getHome2() {
+		return home2;
+	}
+
+	public void setHome2(JButton home2) {
+		this.home2 = home2;
 	}
 
 
