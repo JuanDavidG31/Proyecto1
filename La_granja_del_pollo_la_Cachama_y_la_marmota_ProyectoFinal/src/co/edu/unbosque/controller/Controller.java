@@ -236,18 +236,68 @@ public class Controller implements ActionListener {
 			break;
 		case "selectDate":
 			if (schedule == 2) {
-				// para llenar la info de reagendar
-
 				showScheduleInfo();
 
-				// deja ese metodo ahi, preferiblemete al inicio
-				// es para reiniciar los botones de informacion
+				if (vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString().equals("")) {
+
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					String date = vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString();
+
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
+
+					for (int i = 0; i < appointment.size(); i++) {
+
+						String tDate = appointment.get(i).getDate();
+						if (date.equals(tDate)) {
+
+							vf.getSchedule().getAppointmentNumbers()
+									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
+							vf.getShowOptions().setVisible(false);
+							vf.getSchedule().getReSchedulePanel().setVisible(true);
+							vf.getSchedule().setVisible(true);
+						}
+
+					}
+
+				}
+
 			} else if (schedule == 3) {
+				showScheduleInfo();
 
 				// para llenar la info de cancelar
+				if (vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString().equals("")) {
 
-				showScheduleInfo();
-				// deja ese metodo ahi, preferiblemete al inicio
+					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					String date = vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString();
+
+					appointment = new ArrayList<>();
+					appointment = mf.getAppointment().getAll();
+
+					for (int i = 0; i < appointment.size(); i++) {
+
+						String tDate = appointment.get(i).getDate();
+						if (date.equals(tDate)) {
+
+							vf.getSchedule().getAppointmentNumber()
+									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
+							vf.getShowOptions().setVisible(false);
+							vf.getSchedule().getCancelPanel().setVisible(true);
+							vf.getSchedule().setVisible(true);
+						}
+
+					}
+
+				}
+
 			}
 			break;
 		case "backSelectDate":
