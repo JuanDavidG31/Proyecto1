@@ -227,10 +227,10 @@ public class Controller implements ActionListener {
 
 		vf.getShowOptions().getReturnMenu().addActionListener(this);
 		vf.getShowOptions().getReturnMenu().setActionCommand("backHome");
-		
+
 		vf.getShowOptions().getHome2().addActionListener(this);
 		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
-		
+
 		// add Person
 
 		vf.getPersonMenu().getUpdatePerson().addActionListener(this);
@@ -289,9 +289,21 @@ public class Controller implements ActionListener {
 					int tId = patient.get(i).getId();
 
 					if (id == tId) {
-						
-						
-						
+
+						String name = patient.get(i).getName();
+						int age = patient.get(i).getAge();
+						String email = patient.get(i).getEmail();
+
+						if (mf.getPatient().update(new PatientDTO(null, null, id, 0),
+								new PatientDTO(name, email, id, age))) {
+							JOptionPane.showMessageDialog(null, "Paciente actualiado");
+							vf.getPersonMenu().getPatientUpdateId().setText(null);
+							vf.getPersonMenu().getPatientUpdateName().setText(null);
+							vf.getPersonMenu().getPatientUpdateAge().setText(null);
+							vf.getPersonMenu().getEmailUpdatePatient().setText(null);
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo actualizar el paciente");
+						}
 
 						ent = false;
 					} else {
@@ -301,6 +313,10 @@ public class Controller implements ActionListener {
 				}
 
 				if (ent) {
+					vf.getPersonMenu().getPatientUpdateId().setText(null);
+					vf.getPersonMenu().getPatientUpdateName().setText(null);
+					vf.getPersonMenu().getPatientUpdateAge().setText(null);
+					vf.getPersonMenu().getEmailUpdatePatient().setText(null);
 					JOptionPane.showMessageDialog(null, "El paciente no existe", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -312,7 +328,7 @@ public class Controller implements ActionListener {
 			infoTreatment();
 			changeTheme();
 			break;
-		case"backInitPerson":
+		case "backInitPerson":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			vf.getShowOptions().getPersonPanel().setVisible(true);
 			break;
@@ -2246,8 +2262,6 @@ public class Controller implements ActionListener {
 
 		case "generatedAppointment":
 
-			boolean enter2 = true;
-
 			if (vf.getSchedule().getDoctor().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getSchedule().getName1().getText().toString().equals("")
@@ -2267,7 +2281,6 @@ public class Controller implements ActionListener {
 					int oldId = patient.get(i).getId();
 
 					if (oldId == tId) {
-						enter2 = false;
 
 						String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 						String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
@@ -2303,11 +2316,6 @@ public class Controller implements ActionListener {
 					}
 
 				}
-
-			}
-
-			if (enter2) {
-				JOptionPane.showMessageDialog(null, "El paciente no existe");
 
 			}
 
