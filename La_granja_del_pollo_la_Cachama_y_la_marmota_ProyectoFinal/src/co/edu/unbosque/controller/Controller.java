@@ -11,8 +11,15 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -35,6 +42,9 @@ public class Controller implements ActionListener {
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
 	private ArrayList<ShiftsDTO> shift;
+	String d = "juandavidgonzalezh@gmail.com";
+	String a = "Hola putosssss";
+	String c = "Hola Topo";
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -224,11 +234,16 @@ public class Controller implements ActionListener {
 		vf.getShowOptions().getSelectDate().addActionListener(this);
 		vf.getShowOptions().getSelectDate().setActionCommand("selectDate");
 
+		vf.getHome().getReport().addActionListener(this);
+		vf.getHome().getReport().setActionCommand("holi");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
+		case "holi":
+			enviarConGMail(d, a, c);
+			break;
 		case "theme":
 			showScheduleInfo();
 			infoTreatment();
@@ -2183,4 +2198,37 @@ public class Controller implements ActionListener {
 		return (int) (Math.random() * 10000 + 100);
 	}
 
+	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+		
+		String remitente = "clinicaelbosque306@gmail.com";
+		
+		String claveemail = "chgf lzuy wipa lleu";
+
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.user", remitente);
+		props.put("mail.smtp.clave", claveemail); 
+		props.put("mail.smtp.auth", "true"); 
+		props.put("mail.smtp.starttls.enable", "true"); 
+		props.put("mail.smtp.port", "587"); 
+
+		Session session = Session.getDefaultInstance(props);
+		MimeMessage message = new MimeMessage(session);
+
+		try {
+			message.setFrom(new InternetAddress(remitente));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario)); 
+			message.setSubject(asunto);
+			message.setText(cuerpo);
+			Transport transport = session.getTransport("smtp");
+			transport.connect("smtp.gmail.com", remitente, claveemail);
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+			//mensaje de envio
+		} catch (MessagingException me) {
+			me.printStackTrace(); 
+			
+			//Joption
+		}
+	}
 }
