@@ -202,13 +202,6 @@ public class Schedule extends JFrame {
 		doctor.setBounds(356, 332, 251, 30);
 		doctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		doctor.addItem("");
-		doctor.addItem("nombre 1");
-		doctor.addItem("nombre 2");
-		doctor.addItem("nombre 3");
-		doctor.addItem("nombre 4");
-		doctor.addItem("nombre 5");
-		doctor.addItem("nombre 6");
-		doctor.addItem("nombre 7");
 		schedulePanel.add(doctor);
 
 		specialty = new JComboBox<String>();
