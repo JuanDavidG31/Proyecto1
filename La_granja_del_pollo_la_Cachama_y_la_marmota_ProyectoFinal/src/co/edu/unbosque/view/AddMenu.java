@@ -17,11 +17,12 @@ public class AddMenu extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JPanel personPanel, doctorPanel,personUpdatePanel,doctorUpdatePanel;
-	private JLabel background1, background2,background3,background4;
-	private JTextField patientId, doctorId, doctorName,patientUpdateName,emailUpdatePatient,patientUpdateAge, patientName,patientUpdateId, patientAge, emailDoctor, emailPatient;
+	private JPanel personPanel, doctorPanel, personUpdatePanel, doctorUpdatePanel;
+	private JLabel background1, background2, background3, background4;
+	private JTextField patientId, doctorId, doctorName, patientUpdateName, emailUpdatePatient, patientUpdateAge,
+			patientName, patientUpdateId, patientAge, emailDoctor, emailPatient;
 	private JComboBox<String> speciality;
-	private JButton createPerson, createDoctor, homeP, homeD,homeUDoctor,homeUPerson,UpdatePerson;
+	private JButton createPerson, createDoctor, homeP, homeD, homeUDoctor, homeUPerson, UpdatePerson;
 
 	public AddMenu() {
 		window();
@@ -117,7 +118,7 @@ public class AddMenu extends JFrame {
 		doctorId.setBounds(356, 198, 251, 30);
 		doctorId.setBorder(null);
 		doctorPanel.add(doctorId);
-		
+
 		doctorName = new JTextField();
 		doctorName.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		doctorName.setBounds(356, 236, 251, 30);
@@ -130,7 +131,6 @@ public class AddMenu extends JFrame {
 		emailDoctor.setBorder(null);
 		doctorPanel.add(emailDoctor);
 
-	
 	}
 
 	private void window() {
@@ -157,7 +157,7 @@ public class AddMenu extends JFrame {
 		background2.setBounds(0, 0, 790, 565);
 		background2.setLayout(null);
 		doctorPanel.add(background2);
-		
+
 		background3 = new JLabel();
 		ImageIcon personUpdate = new ImageIcon("Images\\menuAniadir\\actualizarPaClaro.png");
 		background3.setIcon(personUpdate);
@@ -171,7 +171,7 @@ public class AddMenu extends JFrame {
 		background4.setBounds(0, 0, 790, 565);
 		background4.setLayout(null);
 		personUpdatePanel.add(background4);
-	
+
 	}
 
 	private void buttons() {
@@ -242,7 +242,7 @@ public class AddMenu extends JFrame {
 		doctorPanel = new JPanel();
 		doctorPanel.setBounds(0, 0, 800, 600);
 		doctorPanel.setLayout(null);
-		
+
 		doctorUpdatePanel = new JPanel();
 		doctorUpdatePanel.setBounds(0, 0, 800, 600);
 		doctorUpdatePanel.setLayout(null);
@@ -427,6 +427,46 @@ public class AddMenu extends JFrame {
 
 	public void setHomeUPerson(JButton homeUPerson) {
 		this.homeUPerson = homeUPerson;
+	}
+
+	public JTextField getPatientUpdateName() {
+		return patientUpdateName;
+	}
+
+	public void setPatientUpdateName(JTextField patientUpdateName) {
+		this.patientUpdateName = patientUpdateName;
+	}
+
+	public JTextField getEmailUpdatePatient() {
+		return emailUpdatePatient;
+	}
+
+	public void setEmailUpdatePatient(JTextField emailUpdatePatient) {
+		this.emailUpdatePatient = emailUpdatePatient;
+	}
+
+	public JTextField getPatientUpdateAge() {
+		return patientUpdateAge;
+	}
+
+	public void setPatientUpdateAge(JTextField patientUpdateAge) {
+		this.patientUpdateAge = patientUpdateAge;
+	}
+
+	public JTextField getPatientUpdateId() {
+		return patientUpdateId;
+	}
+
+	public void setPatientUpdateId(JTextField patientUpdateId) {
+		this.patientUpdateId = patientUpdateId;
+	}
+
+	public JButton getUpdatePerson() {
+		return UpdatePerson;
+	}
+
+	public void setUpdatePerson(JButton updatePerson) {
+		UpdatePerson = updatePerson;
 	}
 
 }
