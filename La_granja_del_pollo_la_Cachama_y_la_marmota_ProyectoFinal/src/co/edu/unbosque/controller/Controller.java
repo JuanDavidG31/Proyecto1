@@ -2984,6 +2984,9 @@ public class Controller implements ActionListener {
 					enter = false;
 
 					if (mf.getTreatment().add(new TreatmentDTO(name, specialty, treatment, status))) {
+
+						String email = patient.get(i).getEmail();
+
 						JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
 						vf.getTreatments().getId1().setText(null);
 						vf.getTreatments().getName1().setText(null);
