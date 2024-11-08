@@ -1946,14 +1946,17 @@ public class Controller implements ActionListener {
 
 						Properties prop = FileHandler.loadProperties("mail.properties");
 
-						String subject = prop.getProperty("mail.patient.creation.subject");
+						String subject = prop.getProperty("mail.doctor.welcome.subject");
 
-						String body = prop.getProperty("mail.patient.creation.body");
+						String body = prop.getProperty("mail.doctor.welcome.body");
 
-						String message = body.replace("{nombrePaciente}", name).replace("{numeroIdentificacion}", name)
-								.replace("{correo}", email);
+						String message = body.replace("{nombreDoctor}", name)
+								.replace("{especialidad}", speciality)
+								.replace("{numeroIdentificacion}", String.valueOf(id))
+								.replace("{correoDoctor}", email);
 
-						// enviarConGMail(email, subject, message);
+						
+						
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
 					}
