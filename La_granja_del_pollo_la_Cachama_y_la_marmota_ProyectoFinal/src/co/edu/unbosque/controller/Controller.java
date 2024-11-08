@@ -46,9 +46,9 @@ public class Controller implements ActionListener {
 
 	// correo
 
-	String d = "juandavidgonzalezh@gmail.com";
-	String a = "Hola putosssss";
-	String c = "Hola Topo";
+	String d = "lilarod78@gmail.com";
+	String a = "Hola Mundo";
+	String c = "Hola ";
 
 	public Controller() {
 		mf = new ModelFacade();
