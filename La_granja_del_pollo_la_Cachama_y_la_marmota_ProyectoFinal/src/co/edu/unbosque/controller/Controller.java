@@ -46,7 +46,7 @@ public class Controller implements ActionListener {
 
 	// correo
 
-	String d = "lilarod78@gmail.com";
+	String d = "jpr.rod06@gmail.com";
 	String a = "Hola Mundo";
 	String c = "Hola ";
 
@@ -278,6 +278,7 @@ public class Controller implements ActionListener {
 		vf.getHome().getReport().setActionCommand("holi");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -618,18 +619,25 @@ public class Controller implements ActionListener {
 			checkWindowTreatment = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
+				vf.getTreatments().getId1().setText(null);
+				vf.getTreatments().getName1().setText(null);
+				vf.getTreatments().getSpecialty().setSelectedItem("");
+				vf.getTreatments().getTreatmentTxt().setText(null);
+				vf.getTreatments().getStatus().setSelectedIndex(0);
 				vf.getTreatments().getNewTreatmentPanel().setVisible(false);
 				vf.getTreatments().getMainPanel().setVisible(true);
 				infoTreatment();
 
 			} else if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
 
+				vf.getTreatments().getId2().setText(null);
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(false);
 				vf.getTreatments().getMainPanel().setVisible(true);
 				infoTreatment();
 
 			} else if (vf.getTreatments().getFinishTreatmentPanel().isVisible()) {
 
+				vf.getTreatments().getId3().setText(null);
 				vf.getTreatments().getFinishTreatmentPanel().setVisible(false);
 				vf.getTreatments().getMainPanel().setVisible(true);
 				infoTreatment();
@@ -638,29 +646,31 @@ public class Controller implements ActionListener {
 			break;
 		case "sTreatmentBack":
 
-			if (checkWindowTreatment == 1) {
+			if (checkWindowTreatment == 2) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
-				vf.getTreatments().setVisible(true);
+				vf.getTreatments().getFinishTreatmentPanel().setVisible(false);
 				vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
-				infoTreatment();
+				vf.getTreatments().setVisible(true);
+				// infoTreatment();
 
-			} else if (checkWindowTreatment == 2) {
+			} else if (checkWindowTreatment == 3) {
 
 				vf.getShowOptions().setVisible(false);
 				vf.getShowOptions().getMainPanel().setVisible(false);
+				vf.getTreatments().getSearchTreatmentPanel().setVisible(false);
+				vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
 				vf.getTreatments().setVisible(true);
 
-				vf.getTreatments().getFinishTreatmentPanel().setVisible(true);
-				infoTreatment();
+				// infoTreatment();
 			}
-
 			break;
 		case "initTreatment":
 			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
+			
 
 			infoTreatment();
 			break;
@@ -671,9 +681,11 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentS().setText(null);
 			vf.getTreatments().getSpecialty2().setSelectedItem(null);
 			vf.getTreatments().getNameS().setText(null);
-			vf.getTreatments().getNameS().setEditable(false);
+			vf.getTreatments().getNameS().setEnabled(false);
+			vf.getTreatments().getTreatmentS().setEnabled(false);
 
 			vf.getTreatments().getStatus2().enable(false);
+			vf.getTreatments().getSpecialty2().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
@@ -687,8 +699,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentF().setText(null);
 			vf.getTreatments().getId3().setText(null);
 
-			vf.getTreatments().getTreatmentF().setEditable(false);
-			vf.getTreatments().getTreatmentF().setVisible(false);
+			vf.getTreatments().getTreatmentF().setEnabled(false);
 			vf.getTreatments().getStatus3().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
@@ -846,6 +857,7 @@ public class Controller implements ActionListener {
 				if (vf.getShowOptions().getTreatment().getSelectedItem().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
 							JOptionPane.ERROR_MESSAGE);
+					vf.getShowOptions().getMainPanel().setVisible(true);
 				} else {
 
 					String item = vf.getShowOptions().getTreatment().getSelectedItem().toString();
@@ -925,7 +937,7 @@ public class Controller implements ActionListener {
 				}
 
 			}
-			vf.getShowOptions().getMainPanel().setVisible(false);
+
 			break;
 
 		case "search":
@@ -1473,6 +1485,7 @@ public class Controller implements ActionListener {
 						if (tIds == id3) {
 
 							vf.getTreatments().getName1().setText(patient.get(pa).getName());
+							vf.getTreatments().getStatus().setSelectedIndex(1);
 
 						}
 
