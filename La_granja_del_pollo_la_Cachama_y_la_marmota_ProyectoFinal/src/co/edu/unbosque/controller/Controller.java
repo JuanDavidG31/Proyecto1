@@ -206,9 +206,6 @@ public class Controller implements ActionListener {
 		vf.getShifts().getSelectTurnTheme2().addActionListener(this);
 		vf.getShifts().getSelectTurnTheme2().setActionCommand("theme");
 
-		vf.getShifts().getGenerateChange().addActionListener(this);
-		vf.getShifts().getGenerateChange().setActionCommand("cambio");
-
 		vf.getShifts().getHomeTurn2().addActionListener(this);
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 
@@ -511,7 +508,119 @@ public class Controller implements ActionListener {
 
 		case "changeTurn":
 
-			vf.getShifts().getId1().getText().toString();
+			if (vf.getShifts().getId1().getText().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				int id = Integer.parseInt(vf.getShifts().getId1().getText().toString());
+
+				shift = new ArrayList<ShiftsDTO>();
+				shift = mf.getShift().getAll();
+				doctor = new ArrayList<DoctorDTO>();
+				doctor = mf.getDoctor().getAll();
+
+				for (int i = 0; i < shift.size(); i++) {
+
+					int tId = shift.get(i).getId();
+
+					if (id == tId) {
+						boolean exist = false;
+
+						int id2 = Integer.parseInt(vf.getShifts().getId2().getText().toString());
+
+						for (DoctorDTO dc : doctor) {
+
+							if (dc.getId() == id2) {
+
+								if (dc.getStatus().equals("inactivo")) {
+
+									exist = true;
+									break;
+								}
+
+							} else {
+								continue;
+							}
+
+						}
+
+						if (exist == false) {
+							break;
+						}
+
+						if (exist) {
+
+							for (ShiftsDTO sh : shift) {
+
+								if (sh.getId() == id) {
+
+									String date1 = null;
+									String date2 = null;
+									String speciality = null;
+									String name = null;
+
+									for (int d = 0; d < doctor.size(); d++) {
+
+										int tIds = doctor.get(d).getId();
+
+										if (tIds == id2) {
+
+											date1 = sh.getDate1();
+											date2 = sh.getDate2();
+											speciality = doctor.get(d).getSpecialty();
+											name = doctor.get(d).getName();
+
+											if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
+													new ShiftsDTO(date1, date2, speciality, id2, name))) {
+												JOptionPane.showMessageDialog(null, "Cambio realizado");
+												vf.getShifts().getId1().setText(null);
+												vf.getShifts().getId2().setText(null);
+												break;
+											} else {
+
+												JOptionPane.showMessageDialog(null, "no se pudo hacer el cambio");
+											}
+
+										} else {
+											continue;
+										}
+
+									}
+									break;
+								}
+
+							}
+
+							for (DoctorDTO dc : doctor) {
+
+								if (dc.getId() == id) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
+
+									}
+
+								}
+								if (dc.getId() == id2) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
+
+									}
+
+								}
+
+							}
+
+						}
+						break;
+					} else {
+						continue;
+					}
+
+				}
+			}
 
 			break;
 
@@ -670,7 +779,6 @@ public class Controller implements ActionListener {
 			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
-			
 
 			infoTreatment();
 			break;
