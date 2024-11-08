@@ -239,7 +239,7 @@ public class Controller implements ActionListener {
 		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
 
 		// add Person
-		
+
 		vf.getPersonMenu().getUpdateDoctor().addActionListener(this);
 		vf.getPersonMenu().getUpdateDoctor().setActionCommand("updateDoctor");
 
@@ -291,12 +291,49 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().getDoctorUpdatePanel().setVisible(true);
 			vf.getPersonMenu().setVisible(true);
 			break;
-			
+
 		case "updateDoctor":
-			
-			
-			
-			
+
+			if (vf.getPersonMenu().getDoctorUpdateId().getText().toString().equals("")
+					|| vf.getPersonMenu().getDoctorUpdateName().getText().toString().equals("")
+					|| vf.getPersonMenu().getEmailUpdateDoctor().getText().toString().equals("")
+					|| vf.getPersonMenu().getSpecialityUpdate().getSelectedItem().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				doctor = new ArrayList<>();
+				doctor = mf.getDoctor().getAll();
+
+				int id = Integer.parseInt(vf.getPersonMenu().getDoctorUpdateId().getText().toString());
+
+				for (int i = 0; i < doctor.size(); i++) {
+
+					int tIds = doctor.get(i).getId();
+					if (tIds == id) {
+
+						String name = vf.getPersonMenu().getDoctorUpdateName().getText().toString();
+						String email = vf.getPersonMenu().getEmailUpdateDoctor().getText().toString();
+						String speciality = vf.getPersonMenu().getSpecialityUpdate().getSelectedItem().toString();
+						String status = doctor.get(i).getStatus();
+
+						if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null),
+								new DoctorDTO(name, email, id, speciality, status))) {
+							JOptionPane.showMessageDialog(null, "Se actualizo el doctor");
+							vf.getPersonMenu().getDoctorUpdateId().setText(null);
+							vf.getPersonMenu().getDoctorUpdateName().setText(null);
+							vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
+							vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo actualizar el doctor");
+						}
+
+					}
+
+				}
+
+			}
+
 			break;
 
 		case "updatePerson":
