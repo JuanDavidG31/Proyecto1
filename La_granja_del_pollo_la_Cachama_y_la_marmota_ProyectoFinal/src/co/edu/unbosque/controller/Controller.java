@@ -2786,7 +2786,7 @@ public class Controller implements ActionListener {
 
 		String remitente = "clinicaelbosque306@gmail.com";
 
-		String claveemail = "chgf lzuy wipa lleu";
+		String claveemail = "tgkg ofjv gqut qozn";
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
