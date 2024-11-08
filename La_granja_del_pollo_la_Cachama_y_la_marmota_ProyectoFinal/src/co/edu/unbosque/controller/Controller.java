@@ -1846,7 +1846,7 @@ public class Controller implements ActionListener {
 							    .replace("{numeroIdentificacion}", name)
 							    .replace("{correo}", email);
 							
-						enviarConGMail(email, subject, message);
+						//enviarConGMail(email, subject, message);
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
 					}
