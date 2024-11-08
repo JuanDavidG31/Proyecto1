@@ -1880,12 +1880,15 @@ public class Controller implements ActionListener {
 					Properties prop = FileHandler.loadProperties("mail.properties");
 
 					String subject = prop.getProperty("mail.patient.creation.subject");
-
-					String body = prop.getProperty("mail.patient.creation.body");
-
-					String message = body.replace("{nombrePaciente}", name)
-							.replace("{numeroIdentificacion}", String.valueOf(identi)).replace("{correo}", email);
-
+					
+					String body=prop.getProperty("mail.patient.creation.body");
+					
+					String message = body
+						    .replace("{nombrePaciente}", name)
+						    .replace("{numeroIdentificacion}", String.valueOf(identi))
+						    .replace("{correo}", email);
+						
+					JOptionPane.showMessageDialog(null, "Enviando Correo....");
 					enviarConGMail(email, subject, message);
 
 					vf.getShowOptions().getNewPersonPanel().setVisible(false);
