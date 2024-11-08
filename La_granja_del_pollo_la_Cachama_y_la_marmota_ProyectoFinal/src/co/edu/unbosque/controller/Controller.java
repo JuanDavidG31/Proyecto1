@@ -1889,7 +1889,9 @@ public class Controller implements ActionListener {
 						    .replace("{numeroIdentificacion}", String.valueOf(identi))
 						    .replace("{correo}", email);
 						
+					JOptionPane.showMessageDialog(null, "Enviando Correo....");
 					enviarConGMail(email, subject, message);
+					
 					
 					vf.getShowOptions().getNewPersonPanel().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
