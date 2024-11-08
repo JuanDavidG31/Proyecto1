@@ -187,9 +187,9 @@ public class ShowOptions extends JFrame {
 		newDoctor.setToolTipText("Añadir un nuevo Doctor");
 		newDoctor.setBorderPainted(false);
 		newDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		ImageIcon imageNewPerson = new ImageIcon("Images\\menuAniadir\\crearDoctorC.png");
-		Image scaledNewPerson = imageNewPerson.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
-		newDoctor.setIcon(new ImageIcon(scaledNewPerson));
+		ImageIcon imageNewDoctor = new ImageIcon("Images\\menuAniadir\\crearDoctorC.png");
+		Image scaledNewDoctor = imageNewDoctor.getImage().getScaledInstance(110, 110, Image.SCALE_REPLICATE);
+		newDoctor.setIcon(new ImageIcon(scaledNewDoctor));
 		doctorPanel.add(newDoctor);
 
 		updateDoctor = new JButton();

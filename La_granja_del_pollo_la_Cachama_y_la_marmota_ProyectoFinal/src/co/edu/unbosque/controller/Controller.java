@@ -246,6 +246,9 @@ public class Controller implements ActionListener {
 		vf.getPersonMenu().getHomeD().addActionListener(this);
 		vf.getPersonMenu().getHomeD().setActionCommand("backHomeD");
 
+		vf.getPersonMenu().getHomeUDoctor().addActionListener(this);
+		vf.getPersonMenu().getHomeUDoctor().setActionCommand("backHomeD");
+
 		vf.getPersonMenu().getHomeUPerson().addActionListener(this);
 		vf.getPersonMenu().getHomeUPerson().setActionCommand("backHomeP");
 
@@ -313,11 +316,15 @@ public class Controller implements ActionListener {
 
 						if (mf.getPatient().update(new PatientDTO(null, null, id, 0),
 								new PatientDTO(name, email, id, age))) {
-							JOptionPane.showMessageDialog(null, "Paciente actualiado");
+							JOptionPane.showMessageDialog(null, "Paciente actualizado");
 							vf.getPersonMenu().getPatientUpdateId().setText(null);
 							vf.getPersonMenu().getPatientUpdateName().setText(null);
 							vf.getPersonMenu().getPatientUpdateAge().setText(null);
 							vf.getPersonMenu().getEmailUpdatePatient().setText(null);
+
+							vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
+							vf.getPersonMenu().setVisible(false);
+							vf.getHome().setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "No se pudo actualizar el paciente");
 						}
@@ -389,6 +396,7 @@ public class Controller implements ActionListener {
 							vf.getSchedule().getAppointmentNumbers()
 									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
 							vf.getShowOptions().setVisible(false);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().getReSchedulePanel().setVisible(true);
 							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
@@ -422,6 +430,7 @@ public class Controller implements ActionListener {
 							vf.getSchedule().getAppointmentNumber()
 									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
 							vf.getShowOptions().setVisible(false);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().getCancelPanel().setVisible(true);
 							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
@@ -1032,17 +1041,29 @@ public class Controller implements ActionListener {
 
 			break;
 		case "backHomeD":
-			if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
+			vf.getShowOptions().getDoctorPanel().setVisible(false);
+
+			if (vf.getPersonMenu().getDoctorPanel().isVisible() == true) {
+
 				vf.getPersonMenu().setVisible(false);
+
 				vf.getPersonMenu().getDoctorPanel().setVisible(false);
-				vf.getShowOptions().setVisible(true);
+
 				vf.getShowOptions().getNewPersonPanel().setVisible(true);
 
-			} else if (vf.getPersonMenu().getDoctorUpdatePanel().isVisible()) {
-				vf.getPersonMenu().setVisible(false);
-				vf.getPersonMenu().getDoctorUpdatePanel().setVisible(false);
 				vf.getShowOptions().setVisible(true);
+
+			} else if (vf.getPersonMenu().getDoctorUpdatePanel().isVisible() == true) {
+
+				vf.getPersonMenu().setVisible(false);
+
+				vf.getPersonMenu().getDoctorUpdatePanel().setVisible(false);
+
+				vf.getShowOptions().getDoctorPanel().setVisible(false);
+
 				vf.getShowOptions().getNewPersonPanel().setVisible(true);
+
+				vf.getShowOptions().setVisible(true);
 			}
 
 			break;
@@ -1067,6 +1088,7 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(false);
 			vf.getShowOptions().setVisible(true);
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			vf.getShowOptions().getDoctorPanel().setVisible(false);
 			break;
 		case "homeTurn":
 			if (vf.getShifts().getPanelSelect().isVisible()) {
@@ -2230,8 +2252,11 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
-					vf.getShowOptions().setVisible(false);
 					vf.getShowOptions().getNewPerson().setVisible(false);
+					vf.getShowOptions().setVisible(false);
+					vf.getPersonMenu().setVisible(false);
+					vf.getPersonMenu().getPersonPanel().setVisible(false);
+
 					vf.getHome().setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
