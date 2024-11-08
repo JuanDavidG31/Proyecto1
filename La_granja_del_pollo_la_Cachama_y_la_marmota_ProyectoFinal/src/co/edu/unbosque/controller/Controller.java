@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -525,6 +525,8 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 
+				boolean enter = true;
+
 				int id = Integer.parseInt(vf.getShifts().getId1().getText().toString());
 
 				shift = new ArrayList<ShiftsDTO>();
@@ -586,6 +588,21 @@ public class Controller implements ActionListener {
 											if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
 													new ShiftsDTO(date1, date2, speciality, id2, name))) {
 												JOptionPane.showMessageDialog(null, "Cambio realizado");
+												enter = false;
+												SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+												Date tDate1 = null;
+												Date tDate2 = null;
+												try {
+													tDate1 = formato.parse(date1);
+													tDate2 = formato.parse(date2);
+												} catch (ParseException e1) {
+													// TODO Auto-generated catch block
+													e1.printStackTrace();
+												}
+
+												vf.getShifts().getStartDate2().setDate(tDate1);
+												vf.getShifts().getFinishDate2().setEnabled(true);
+												vf.getShifts().getFinishDate2().setDate(tDate2);
 												vf.getShifts().getId1().setText(null);
 												vf.getShifts().getId2().setText(null);
 												break;
@@ -601,28 +618,28 @@ public class Controller implements ActionListener {
 									}
 									break;
 								}
+								for (DoctorDTO dc : doctor) {
 
-							}
+									if (dc.getId() == id) {
 
-							for (DoctorDTO dc : doctor) {
+										if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null),
+												new DoctorDTO(dc.getName(), dc.getEmail(), id, dc.getSpecialty(),
+														"inactivo"))) {
 
-								if (dc.getId() == id) {
+										}
 
-									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
-											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
+									}
+									if (dc.getId() == id2) {
+
+										if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null),
+												new DoctorDTO(dc.getName(), dc.getEmail(), id2, dc.getSpecialty(),
+														"activo"))) {
+
+										}
 
 									}
 
 								}
-								if (dc.getId() == id2) {
-
-									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
-											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
-
-									}
-
-								}
-
 							}
 
 						}
@@ -630,6 +647,14 @@ public class Controller implements ActionListener {
 					} else {
 						continue;
 					}
+
+				}
+				if (enter) {
+					vf.getShifts().getStartDate2().setDate(null);
+					vf.getShifts().getFinishDate2().setDate(null);
+					vf.getShifts().getId1().setText(null);
+					vf.getShifts().getId2().setText(null);
+					JOptionPane.showMessageDialog(null, "El cambio no se puede realizar, cambias los ids");
 
 				}
 			}
