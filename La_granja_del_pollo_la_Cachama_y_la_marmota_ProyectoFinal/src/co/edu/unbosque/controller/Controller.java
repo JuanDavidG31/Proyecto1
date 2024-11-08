@@ -2683,6 +2683,8 @@ public class Controller implements ActionListener {
 					vf.getSchedule().getAppointmentNumbers().setText(null);
 					vf.getSchedule().getDate2().setDate(null);
 
+					
+					
 					break p;
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo actualizar");
@@ -2711,6 +2713,9 @@ public class Controller implements ActionListener {
 
 				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
 				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
+				
+				String name = vf.getSchedule().getName1().getText().toString();
+				String email=vf.getSchedule().getEmail().getText().toString();
 
 				Date tDate = vf.getSchedule().getDate1().getDate();
 				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -2730,6 +2735,19 @@ public class Controller implements ActionListener {
 					vf.getSchedule().getDate1().setCalendar(null);
 					// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAIL
 
+					Properties prop = FileHandler.loadProperties("mail.properties");
+
+					String subject = prop.getProperty("mail.appointment.scheduled.subject");
+
+					String body = prop.getProperty("mail.appointment.scheduled.body");
+
+					String message = body.replace("{nombrePaciente}", name)
+							.replace("{numeroIdentificacion}", String.valueOf(id))
+							.replace("{numeroCita}", String.valueOf(appoitment))
+							.replace("{especialidadCita}", specialty).replace("{fechaCita}", date)
+							.replace("{nombreDoctor}", doctor);
+
+					sendEmail(email, subject, message);
 				} else {
 
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3296,7 +3314,20 @@ public class Controller implements ActionListener {
 							vf.getPersonMenu().getDoctorUpdateName().setText(null);
 							vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
 							vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+
+							Properties prop = FileHandler.loadProperties("mail.properties");
+
+							String subject = prop.getProperty("mail.doctor.update.subject");
+
+							String body = prop.getProperty("mail.doctor.update.body");
+
+							String message = body.replace("{nombreDoctor}", name)
+									.replace("{numeroIdentificacion}", String.valueOf(id))
+									.replace("{correoDoctor}", email).replace("{especialidad}", speciality);
+
+							sendEmail(email, subject, message);
 							doctorOrderId();
+
 						} else {
 							JOptionPane.showMessageDialog(null, "No se pudo actualizar el doctor");
 						}
