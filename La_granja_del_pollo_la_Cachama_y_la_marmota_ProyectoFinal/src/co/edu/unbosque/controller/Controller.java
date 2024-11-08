@@ -398,6 +398,7 @@ public class Controller implements ActionListener {
 							vf.getShowOptions().setVisible(false);
 							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().getReSchedulePanel().setVisible(true);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
 						}
 
@@ -431,6 +432,7 @@ public class Controller implements ActionListener {
 							vf.getShowOptions().setVisible(false);
 							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().getCancelPanel().setVisible(true);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
 						}
 
@@ -439,6 +441,7 @@ public class Controller implements ActionListener {
 				}
 
 			}
+
 			break;
 		case "backSelectDate":
 			if (schedule == 2) {
@@ -2253,6 +2256,7 @@ public class Controller implements ActionListener {
 					vf.getShowOptions().setVisible(false);
 					vf.getPersonMenu().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
+
 					vf.getHome().setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
