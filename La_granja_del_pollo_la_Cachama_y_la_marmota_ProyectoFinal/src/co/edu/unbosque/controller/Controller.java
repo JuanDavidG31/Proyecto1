@@ -36,8 +36,11 @@ import co.edu.unbosque.model.AppoitmentReportDTO;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.model.persistence.FileHandler;
+import co.edu.unbosque.util.exceptions.AgeNotValidException;
+import co.edu.unbosque.util.exceptions.EmailNotValidException;
 import co.edu.unbosque.util.exceptions.ExceptionChecker;
 import co.edu.unbosque.util.exceptions.IdentificationNotValidException;
+import co.edu.unbosque.util.exceptions.NameNotValidException;
 import co.edu.unbosque.util.order.idDoctorOrder;
 import co.edu.unbosque.util.order.nameSpecialityTurnOrder;
 import co.edu.unbosque.view.ViewFacade;
@@ -2610,7 +2613,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public boolean idCheckException(int id) {
+	public boolean idCheckException(String id) {
 		try {
 			ExceptionChecker.IdentificationNotValidNumber(id);
 		} catch (IdentificationNotValidException e) {
@@ -2746,80 +2749,129 @@ public class Controller implements ActionListener {
 		int contador = 0;
 		String speciality = vf.getPersonMenu().getSpeciality().getSelectedItem().toString();
 
-		doctor = new ArrayList<>();
-		doctor = mf.getDoctor().getAll();
+		boolean checkSpeciality = nameCheckException(speciality);
 
-		for (int i = 0; i < doctor.size(); i++) {
+		if (checkSpeciality) {
+			vf.getPersonMenu().getSpeciality().setSelectedItem("");
+			JOptionPane.showMessageDialog(null, "La especialidad tiene caracteres incorrectos");
+		} else {
 
-			String spe = doctor.get(i).getSpecialty();
+			doctor = new ArrayList<>();
+			doctor = mf.getDoctor().getAll();
 
-			if (spe.equals(speciality)) {
-				contador++;
-				continue;
+			for (int i = 0; i < doctor.size(); i++) {
+
+				String spe = doctor.get(i).getSpecialty();
+
+				if (spe.equals(speciality)) {
+					contador++;
+					continue;
+				}
+
 			}
 
+			if (contador < 8) {
+
+				String id2 = vf.getPersonMenu().getDoctorId().getText().toString();
+				String name = vf.getPersonMenu().getDoctorName().getText().toString();
+				String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
+
+				boolean checkId = idCheckException(id2);
+				boolean checkName = nameCheckException(name);
+				boolean checkEmail = emailCheckException(email);
+
+				if (checkId) {
+					vf.getPersonMenu().getDoctorId().setText(null);
+					JOptionPane.showMessageDialog(null, "El id tiene caracteres incorrectos");
+				} else if (checkEmail) {
+					vf.getPersonMenu().getEmailDoctor().setText(null);
+					JOptionPane.showMessageDialog(null, "El email tiene caracteres incorrectos");
+				} else if (checkName) {
+					vf.getPersonMenu().getDoctorName().setText(null);
+					JOptionPane.showMessageDialog(null, "El nombre tiene caracteres incorrectos");
+				} else {
+
+					int id = Integer.parseInt(id2);
+
+					if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality, "inactivo"))) {
+						JOptionPane.showMessageDialog(null, "Doctor creado con exito");
+						vf.getPersonMenu().getDoctorId().setText(null);
+						vf.getPersonMenu().getDoctorName().setText(null);
+						vf.getPersonMenu().getEmailDoctor().setText(null);
+						vf.getPersonMenu().getSpeciality().setSelectedItem("");
+
+						Properties prop = FileHandler.loadProperties("mail.properties");
+
+						String subject = prop.getProperty("mail.doctor.welcome.subject");
+
+						String body = prop.getProperty("mail.doctor.welcome.body");
+
+						String message = body.replace("{nombreDoctor}", name).replace("{especialidad}", speciality)
+								.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoDoctor}", email);
+
+						doctorOrderId();
+						sendEmail(email, subject, message);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "No se pudo crear");
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No pueden existir mas de 7 doctores por especialidad");
+			}
 		}
+	}
 
-		if (contador < 8) {
+	public void createPatient() {
 
-			int id = Integer.parseInt(vf.getPersonMenu().getDoctorId().getText().toString());
-			String name = vf.getPersonMenu().getDoctorName().getText().toString();
-			String email = vf.getPersonMenu().getEmailDoctor().getText().toString();
+		String identi2 = vf.getPersonMenu().getPatientId().getText().toString();
+		String name = vf.getPersonMenu().getPatientName().getText().toString();
+		String age2 = vf.getPersonMenu().getPatientAge().getText().toString();
+		String email = vf.getPersonMenu().getEmailPatient().getText().toString();
+		boolean checkId = idCheckException(identi2);
+		boolean checkAge = ageCheckException(age2);
+		boolean checkName = nameCheckException(name);
+		boolean checkEmail = emailCheckException(email);
 
-			if (mf.getDoctor().add(new DoctorDTO(name, email, id, speciality, "inactivo"))) {
-				JOptionPane.showMessageDialog(null, "Doctor creado con exito");
-				vf.getPersonMenu().getDoctorId().setText(null);
-				vf.getPersonMenu().getDoctorName().setText(null);
-				vf.getPersonMenu().getEmailDoctor().setText(null);
-				vf.getPersonMenu().getSpeciality().setSelectedItem("");
+		if (checkId) {
+			vf.getPersonMenu().getPatientId().setText(null);
+			JOptionPane.showMessageDialog(null, "El id no puede contener caracteres especiales");
+		} else if (checkAge) {
+			vf.getPersonMenu().getPatientAge().setText(null);
+			JOptionPane.showMessageDialog(null, "La edad no puede contener caracteres especiales");
+		} else if (checkName) {
+			vf.getPersonMenu().getPatientName().setText(null);
+			JOptionPane.showMessageDialog(null, "El nombre no tiene un formato correcto");
+		} else if (checkEmail) {
+			vf.getPersonMenu().getEmailPatient().setText(null);
+			JOptionPane.showMessageDialog(null, "El email no tiene un formato correcto");
+		} else {
+
+			int identi = Integer.parseInt(identi2);
+			int age = Integer.parseInt(age2);
+
+			if (mf.getPatient().add(new PatientDTO(name, email, identi, age))) {
+				vf.getPersonMenu().getPatientId().setText(null);
+				vf.getPersonMenu().getPatientName().setText(null);
+				vf.getPersonMenu().getPatientAge().setText(null);
+				vf.getPersonMenu().getEmailPatient().setText(null);
+				JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
 				Properties prop = FileHandler.loadProperties("mail.properties");
 
-				String subject = prop.getProperty("mail.doctor.welcome.subject");
+				String subject = prop.getProperty("mail.patient.creation.subject");
 
-				String body = prop.getProperty("mail.doctor.welcome.body");
+				String body = prop.getProperty("mail.patient.creation.body");
 
-				String message = body.replace("{nombreDoctor}", name).replace("{especialidad}", speciality)
-						.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoDoctor}", email);
+				String message = body.replace("{nombrePaciente}", name)
+						.replace("{numeroIdentificacion}", String.valueOf(identi)).replace("{correo}", email);
 
-				doctorOrderId();
+				// enviarConGMail(email, subject, message);
 				sendEmail(email, subject, message);
 
 			} else {
 				JOptionPane.showMessageDialog(null, "No se pudo crear");
 			}
-		} else {
-			JOptionPane.showMessageDialog(null, "No pueden existir mas de 7 doctores por especialidad");
-		}
-	}
-
-	public void createPatient() {
-		int identi = Integer.parseInt(vf.getPersonMenu().getPatientId().getText().toString());
-		String name = vf.getPersonMenu().getPatientName().getText().toString();
-		int age = Integer.parseInt(vf.getPersonMenu().getPatientAge().getText().toString());
-		String email = vf.getPersonMenu().getEmailPatient().getText().toString();
-
-		if (mf.getPatient().add(new PatientDTO(name, email, identi, age))) {
-			vf.getPersonMenu().getPatientId().setText(null);
-			vf.getPersonMenu().getPatientName().setText(null);
-			vf.getPersonMenu().getPatientAge().setText(null);
-			vf.getPersonMenu().getEmailPatient().setText(null);
-			JOptionPane.showMessageDialog(null, "Paciente creado con exito");
-
-			Properties prop = FileHandler.loadProperties("mail.properties");
-
-			String subject = prop.getProperty("mail.patient.creation.subject");
-
-			String body = prop.getProperty("mail.patient.creation.body");
-
-			String message = body.replace("{nombrePaciente}", name)
-					.replace("{numeroIdentificacion}", String.valueOf(identi)).replace("{correo}", email);
-
-			// enviarConGMail(email, subject, message);
-			sendEmail(email, subject, message);
-
-		} else {
-			JOptionPane.showMessageDialog(null, "No se pudo crear");
 		}
 	}
 
@@ -3118,56 +3170,83 @@ public class Controller implements ActionListener {
 
 	public void updatePerson() {
 		boolean ent = true;
-		int id = Integer.parseInt(vf.getPersonMenu().getPatientUpdateId().getText().toString());
+		String id2 = vf.getPersonMenu().getPatientUpdateId().getText().toString();
+		boolean checkId = idCheckException(id2);
 
-		patient = new ArrayList<>();
-		patient = mf.getPatient().getAll();
+		if (checkId) {
+			vf.getPersonMenu().getPatientUpdateId().setText(null);
+			JOptionPane.showMessageDialog(null, "El id no puede contener caracteres especiales");
 
-		for (int i = 0; i < patient.size(); i++) {
+		} else {
+			int id = Integer.parseInt(id2);
+			patient = new ArrayList<>();
+			patient = mf.getPatient().getAll();
 
-			int tId = patient.get(i).getId();
+			for (int i = 0; i < patient.size(); i++) {
 
-			if (id == tId) {
+				int tId = patient.get(i).getId();
 
-				String name = vf.getPersonMenu().getPatientUpdateName().getText().toString();
-				int age = Integer.parseInt(vf.getPersonMenu().getPatientUpdateAge().getText().toString());
-				String email = vf.getPersonMenu().getEmailUpdatePatient().getText().toString();
+				if (id == tId) {
 
-				if (mf.getPatient().update(new PatientDTO(null, null, id, 0), new PatientDTO(name, email, id, age))) {
-					JOptionPane.showMessageDialog(null, "Paciente actualizado");
-					vf.getPersonMenu().getPatientUpdateId().setText(null);
-					vf.getPersonMenu().getPatientUpdateName().setText(null);
-					vf.getPersonMenu().getPatientUpdateAge().setText(null);
-					vf.getPersonMenu().getEmailUpdatePatient().setText(null);
+					String name = vf.getPersonMenu().getPatientUpdateName().getText().toString();
+					String age2 = vf.getPersonMenu().getPatientUpdateAge().getText().toString();
+					String email = vf.getPersonMenu().getEmailUpdatePatient().getText().toString();
 
-					Properties prop = FileHandler.loadProperties("mail.properties");
+					boolean checkName = nameCheckException(name);
+					boolean checkEmail = emailCheckException(email);
+					boolean checkAge = ageCheckException(age2);
 
-					String subject = prop.getProperty("mail.patient.update.subject");
+					if (checkEmail) {
+						vf.getPersonMenu().getEmailUpdatePatient().setText(null);
+						JOptionPane.showMessageDialog(null, "El email no esta en el formato correcto");
+					} else if (checkName) {
+						vf.getPersonMenu().getPatientUpdateName().setText(null);
+						JOptionPane.showMessageDialog(null, "El nombre no esta en el formato correcto");
+					} else if (checkAge) {
+						vf.getPersonMenu().getPatientUpdateAge().setText(null);
+						JOptionPane.showMessageDialog(null, "La edad no puede contener caracteres especiales");
+					} else {
 
-					String body = prop.getProperty("mail.patient.update.body");
+						int age = Integer.parseInt(age2);
 
-					String message = body.replace("{nombrePaciente}", name)
-							.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoPaciente}", email)
-							.replace("{edadPaciente}", String.valueOf(age));
+						if (mf.getPatient().update(new PatientDTO(null, null, id, 0),
+								new PatientDTO(name, email, id, age))) {
+							JOptionPane.showMessageDialog(null, "Paciente actualizado");
+							vf.getPersonMenu().getPatientUpdateId().setText(null);
+							vf.getPersonMenu().getPatientUpdateName().setText(null);
+							vf.getPersonMenu().getPatientUpdateAge().setText(null);
+							vf.getPersonMenu().getEmailUpdatePatient().setText(null);
 
-					sendEmail(email, subject, message);
+							Properties prop = FileHandler.loadProperties("mail.properties");
+
+							String subject = prop.getProperty("mail.patient.update.subject");
+
+							String body = prop.getProperty("mail.patient.update.body");
+
+							String message = body.replace("{nombrePaciente}", name)
+									.replace("{numeroIdentificacion}", String.valueOf(id))
+									.replace("{correoPaciente}", email).replace("{edadPaciente}", String.valueOf(age));
+
+							sendEmail(email, subject, message);
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo actualizar el paciente");
+						}
+
+						ent = false;
+					}
 				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo actualizar el paciente");
+					continue;
 				}
 
-				ent = false;
-			} else {
-				continue;
 			}
 
-		}
-
-		if (ent) {
-			vf.getPersonMenu().getPatientUpdateId().setText(null);
-			vf.getPersonMenu().getPatientUpdateName().setText(null);
-			vf.getPersonMenu().getPatientUpdateAge().setText(null);
-			vf.getPersonMenu().getEmailUpdatePatient().setText(null);
-			JOptionPane.showMessageDialog(null, "El paciente no existe", "Error", JOptionPane.ERROR_MESSAGE);
+			if (ent) {
+				vf.getPersonMenu().getPatientUpdateId().setText(null);
+				vf.getPersonMenu().getPatientUpdateName().setText(null);
+				vf.getPersonMenu().getPatientUpdateAge().setText(null);
+				vf.getPersonMenu().getEmailUpdatePatient().setText(null);
+				JOptionPane.showMessageDialog(null, "El paciente no existe", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -3175,32 +3254,85 @@ public class Controller implements ActionListener {
 		doctor = new ArrayList<>();
 		doctor = mf.getDoctor().getAll();
 
-		int id = Integer.parseInt(vf.getPersonMenu().getDoctorUpdateId().getText().toString());
+		String id2 = vf.getPersonMenu().getDoctorUpdateId().getText().toString();
 
-		for (int i = 0; i < doctor.size(); i++) {
+		boolean checkId = idCheckException(id2);
 
-			int tIds = doctor.get(i).getId();
-			if (tIds == id) {
+		if (checkId) {
+			vf.getPersonMenu().getDoctorUpdateId().setText(null);
+			JOptionPane.showMessageDialog(null, "El id no puede contener caracteres especiales");
 
-				String name = vf.getPersonMenu().getDoctorUpdateName().getText().toString();
-				String email = vf.getPersonMenu().getEmailUpdateDoctor().getText().toString();
-				String speciality = vf.getPersonMenu().getSpecialityUpdate().getSelectedItem().toString();
-				String status = doctor.get(i).getStatus();
+		} else {
 
-				if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null),
-						new DoctorDTO(name, email, id, speciality, status))) {
-					JOptionPane.showMessageDialog(null, "Se actualizo el doctor");
-					vf.getPersonMenu().getDoctorUpdateId().setText(null);
-					vf.getPersonMenu().getDoctorUpdateName().setText(null);
-					vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
-					vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
-					doctorOrderId();
-				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo actualizar el doctor");
+			int id = Integer.parseInt(id2);
+
+			for (int i = 0; i < doctor.size(); i++) {
+
+				int tIds = doctor.get(i).getId();
+				if (tIds == id) {
+
+					String name = vf.getPersonMenu().getDoctorUpdateName().getText().toString();
+					String email = vf.getPersonMenu().getEmailUpdateDoctor().getText().toString();
+					String speciality = vf.getPersonMenu().getSpecialityUpdate().getSelectedItem().toString();
+
+					boolean checkName = nameCheckException(name);
+					boolean checkEmail = emailCheckException(email);
+					boolean checkSpeciality = nameCheckException(speciality);
+
+					if (checkName) {
+						vf.getPersonMenu().getDoctorUpdateName().setText(null);
+					} else if (checkEmail) {
+						vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
+					} else if (checkSpeciality) {
+						vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+					} else {
+
+						String status = doctor.get(i).getStatus();
+
+						if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null),
+								new DoctorDTO(name, email, id, speciality, status))) {
+							JOptionPane.showMessageDialog(null, "Se actualizo el doctor");
+							vf.getPersonMenu().getDoctorUpdateId().setText(null);
+							vf.getPersonMenu().getDoctorUpdateName().setText(null);
+							vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
+							vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+							doctorOrderId();
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo actualizar el doctor");
+						}
+					}
 				}
-
 			}
-
 		}
+	}
+
+	public boolean nameCheckException(String name) {
+
+		try {
+			ExceptionChecker.NameNotValid(name);
+		} catch (NameNotValidException e) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public boolean emailCheckException(String email) {
+		try {
+			ExceptionChecker.checkEmail(email);
+		} catch (EmailNotValidException e) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean ageCheckException(String age) {
+
+		try {
+			ExceptionChecker.AgeNotValidNumber(age);
+		} catch (AgeNotValidException e) {
+			return true;
+		}
+		return false;
 	}
 }
