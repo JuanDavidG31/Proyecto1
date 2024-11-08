@@ -1082,6 +1082,7 @@ public class Controller implements ActionListener {
 
 			vf.getShowOptions().getNewPersonPanel().setVisible(false);
 			vf.getShowOptions().getPersonPanel().setVisible(true);
+			vf.getShowOptions().getNewPerson().setVisible(true);
 
 			break;
 		case "initAddPerson":
@@ -2252,10 +2253,9 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
-					vf.getShowOptions().getNewPerson().setVisible(false);
-					vf.getPersonMenu().setVisible(false);
+					vf.getShowOptions().getNewPersonPanel().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
-
+					vf.getPersonMenu().setVisible(false);
 					vf.getHome().setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
