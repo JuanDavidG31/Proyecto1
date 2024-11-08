@@ -50,7 +50,7 @@ public class AddMenu extends JFrame {
 		speciality.setBounds(356, 305, 251, 30);
 		speciality.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		speciality.addItem("");
-		speciality.addItem("Cirujia");
+		speciality.addItem("Cirugia");
 		speciality.addItem("Oncologia");
 		speciality.addItem("Dermatologia");
 		speciality.addItem("Neumologia");
@@ -62,7 +62,7 @@ public class AddMenu extends JFrame {
 		specialityUpdate.setBounds(356, 305, 251, 30);
 		specialityUpdate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		specialityUpdate.addItem("");
-		specialityUpdate.addItem("Cirujia");
+		specialityUpdate.addItem("Cirugia");
 		specialityUpdate.addItem("Oncologia");
 		specialityUpdate.addItem("Dermatologia");
 		specialityUpdate.addItem("Neumologia");

@@ -502,7 +502,7 @@ public class Controller implements ActionListener {
 				List<String> especialidad5 = new ArrayList<>();
 				List<String> especialidad6 = new ArrayList<>();
 
-				String espe1 = "Cirujia";
+				String espe1 = "Cirugia";
 				String espe2 = "Oncologia";
 				String espe3 = "Dermatologia";
 				String espe4 = "Neumologia";
@@ -1677,7 +1677,7 @@ public class Controller implements ActionListener {
 
 			String item = vf.getSchedule().getSpecialty().getSelectedItem().toString();
 
-			if (item.equals("Cirujia")) {
+			if (item.equals("Cirugia")) {
 
 				shift = new ArrayList<>();
 				shift = mf.getShift().getAll();
@@ -1690,7 +1690,7 @@ public class Controller implements ActionListener {
 
 						for (ShiftsDTO sh : shift) {
 
-							if (sh.getSpecialty().equals("Cirujia")) {
+							if (sh.getSpecialty().equals("Cirugia")) {
 
 								boolean exists = false;
 								for (int j = 0; j < vf.getSchedule().getDoctor().getItemCount(); j++) {

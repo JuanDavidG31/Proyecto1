@@ -208,7 +208,7 @@ public class Schedule extends JFrame {
 		specialty.setBounds(356, 292, 251, 30);
 		specialty.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		specialty.addItem("");
-		specialty.addItem("Cirujia");
+		specialty.addItem("Cirugia");
 		specialty.addItem("Oncologia");
 		specialty.addItem("Dermatologia");
 		specialty.addItem("Neumologia");
