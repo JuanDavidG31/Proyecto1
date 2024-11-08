@@ -37,6 +37,7 @@ import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.util.exceptions.AgeNotValidException;
+import co.edu.unbosque.util.exceptions.DateFormatNotValidException;
 import co.edu.unbosque.util.exceptions.EmailNotValidException;
 import co.edu.unbosque.util.exceptions.ExceptionChecker;
 import co.edu.unbosque.util.exceptions.IdentificationNotValidException;
@@ -2640,6 +2641,26 @@ public class Controller implements ActionListener {
 
 				if (mf.getAppointment().delete(new AppointmentDTO(0, null, null, null, appoint))) {
 
+					String speciality = appointment.get(i).getSpecialty();
+					String name = null;
+					String email = null;
+
+					patient = new ArrayList<PatientDTO>();
+					patient = mf.getPatient().getAll();
+
+					for (PatientDTO pa : patient) {
+
+						int id = pa.getId();
+
+						if (id == appointment.get(i).getId()) {
+							name = pa.getName();
+							email = pa.getEmail();
+							break;
+
+						}
+
+					}
+
 					JOptionPane.showMessageDialog(null, "Cita de numero " + appoint + " eliminado exitosamente");
 
 					vf.getSchedule().getAppointmentNumber().setText(null);
@@ -2661,88 +2682,133 @@ public class Controller implements ActionListener {
 
 	public void reGenerated() {
 		int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
-		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-		String date = formatoFecha.format(vf.getSchedule().getDate2().getDate());
+		Date tDates = vf.getSchedule().getDate2().getDate();
 
-		appointment = new ArrayList<>();
-		appointment = mf.getAppointment().getAll();
+		boolean checkDate = dateCheckException(tDates);
 
-		p: for (int i = 0; i < appointment.size(); i++) {
-			int ap = appointment.get(i).getAppointmentNum();
+		if (checkDate) {
+			vf.getSchedule().getDate2().setDate(null);
+			JOptionPane.showMessageDialog(null, "La fecha tiene caracteres incorrectos");
 
-			if (ap == appoint) {
-				String doctor = appointment.get(i).getDoctor();
-				String specialty = appointment.get(i).getSpecialty();
-				int id = appointment.get(i).getId();
+		} else {
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+			String date = formatoFecha.format(tDates);
 
-				if (mf.getAppointment().update(new AppointmentDTO(0, null, null, null, appoint),
-						new AppointmentDTO(id, doctor, specialty, date, appoint))) {
+			appointment = new ArrayList<>();
+			appointment = mf.getAppointment().getAll();
 
-					JOptionPane.showMessageDialog(null, "Cita de numero " + appoint + " actualizado exitosamente");
-					vf.getSchedule().getId2().setText(null);
-					vf.getSchedule().getAppointmentNumbers().setText(null);
-					vf.getSchedule().getDate2().setDate(null);
+			p: for (int i = 0; i < appointment.size(); i++) {
+				int ap = appointment.get(i).getAppointmentNum();
 
-					break p;
+				if (ap == appoint) {
+					String doctor = appointment.get(i).getDoctor();
+					String specialty = appointment.get(i).getSpecialty();
+					int id = appointment.get(i).getId();
+
+					if (mf.getAppointment().update(new AppointmentDTO(0, null, null, null, appoint),
+							new AppointmentDTO(id, doctor, specialty, date, appoint))) {
+
+						String name = null;
+						String email = null;
+
+						patient = new ArrayList<PatientDTO>();
+						patient = mf.getPatient().getAll();
+
+						for (PatientDTO pa : patient) {
+
+							int tIds = pa.getId();
+
+							if (tIds == id) {
+								name = pa.getName();
+								email = pa.getEmail();
+								break;
+
+							}
+
+						}
+
+						JOptionPane.showMessageDialog(null, "Cita de numero " + appoint + " actualizado exitosamente");
+						vf.getSchedule().getId2().setText(null);
+						vf.getSchedule().getAppointmentNumbers().setText(null);
+						vf.getSchedule().getDate2().setDate(null);
+
+						break p;
+					} else {
+						JOptionPane.showMessageDialog(null, "No se pudo actualizar");
+						break p;
+
+					}
+
 				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo actualizar");
-					break p;
-
+					continue p;
 				}
 
-			} else {
-				continue p;
 			}
-
 		}
 	}
 
 	public void generatedAppointment() {
 		String id = vf.getSchedule().getId().getText().toString();
-		int tId = Integer.parseInt(id);
 
-		patient = new ArrayList<>();
-		patient = mf.getPatient().getAll();
-		for (int i = 0; i < patient.size(); i++) {
+		boolean checkId = idCheckException(id);
 
-			int oldId = patient.get(i).getId();
+		if (checkId) {
+			vf.getSchedule().getId().setText(null);
+			JOptionPane.showMessageDialog(null, "El id tiene caracteres incorrectos");
 
-			if (oldId == tId) {
+		} else {
+			int tId = Integer.parseInt(id);
+			patient = new ArrayList<>();
+			patient = mf.getPatient().getAll();
+			for (int i = 0; i < patient.size(); i++) {
 
-				String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
-				String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
+				int oldId = patient.get(i).getId();
 
-				Date tDate = vf.getSchedule().getDate1().getDate();
-				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-				String date = formatoFecha.format(tDate);
+				if (oldId == tId) {
 
-				int appoitment = appoitment();
+					String doctor = vf.getSchedule().getDoctor().getSelectedItem().toString();
+					String specialty = vf.getSchedule().getSpecialty().getSelectedItem().toString();
+					Date tDate = vf.getSchedule().getDate1().getDate();
 
-				if (mf.getAppointment().add(new AppointmentDTO(tId, doctor, specialty, date, appoitment))) {
+					boolean checkDate = dateCheckException(tDate);
 
-					JOptionPane.showMessageDialog(null, "Cita de numero " + appoitment + " creado exitosamente");
+					if (checkDate) {
+						JOptionPane.showMessageDialog(null, "La fecha tiene caracteres incorrectos");
+						vf.getSchedule().getDate1().setDate(null);
+					} else {
 
-					vf.getSchedule().getId().setText(null);
-					vf.getSchedule().getName1().setText(null);
-					vf.getSchedule().getEmail().setText(null);
-					vf.getSchedule().getSpecialty().setSelectedItem("");
-					vf.getSchedule().getDoctor().setSelectedItem("");
-					vf.getSchedule().getDate1().setCalendar(null);
-					// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAIL
+						SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+						String date = formatoFecha.format(tDate);
 
+						int appoitment = appoitment();
+
+						if (mf.getAppointment().add(new AppointmentDTO(tId, doctor, specialty, date, appoitment))) {
+
+							JOptionPane.showMessageDialog(null,
+									"Cita de numero " + appoitment + " creado exitosamente");
+
+							vf.getSchedule().getId().setText(null);
+							vf.getSchedule().getName1().setText(null);
+							vf.getSchedule().getEmail().setText(null);
+							vf.getSchedule().getSpecialty().setSelectedItem("");
+							vf.getSchedule().getDoctor().setSelectedItem("");
+							vf.getSchedule().getDate1().setCalendar(null);
+							// ENVIO DE NOTIFICACION MEDIANTE CORREO GMAIL
+
+						} else {
+
+							JOptionPane.showMessageDialog(null, "No se pudo crear");
+
+						}
+
+						break;
+					}
 				} else {
-
-					JOptionPane.showMessageDialog(null, "No se pudo crear");
-
+					continue;
 				}
 
-				break;
-			} else {
-				continue;
 			}
-
 		}
-
 	}
 
 	public void createDoctor() {
@@ -2878,41 +2944,54 @@ public class Controller implements ActionListener {
 	public void registerTre() {
 		boolean enter = true;
 		String name = vf.getTreatments().getName1().getText().toString();
+		String specialty = vf.getTreatments().getSpecialty().getSelectedItem().toString();
+		String treatment = vf.getTreatments().getTreatmentTxt().getText().toString();
+		String status = vf.getTreatments().getStatus().getSelectedItem().toString();
 
-		patient = new ArrayList<>();
-		patient = mf.getPatient().getAll();
-		newP: for (int i = 0; i < patient.size(); i++) {
+		boolean checkTreatment = nameCheckException(treatment);
+		boolean checkName = nameCheckException(name);
 
-			String oldName = patient.get(i).getName();
+		if (checkName) {
+			vf.getTreatments().getName1().setText(null);
+			JOptionPane.showMessageDialog(null, "El nombre tiene caracteres incorrectos");
 
-			if (name.equals(oldName)) {
+		} else if (checkTreatment) {
+			vf.getTreatments().getTreatmentTxt().setText(null);
+			JOptionPane.showMessageDialog(null, "El tratamiento tiene caracteres incorrectos");
 
-				enter = false;
+		} else {
 
-				String specialty = vf.getTreatments().getSpecialty().getSelectedItem().toString();
-				String treatment = vf.getTreatments().getTreatmentTxt().getText().toString();
-				String status = vf.getTreatments().getStatus().getSelectedItem().toString();
+			patient = new ArrayList<>();
+			patient = mf.getPatient().getAll();
+			newP: for (int i = 0; i < patient.size(); i++) {
 
-				if (mf.getTreatment().add(new TreatmentDTO(name, specialty, treatment, status))) {
-					JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
-					vf.getTreatments().getId1().setText(null);
-					vf.getTreatments().getName1().setText(null);
-					vf.getTreatments().getSpecialty().setSelectedItem("");
-					vf.getTreatments().getTreatmentTxt().setText(null);
-					vf.getTreatments().getStatus().setSelectedItem("");
+				String oldName = patient.get(i).getName();
+
+				if (name.equals(oldName)) {
+
+					enter = false;
+
+					if (mf.getTreatment().add(new TreatmentDTO(name, specialty, treatment, status))) {
+						JOptionPane.showMessageDialog(null, "Tratamiento creado correctamente");
+						vf.getTreatments().getId1().setText(null);
+						vf.getTreatments().getName1().setText(null);
+						vf.getTreatments().getSpecialty().setSelectedItem("");
+						vf.getTreatments().getTreatmentTxt().setText(null);
+						vf.getTreatments().getStatus().setSelectedItem("");
+					} else {
+						JOptionPane.showMessageDialog(null, "No se pudo crear");
+					}
+
+					break newP;
 				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo crear");
+					continue newP;
 				}
 
-				break newP;
-			} else {
-				continue newP;
 			}
 
-		}
-
-		if (enter) {
-			JOptionPane.showMessageDialog(null, "El paciente no existe");
+			if (enter) {
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
+			}
 		}
 	}
 
@@ -2923,43 +3002,57 @@ public class Controller implements ActionListener {
 		String status = vf.getTreatments().getStatus2().getSelectedItem().toString();
 		String name = vf.getTreatments().getNameS().getText().toString();
 
-		treat = new ArrayList<>();
-		treat = mf.getTreatment().getAll();
+		boolean checkTreatment = nameCheckException(treatment);
+		boolean checkName = nameCheckException(name);
 
-		main: for (int i = 0; i < treat.size(); i++) {
+		if (checkName) {
+			vf.getTreatments().getNameS().setText(null);
+			JOptionPane.showMessageDialog(null, "El nombre tiene caracteres incorrectos");
 
-			String treatment2 = treat.get(i).getTreatment();
-			String speciality2 = treat.get(i).getSpecialty();
-			String status2 = treat.get(i).getVerified();
-			String name2 = treat.get(i).getName();
+		} else if (checkTreatment) {
+			vf.getTreatments().getTreatmentS().setText(null);
+			JOptionPane.showMessageDialog(null, "El tratamiento tiene caracteres incorrectos");
 
-			if (treatment.equals(treatment2) && speciality.equals(speciality2) && status.equals(status2)
-					&& name.equals(name2)) {
-				JOptionPane.showMessageDialog(null, "No se cambio ningun valor para actualizar", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				verf = false;
+		} else {
 
-				break main;
+			treat = new ArrayList<>();
+			treat = mf.getTreatment().getAll();
 
-			} else {
+			main: for (int i = 0; i < treat.size(); i++) {
 
-				continue main;
+				String treatment2 = treat.get(i).getTreatment();
+				String speciality2 = treat.get(i).getSpecialty();
+				String status2 = treat.get(i).getVerified();
+				String name2 = treat.get(i).getName();
+
+				if (treatment.equals(treatment2) && speciality.equals(speciality2) && status.equals(status2)
+						&& name.equals(name2)) {
+					JOptionPane.showMessageDialog(null, "No se cambio ningun valor para actualizar", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					verf = false;
+
+					break main;
+
+				} else {
+
+					continue main;
+				}
+
 			}
 
-		}
+			if (verf) {
 
-		if (verf) {
-
-			if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
-					new TreatmentDTO(name, speciality, treatment, status))) {
-				JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
-				vf.getTreatments().getId2().setText(null);
-				vf.getTreatments().getTreatmentS().setText(null);
-				vf.getTreatments().getSpecialty2().setSelectedItem(null);
-				vf.getTreatments().getStatus2().setSelectedItem(null);
-				vf.getTreatments().getNameS().setText(null);
-			} else {
-				JOptionPane.showMessageDialog(null, "No se pudo actualizar");
+				if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
+						new TreatmentDTO(name, speciality, treatment, status))) {
+					JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
+					vf.getTreatments().getId2().setText(null);
+					vf.getTreatments().getTreatmentS().setText(null);
+					vf.getTreatments().getSpecialty2().setSelectedItem(null);
+					vf.getTreatments().getStatus2().setSelectedItem(null);
+					vf.getTreatments().getNameS().setText(null);
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo actualizar");
+				}
 			}
 		}
 	}
@@ -2969,65 +3062,82 @@ public class Controller implements ActionListener {
 		String name = null;
 		String treatment = vf.getTreatments().getTreatmentF().getText().toString();
 		String status = vf.getTreatments().getStatus3().getSelectedItem().toString();
-		int id = Integer.parseInt(vf.getTreatments().getId3().getText().toString());
-		patient = new ArrayList<>();
-		patient = mf.getPatient().getAll();
+		String id2 = vf.getTreatments().getId3().getText().toString();
 
-		for (int pa = 0; pa < patient.size(); pa++) {
+		boolean checkId = idCheckException(id2);
+		boolean checkTreatment = nameCheckException(treatment);
 
-			int tIds = patient.get(pa).getId();
+		if (checkId) {
+			vf.getTreatments().getId3().setText(null);
+			JOptionPane.showMessageDialog(null, "El id tiene caracteres incorrectos");
 
-			if (tIds == id) {
+		} else if (checkTreatment) {
+			vf.getTreatments().getTreatmentF().setText(null);
+			JOptionPane.showMessageDialog(null, "El tratamiento tiene caracteres incorrectos");
 
-				name = patient.get(pa).getName();
+		} else {
 
-			} else {
-				continue;
-			}
+			int id = Integer.parseInt(id2);
 
-		}
-		String speciality = "";
+			patient = new ArrayList<>();
+			patient = mf.getPatient().getAll();
 
-		treat = new ArrayList<>();
-		treat = mf.getTreatment().getAll();
+			for (int pa = 0; pa < patient.size(); pa++) {
 
-		main: for (int i = 0; i < treat.size(); i++) {
+				int tIds = patient.get(pa).getId();
 
-			String name2 = treat.get(i).getName();
-			speciality = treat.get(i).getSpecialty();
-			if (name.equals(name2)) {
+				if (tIds == id) {
 
-				if (status.equals("Finalizado")) {
-					JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					verf2 = false;
-
-					break main;
+					name = patient.get(pa).getName();
 
 				} else {
-					verf2 = true;
+					continue;
 				}
 
-			} else {
-				continue main;
+			}
+			String speciality = "";
+
+			treat = new ArrayList<>();
+			treat = mf.getTreatment().getAll();
+
+			main: for (int i = 0; i < treat.size(); i++) {
+
+				String name2 = treat.get(i).getName();
+				speciality = treat.get(i).getSpecialty();
+				if (name.equals(name2)) {
+
+					if (status.equals("Finalizado")) {
+						JOptionPane.showMessageDialog(null, "No se puede finalizar el tratamiento", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						verf2 = false;
+
+						break main;
+
+					} else {
+						verf2 = true;
+					}
+
+				} else {
+					continue main;
+				}
+
 			}
 
-		}
+			if (verf2) {
 
-		if (verf2) {
+				vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
+				status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 
-			vf.getTreatments().getStatus3().setSelectedItem("Finalizado");
-			status = vf.getTreatments().getStatus3().getSelectedItem().toString();
+				if (mf.getTreatment().update2(new TreatmentDTO(null, null, treatment, null),
+						new TreatmentDTO(name, speciality, treatment, status))) {
+					JOptionPane.showMessageDialog(null, "Tratamiento finalizado correctamente");
+					vf.getTreatments().getTreatmentF().setText(null);
+					vf.getTreatments().getStatus3().setSelectedItem(null);
+					vf.getTreatments().getId3().setText(null);
 
-			if (mf.getTreatment().update2(new TreatmentDTO(null, null, treatment, null),
-					new TreatmentDTO(name, speciality, treatment, status))) {
-				JOptionPane.showMessageDialog(null, "Tratamiento finalizado correctamente");
-				vf.getTreatments().getTreatmentF().setText(null);
-				vf.getTreatments().getStatus3().setSelectedItem(null);
-				vf.getTreatments().getId3().setText(null);
-
-			} else {
-				JOptionPane.showMessageDialog(null, "No se pudo finalizar el tratamiento ");
+				} else {
+					JOptionPane.showMessageDialog(null, "No se pudo finalizar el tratamiento ");
+				}
 			}
 		}
 	}
@@ -3035,136 +3145,153 @@ public class Controller implements ActionListener {
 	public void changeTurn() {
 		boolean enter = true;
 
-		int id = Integer.parseInt(vf.getShifts().getId1().getText().toString());
+		String id3 = vf.getShifts().getId1().getText().toString();
+		String id4 = vf.getShifts().getId2().getText().toString();
 
-		shift = new ArrayList<ShiftsDTO>();
-		shift = mf.getShift().getAll();
-		doctor = new ArrayList<DoctorDTO>();
-		doctor = mf.getDoctor().getAll();
+		boolean checkId = idCheckException(id3);
+		boolean checkId2 = idCheckException(id4);
 
-		for (int i = 0; i < shift.size(); i++) {
+		if (checkId) {
+			vf.getShifts().getId1().setText(null);
+			JOptionPane.showMessageDialog(null, "El id1 tiene caracteres incorrectos");
 
-			int tId = shift.get(i).getId();
+		} else if (checkId2) {
+			vf.getShifts().getId1().setText(null);
+			JOptionPane.showMessageDialog(null, "El id2 tiene caracteres incorrectos");
 
-			if (id == tId) {
-				boolean exist = false;
+		} else {
 
-				int id2 = Integer.parseInt(vf.getShifts().getId2().getText().toString());
+			int id = Integer.parseInt(id3);
 
-				for (DoctorDTO dc : doctor) {
+			shift = new ArrayList<ShiftsDTO>();
+			shift = mf.getShift().getAll();
+			doctor = new ArrayList<DoctorDTO>();
+			doctor = mf.getDoctor().getAll();
 
-					if (dc.getId() == id2) {
+			for (int i = 0; i < shift.size(); i++) {
 
-						if (dc.getStatus().equals("inactivo")) {
+				int tId = shift.get(i).getId();
 
-							exist = true;
-							break;
+				if (id == tId) {
+					boolean exist = false;
+
+					int id2 = Integer.parseInt(id4);
+
+					for (DoctorDTO dc : doctor) {
+
+						if (dc.getId() == id2) {
+
+							if (dc.getStatus().equals("inactivo")) {
+
+								exist = true;
+								break;
+							}
+
+						} else {
+							continue;
 						}
 
-					} else {
-						continue;
 					}
 
-				}
+					if (exist == false) {
+						break;
+					}
 
-				if (exist == false) {
-					break;
-				}
+					if (exist) {
 
-				if (exist) {
+						for (ShiftsDTO sh : shift) {
 
-					for (ShiftsDTO sh : shift) {
+							if (sh.getId() == id) {
 
-						if (sh.getId() == id) {
+								String date1 = null;
+								String date2 = null;
+								String speciality = null;
+								String name = null;
 
-							String date1 = null;
-							String date2 = null;
-							String speciality = null;
-							String name = null;
+								for (int d = 0; d < doctor.size(); d++) {
 
-							for (int d = 0; d < doctor.size(); d++) {
+									int tIds = doctor.get(d).getId();
 
-								int tIds = doctor.get(d).getId();
+									if (tIds == id2) {
 
-								if (tIds == id2) {
+										date1 = sh.getDate1();
+										date2 = sh.getDate2();
+										speciality = doctor.get(d).getSpecialty();
+										name = doctor.get(d).getName();
 
-									date1 = sh.getDate1();
-									date2 = sh.getDate2();
-									speciality = doctor.get(d).getSpecialty();
-									name = doctor.get(d).getName();
+										if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
+												new ShiftsDTO(date1, date2, speciality, id2, name))) {
+											JOptionPane.showMessageDialog(null, "Cambio realizado");
 
-									if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
-											new ShiftsDTO(date1, date2, speciality, id2, name))) {
-										JOptionPane.showMessageDialog(null, "Cambio realizado");
+											enter = false;
+											SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+											Date tDate1 = null;
+											Date tDate2 = null;
+											try {
+												tDate1 = formato.parse(date1);
+												tDate2 = formato.parse(date2);
+											} catch (ParseException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 
-										enter = false;
-										SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-										Date tDate1 = null;
-										Date tDate2 = null;
-										try {
-											tDate1 = formato.parse(date1);
-											tDate2 = formato.parse(date2);
-										} catch (ParseException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
+											vf.getShifts().getStartDate2().setDate(tDate1);
+											vf.getShifts().getFinishDate2().setEnabled(true);
+											vf.getShifts().getFinishDate2().setDate(tDate2);
+											vf.getShifts().getId1().setText(null);
+											vf.getShifts().getId2().setText(null);
+											doctorOrderId();
+											turnNameSpeciality();
+											break;
+										} else {
+
+											JOptionPane.showMessageDialog(null, "no se pudo hacer el cambio");
 										}
 
-										vf.getShifts().getStartDate2().setDate(tDate1);
-										vf.getShifts().getFinishDate2().setEnabled(true);
-										vf.getShifts().getFinishDate2().setDate(tDate2);
-										vf.getShifts().getId1().setText(null);
-										vf.getShifts().getId2().setText(null);
-										doctorOrderId();
-										turnNameSpeciality();
-										break;
 									} else {
-
-										JOptionPane.showMessageDialog(null, "no se pudo hacer el cambio");
+										continue;
 									}
 
-								} else {
-									continue;
+								}
+								break;
+							}
+							for (DoctorDTO dc : doctor) {
+
+								if (dc.getId() == id) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
+
+									}
+
+								}
+								if (dc.getId() == id2) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
+
+									}
+
 								}
 
 							}
-							break;
 						}
-						for (DoctorDTO dc : doctor) {
 
-							if (dc.getId() == id) {
-
-								if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
-										dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-
-								}
-
-							}
-							if (dc.getId() == id2) {
-
-								if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null),
-										new DoctorDTO(dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
-
-								}
-
-							}
-
-						}
 					}
-
+					break;
+				} else {
+					continue;
 				}
-				break;
-			} else {
-				continue;
+
 			}
+			if (enter) {
+				vf.getShifts().getStartDate2().setDate(null);
+				vf.getShifts().getFinishDate2().setDate(null);
+				vf.getShifts().getId1().setText(null);
+				vf.getShifts().getId2().setText(null);
+				JOptionPane.showMessageDialog(null, "El cambio no se puede realizar, cambias los ids");
 
-		}
-		if (enter) {
-			vf.getShifts().getStartDate2().setDate(null);
-			vf.getShifts().getFinishDate2().setDate(null);
-			vf.getShifts().getId1().setText(null);
-			vf.getShifts().getId2().setText(null);
-			JOptionPane.showMessageDialog(null, "El cambio no se puede realizar, cambias los ids");
-
+			}
 		}
 	}
 
@@ -3281,9 +3408,12 @@ public class Controller implements ActionListener {
 
 					if (checkName) {
 						vf.getPersonMenu().getDoctorUpdateName().setText(null);
+						JOptionPane.showMessageDialog(null, "El nombre tiene caracteres incorrectos");
 					} else if (checkEmail) {
 						vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
+						JOptionPane.showMessageDialog(null, "El email tiene caracteres incorrectos");
 					} else if (checkSpeciality) {
+						JOptionPane.showMessageDialog(null, "La especialidad tiene caracteres incorrectos");
 						vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
 					} else {
 
@@ -3331,6 +3461,15 @@ public class Controller implements ActionListener {
 		try {
 			ExceptionChecker.AgeNotValidNumber(age);
 		} catch (AgeNotValidException e) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean dateCheckException(Date date) {
+		try {
+			ExceptionChecker.dateException(date);
+		} catch (DateFormatNotValidException e) {
 			return true;
 		}
 		return false;
