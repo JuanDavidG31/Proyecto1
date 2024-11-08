@@ -29,6 +29,7 @@ import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
+import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
@@ -53,6 +54,7 @@ public class Controller implements ActionListener {
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
+		
 		assignReaders();
 		vf.getHome().setVisible(true);
 		showScheduleInfo();
@@ -206,9 +208,6 @@ public class Controller implements ActionListener {
 		vf.getShifts().getSelectTurnTheme2().addActionListener(this);
 		vf.getShifts().getSelectTurnTheme2().setActionCommand("theme");
 
-		vf.getShifts().getGenerateChange().addActionListener(this);
-		vf.getShifts().getGenerateChange().setActionCommand("cambio");
-
 		vf.getShifts().getHomeTurn2().addActionListener(this);
 		vf.getShifts().getHomeTurn2().setActionCommand("homeTurn");
 
@@ -283,7 +282,7 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "holi":
-			// enviarConGMail(d, a, c);
+			enviarConGMail(d, a, c);
 			setInactive();
 			break;
 		case "initNewDoctor":
@@ -511,7 +510,119 @@ public class Controller implements ActionListener {
 
 		case "changeTurn":
 
-			vf.getShifts().getId1().getText().toString();
+			if (vf.getShifts().getId1().getText().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				int id = Integer.parseInt(vf.getShifts().getId1().getText().toString());
+
+				shift = new ArrayList<ShiftsDTO>();
+				shift = mf.getShift().getAll();
+				doctor = new ArrayList<DoctorDTO>();
+				doctor = mf.getDoctor().getAll();
+
+				for (int i = 0; i < shift.size(); i++) {
+
+					int tId = shift.get(i).getId();
+
+					if (id == tId) {
+						boolean exist = false;
+
+						int id2 = Integer.parseInt(vf.getShifts().getId2().getText().toString());
+
+						for (DoctorDTO dc : doctor) {
+
+							if (dc.getId() == id2) {
+
+								if (dc.getStatus().equals("inactivo")) {
+
+									exist = true;
+									break;
+								}
+
+							} else {
+								continue;
+							}
+
+						}
+
+						if (exist == false) {
+							break;
+						}
+
+						if (exist) {
+
+							for (ShiftsDTO sh : shift) {
+
+								if (sh.getId() == id) {
+
+									String date1 = null;
+									String date2 = null;
+									String speciality = null;
+									String name = null;
+
+									for (int d = 0; d < doctor.size(); d++) {
+
+										int tIds = doctor.get(d).getId();
+
+										if (tIds == id2) {
+
+											date1 = sh.getDate1();
+											date2 = sh.getDate2();
+											speciality = doctor.get(d).getSpecialty();
+											name = doctor.get(d).getName();
+
+											if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
+													new ShiftsDTO(date1, date2, speciality, id2, name))) {
+												JOptionPane.showMessageDialog(null, "Cambio realizado");
+												vf.getShifts().getId1().setText(null);
+												vf.getShifts().getId2().setText(null);
+												break;
+											} else {
+
+												JOptionPane.showMessageDialog(null, "no se pudo hacer el cambio");
+											}
+
+										} else {
+											continue;
+										}
+
+									}
+									break;
+								}
+
+							}
+
+							for (DoctorDTO dc : doctor) {
+
+								if (dc.getId() == id) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
+
+									}
+
+								}
+								if (dc.getId() == id2) {
+
+									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
+											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
+
+									}
+
+								}
+
+							}
+
+						}
+						break;
+					} else {
+						continue;
+					}
+
+				}
+			}
 
 			break;
 
@@ -670,7 +781,6 @@ public class Controller implements ActionListener {
 			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
-			
 
 			infoTreatment();
 			break;
@@ -1767,10 +1877,25 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
+					
+					Properties prop = FileHandler.loadProperties("mail.properties");
+					
+					String subject = prop.getProperty("mail.patient.creation.subject");
+					
+					String body=prop.getProperty("mail.patient.creation.body");
+					
+					String message = body
+						    .replace("{nombrePaciente}", name)
+						    .replace("{numeroIdentificacion}", String.valueOf(identi))
+						    .replace("{correo}", email);
+						
+					enviarConGMail(email, subject, message);
+					
 					vf.getShowOptions().getNewPersonPanel().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
 					vf.getPersonMenu().setVisible(false);
 					vf.getHome().setVisible(true);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
 				}
@@ -1818,6 +1943,19 @@ public class Controller implements ActionListener {
 						vf.getPersonMenu().getDoctorName().setText(null);
 						vf.getPersonMenu().getEmailDoctor().setText(null);
 						vf.getPersonMenu().getSpeciality().setSelectedItem("");
+						
+						Properties prop = FileHandler.loadProperties("mail.properties");
+						
+						String subject = prop.getProperty("mail.patient.creation.subject");
+						
+						String body=prop.getProperty("mail.patient.creation.body");
+						
+						String message = body
+							    .replace("{nombrePaciente}", name)
+							    .replace("{numeroIdentificacion}", name)
+							    .replace("{correo}", email);
+							
+						//enviarConGMail(email, subject, message);
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
 					}
@@ -2287,10 +2425,11 @@ public class Controller implements ActionListener {
 	}
 
 	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+		Properties prop = FileHandler.loadProperties("mail.properties");
+		
+		String remitente = prop.getProperty("mail.email.sender");
 
-		String remitente = "clinicaelbosque306@gmail.com";
-
-		String claveemail = "tgkg ofjv gqut qozn";
+		String claveemail = prop.getProperty("mail.password.sender");
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -2312,11 +2451,10 @@ public class Controller implements ActionListener {
 			transport.connect("smtp.gmail.com", remitente, claveemail);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			// mensaje de envio
+			JOptionPane.showMessageDialog(null, "Correo enviado exitosamente");
 		} catch (MessagingException me) {
-			me.printStackTrace();
-
-			// Joption
+			JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -2884,3 +3022,4 @@ public class Controller implements ActionListener {
 
 	}
 }
+//hola
