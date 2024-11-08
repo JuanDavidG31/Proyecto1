@@ -29,6 +29,7 @@ import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.AppointmentDTO;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
+import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
@@ -53,6 +54,7 @@ public class Controller implements ActionListener {
 	public Controller() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
+		
 		assignReaders();
 		vf.getHome().setVisible(true);
 		showScheduleInfo();
@@ -283,7 +285,7 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "holi":
-			// enviarConGMail(d, a, c);
+			enviarConGMail(d, a, c);
 			setInactive();
 			break;
 		case "initNewDoctor":
@@ -670,7 +672,6 @@ public class Controller implements ActionListener {
 			checkWindowTreatment = 1;
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
-			
 
 			infoTreatment();
 			break;
@@ -1767,10 +1768,25 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
+					
+					Properties prop = FileHandler.loadProperties("mail.properties");
+					
+					String subject = prop.getProperty("mail.patient.creation.subject");
+					
+					String body=prop.getProperty("mail.patient.creation.body");
+					
+					String message = body
+						    .replace("{nombrePaciente}", name)
+						    .replace("{numeroIdentificacion}", String.valueOf(identi))
+						    .replace("{correo}", email);
+						
+					enviarConGMail(email, subject, message);
+					
 					vf.getShowOptions().getNewPersonPanel().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
 					vf.getPersonMenu().setVisible(false);
 					vf.getHome().setVisible(true);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
 				}
@@ -1818,6 +1834,19 @@ public class Controller implements ActionListener {
 						vf.getPersonMenu().getDoctorName().setText(null);
 						vf.getPersonMenu().getEmailDoctor().setText(null);
 						vf.getPersonMenu().getSpeciality().setSelectedItem("");
+						
+						Properties prop = FileHandler.loadProperties("mail.properties");
+						
+						String subject = prop.getProperty("mail.patient.creation.subject");
+						
+						String body=prop.getProperty("mail.patient.creation.body");
+						
+						String message = body
+							    .replace("{nombrePaciente}", name)
+							    .replace("{numeroIdentificacion}", name)
+							    .replace("{correo}", email);
+							
+						enviarConGMail(email, subject, message);
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
 					}
@@ -2287,10 +2316,11 @@ public class Controller implements ActionListener {
 	}
 
 	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+		Properties prop = FileHandler.loadProperties("mail.properties");
+		
+		String remitente = prop.getProperty("mail.email.sender");
 
-		String remitente = "clinicaelbosque306@gmail.com";
-
-		String claveemail = "tgkg ofjv gqut qozn";
+		String claveemail = prop.getProperty("mail.password.sender");
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -2312,11 +2342,10 @@ public class Controller implements ActionListener {
 			transport.connect("smtp.gmail.com", remitente, claveemail);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			// mensaje de envio
+			JOptionPane.showMessageDialog(null, "Correo enviado exitosamente");
 		} catch (MessagingException me) {
-			me.printStackTrace();
-
-			// Joption
+			JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
