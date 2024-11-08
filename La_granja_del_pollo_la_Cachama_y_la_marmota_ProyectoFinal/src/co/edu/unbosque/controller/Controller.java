@@ -365,9 +365,9 @@ public class Controller implements ActionListener {
 
 					if (id == tId) {
 
-						String name = patient.get(i).getName();
-						int age = patient.get(i).getAge();
-						String email = patient.get(i).getEmail();
+						String name = vf.getPersonMenu().getPatientUpdateName().getText().toString();
+						int age = Integer.parseInt(vf.getPersonMenu().getPatientUpdateAge().getText().toString());
+						String email = vf.getPersonMenu().getEmailUpdatePatient().getText().toString();
 
 						if (mf.getPatient().update(new PatientDTO(null, null, id, 0),
 								new PatientDTO(name, email, id, age))) {
@@ -377,9 +377,17 @@ public class Controller implements ActionListener {
 							vf.getPersonMenu().getPatientUpdateAge().setText(null);
 							vf.getPersonMenu().getEmailUpdatePatient().setText(null);
 
-							vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
-							vf.getPersonMenu().setVisible(false);
-							vf.getHome().setVisible(true);
+							Properties prop = FileHandler.loadProperties("mail.properties");
+
+							String subject = prop.getProperty("mail.patient.update.subject");
+
+							String body = prop.getProperty("mail.patient.update.body");
+
+							String message = body.replace("{nombrePaciente}", name)
+									.replace("{numeroIdentificacion}", String.valueOf(id))
+									.replace("{correoPaciente}", email).replace("{edadPaciente}", String.valueOf(age));
+
+							sendEmail(email, subject, message);
 						} else {
 							JOptionPane.showMessageDialog(null, "No se pudo actualizar el paciente");
 						}
@@ -390,8 +398,6 @@ public class Controller implements ActionListener {
 					}
 
 				}
-				vf.getShowOptions().setVisible(false);
-				vf.getShowOptions().getUpdatePerson().setVisible(false);
 
 				if (ent) {
 					vf.getPersonMenu().getPatientUpdateId().setText(null);
@@ -1947,13 +1953,11 @@ public class Controller implements ActionListener {
 
 						String body = prop.getProperty("mail.doctor.welcome.body");
 
-						String message = body.replace("{nombreDoctor}", name)
-								.replace("{especialidad}", speciality)
-								.replace("{numeroIdentificacion}", String.valueOf(id))
-								.replace("{correoDoctor}", email);
+						String message = body.replace("{nombreDoctor}", name).replace("{especialidad}", speciality)
+								.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoDoctor}", email);
 
-						
-						
+						sendEmail(email, subject, message);
+
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
 					}
@@ -3023,7 +3027,7 @@ public class Controller implements ActionListener {
 
 		JDialog loadingDialog = new JDialog();
 		loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		loadingDialog.setSize(100, 100);
+		loadingDialog.setSize(200, 50);
 		loadingDialog.setLocationRelativeTo(null);
 		loadingDialog.setUndecorated(true);
 
@@ -3059,6 +3063,18 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().getPersonPanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
+		} else if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getPersonMenu().getDoctorPanel().setVisible(false);
+			vf.getPersonMenu().setVisible(false);
+			vf.getHome().setVisible(true);
+		} else if (vf.getPersonMenu().getUpdatePerson().isVisible()) {
+			vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
+			vf.getPersonMenu().setVisible(false);
+			vf.getHome().setVisible(true);
+		}
+		{
+
 		}
 	}
 }
