@@ -2578,9 +2578,7 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 		}
-		{
-
-		}
+		
 	}
 
 	public void doctorOrderId() {
