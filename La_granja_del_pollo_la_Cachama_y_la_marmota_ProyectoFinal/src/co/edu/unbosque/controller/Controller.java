@@ -2826,7 +2826,7 @@ public class Controller implements ActionListener {
 		String claveemail = "tgkg ofjv gqut qozn";
 
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 		props.put("mail.smtp.user", remitente);
 		props.put("mail.smtp.clave", claveemail);
 		props.put("mail.smtp.auth", "true");
