@@ -21,7 +21,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.SwingWorker;
 
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
@@ -34,7 +38,7 @@ import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
 	private ModelFacade mf;
-	private ViewFacade vf;
+	private static ViewFacade vf;
 	private int checkWindowTreatment = 0;
 	private int schedule = 0;
 	private int person = 0;
@@ -1880,21 +1884,14 @@ public class Controller implements ActionListener {
 					Properties prop = FileHandler.loadProperties("mail.properties");
 
 					String subject = prop.getProperty("mail.patient.creation.subject");
-					
-					String body=prop.getProperty("mail.patient.creation.body");
-					
-					String message = body
-						    .replace("{nombrePaciente}", name)
-						    .replace("{numeroIdentificacion}", String.valueOf(identi))
-						    .replace("{correo}", email);
-						
-					JOptionPane.showMessageDialog(null, "Enviando Correo....");
-					enviarConGMail(email, subject, message);
 
-					vf.getShowOptions().getNewPersonPanel().setVisible(false);
-					vf.getPersonMenu().getPersonPanel().setVisible(false);
-					vf.getPersonMenu().setVisible(false);
-					vf.getHome().setVisible(true);
+					String body = prop.getProperty("mail.patient.creation.body");
+
+					String message = body.replace("{nombrePaciente}", name)
+							.replace("{numeroIdentificacion}", String.valueOf(identi)).replace("{correo}", email);
+
+					// enviarConGMail(email, subject, message);
+					sendEmail(email, subject, message);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -2422,7 +2419,7 @@ public class Controller implements ActionListener {
 		return (int) (Math.random() * 10000 + 100);
 	}
 
-	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+	private static void generateEmail(String destinatario, String asunto, String cuerpo) {
 		Properties prop = FileHandler.loadProperties("mail.properties");
 
 		String remitente = prop.getProperty("mail.email.sender");
@@ -2449,7 +2446,6 @@ public class Controller implements ActionListener {
 			transport.connect("smtp.gmail.com", remitente, claveemail);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			JOptionPane.showMessageDialog(null, "Correo enviado exitosamente");
 		} catch (MessagingException me) {
 			JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
 					JOptionPane.ERROR_MESSAGE);
@@ -3018,5 +3014,48 @@ public class Controller implements ActionListener {
 
 		}
 
+	}
+
+	public static void sendEmail(String email, String subject, String message) {
+
+		JDialog loadingDialog = new JDialog();
+		loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		loadingDialog.setSize(100, 100);
+		loadingDialog.setLocationRelativeTo(null);
+		loadingDialog.setUndecorated(true);
+
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setIndeterminate(true);
+		loadingDialog.add(new JLabel("Enviando Correo..."), "North");
+		loadingDialog.add(progressBar, "Center");
+
+		SwingWorker<Void, Void> worker = new SwingWorker<>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+
+				generateEmail(email, subject, message);
+
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				loadingDialog.dispose();
+				JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
+				panelsEmails();
+			}
+		};
+
+		loadingDialog.setVisible(true);
+		worker.execute();
+	}
+
+	public static void panelsEmails() {
+		if (vf.getPersonMenu().getPersonPanel().isVisible()) {
+			vf.getShowOptions().getNewPersonPanel().setVisible(false);
+			vf.getPersonMenu().getPersonPanel().setVisible(false);
+			vf.getPersonMenu().setVisible(false);
+			vf.getHome().setVisible(true);
+		}
 	}
 }
