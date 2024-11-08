@@ -19,10 +19,11 @@ public class AddMenu extends JFrame {
 
 	private JPanel personPanel, doctorPanel, personUpdatePanel, doctorUpdatePanel;
 	private JLabel background1, background2, background3, background4;
-	private JTextField patientId, doctorId, doctorName, patientUpdateName, emailUpdatePatient, patientUpdateAge,
-			patientName, patientUpdateId, patientAge, emailDoctor, emailPatient;
-	private JComboBox<String> speciality;
-	private JButton createPerson, createDoctor, homeP, homeD, homeUDoctor, homeUPerson, UpdatePerson;
+	private JTextField patientId, emailUpdateDoctor, doctorUpdateId, doctorUpdateName, doctorId, doctorName,
+			patientUpdateName, emailUpdatePatient, patientUpdateAge, patientName, patientUpdateId, patientAge,
+			emailDoctor, emailPatient;
+	private JComboBox<String> speciality,specialityUpdate;
+	private JButton createPerson,UpdateDoctor, createDoctor, homeP, homeD, homeUDoctor, homeUPerson, UpdatePerson;
 
 	public AddMenu() {
 		window();
@@ -56,6 +57,18 @@ public class AddMenu extends JFrame {
 		speciality.addItem("Cardiologia");
 		speciality.addItem("MedicinaInterna");
 		doctorPanel.add(speciality);
+
+		specialityUpdate = new JComboBox<String>();
+		specialityUpdate.setBounds(356, 305, 251, 30);
+		specialityUpdate.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		specialityUpdate.addItem("");
+		specialityUpdate.addItem("Cirujia");
+		specialityUpdate.addItem("Oncologia");
+		specialityUpdate.addItem("Dermatologia");
+		specialityUpdate.addItem("Neumologia");
+		specialityUpdate.addItem("Cardiologia");
+		specialityUpdate.addItem("MedicinaInterna");
+		doctorUpdatePanel.add(specialityUpdate);
 
 	}
 
@@ -129,7 +142,24 @@ public class AddMenu extends JFrame {
 		emailDoctor.setBounds(356, 270, 251, 30);
 		emailDoctor.setBorder(null);
 		doctorPanel.add(emailDoctor);
+// ----------------------------------------------------------------------
+		doctorUpdateId = new JTextField();
+		doctorUpdateId.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		doctorUpdateId.setBounds(356, 198, 251, 30);
+		doctorUpdateId.setBorder(null);
+		doctorUpdatePanel.add(doctorUpdateId);
 
+		doctorUpdateName = new JTextField();
+		doctorUpdateName.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		doctorUpdateName.setBounds(356, 236, 251, 30);
+		doctorUpdateName.setBorder(null);
+		doctorUpdatePanel.add(doctorUpdateName);
+
+		emailUpdateDoctor = new JTextField();
+		emailUpdateDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		emailUpdateDoctor.setBounds(356, 270, 251, 30);
+		emailUpdateDoctor.setBorder(null);
+		doctorUpdatePanel.add(emailUpdateDoctor);
 	}
 
 	private void window() {
@@ -176,6 +206,7 @@ public class AddMenu extends JFrame {
 	private void buttons() {
 		createPerson = new JButton();
 		createPerson.setBounds(328, 385, 162, 38);
+		createPerson.setToolTipText("Crear Paciente");
 		createPerson.setBorder(null);
 		createPerson.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ImageIcon createP = new ImageIcon("Images\\menuAniadir\\anadirPaC.png");
@@ -184,14 +215,25 @@ public class AddMenu extends JFrame {
 
 		UpdatePerson = new JButton();
 		UpdatePerson.setBounds(332, 384, 162, 38);
+		UpdatePerson.setToolTipText("Actualizar Persona");
 		UpdatePerson.setBorder(null);
 		UpdatePerson.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ImageIcon updateP = new ImageIcon("Images\\menuAniadir\\actualizarC.png");
 		UpdatePerson.setIcon(updateP);
 		personUpdatePanel.add(UpdatePerson);
+		
+		UpdateDoctor = new JButton();
+		UpdateDoctor.setBounds(326, 385, 162, 38);
+		UpdateDoctor.setToolTipText("Actualizar Doctor");
+		UpdateDoctor.setBorder(null);
+		UpdateDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ImageIcon updateD = new ImageIcon("Images\\menuAniadir\\actualizarC.png");
+		UpdateDoctor.setIcon(updateD);
+		doctorUpdatePanel.add(UpdateDoctor);
 
 		createDoctor = new JButton();
 		createDoctor.setBounds(327, 385, 162, 38);
+		createDoctor.setToolTipText("Crear Doctor");
 		createDoctor.setBorder(null);
 		createDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ImageIcon createD = new ImageIcon("Images\\menuAniadir\\anadirDoC.png");
@@ -216,7 +258,7 @@ public class AddMenu extends JFrame {
 		personUpdatePanel.add(homeUPerson);
 
 		homeUDoctor = new JButton();
-		homeUDoctor.setBounds(528, 382, 42, 42);
+		homeUDoctor.setBounds(517, 382, 42, 42);
 		homeUDoctor.setBorderPainted(false);
 		homeUDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeUDoctor.setToolTipText("Menú principal");
@@ -466,6 +508,50 @@ public class AddMenu extends JFrame {
 
 	public void setUpdatePerson(JButton updatePerson) {
 		UpdatePerson = updatePerson;
+	}
+
+	public JTextField getEmailUpdateDoctor() {
+		return emailUpdateDoctor;
+	}
+
+	public void setEmailUpdateDoctor(JTextField emailUpdateDoctor) {
+		this.emailUpdateDoctor = emailUpdateDoctor;
+	}
+
+	public JTextField getDoctorUpdateId() {
+		return doctorUpdateId;
+	}
+
+	public void setDoctorUpdateId(JTextField doctorUpdateId) {
+		this.doctorUpdateId = doctorUpdateId;
+	}
+
+	public JTextField getDoctorUpdateName() {
+		return doctorUpdateName;
+	}
+
+	public void setDoctorUpdateName(JTextField doctorUpdateName) {
+		this.doctorUpdateName = doctorUpdateName;
+	}
+
+	public JComboBox<String> getSpecialityUpdate() {
+		return specialityUpdate;
+	}
+
+	public void setSpecialityUpdate(JComboBox<String> specialityUpdate) {
+		this.specialityUpdate = specialityUpdate;
+	}
+
+	public JButton getUpdateDoctor() {
+		return UpdateDoctor;
+	}
+
+	public void setUpdateDoctor(JButton updateDoctor) {
+		UpdateDoctor = updateDoctor;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
