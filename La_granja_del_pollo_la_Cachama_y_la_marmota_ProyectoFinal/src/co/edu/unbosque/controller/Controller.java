@@ -2253,7 +2253,6 @@ public class Controller implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
 					vf.getShowOptions().getNewPerson().setVisible(false);
-					vf.getShowOptions().setVisible(false);
 					vf.getPersonMenu().setVisible(false);
 					vf.getPersonMenu().getPersonPanel().setVisible(false);
 
