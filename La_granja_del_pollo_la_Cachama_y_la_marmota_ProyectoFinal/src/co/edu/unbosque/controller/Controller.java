@@ -306,7 +306,7 @@ public class Controller implements ActionListener {
 					int tId = patient.get(i).getId();
 
 					if (id == tId) {
-            
+
 						String name = patient.get(i).getName();
 						int age = patient.get(i).getAge();
 						String email = patient.get(i).getEmail();
@@ -390,6 +390,7 @@ public class Controller implements ActionListener {
 									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
 							vf.getShowOptions().setVisible(false);
 							vf.getSchedule().getReSchedulePanel().setVisible(true);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
 						}
 
@@ -422,6 +423,7 @@ public class Controller implements ActionListener {
 									.setText(String.valueOf(appointment.get(i).getAppointmentNum()));
 							vf.getShowOptions().setVisible(false);
 							vf.getSchedule().getCancelPanel().setVisible(true);
+							vf.getShowOptions().getDatePanel().setVisible(false);
 							vf.getSchedule().setVisible(true);
 						}
 
@@ -430,6 +432,7 @@ public class Controller implements ActionListener {
 				}
 
 			}
+
 			break;
 		case "backSelectDate":
 			if (schedule == 2) {
@@ -2226,9 +2229,10 @@ public class Controller implements ActionListener {
 					vf.getPersonMenu().getPatientAge().setText(null);
 					vf.getPersonMenu().getEmailPatient().setText(null);
 					JOptionPane.showMessageDialog(null, "Paciente creado con exito");
-					
+
 					vf.getShowOptions().setVisible(false);
 					vf.getShowOptions().getNewPerson().setVisible(false);
+					vf.getHome().setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo crear");
 				}
