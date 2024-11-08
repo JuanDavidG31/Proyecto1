@@ -14,7 +14,7 @@ public class DoctorDAO implements CRUDOperation<DoctorDTO, Doctor> {
 	public DoctorDAO() {
 
 		FileHandler.checkFolder();
-		// readFile();
+		//readFile();
 		readSerizalized();
 	}
 

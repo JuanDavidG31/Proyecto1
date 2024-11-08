@@ -22,7 +22,7 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 	public String showAll() {
 		String rta = "";
 		if (shiftsList.isEmpty()) {
-			return "No hay pacientes en la lista";
+			return "No hay turnos en la lista";
 		} else {
 			for (Shifts Shifts : shiftsList) {
 				rta += Shifts;
@@ -163,4 +163,5 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 			shiftsList = (ArrayList<Shifts>) content;
 		}
 	}
+
 }

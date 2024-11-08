@@ -4,18 +4,55 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.model.Appointment;
 import co.edu.unbosque.model.AppointmentDTO;
+import co.edu.unbosque.model.AppoitmentReport;
+import co.edu.unbosque.model.AppoitmentReportDTO;
 import co.edu.unbosque.model.Doctor;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.Patient;
 import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.Shifts;
 import co.edu.unbosque.model.ShiftsDTO;
+import co.edu.unbosque.model.ShiftsReport;
+import co.edu.unbosque.model.ShiftsReportDTO;
 import co.edu.unbosque.model.Treatment;
 import co.edu.unbosque.model.TreatmentDTO;
 
 public class DataMapper {
 
 	// Turnos
+
+	public static ShiftsReport ShiftsReportDTOToShiftsReport(ShiftsReportDTO dto) {
+		ShiftsReport entity;
+		entity = new ShiftsReport(dto.getDate1(), dto.getDate2(), dto.getSpecialty(), dto.getId(), dto.getName(),
+				dto.isReport());
+		return entity;
+	}
+
+	public static ShiftsReportDTO ShiftsReportToShiftsReportDTO(ShiftsReport entity) {
+		ShiftsReportDTO dto;
+		dto = new ShiftsReportDTO(entity.getDate1(), entity.getDate2(), entity.getSpecialty(), entity.getId(),
+				entity.getName(), entity.isReport());
+		return dto;
+	}
+
+	public static ArrayList<ShiftsReportDTO> listaShiftsReportToListaShiftsReportDTO(
+			ArrayList<ShiftsReport> entityList) {
+		ArrayList<ShiftsReportDTO> dtoList = new ArrayList<>();
+		for (ShiftsReport m : entityList) {
+			dtoList.add(new ShiftsReportDTO(m.getDate1(), m.getDate2(), m.getSpecialty(), m.getId(), m.getName(),
+					m.isReport()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<ShiftsReport> listaShiftsReportDTOToListaShiftsReport(ArrayList<ShiftsReportDTO> dtoList) {
+		ArrayList<ShiftsReport> entityList = new ArrayList<>();
+		for (ShiftsReportDTO d : dtoList) {
+			entityList.add(new ShiftsReport(d.getDate1(), d.getDate2(), d.getSpecialty(), d.getId(), d.getName(),
+					d.isReport()));
+		}
+		return entityList;
+	}
 
 	public static Shifts ShiftsDTOToShifts(ShiftsDTO dto) {
 		Shifts entity;
@@ -108,6 +145,40 @@ public class DataMapper {
 	}
 
 	// Cita
+
+	public static AppoitmentReport AppoitmentReportDTOToAppoitmentReport(AppoitmentReportDTO dto) {
+		AppoitmentReport entity;
+		entity = new AppoitmentReport(dto.getId(), dto.getDoctor(), dto.getSpecialty(), dto.getDate(),
+				dto.getAppointmentNum());
+		return entity;
+	}
+
+	public static AppoitmentReportDTO AppoitmentReportToAppoitmentReportDTO(AppoitmentReport entity) {
+		AppoitmentReportDTO dto;
+		dto = new AppoitmentReportDTO(entity.getId(), entity.getDoctor(), entity.getSpecialty(), entity.getDate(),
+				entity.getAppointmentNum());
+		return dto;
+	}
+
+	public static ArrayList<AppoitmentReportDTO> listaAppoitmentReportToListaAppoitmentReportDTO(
+			ArrayList<AppoitmentReport> entityList) {
+		ArrayList<AppoitmentReportDTO> dtoList = new ArrayList<>();
+		for (AppoitmentReport m : entityList) {
+			dtoList.add(new AppoitmentReportDTO(m.getId(), m.getDoctor(), m.getSpecialty(), m.getDate(),
+					m.getAppointmentNum()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<AppoitmentReport> listaAppoitmentReportDTOToListaAppoitmentReport(
+			ArrayList<AppoitmentReportDTO> dtoList) {
+		ArrayList<AppoitmentReport> entityList = new ArrayList<>();
+		for (AppoitmentReportDTO d : dtoList) {
+			entityList.add(new AppoitmentReport(d.getId(), d.getDoctor(), d.getSpecialty(), d.getDate(),
+					d.getAppointmentNum()));
+		}
+		return entityList;
+	}
 
 	public static Appointment AppoitmentDTOToAppoitment(AppointmentDTO dto) {
 		Appointment entity;

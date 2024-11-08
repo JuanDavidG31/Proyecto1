@@ -30,10 +30,16 @@ import javax.swing.SwingWorker;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.ShiftsDTO;
+import co.edu.unbosque.model.ShiftsReportDTO;
 import co.edu.unbosque.model.AppointmentDTO;
+import co.edu.unbosque.model.AppoitmentReportDTO;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.TreatmentDTO;
 import co.edu.unbosque.model.persistence.FileHandler;
+import co.edu.unbosque.util.exceptions.ExceptionChecker;
+import co.edu.unbosque.util.exceptions.IdentificationNotValidException;
+import co.edu.unbosque.util.order.idDoctorOrder;
+import co.edu.unbosque.util.order.nameSpecialityTurnOrder;
 import co.edu.unbosque.view.ViewFacade;
 
 public class Controller implements ActionListener {
@@ -332,6 +338,7 @@ public class Controller implements ActionListener {
 							vf.getPersonMenu().getDoctorUpdateName().setText(null);
 							vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
 							vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+							doctorOrderId();
 						} else {
 							JOptionPane.showMessageDialog(null, "No se pudo actualizar el doctor");
 						}
@@ -588,6 +595,7 @@ public class Controller implements ActionListener {
 											if (mf.getShift().update(new ShiftsDTO(null, null, null, id, null),
 													new ShiftsDTO(date1, date2, speciality, id2, name))) {
 												JOptionPane.showMessageDialog(null, "Cambio realizado");
+
 												enter = false;
 												SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 												Date tDate1 = null;
@@ -605,6 +613,8 @@ public class Controller implements ActionListener {
 												vf.getShifts().getFinishDate2().setDate(tDate2);
 												vf.getShifts().getId1().setText(null);
 												vf.getShifts().getId2().setText(null);
+												doctorOrderId();
+												turnNameSpeciality();
 												break;
 											} else {
 
@@ -1981,6 +1991,7 @@ public class Controller implements ActionListener {
 						String message = body.replace("{nombreDoctor}", name).replace("{especialidad}", speciality)
 								.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoDoctor}", email);
 
+						doctorOrderId();
 						sendEmail(email, subject, message);
 
 					} else {
@@ -2117,6 +2128,11 @@ public class Controller implements ActionListener {
 					int ap = appointment.get(i).getAppointmentNum();
 
 					if (ap == appoint) {
+
+						mf.getAppointmentReport()
+								.add(new AppoitmentReportDTO(appointment.get(i).getId(), appointment.get(i).getDoctor(),
+										appointment.get(i).getSpecialty(), appointment.get(i).getDate(),
+										appointment.get(i).getAppointmentNum(), false));
 
 						if (mf.getAppointment().delete(new AppointmentDTO(0, null, null, null, appoint))) {
 
@@ -2984,7 +3000,10 @@ public class Controller implements ActionListener {
 				int id = shift.get(i).getId();
 
 				if (ids.get(i) == id) {
-
+					String date1 = shift.get(i).getDate1();
+					String date2 = shift.get(i).getDate2();
+					String tSpeciality = shift.get(i).getSpecialty();
+					String tName = shift.get(i).getName();
 					p: for (int n = 0; n < doctor.size(); n++) {
 
 						int tId = doctor.get(n).getId();
@@ -2998,6 +3017,9 @@ public class Controller implements ActionListener {
 								String name = doctor.get(n).getName();
 								String email = doctor.get(n).getEmail();
 								String speciality = doctor.get(n).getSpecialty();
+
+								mf.getShiftReport()
+										.add(new ShiftsReportDTO(date1, date2, tSpeciality, ids.get(i), tName, false));
 
 								mf.getDoctor().update(new DoctorDTO(null, null, ids.get(i), null, null),
 										new DoctorDTO(name, email, ids.get(i), speciality, "inactivo"));
@@ -3030,6 +3052,9 @@ public class Controller implements ActionListener {
 		if (t1 == false || t2 == false || t3 == false || t4 == false || t5 == false || t6 == false || t11 == false
 				|| t22 == false || t33 == false || t44 == false || t55 == false || t66 == false) {
 			JOptionPane.showMessageDialog(null, "Turno creado en la fecha " + dat);
+			turnNameSpeciality();
+			doctorOrderId();
+
 		}
 
 	}
@@ -3045,7 +3070,7 @@ public class Controller implements ActionListener {
 					new DoctorDTO(dc.getName(), dc.getEmail(), dc.getId(), dc.getSpecialty(), "inactivo"));
 
 		}
-
+		doctorOrderId();
 	}
 
 	public static void sendEmail(String email, String subject, String message) {
@@ -3102,4 +3127,44 @@ public class Controller implements ActionListener {
 
 		}
 	}
+
+	public void doctorOrderId() {
+
+		doctor = new ArrayList<DoctorDTO>();
+		doctor = mf.getDoctor().getAll();
+		Collections.sort(doctor, new idDoctorOrder());
+
+		for (DoctorDTO dc : doctor) {
+
+			mf.getDoctor().update(new DoctorDTO(null, null, dc.getId(), null, null),
+					new DoctorDTO(dc.getName(), dc.getEmail(), dc.getId(), dc.getSpecialty(), dc.getStatus()));
+
+		}
+
+	}
+
+	public void turnNameSpeciality() {
+
+		shift = new ArrayList<ShiftsDTO>();
+		shift = mf.getShift().getAll();
+		Collections.sort(shift, new nameSpecialityTurnOrder());
+
+		for (ShiftsDTO sh : shift) {
+
+			mf.getShift().update(new ShiftsDTO(null, null, null, sh.getId(), null),
+					new ShiftsDTO(sh.getDate1(), sh.getDate2(), sh.getSpecialty(), sh.getId(), sh.getName()));
+
+		}
+
+	}
+
+	public boolean idCheckException(int id) {
+		try {
+			ExceptionChecker.IdentificationNotValidNumber(id);
+		} catch (IdentificationNotValidException e) {
+			return true;
+		}
+		return false;
+	}
+
 }

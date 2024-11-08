@@ -1,17 +1,21 @@
 package co.edu.unbosque.model;
 
 import co.edu.unbosque.model.persistence.AppointmentDAO;
+import co.edu.unbosque.model.persistence.AppoitmentReportDAO;
 import co.edu.unbosque.model.persistence.DoctorDAO;
 import co.edu.unbosque.model.persistence.PatientDAO;
 import co.edu.unbosque.model.persistence.ShiftsDAO;
+import co.edu.unbosque.model.persistence.ShiftsReportDAO;
 import co.edu.unbosque.model.persistence.TreatmentDAO;
 
 public class ModelFacade {
 	private AppointmentDAO appointment;
+	private AppoitmentReportDAO appointmentReport;
 	private TreatmentDAO treatment;
 	private PatientDAO patient;
 	private DoctorDAO doctor;
 	private ShiftsDAO shift;
+	private ShiftsReportDAO shiftReport;
 
 	public ModelFacade() {
 		appointment = new AppointmentDAO();
@@ -19,6 +23,8 @@ public class ModelFacade {
 		patient = new PatientDAO();
 		doctor = new DoctorDAO();
 		shift = new ShiftsDAO();
+		shiftReport = new ShiftsReportDAO();
+		appointmentReport = new AppoitmentReportDAO();
 	}
 
 	public AppointmentDAO getAppointment() {
@@ -59,6 +65,22 @@ public class ModelFacade {
 
 	public void setShift(ShiftsDAO shift) {
 		this.shift = shift;
+	}
+
+	public ShiftsReportDAO getShiftReport() {
+		return shiftReport;
+	}
+
+	public void setShiftReport(ShiftsReportDAO shiftReport) {
+		this.shiftReport = shiftReport;
+	}
+
+	public AppoitmentReportDAO getAppointmentReport() {
+		return appointmentReport;
+	}
+
+	public void setAppointmentReport(AppoitmentReportDAO appointmentReport) {
+		this.appointmentReport = appointmentReport;
 	}
 
 }
