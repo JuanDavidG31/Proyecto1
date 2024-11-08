@@ -1,5 +1,6 @@
 package co.edu.unbosque.view;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 
@@ -18,8 +19,8 @@ public class WorkShifts extends JFrame {
 	private JLabel background1, background2, background3;
 	private JButton home, changeTurn, initTurn, themeMain, generateTurns, homeTurn1, selectTurnTheme, generateChange,
 			selectTurnTheme2, homeTurn2;
-	private JDateChooser startDate, finishDate;
-	private JTextField especialista1, especialista2, turnoActual;
+	private JDateChooser startDate, finishDate, startDate2, finishDate2;
+	private JTextField id1, id2;
 
 	public WorkShifts() {
 		window();
@@ -51,6 +52,20 @@ public class WorkShifts extends JFrame {
 		finishDate.setBorder(null);
 		finishDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panelSelect.add(finishDate);
+
+		startDate2 = new JDateChooser();
+		startDate2.setBounds(106, 284, 251, 30);
+		startDate2.setBorder(null);
+		startDate2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		panelChange.add(startDate2);
+
+		// fecha de cita para el reagendar
+		finishDate2 = new JDateChooser();
+		finishDate2.setBounds(443, 283, 251, 30);
+		finishDate2.setBorder(null);
+		finishDate2.setEnabled(false);
+		finishDate2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		panelChange.add(finishDate2);
 
 	}
 
@@ -103,11 +118,18 @@ public class WorkShifts extends JFrame {
 	}
 
 	public void inputs() {
-		especialista1 = new JTextField();
 
-		especialista2 = new JTextField();
+		id1 = new JTextField();
+		id1.setBounds(106, 214, 251, 30);
+		id1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id1.setBorder(null);
+		panelChange.add(id1);
 
-		turnoActual = new JTextField();
+		id2 = new JTextField();
+		id2.setBounds(442, 214, 251, 30);
+		id2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		id2.setBorder(null);
+		panelChange.add(id2);
 
 	}
 
@@ -168,7 +190,7 @@ public class WorkShifts extends JFrame {
 		generateChange.setBounds(311, 421, 157, 41);
 		generateChange.setBorderPainted(false);
 		generateChange.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		generateChange.setToolTipText("Registrar Tratamiento");
+		generateChange.setToolTipText("Registrar cambio");
 		ImageIcon imageChange = new ImageIcon("Images\\menuTurnos\\cambioC.png");
 		Image scaledChange = imageChange.getImage().getScaledInstance(157, 41, Image.SCALE_REPLICATE);
 		generateChange.setIcon(new ImageIcon(scaledChange));
@@ -354,6 +376,38 @@ public class WorkShifts extends JFrame {
 
 	public void setSelectTurnTheme2(JButton selectTurnTheme2) {
 		this.selectTurnTheme2 = selectTurnTheme2;
+	}
+
+	public JDateChooser getStartDate2() {
+		return startDate2;
+	}
+
+	public void setStartDate2(JDateChooser startDate2) {
+		this.startDate2 = startDate2;
+	}
+
+	public JDateChooser getFinishDate2() {
+		return finishDate2;
+	}
+
+	public void setFinishDate2(JDateChooser finishDate2) {
+		this.finishDate2 = finishDate2;
+	}
+
+	public JTextField getId1() {
+		return id1;
+	}
+
+	public void setId1(JTextField id1) {
+		this.id1 = id1;
+	}
+
+	public JTextField getId2() {
+		return id2;
+	}
+
+	public void setId2(JTextField id2) {
+		this.id2 = id2;
 	}
 
 }
