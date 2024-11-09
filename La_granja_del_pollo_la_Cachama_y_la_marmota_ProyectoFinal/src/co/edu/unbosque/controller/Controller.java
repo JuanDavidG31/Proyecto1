@@ -1,9 +1,12 @@
 package co.edu.unbosque.controller;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +29,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
-
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
 import co.edu.unbosque.model.ShiftsDTO;
@@ -59,12 +61,6 @@ public class Controller implements ActionListener {
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
 	private ArrayList<ShiftsDTO> shift;
-
-	// correo
-
-	String d = "jpr.rod06@gmail.com";
-	String a = "Hola Mundo";
-	String c = "Hola ";
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -297,8 +293,9 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "holi":
-			// enviarConGMail(d, a, c);
-			setInactive();
+			
+			// setInactive();
+			showReports("dataa/appointment.csv");
 			break;
 		case "initNewDoctor":
 			vf.getShowOptions().setVisible(false);
@@ -1649,8 +1646,7 @@ public class Controller implements ActionListener {
 			} else {
 
 				generatedAppointment();
-				
-				
+
 			}
 
 			break;
@@ -1664,7 +1660,6 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				reGenerated();
-				
 
 			}
 
@@ -1677,7 +1672,7 @@ public class Controller implements ActionListener {
 			} else {
 
 				cancel();
-				
+
 			}
 
 			break;
@@ -2637,40 +2632,46 @@ public class Controller implements ActionListener {
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		}  if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
+		}
+		if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
 
 			vf.getShowOptions().getNewPersonPanel().setVisible(false);
 			vf.getPersonMenu().getDoctorPanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		}  if (vf.getPersonMenu().getUpdatePerson().isVisible()) {
+		}
+		if (vf.getPersonMenu().getUpdatePerson().isVisible()) {
 
 			vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		}  if (vf.getPersonMenu().getUpdateDoctor().isVisible()) {
+		}
+		if (vf.getPersonMenu().getUpdateDoctor().isVisible()) {
 
 			vf.getPersonMenu().getUpdateDoctor().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} if (sendEmail == 1) {
+		}
+		if (sendEmail == 1) {
 
 			vf.getSchedule().getSchedulePanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
 			vf.getSchedule().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		}  if (sendEmail == 2) {
+		}
+		if (sendEmail == 2) {
 
 			vf.getSchedule().getReSchedulePanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
 			vf.getSchedule().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} if (sendEmail == 3) {
+		}
+		if (sendEmail == 3) {
 
 			vf.getSchedule().getCancelPanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
@@ -2844,7 +2845,7 @@ public class Controller implements ActionListener {
 								.replace("{especialidadCita}", specialty).replace("{fechaCita}", date)
 								.replace("{nombreDoctor}", doctor);
 						sendEmail(email, subject, message);
-						
+
 						break p;
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo actualizar");
@@ -2861,7 +2862,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void generatedAppointment() {
-		
+
 		String id = vf.getSchedule().getId().getText().toString();
 
 		boolean checkId = idCheckException(id);
@@ -2924,10 +2925,10 @@ public class Controller implements ActionListener {
 
 							sendEmail(email, subject, message);
 							/*
-							vf.getSchedule().getSchedulePanel().setVisible(false);
-							vf.getSchedule().getMainPanel().setVisible(true);
-							vf.getSchedule().setVisible(false);
-							vf.getHome().setVisible(true);*/
+							 * vf.getSchedule().getSchedulePanel().setVisible(false);
+							 * vf.getSchedule().getMainPanel().setVisible(true);
+							 * vf.getSchedule().setVisible(false); vf.getHome().setVisible(true);
+							 */
 						} else {
 
 							JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3621,5 +3622,30 @@ public class Controller implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+
+	public void showReports(String rutaArchivo) {
+
+		try {
+			File archivo = new File(rutaArchivo);
+
+			if (!archivo.exists()) {
+				JOptionPane.showMessageDialog(null, "El archivo no existe");
+
+				return;
+			}
+
+			if (Desktop.isDesktopSupported()) {
+				Desktop desktop = Desktop.getDesktop();
+
+				desktop.open(archivo);
+
+			} else {
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
 	}
 }
