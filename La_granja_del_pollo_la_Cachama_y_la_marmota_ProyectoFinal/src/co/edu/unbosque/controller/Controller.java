@@ -3776,7 +3776,7 @@ public class Controller implements ActionListener {
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-
+										// correo de la persona 1
 									}
 
 								}
@@ -3784,7 +3784,7 @@ public class Controller implements ActionListener {
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
-
+										// correo de la persona 2
 									}
 
 								}
