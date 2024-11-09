@@ -3738,6 +3738,42 @@ public class Controller implements ActionListener {
 												new ShiftsDTO(date1, date2, speciality, id2, name))) {
 											JOptionPane.showMessageDialog(null, "Cambio realizado");
 
+											int idFr = Integer.parseInt(id3);
+											int idSec = Integer.parseInt(id4);
+											String name1 = null;
+											String name2 = null;
+											String email1 = null;
+											String email2 = null;
+											String specialitys = null;
+
+											doctor = new ArrayList<>();
+											doctor = mf.getDoctor().getAll();
+
+											for (DoctorDTO dc : doctor) {
+
+												int idFr2 = dc.getId();
+												int idSec2 = dc.getId();
+
+												if (idFr == idFr2) {
+
+													name1 = dc.getName();
+													email1 = dc.getEmail();
+													specialitys = dc.getSpecialty();
+
+												} else if (idSec2 == idSec) {
+
+													name2 = dc.getName();
+													email2 = dc.getEmail();
+
+												} else {
+													continue;
+												}
+
+											}
+
+											exchangeTurn(email1, name1, name1, idFr, specialitys, date1, date2);
+											exchangeTurn(email2, name2, name1, idSec, specialitys, date2, date1);
+
 											enter = false;
 											SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 											Date tDate1 = null;
@@ -3771,33 +3807,19 @@ public class Controller implements ActionListener {
 							}
 							for (DoctorDTO dc : doctor) {
 
-								String name1 = null;
-								String name2 = null;
-								String email1 = null;
-								String email2 = null;
-								String speciality = null;
-
 								if (dc.getId() == id) {
-
-									name1 = dc.getName();
-									email1 = dc.getEmail();
-									speciality = dc.getSpecialty();
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-										exchangeTurn(email1, name1, name1, id, speciality, date1, date2);
+
 									}
 
 								}
 								if (dc.getId() == id2) {
 
-									name2 = dc.getName();
-									email2 = dc.getEmail();
-
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
 
-										exchangeTurn(email2, name2, name1, id2, speciality, date2, date1);
 									}
 
 								}
@@ -4106,9 +4128,7 @@ public class Controller implements ActionListener {
 		String body = prop.getProperty("mail.schedule.change.person1.body");
 
 		String message = body.replace("{nombre1}", name1).replace("{numeroIdentificacion}", String.valueOf(id))
-				.replace("{especialidad}", speciality)
-				.replace("{fechaAntiguoTurno}", date1)
-				.replace("{nombre2}", name2)
+				.replace("{especialidad}", speciality).replace("{fechaAntiguoTurno}", date1).replace("{nombre2}", name2)
 				.replace("{fechaNuevoTurno}", date2);
 
 		sendEmail(email, subject, message);
