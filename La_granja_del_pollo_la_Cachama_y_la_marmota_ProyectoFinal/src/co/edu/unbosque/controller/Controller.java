@@ -836,8 +836,8 @@ public class Controller implements ActionListener {
 			}
 			break;
 		case "initTreatment":
-			infoTreatment();
 			checkWindowTreatment = 1;
+			infoTreatment();
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getNewTreatmentPanel().setVisible(true);
 
@@ -845,6 +845,7 @@ public class Controller implements ActionListener {
 			break;
 		case "searchTreatment":
 			checkWindowTreatment = 2;
+			infoTreatment();
 
 			vf.getTreatments().getStatus2().setSelectedItem(null);
 			vf.getTreatments().getTreatmentS().setText(null);
@@ -863,6 +864,7 @@ public class Controller implements ActionListener {
 			break;
 		case "finishTreatment":
 			checkWindowTreatment = 3;
+			infoTreatment();
 
 			vf.getTreatments().getStatus3().setSelectedItem(null);
 			vf.getTreatments().getTreatmentF().setText(null);
