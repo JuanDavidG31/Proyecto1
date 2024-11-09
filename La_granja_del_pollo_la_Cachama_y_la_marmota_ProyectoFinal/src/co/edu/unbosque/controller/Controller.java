@@ -329,8 +329,7 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "report1":
-			setInactive();
-			
+			// setInactive();
 
 			patient = new ArrayList<PatientDTO>();
 			patient = mf.getPatient().getAll();
