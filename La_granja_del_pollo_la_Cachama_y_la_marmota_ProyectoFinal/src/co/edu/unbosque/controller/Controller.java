@@ -262,6 +262,10 @@ public class Controller implements ActionListener {
 		vf.getShowOptions().getHome2().addActionListener(this);
 		vf.getShowOptions().getHome2().setActionCommand("backInitPerson");
 
+		vf.getShowOptions().getHome3().addActionListener(this);
+		vf.getShowOptions().getHome3().setActionCommand("backInitDoctor");
+		
+
 		// add Person
 
 		vf.getPersonMenu().getUpdateDoctor().addActionListener(this);
@@ -570,7 +574,11 @@ public class Controller implements ActionListener {
 			break;
 		case "backInitPerson":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
-			vf.getShowOptions().getPersonPanel().setVisible(true);
+			vf.getShowOptions().getPersonPanel().setVisible(false);
+			break;
+		case"backInitDoctor":
+			vf.getShowOptions().getNewPersonPanel().setVisible(true);
+			vf.getShowOptions().getDoctorPanel().setVisible(false);
 			break;
 		case "initUpdatePerson":
 			person = 2;
