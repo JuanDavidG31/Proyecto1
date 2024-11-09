@@ -293,7 +293,7 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "holi":
-			
+
 			// setInactive();
 			showReports("dataa/appointment.csv");
 			break;
@@ -1323,6 +1323,7 @@ public class Controller implements ActionListener {
 			break;
 
 		case "selectCreateTre":
+			boolean enter = true;
 			appointment = new ArrayList<>();
 			appointment = mf.getAppointment().getAll();
 			String id5 = vf.getTreatments().getId1().getText().toString();
@@ -1341,7 +1342,7 @@ public class Controller implements ActionListener {
 					int tId = appointment.get(a).getId();
 
 					if (id3 == tId) {
-
+						enter = false;
 						patient = new ArrayList<>();
 						patient = mf.getPatient().getAll();
 
@@ -1362,6 +1363,12 @@ public class Controller implements ActionListener {
 						continue;
 					}
 				}
+			}
+
+			if (enter) {
+				vf.getTreatments().getId1().setText(null);
+				JOptionPane.showMessageDialog(null, "El paciente no existe");
+
 			}
 			break;
 
@@ -3514,6 +3521,8 @@ public class Controller implements ActionListener {
 	}
 
 	public void updateDoctor() {
+
+		boolean enter = true;
 		doctor = new ArrayList<>();
 		doctor = mf.getDoctor().getAll();
 
@@ -3562,7 +3571,7 @@ public class Controller implements ActionListener {
 							vf.getPersonMenu().getDoctorUpdateName().setText(null);
 							vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
 							vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
-
+							enter = false;
 							Properties prop = FileHandler.loadProperties("mail.properties");
 
 							String subject = prop.getProperty("mail.doctor.update.subject");
@@ -3582,6 +3591,13 @@ public class Controller implements ActionListener {
 					}
 				}
 			}
+		}
+		if (enter) {
+			vf.getPersonMenu().getDoctorUpdateId().setText(null);
+			vf.getPersonMenu().getDoctorUpdateName().setText(null);
+			vf.getPersonMenu().getEmailUpdateDoctor().setText(null);
+			vf.getPersonMenu().getSpecialityUpdate().setSelectedItem("");
+			JOptionPane.showMessageDialog(null, "El doctor no existe");
 		}
 	}
 
