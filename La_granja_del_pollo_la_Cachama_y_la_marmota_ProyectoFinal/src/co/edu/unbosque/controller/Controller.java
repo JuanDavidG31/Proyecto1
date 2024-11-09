@@ -2917,7 +2917,7 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(true);
 
 		}
-		if (sendEmail==5) {
+		if (sendEmail == 5) {
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(false);
 			vf.getTreatments().getMainPanel().setVisible(true);
 			vf.getTreatments().setVisible(false);
@@ -3379,8 +3379,7 @@ public class Controller implements ActionListener {
 
 						String body = prop.getProperty("mail.treatment.assigned.body");
 
-						String message = body.replace("{nombrePaciente}", name)
-								.replace("{especialidad}", specialty)
+						String message = body.replace("{nombrePaciente}", name).replace("{especialidad}", specialty)
 								.replace("{tratamiento}", treatment);
 
 						sendEmail(email, subject, message);
@@ -3403,13 +3402,14 @@ public class Controller implements ActionListener {
 	}
 
 	public void updateTre() {
-		sendEmail=5;
+		sendEmail = 5;
 		boolean verf = true;
-		String email=null;
+		String email = null;
 		String treatment = vf.getTreatments().getTreatmentS().getText().toString();
 		String speciality = vf.getTreatments().getSpecialty2().getSelectedItem().toString();
 		String status = vf.getTreatments().getStatus2().getSelectedItem().toString();
 		String name = vf.getTreatments().getNameS().getText().toString();
+		String id = vf.getTreatments().getId2().getText().toString();
 
 		boolean checkTreatment = nameCheckException(treatment);
 		boolean checkName = nameCheckException(name);
@@ -3453,25 +3453,38 @@ public class Controller implements ActionListener {
 
 				if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
 						new TreatmentDTO(name, speciality, treatment, status))) {
+
+					patient = new ArrayList<PatientDTO>();
+					patient = mf.getPatient().getAll();
+					int tId = Integer.parseInt(id);
+					for (PatientDTO pa : patient) {
+
+						int tIds = pa.getId();
+
+						if (tIds == tId) {
+							email = pa.getEmail();
+						}
+
+					}
+
 					JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
 					vf.getTreatments().getId2().setText(null);
 					vf.getTreatments().getTreatmentS().setText(null);
 					vf.getTreatments().getSpecialty2().setSelectedItem(null);
 					vf.getTreatments().getStatus2().setSelectedItem(null);
 					vf.getTreatments().getNameS().setText(null);
-					
+
 					Properties prop = FileHandler.loadProperties("mail.properties");
 
 					String subject = prop.getProperty("mail.treatment.assigned.subject");
 
 					String body = prop.getProperty("mail.treatment.assigned.body");
 
-					String message = body.replace("{nombrePaciente}", name)
-							.replace("{especialidad}", specialty)
+					String message = body.replace("{nombrePaciente}", name).replace("{especialidad}", speciality)
 							.replace("{tratamiento}", treatment);
 
 					sendEmail(email, subject, message);
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo actualizar");
 				}
@@ -3482,7 +3495,7 @@ public class Controller implements ActionListener {
 	public void finishTre() {
 		boolean verf2 = true;
 		String name = null;
-		String email=null;
+		String email = null;
 		String treatment = vf.getTreatments().getTreatmentF().getText().toString();
 		String status = vf.getTreatments().getStatus3().getSelectedItem().toString();
 		String id2 = vf.getTreatments().getId3().getText().toString();
@@ -3558,8 +3571,8 @@ public class Controller implements ActionListener {
 					vf.getTreatments().getTreatmentF().setText(null);
 					vf.getTreatments().getStatus3().setSelectedItem(null);
 					vf.getTreatments().getId3().setText(null);
-					
-					//correo
+
+					// correo
 
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo finalizar el tratamiento ");
