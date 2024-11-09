@@ -3612,7 +3612,6 @@ public class Controller implements ActionListener {
 												tDate1 = formato.parse(date1);
 												tDate2 = formato.parse(date2);
 											} catch (ParseException e1) {
-												// TODO Auto-generated catch block
 												e1.printStackTrace();
 											}
 
