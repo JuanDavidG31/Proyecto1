@@ -784,7 +784,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
-			
+
 			checkWindowTreatment = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
@@ -855,7 +855,6 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getTreatmentS().setEnabled(false);
 
 			vf.getTreatments().getStatus2().enable(false);
-			vf.getTreatments().getSpecialty2().enable(false);
 
 			vf.getTreatments().getMainPanel().setVisible(false);
 			vf.getTreatments().getSearchTreatmentPanel().setVisible(true);
@@ -1128,7 +1127,9 @@ public class Controller implements ActionListener {
 										vf.getTreatments().getStatus2().setSelectedItem(status);
 
 										vf.getTreatments().getSpecialty2().setVisible(true);
+										vf.getTreatments().getSpecialty2().setEnabled(true);
 										vf.getTreatments().getTreatmentS().setVisible(true);
+										vf.getTreatments().getTreatmentS().setEnabled(true);
 										vf.getTreatments().getSpecialty2().setEditable(true);
 										vf.getTreatments().getTreatmentS().setEditable(true);
 										vf.getTreatments().getStatus2().enable(false);
@@ -3466,44 +3467,61 @@ public class Controller implements ActionListener {
 
 			if (verf) {
 
-				if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
-						new TreatmentDTO(name, speciality, treatment, status))) {
+				appointment = new ArrayList<>();
+				appointment = mf.getAppointment().getAll();
 
-					patient = new ArrayList<PatientDTO>();
-					patient = mf.getPatient().getAll();
-					int tId = Integer.parseInt(id);
-					for (PatientDTO pa : patient) {
+				for (AppointmentDTO ap : appointment) {
+					int tIds2 = Integer.parseInt(id);
+					int ids = ap.getId();
 
-						int tIds = pa.getId();
+					if (tIds2 == ids) {
 
-						if (tIds == tId) {
-							email = pa.getEmail();
+						if (mf.getTreatment().update(new TreatmentDTO(name, null, null, null),
+								new TreatmentDTO(name, speciality, treatment, status))) {
+
+							patient = new ArrayList<PatientDTO>();
+							patient = mf.getPatient().getAll();
+							int tId = Integer.parseInt(id);
+							for (PatientDTO pa : patient) {
+
+								int tIds = pa.getId();
+
+								if (tIds == tId) {
+									email = pa.getEmail();
+								}
+
+							}
+
+							JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
+							vf.getTreatments().getId2().setText(null);
+							vf.getTreatments().getTreatmentS().setText(null);
+							vf.getTreatments().getSpecialty2().setSelectedItem(null);
+							vf.getTreatments().getStatus2().setSelectedItem(null);
+							vf.getTreatments().getNameS().setText(null);
+
+							Properties prop = FileHandler.loadProperties("mail.properties");
+
+							String subject = prop.getProperty("mail.treatment.updated.subject");
+
+							String body = prop.getProperty("mail.treatment.updated.body");
+
+							String message = body.replace("{nombrePaciente}", name)
+									.replace("{especialidad}", speciality).replace("{tratamiento}", treatment)
+									.replace("{estadoTratamiento}", status);
+
+							sendEmail(email, subject, message);
+							infoTreatment();
+
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo actualizar");
 						}
-
+						break;
+					} else {
+						continue;
 					}
 
-					JOptionPane.showMessageDialog(null, "Tratamiento actualizado correctamente");
-					vf.getTreatments().getId2().setText(null);
-					vf.getTreatments().getTreatmentS().setText(null);
-					vf.getTreatments().getSpecialty2().setSelectedItem(null);
-					vf.getTreatments().getStatus2().setSelectedItem(null);
-					vf.getTreatments().getNameS().setText(null);
-
-					Properties prop = FileHandler.loadProperties("mail.properties");
-
-					String subject = prop.getProperty("mail.treatment.updated.subject");
-
-					String body = prop.getProperty("mail.treatment.updated.body");
-
-					String message = body.replace("{nombrePaciente}", name).replace("{especialidad}", speciality)
-							.replace("{tratamiento}", treatment).replace("{estadoTratamiento}", status);
-
-					sendEmail(email, subject, message);
-					infoTreatment();
-
-				} else {
-					JOptionPane.showMessageDialog(null, "No se pudo actualizar");
 				}
+
 			}
 		}
 	}
