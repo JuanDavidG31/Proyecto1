@@ -52,6 +52,7 @@ public class Controller implements ActionListener {
 	private int checkWindowTreatment = 0;
 	private int schedule = 0;
 	private int person = 0;
+	private static int sendEmail = 0;
 	private boolean darkMode = false;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
@@ -687,6 +688,7 @@ public class Controller implements ActionListener {
 			break;
 		case "scheduleMenu":
 			schedule = 1;
+			sendEmail = 1;
 			vf.getSchedule().getName1().setEditable(false);
 			vf.getSchedule().getEmail().setEditable(false);
 			vf.getSchedule().getMainPanel().setVisible(false);
@@ -698,6 +700,7 @@ public class Controller implements ActionListener {
 			break;
 		case "reSchedleMenu":
 			schedule = 2;
+			sendEmail = 2;
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getReSchedulePanel().setVisible(true);
 			vf.getSchedule().getInfoPanel().setVisible(true);
@@ -707,6 +710,7 @@ public class Controller implements ActionListener {
 			break;
 		case "cancelMenu":
 			schedule = 3;
+			sendEmail = 3;
 
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(true);
@@ -1645,7 +1649,8 @@ public class Controller implements ActionListener {
 			} else {
 
 				generatedAppointment();
-
+				
+				
 			}
 
 			break;
@@ -1659,6 +1664,7 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				reGenerated();
+				
 
 			}
 
@@ -1671,6 +1677,7 @@ public class Controller implements ActionListener {
 			} else {
 
 				cancel();
+				
 			}
 
 			break;
@@ -2607,15 +2614,14 @@ public class Controller implements ActionListener {
 			protected Void doInBackground() throws Exception {
 
 				generateEmail(email, subject, message);
-
 				return null;
 			}
 
 			@Override
 			protected void done() {
+				panelsEmails();
 				loadingDialog.dispose();
 				JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-				panelsEmails();
 			}
 		};
 
@@ -2624,46 +2630,47 @@ public class Controller implements ActionListener {
 	}
 
 	public static void panelsEmails() {
+
 		if (vf.getPersonMenu().getPersonPanel().isVisible()) {
 			vf.getShowOptions().getNewPersonPanel().setVisible(false);
 			vf.getPersonMenu().getPersonPanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
+		}  if (vf.getPersonMenu().getDoctorPanel().isVisible()) {
 
 			vf.getShowOptions().getNewPersonPanel().setVisible(false);
 			vf.getPersonMenu().getDoctorPanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getPersonMenu().getUpdatePerson().isVisible()) {
+		}  if (vf.getPersonMenu().getUpdatePerson().isVisible()) {
 
 			vf.getPersonMenu().getPersonUpdatePanel().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getPersonMenu().getUpdateDoctor().isVisible()) {
+		}  if (vf.getPersonMenu().getUpdateDoctor().isVisible()) {
 
 			vf.getPersonMenu().getUpdateDoctor().setVisible(false);
 			vf.getPersonMenu().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getSchedule().getSchedulePanel().isVisible()) {
+		} if (sendEmail == 1) {
 
 			vf.getSchedule().getSchedulePanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
 			vf.getSchedule().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getSchedule().getReSchedulePanel().isVisible()) {
+		}  if (sendEmail == 2) {
 
 			vf.getSchedule().getReSchedulePanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
 			vf.getSchedule().setVisible(false);
 			vf.getHome().setVisible(true);
 
-		} else if (vf.getSchedule().getCancelPanel().isVisible()) {
+		} if (sendEmail == 3) {
 
 			vf.getSchedule().getCancelPanel().setVisible(false);
 			vf.getSchedule().getMainPanel().setVisible(true);
@@ -2714,6 +2721,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void cancel() {
+		sendEmail = 3;
 		int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumber().getText().toString());
 
 		appointment = new ArrayList<>();
@@ -2768,9 +2776,11 @@ public class Controller implements ActionListener {
 			}
 
 		}
+
 	}
 
 	public void reGenerated() {
+		sendEmail = 2;
 		int appoint = Integer.parseInt(vf.getSchedule().getAppointmentNumbers().getText().toString());
 		Date tDates = vf.getSchedule().getDate2().getDate();
 
@@ -2834,7 +2844,7 @@ public class Controller implements ActionListener {
 								.replace("{especialidadCita}", specialty).replace("{fechaCita}", date)
 								.replace("{nombreDoctor}", doctor);
 						sendEmail(email, subject, message);
-
+						
 						break p;
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo actualizar");
@@ -2851,6 +2861,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void generatedAppointment() {
+		
 		String id = vf.getSchedule().getId().getText().toString();
 
 		boolean checkId = idCheckException(id);
@@ -2912,6 +2923,11 @@ public class Controller implements ActionListener {
 									.replace("{nombreDoctor}", doctor);
 
 							sendEmail(email, subject, message);
+							/*
+							vf.getSchedule().getSchedulePanel().setVisible(false);
+							vf.getSchedule().getMainPanel().setVisible(true);
+							vf.getSchedule().setVisible(false);
+							vf.getHome().setVisible(true);*/
 						} else {
 
 							JOptionPane.showMessageDialog(null, "No se pudo crear");
