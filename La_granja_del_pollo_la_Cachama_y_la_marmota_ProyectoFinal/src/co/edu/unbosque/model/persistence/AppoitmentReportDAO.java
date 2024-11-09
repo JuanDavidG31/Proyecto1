@@ -113,11 +113,11 @@ public class AppoitmentReportDAO implements CRUDOperation<AppoitmentReportDTO, A
 	public void writeFile() {
 		String content = "";
 		for (AppoitmentReport m : appoitmentReportList) {
-			content += m.getId() + ";";
-			content += m.getDoctor() + ";";
-			content += m.getSpecialty() + ";";
-			content += m.getDate() + ";";
-			content += m.getAppointmentNum() + ";";
+			content += "ID = " + m.getId() + ";";
+			content += "DOCTOR = " + m.getDoctor() + ";";
+			content += "Speciality = " + m.getSpecialty() + ";";
+			content += "Date = " + m.getDate() + ";";
+			content += "Appoint num = " + m.getAppointmentNum() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);

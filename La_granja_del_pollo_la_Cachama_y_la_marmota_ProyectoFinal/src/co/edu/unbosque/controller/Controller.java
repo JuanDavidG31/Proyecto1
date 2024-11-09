@@ -31,6 +31,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.ReportMaxDoctorDTO;
+import co.edu.unbosque.model.ReportMaxSpecialityDTO;
+import co.edu.unbosque.model.ReportPatientDTO;
 import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.ShiftsReportDTO;
 import co.edu.unbosque.model.AppointmentDTO;
@@ -44,6 +47,7 @@ import co.edu.unbosque.util.exceptions.EmailNotValidException;
 import co.edu.unbosque.util.exceptions.ExceptionChecker;
 import co.edu.unbosque.util.exceptions.IdentificationNotValidException;
 import co.edu.unbosque.util.exceptions.NameNotValidException;
+import co.edu.unbosque.util.order.NumReportDocOrder;
 import co.edu.unbosque.util.order.idDoctorOrder;
 import co.edu.unbosque.util.order.nameSpecialityTurnOrder;
 import co.edu.unbosque.view.ViewFacade;
@@ -61,6 +65,10 @@ public class Controller implements ActionListener {
 	private ArrayList<PatientDTO> patient;
 	private ArrayList<AppointmentDTO> appointment;
 	private ArrayList<ShiftsDTO> shift;
+	private ArrayList<ReportPatientDTO> reportPat;
+	private ArrayList<AppoitmentReportDTO> appointReport;
+	private ArrayList<ReportMaxDoctorDTO> reportDoc;
+	private ArrayList<ReportMaxSpecialityDTO> reportSpe;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -319,19 +327,166 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "report1":
-			showReports("");
+
+			patient = new ArrayList<PatientDTO>();
+			patient = mf.getPatient().getAll();
+
+			for (PatientDTO pa : patient) {
+
+				mf.getReportPatient().add(new ReportPatientDTO(pa.getName(), pa.getId(), pa.getEmail()));
+
+			}
+
+			reportPat = new ArrayList<ReportPatientDTO>();
+			reportPat = mf.getReportPatient().getAll();
+
+			if (!reportPat.isEmpty()) {
+
+				showReports("data/reportPatient.csv");
+			} else {
+				JOptionPane.showMessageDialog(null, "No existen pacientes");
+
+			}
+
 			break;
 		case "report2":
-			showReports("");
+
+			treat = new ArrayList<>();
+			treat = mf.getTreatment().getAll();
+
+			if (!treat.isEmpty()) {
+
+				showReports("data/treatment.csv");
+			} else {
+				JOptionPane.showMessageDialog(null, "No existen tratamientos");
+
+			}
+
 			break;
 		case "report3":
-			showReports("");
+			appointReport = new ArrayList<>();
+			appointReport = mf.getAppointmentReport().getAll();
+			if (!appointReport.isEmpty()) {
+
+				showReports("data/appoitmentReport.csv");
+
+			} else {
+				JOptionPane.showMessageDialog(null, "No existen citas");
+
+			}
+
 			break;
 		case "report4":
-			showReports("");
+
+			appointment = new ArrayList<AppointmentDTO>();
+			appointment = mf.getAppointment().getAll();
+			doctor = new ArrayList<>();
+			doctor = mf.getDoctor().getAll();
+
+			ArrayList<String> existDoc = new ArrayList<>();
+
+			for (AppointmentDTO app : appointment) {
+
+				if (existDoc.contains(app.getDoctor())) {
+					continue;
+				} else {
+					existDoc.add(app.getDoctor());
+				}
+
+				int frecuency = 0;
+
+				for (AppointmentDTO app2 : appointment) {
+
+					if (app2.getDoctor().equals(app.getDoctor())) {
+						frecuency++;
+					}
+
+				}
+
+				for (DoctorDTO dc : doctor) {
+
+					String name = dc.getName();
+
+					if (name.equals(app.getDoctor())) {
+						mf.getReportMaxDoc().add(new ReportMaxDoctorDTO(frecuency, name, dc.getEmail()));
+						break;
+					} else {
+						continue;
+					}
+
+				}
+
+			}
+
+			reportDoctorOrder();
+
+			reportDoc = new ArrayList<>();
+			reportDoc = mf.getReportMaxDoc().getAll();
+
+			if (!reportDoc.isEmpty()) {
+
+				showReports("data/reportMaxDoctor.csv");
+			} else {
+				JOptionPane.showMessageDialog(null, "No existen doctores con citas");
+
+			}
+
 			break;
 		case "report5":
-			showReports("");
+
+			appointment = new ArrayList<AppointmentDTO>();
+			appointment = mf.getAppointment().getAll();
+			doctor = new ArrayList<>();
+			doctor = mf.getDoctor().getAll();
+
+			ArrayList<String> existSpe = new ArrayList<>();
+
+			for (AppointmentDTO app : appointment) {
+
+				if (existSpe.contains(app.getSpecialty())) {
+					continue;
+				} else {
+					existSpe.add(app.getSpecialty());
+				}
+
+				int frecuency = 0;
+
+				for (AppointmentDTO app2 : appointment) {
+
+					if (app2.getSpecialty().equals(app.getSpecialty())) {
+						frecuency++;
+					}
+
+				}
+
+				for (DoctorDTO dc : doctor) {
+
+					String spec = dc.getSpecialty();
+
+					if (spec.equals(app.getSpecialty())) {
+						mf.getReportMaxSpe().add(new ReportMaxSpecialityDTO(frecuency, spec));
+						break;
+					} else {
+						continue;
+					}
+
+				}
+
+			}
+
+			reportDoctorOrder();
+
+			reportSpe = new ArrayList<>();
+			reportSpe = mf.getReportMaxSpe().getAll();
+
+			if (!reportSpe.isEmpty()) {
+
+				showReports("reportMaxSpeciality.csv");
+			} else {
+				JOptionPane.showMessageDialog(null, "No existen especialidades con citas");
+
+			}
+
 			break;
 		case "report6":
 			showReports("");
@@ -2831,8 +2986,7 @@ public class Controller implements ActionListener {
 
 					String message = body.replace("{nombrePaciente}", name)
 							.replace("{numeroIdentificacion}", String.valueOf(id))
-							.replace("{numeroCita}", String.valueOf(appoint))
-							.replace("{especialidadCita}", speciality)
+							.replace("{numeroCita}", String.valueOf(appoint)).replace("{especialidadCita}", speciality)
 							.replace("{fechaCita}", date);
 					sendEmail(email, subject, message);
 					break p;
@@ -3727,5 +3881,21 @@ public class Controller implements ActionListener {
 			e.printStackTrace();
 
 		}
+	}
+
+	public void reportDoctorOrder() {
+
+		reportDoc = new ArrayList<>();
+		reportDoc = mf.getReportMaxDoc().getAll();
+
+		Collections.sort(reportDoc, new NumReportDocOrder());
+
+		for (ReportMaxDoctorDTO re : reportDoc) {
+
+			mf.getReportMaxDoc().update(new ReportMaxDoctorDTO(0, null, re.getEmail()),
+					new ReportMaxDoctorDTO(re.getNumAppo(), re.getName(), re.getEmail()));
+
+		}
+
 	}
 }

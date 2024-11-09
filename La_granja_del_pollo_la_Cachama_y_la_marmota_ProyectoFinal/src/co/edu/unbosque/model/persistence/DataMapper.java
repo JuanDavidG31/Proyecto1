@@ -10,6 +10,12 @@ import co.edu.unbosque.model.Doctor;
 import co.edu.unbosque.model.DoctorDTO;
 import co.edu.unbosque.model.Patient;
 import co.edu.unbosque.model.PatientDTO;
+import co.edu.unbosque.model.ReportMaxDoctor;
+import co.edu.unbosque.model.ReportMaxDoctorDTO;
+import co.edu.unbosque.model.ReportMaxSpeciality;
+import co.edu.unbosque.model.ReportMaxSpecialityDTO;
+import co.edu.unbosque.model.ReportPatient;
+import co.edu.unbosque.model.ReportPatientDTO;
 import co.edu.unbosque.model.Shifts;
 import co.edu.unbosque.model.ShiftsDTO;
 import co.edu.unbosque.model.ShiftsReport;
@@ -18,6 +24,102 @@ import co.edu.unbosque.model.Treatment;
 import co.edu.unbosque.model.TreatmentDTO;
 
 public class DataMapper {
+
+	// Reporte max especialidad
+
+	public static ReportMaxSpeciality ReportMaxSpecialityDTOToReportMaxSpeciality(ReportMaxSpecialityDTO dto) {
+		ReportMaxSpeciality entity;
+		entity = new ReportMaxSpeciality(dto.getNumAppo(), dto.getName());
+		return entity;
+	}
+
+	public static ReportMaxSpecialityDTO ReportMaxSpecialityToReportMaxSpecialityDTO(ReportMaxSpeciality entity) {
+		ReportMaxSpecialityDTO dto;
+		dto = new ReportMaxSpecialityDTO(entity.getNumAppo(), entity.getName());
+		return dto;
+	}
+
+	public static ArrayList<ReportMaxSpecialityDTO> listaReportMaxSpecialityToListaReportMaxSpecialityDTO(
+			ArrayList<ReportMaxSpeciality> entityList) {
+		ArrayList<ReportMaxSpecialityDTO> dtoList = new ArrayList<>();
+		for (ReportMaxSpeciality m : entityList) {
+			dtoList.add(new ReportMaxSpecialityDTO(m.getNumAppo(), m.getName()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<ReportMaxSpeciality> listaReportMaxSpecialityDTOToListaReportMaxSpeciality(
+			ArrayList<ReportMaxSpecialityDTO> dtoList) {
+		ArrayList<ReportMaxSpeciality> entityList = new ArrayList<>();
+		for (ReportMaxSpecialityDTO d : dtoList) {
+			entityList.add(new ReportMaxSpeciality(d.getNumAppo(), d.getName()));
+		}
+		return entityList;
+	}
+
+	// Reporte max doctor
+
+	public static ReportMaxDoctor ReportMaxDoctorDTOToReportMaxDoctor(ReportMaxDoctorDTO dto) {
+		ReportMaxDoctor entity;
+		entity = new ReportMaxDoctor(dto.getNumAppo(), dto.getName(), dto.getEmail());
+		return entity;
+	}
+
+	public static ReportMaxDoctorDTO ReportMaxDoctorToReportMaxDoctorDTO(ReportMaxDoctor entity) {
+		ReportMaxDoctorDTO dto;
+		dto = new ReportMaxDoctorDTO(entity.getNumAppo(), entity.getName(), entity.getEmail());
+		return dto;
+	}
+
+	public static ArrayList<ReportMaxDoctorDTO> listaReportMaxDoctorToListaReportMaxDoctorDTO(
+			ArrayList<ReportMaxDoctor> entityList) {
+		ArrayList<ReportMaxDoctorDTO> dtoList = new ArrayList<>();
+		for (ReportMaxDoctor m : entityList) {
+			dtoList.add(new ReportMaxDoctorDTO(m.getNumAppo(), m.getName(), m.getEmail()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<ReportMaxDoctor> listaReportMaxDoctorDTOToListaReportMaxDoctor(
+			ArrayList<ReportMaxDoctorDTO> dtoList) {
+		ArrayList<ReportMaxDoctor> entityList = new ArrayList<>();
+		for (ReportMaxDoctorDTO d : dtoList) {
+			entityList.add(new ReportMaxDoctor(d.getNumAppo(), d.getName(), d.getEmail()));
+		}
+		return entityList;
+	}
+
+	// Reporte paciente
+
+	public static ReportPatient ReportPatientDTOToReportPatient(ReportPatientDTO dto) {
+		ReportPatient entity;
+		entity = new ReportPatient(dto.getName(), dto.getId(), dto.getEmail());
+		return entity;
+	}
+
+	public static ReportPatientDTO ReportPatientToReportPatientDTO(ReportPatient entity) {
+		ReportPatientDTO dto;
+		dto = new ReportPatientDTO(entity.getName(), entity.getId(), entity.getEmail());
+		return dto;
+	}
+
+	public static ArrayList<ReportPatientDTO> listaReportPatientToListaReportPatientDTO(
+			ArrayList<ReportPatient> entityList) {
+		ArrayList<ReportPatientDTO> dtoList = new ArrayList<>();
+		for (ReportPatient m : entityList) {
+			dtoList.add(new ReportPatientDTO(m.getName(), m.getId(), m.getEmail()));
+		}
+		return dtoList;
+	}
+
+	public static ArrayList<ReportPatient> listaReportPatientDTOToListaReportPatient(
+			ArrayList<ReportPatientDTO> dtoList) {
+		ArrayList<ReportPatient> entityList = new ArrayList<>();
+		for (ReportPatientDTO d : dtoList) {
+			entityList.add(new ReportPatient(d.getName(), d.getId(), d.getEmail()));
+		}
+		return entityList;
+	}
 
 	// Turnos
 
