@@ -128,10 +128,14 @@ public class ReportPatientDAO implements CRUDOperation<ReportPatientDTO, ReportP
 
 	public void writeFile() {
 		String content = "";
+		content += "Nombre  " + ";";
+		content += "Id " + ";";
+		content += "Email " + ";";
+		content += "\n";
 		for (ReportPatient m : reportPatientList) {
-			content += "Name =  " + m.getName() + ";";
-			content += "Id = " + m.getId() + ";";
-			content += "Email = " + m.getEmail() + ";";
+			content += m.getName() + ";";
+			content += m.getId() + ";";
+			content += m.getEmail() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
