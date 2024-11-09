@@ -285,17 +285,67 @@ public class Controller implements ActionListener {
 		vf.getShowOptions().getSelectDate().setActionCommand("selectDate");
 
 		vf.getHome().getReport().addActionListener(this);
-		vf.getHome().getReport().setActionCommand("holi");
+		vf.getHome().getReport().setActionCommand("initReports");
+
+		// reports
+		vf.getReports().getExit().addActionListener(this);
+		vf.getReports().getExit().setActionCommand("backReports");
+
+		vf.getReports().getTheme().addActionListener(this);
+		vf.getReports().getTheme().setActionCommand("theme");
+
+		vf.getReports().getReport1().addActionListener(this);
+		vf.getReports().getReport1().setActionCommand("report1");
+
+		vf.getReports().getReport2().addActionListener(this);
+		vf.getReports().getReport2().setActionCommand("report2");
+
+		vf.getReports().getReport3().addActionListener(this);
+		vf.getReports().getReport3().setActionCommand("report3");
+
+		vf.getReports().getReport4().addActionListener(this);
+		vf.getReports().getReport4().setActionCommand("report4");
+
+		vf.getReports().getReport5().addActionListener(this);
+		vf.getReports().getReport5().setActionCommand("report5");
+
+		vf.getReports().getReport6().addActionListener(this);
+		vf.getReports().getReport6().setActionCommand("report6");
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "holi":
+
+		case "report1":
+			showReports("");
+			break;
+		case "report2":
+			showReports("");
+			break;
+		case "report3":
+			showReports("");
+			break;
+		case "report4":
+			showReports("");
+			break;
+		case "report5":
+			showReports("");
+			break;
+		case "report6":
+			showReports("");
+			break;
+		case "backReports":
+			vf.getReports().setVisible(false);
+			vf.getHome().setVisible(true);
+			break;
+		case "initReports":
+			vf.getHome().setVisible(false);
+			vf.getReports().setVisible(true);
 
 			// setInactive();
-			showReports("dataa/appointment.csv");
+			// showReports("dataa/appointment.csv");
 			break;
 		case "initNewDoctor":
 			vf.getShowOptions().setVisible(false);
@@ -2748,19 +2798,21 @@ public class Controller implements ActionListener {
 				if (mf.getAppointment().delete(new AppointmentDTO(0, null, null, null, appoint))) {
 
 					String speciality = appointment.get(i).getSpecialty();
+					String date = appointment.get(i).getDate();
 					String name = null;
 					String email = null;
-
+					int id = 0;
 					patient = new ArrayList<PatientDTO>();
 					patient = mf.getPatient().getAll();
 
 					for (PatientDTO pa : patient) {
 
-						int id = pa.getId();
+						id = pa.getId();
 
 						if (id == appointment.get(i).getId()) {
 							name = pa.getName();
 							email = pa.getEmail();
+
 							break;
 
 						}
@@ -2771,8 +2823,20 @@ public class Controller implements ActionListener {
 
 					vf.getSchedule().getAppointmentNumber().setText(null);
 					vf.getSchedule().getId3().setText(null);
+					Properties prop = FileHandler.loadProperties("mail.properties");
 
+					String subject = prop.getProperty("mail.appointment.canceled.subject");
+
+					String body = prop.getProperty("mail.appointment.canceled.body");
+
+					String message = body.replace("{nombrePaciente}", name)
+							.replace("{numeroIdentificacion}", String.valueOf(id))
+							.replace("{numeroCita}", String.valueOf(appoint))
+							.replace("{especialidadCita}", speciality)
+							.replace("{fechaCita}", date);
+					sendEmail(email, subject, message);
 					break p;
+
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudo eliminar");
 					break p;
