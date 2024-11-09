@@ -3772,21 +3772,38 @@ public class Controller implements ActionListener {
 							}
 							for (DoctorDTO dc : doctor) {
 
+								String name1 = null;
+								String name2 = null;
+								String email1 = null;
+								String email2 = null;
+								String speciality = null;
+
 								if (dc.getId() == id) {
+
+									name1 = dc.getName();
+									email1 = dc.getEmail();
+									speciality = dc.getSpecialty();
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-										// correo de la persona 1
+
 									}
 
 								}
 								if (dc.getId() == id2) {
 
+									name2 = dc.getName();
+									email2 = dc.getEmail();
+
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
-										// correo de la persona 2
+
 									}
 
+								}
+
+								if (name1 != null && name2 != null) {
+									// correos
 								}
 
 							}
