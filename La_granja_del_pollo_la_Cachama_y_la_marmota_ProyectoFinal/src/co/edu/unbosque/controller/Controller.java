@@ -522,7 +522,7 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(false);
 			vf.getReports().setVisible(true);
 
-			// setInactive();
+			setInactive();
 			// showReports("dataa/appointment.csv");
 			break;
 		case "initNewDoctor":
@@ -3678,7 +3678,8 @@ public class Controller implements ActionListener {
 		} else {
 
 			int id = Integer.parseInt(id3);
-
+			String date1 = null;
+			String date2 = null;
 			shift = new ArrayList<ShiftsDTO>();
 			shift = mf.getShift().getAll();
 			doctor = new ArrayList<DoctorDTO>();
@@ -3719,8 +3720,6 @@ public class Controller implements ActionListener {
 
 							if (sh.getId() == id) {
 
-								String date1 = null;
-								String date2 = null;
 								String speciality = null;
 								String name = null;
 
@@ -3786,6 +3785,7 @@ public class Controller implements ActionListener {
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
+										exchangeTurn(email1, name1, name1, id, speciality, date1, date2);
 									}
 
 								}
@@ -3797,12 +3797,9 @@ public class Controller implements ActionListener {
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id2, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id2, dc.getSpecialty(), "activo"))) {
 
+										exchangeTurn(email2, name2, name1, id2, speciality, date2, date1);
 									}
 
-								}
-
-								if (name1 != null && name2 != null) {
-									// correos
 								}
 
 							}
@@ -4100,8 +4097,21 @@ public class Controller implements ActionListener {
 		sendEmail(email, subject, message);
 	}
 
-	public void exchangeTurn1(String email, String name1, String name2, int id, String speciality) {
+	public void exchangeTurn(String email, String name1, String name2, int id, String speciality, String date1,
+			String date2) {
+		Properties prop = FileHandler.loadProperties("mail.properties");
 
+		String subject = prop.getProperty("mail.schedule.change.person1.subject");
+
+		String body = prop.getProperty("mail.schedule.change.person1.body");
+
+		String message = body.replace("{nombre1}", name1).replace("{numeroIdentificacion}", String.valueOf(id))
+				.replace("{especialidad}", speciality)
+				.replace("{fechaAntiguoTurno}", date1)
+				.replace("{nombre2}", name2)
+				.replace("{fechaNuevoTurno}", date2);
+
+		sendEmail(email, subject, message);
 	}
 
 	public static void eliminarArchivos(String folderName, String fileName) {
