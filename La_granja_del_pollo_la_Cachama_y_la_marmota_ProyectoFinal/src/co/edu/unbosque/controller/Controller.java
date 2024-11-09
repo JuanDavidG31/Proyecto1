@@ -264,7 +264,6 @@ public class Controller implements ActionListener {
 
 		vf.getShowOptions().getHome3().addActionListener(this);
 		vf.getShowOptions().getHome3().setActionCommand("backInitDoctor");
-		
 
 		// add Person
 
@@ -576,7 +575,7 @@ public class Controller implements ActionListener {
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			vf.getShowOptions().getPersonPanel().setVisible(false);
 			break;
-		case"backInitDoctor":
+		case "backInitDoctor":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			vf.getShowOptions().getDoctorPanel().setVisible(false);
 			break;
@@ -2130,7 +2129,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public static  void infoTreatment() {
+	public static void infoTreatment() {
 
 		if (checkWindowTreatment == 1) {// Principal
 
@@ -2151,7 +2150,8 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSelectPatient().setVisible(true);
 			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
 
-		}  if (checkWindowTreatment == 2) {// Buscar
+		}
+		if (checkWindowTreatment == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -2171,7 +2171,8 @@ public class Controller implements ActionListener {
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
-		}  if (checkWindowTreatment == 3) {// Finish
+		}
+		if (checkWindowTreatment == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -2182,15 +2183,15 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
-		}  if (checkWindowTreatment == 0) {
+		}
+		if (checkWindowTreatment == 0) {
 			vf.getTreatments().getSearchButton().setVisible(false);
 			vf.getTreatments().getInfoTreatment().setVisible(false);
 			vf.getTreatments().getInfospecialty().setVisible(false);
 			vf.getTreatments().getInfoName().setVisible(false);
 			vf.getTreatments().getInfoStatus().setVisible(false);
 			vf.getTreatments().getSelectPatient().setVisible(false);
-			//vf.getTreatments().getInfoPanel().setVisible(false);
-			
+			// vf.getTreatments().getInfoPanel().setVisible(false);
 
 		}
 
@@ -2488,7 +2489,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe1))) {
 									t1 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2512,7 +2514,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe11))) {
 									t11 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2537,7 +2540,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe2))) {
 									t2 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2558,7 +2562,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe22))) {
 									t22 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2583,7 +2588,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe3))) {
 									t3 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2606,7 +2612,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe33))) {
 									t33 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2629,7 +2636,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe4))) {
 									t4 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2652,7 +2660,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe44))) {
 									t44 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2676,7 +2685,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe5))) {
 									t5 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2699,7 +2709,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe55))) {
 									t55 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2724,7 +2735,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe6))) {
 									t6 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2749,7 +2761,8 @@ public class Controller implements ActionListener {
 
 								if (mf.getShift().add(new ShiftsDTO(dat, dat2, speciality, ident, nombreEspe66))) {
 									t66 = false;
-
+//correo
+									emailTurn(email, name, ident, speciality, dat, dat2);
 								} else {
 									// JOptionPane.showMessageDialog(null, "No se pudo crear el turno ");
 								}
@@ -2933,7 +2946,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getMainPanel().setVisible(true);
 			vf.getTreatments().setVisible(false);
 			vf.getHome().setVisible(true);
-			checkWindowTreatment =0;
+			checkWindowTreatment = 0;
 			infoTreatment();
 
 		}
@@ -3362,7 +3375,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void registerTre() {
-		checkWindowTreatment=0;
+		checkWindowTreatment = 0;
 		sendEmail = 4;
 		boolean enter = true;
 		String name = vf.getTreatments().getName1().getText().toString();
@@ -3415,7 +3428,7 @@ public class Controller implements ActionListener {
 
 						sendEmail(email, subject, message);
 						infoTreatment();
-						checkWindowTreatment=1;
+						checkWindowTreatment = 1;
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3436,7 +3449,7 @@ public class Controller implements ActionListener {
 
 	public void updateTre() {
 		sendEmail = 5;
-		checkWindowTreatment=0;
+		checkWindowTreatment = 0;
 		boolean verf = true;
 		String email = null;
 		String treatment = vf.getTreatments().getTreatmentS().getText().toString();
@@ -3545,7 +3558,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void finishTre() {
-		checkWindowTreatment=0;
+		checkWindowTreatment = 0;
 		sendEmail = 6;
 		boolean verf2 = true;
 		String name = null;
@@ -4054,6 +4067,22 @@ public class Controller implements ActionListener {
 
 		}
 
+	}
+
+	public void emailTurn(String email, String name, int id, String speciality, String date1, String date2) {
+		JOptionPane.showMessageDialog(null, "Paciente creado con exito");
+
+		Properties prop = FileHandler.loadProperties("mail.properties");
+
+		String subject = prop.getProperty("mail.schedule.assigned.subject");
+
+		String body = prop.getProperty("mail.schedule.assigned.body");
+
+		String message = body.replace("{nombreDoctor}", name).replace("{numeroIdentificacion}", String.valueOf(id))
+				.replace("{correo}", email).replace("{especialidad}", speciality).replace("{fechaInicio}", date1)
+				.replace("{fechaFin}", date2);
+
+		sendEmail(email, subject, message);
 	}
 
 	public static void eliminarArchivos(String folderName, String fileName) {
