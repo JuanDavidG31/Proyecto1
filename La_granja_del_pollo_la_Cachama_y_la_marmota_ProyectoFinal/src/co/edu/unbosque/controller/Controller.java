@@ -48,6 +48,7 @@ import co.edu.unbosque.util.exceptions.ExceptionChecker;
 import co.edu.unbosque.util.exceptions.IdentificationNotValidException;
 import co.edu.unbosque.util.exceptions.NameNotValidException;
 import co.edu.unbosque.util.order.NumReportDocOrder;
+import co.edu.unbosque.util.order.NumReportSpecialityOrder;
 import co.edu.unbosque.util.order.idDoctorOrder;
 import co.edu.unbosque.util.order.nameSpecialityTurnOrder;
 import co.edu.unbosque.view.ViewFacade;
@@ -69,6 +70,7 @@ public class Controller implements ActionListener {
 	private ArrayList<AppoitmentReportDTO> appointReport;
 	private ArrayList<ReportMaxDoctorDTO> reportDoc;
 	private ArrayList<ReportMaxSpecialityDTO> reportSpe;
+	private ArrayList<ShiftsReportDTO> turnReport;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -474,14 +476,14 @@ public class Controller implements ActionListener {
 
 			}
 
-			reportDoctorOrder();
+			reportSpeOrder();
 
 			reportSpe = new ArrayList<>();
 			reportSpe = mf.getReportMaxSpe().getAll();
 
 			if (!reportSpe.isEmpty()) {
 
-				showReports("reportMaxSpeciality.csv");
+				showReports("data/reportMaxSpeciality.csv");
 			} else {
 				JOptionPane.showMessageDialog(null, "No existen especialidades con citas");
 
@@ -489,7 +491,18 @@ public class Controller implements ActionListener {
 
 			break;
 		case "report6":
-			showReports("");
+
+			turnReport = new ArrayList<>();
+			turnReport = mf.getShiftReport().getAll();
+
+			if (!turnReport.isEmpty()) {
+
+				showReports("data/shiftsReport.csv");
+
+			} else {
+				JOptionPane.showMessageDialog(null, "No existe historial de turnos");
+			}
+
 			break;
 		case "backReports":
 			vf.getReports().setVisible(false);
@@ -3894,6 +3907,22 @@ public class Controller implements ActionListener {
 
 			mf.getReportMaxDoc().update(new ReportMaxDoctorDTO(0, null, re.getEmail()),
 					new ReportMaxDoctorDTO(re.getNumAppo(), re.getName(), re.getEmail()));
+
+		}
+
+	}
+
+	public void reportSpeOrder() {
+
+		reportSpe = new ArrayList<>();
+		reportSpe = mf.getReportMaxSpe().getAll();
+
+		Collections.sort(reportSpe, new NumReportSpecialityOrder());
+
+		for (ReportMaxSpecialityDTO re : reportSpe) {
+
+			mf.getReportMaxSpe().update(new ReportMaxSpecialityDTO(0, re.getName()),
+					new ReportMaxSpecialityDTO(re.getNumAppo(), re.getName()));
 
 		}
 

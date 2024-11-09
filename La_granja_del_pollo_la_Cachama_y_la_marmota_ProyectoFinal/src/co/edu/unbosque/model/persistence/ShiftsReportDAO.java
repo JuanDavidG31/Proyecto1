@@ -114,11 +114,11 @@ public class ShiftsReportDAO implements CRUDOperation<ShiftsReportDTO, ShiftsRep
 	public void writeFile() {
 		String content = "";
 		for (ShiftsReport m : shiftsReportList) {
-			content += m.getDate1() + ";";
-			content += m.getDate2() + ";";
-			content += m.getSpecialty() + ";";
-			content += m.getId() + ";";
-			content += m.getName() + ";";
+			content += "Fecha inicio = " + m.getDate1() + ";";
+			content += "Fecha fin = " + m.getDate2() + ";";
+			content += "Especialidad = " + m.getSpecialty() + ";";
+			content += "Id = " + m.getId() + ";";
+			content += "Nombre = " + m.getName() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
