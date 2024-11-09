@@ -3786,8 +3786,7 @@ public class Controller implements ActionListener {
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-
-									}
+		}
 
 								}
 								if (dc.getId() == id2) {
@@ -4087,7 +4086,6 @@ public class Controller implements ActionListener {
 	}
 
 	public void emailTurn(String email, String name, int id, String speciality, String date1, String date2) {
-		JOptionPane.showMessageDialog(null, "Paciente creado con exito");
 
 		Properties prop = FileHandler.loadProperties("mail.properties");
 
@@ -4100,6 +4098,10 @@ public class Controller implements ActionListener {
 				.replace("{fechaFin}", date2);
 
 		sendEmail(email, subject, message);
+	}
+	
+	public void exchangeTurn1(String email, String name1,String name2, int id, String speciality ) {
+		
 	}
 
 	public static void eliminarArchivos(String folderName, String fileName) {
