@@ -3786,7 +3786,7 @@ public class Controller implements ActionListener {
 
 									if (mf.getDoctor().update(new DoctorDTO(null, null, id, null, null), new DoctorDTO(
 											dc.getName(), dc.getEmail(), id, dc.getSpecialty(), "inactivo"))) {
-		}
+									}
 
 								}
 								if (dc.getId() == id2) {
@@ -4099,9 +4099,9 @@ public class Controller implements ActionListener {
 
 		sendEmail(email, subject, message);
 	}
-	
-	public void exchangeTurn1(String email, String name1,String name2, int id, String speciality ) {
-		
+
+	public void exchangeTurn1(String email, String name1, String name2, int id, String speciality) {
+
 	}
 
 	public static void eliminarArchivos(String folderName, String fileName) {
