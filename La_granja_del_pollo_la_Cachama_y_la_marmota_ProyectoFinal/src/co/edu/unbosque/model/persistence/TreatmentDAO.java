@@ -113,7 +113,7 @@ public class TreatmentDAO implements CRUDOperation<TreatmentDTO, Treatment> {
 			return false;
 		}
 	}
-	
+
 	public boolean update2(TreatmentDTO previous, TreatmentDTO newData) {
 		Treatment found = find2(DataMapper.TreatmentDTOToTreatment(previous));
 		if (found != null) {
@@ -130,9 +130,13 @@ public class TreatmentDAO implements CRUDOperation<TreatmentDTO, Treatment> {
 	public void writeFile() {
 		String content = "";
 		for (Treatment m : TreatmentList) {
+			content += "Nombre: " + ";";
 			content += m.getName() + ";";
+			content += "Especialidad: " + ";";
 			content += m.getSpecialty() + ";";
+			content += "Tratamiento: " + ";";
 			content += m.getTreatment() + ";";
+			content += "Estado: " + ";";
 			content += m.getVerified() + ";";
 			content += "\n";
 		}

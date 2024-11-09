@@ -88,7 +88,7 @@ public class ShiftsDAO implements CRUDOperation<ShiftsDTO, Shifts> {
 		Shifts found = null;
 		if (!shiftsList.isEmpty()) {
 			for (Shifts Shifts : shiftsList) {
-				if (Shifts.getDate1().equals(toFind.getDate1())) {
+				if (Shifts.getId() == toFind.getId()) {
 					found = Shifts;
 					return found;
 				} else {
