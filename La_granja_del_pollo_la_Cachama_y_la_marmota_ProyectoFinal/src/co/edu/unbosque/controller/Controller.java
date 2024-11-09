@@ -71,6 +71,7 @@ public class Controller implements ActionListener {
 	private ArrayList<ReportMaxDoctorDTO> reportDoc;
 	private ArrayList<ReportMaxSpecialityDTO> reportSpe;
 	private ArrayList<ShiftsReportDTO> turnReport;
+	private String FOLDER_NAME = "data";
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -329,7 +330,8 @@ public class Controller implements ActionListener {
 		switch (e.getActionCommand()) {
 
 		case "report1":
-			// setInactive();
+
+			eliminarArchivos(FOLDER_NAME, "reportPatient");
 
 			patient = new ArrayList<PatientDTO>();
 			patient = mf.getPatient().getAll();
@@ -380,6 +382,8 @@ public class Controller implements ActionListener {
 
 			break;
 		case "report4":
+
+			eliminarArchivos(FOLDER_NAME, "reportMaxDoctor");
 
 			appointment = new ArrayList<AppointmentDTO>();
 			appointment = mf.getAppointment().getAll();
@@ -436,6 +440,8 @@ public class Controller implements ActionListener {
 
 			break;
 		case "report5":
+
+			eliminarArchivos(FOLDER_NAME, "reportMaxSpeciality");
 
 			appointment = new ArrayList<AppointmentDTO>();
 			appointment = mf.getAppointment().getAll();
@@ -3927,5 +3933,13 @@ public class Controller implements ActionListener {
 
 		}
 
+	}
+
+	public static void eliminarArchivos(String folderName, String fileName) {
+		File archivo;
+		archivo = new File(folderName + "/" + fileName + ".dat");
+		archivo.delete();
+		archivo = new File(folderName + "/" + fileName + ".csv");
+		archivo.delete();
 	}
 }
