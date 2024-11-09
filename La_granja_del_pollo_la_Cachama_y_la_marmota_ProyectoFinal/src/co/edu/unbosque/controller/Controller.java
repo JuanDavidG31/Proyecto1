@@ -784,7 +784,7 @@ public class Controller implements ActionListener {
 			vf.getShifts().setVisible(true);
 			break;
 		case "homeTreatments":
-			
+
 			checkWindowTreatment = 0;
 			if (vf.getTreatments().getNewTreatmentPanel().isVisible()) {
 
@@ -947,7 +947,7 @@ public class Controller implements ActionListener {
 			break;
 
 		case "finishTre":
-
+			infoTreatment();
 			if (vf.getTreatments().getId3().getText().equals("")
 					|| vf.getTreatments().getTreatmentF().getText().equals("")
 					|| vf.getTreatments().getStatus3().getSelectedItem().equals("")) {
@@ -961,7 +961,7 @@ public class Controller implements ActionListener {
 			break;
 
 		case "selectTreatments":
-
+			infoTreatment();
 			if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
 
 				if (vf.getShowOptions().getTreatment().getSelectedItem().toString().equals("")) {
@@ -1051,6 +1051,8 @@ public class Controller implements ActionListener {
 			break;
 
 		case "search":
+
+			infoTreatment();
 			if (vf.getTreatments().getSearchTreatmentPanel().isVisible()) {
 				if (vf.getTreatments().getId2().getText().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "Ingrese los valores requeridos", "Error",
@@ -1603,7 +1605,6 @@ public class Controller implements ActionListener {
 			break;
 
 		case "registerTre":
-			infoTreatment();
 			if (vf.getTreatments().getName1().getText().toString().equals("")
 					|| vf.getTreatments().getSpecialty().getSelectedItem().toString().equals("")
 					|| vf.getTreatments().getTreatmentTxt().getText().toString().equals("")
@@ -1613,6 +1614,7 @@ public class Controller implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				registerTre();
+				infoTreatment();
 
 			}
 			break;
@@ -2119,7 +2121,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public static void infoTreatment() {
+	public static  void infoTreatment() {
 
 		if (checkWindowTreatment == 1) {// Principal
 
@@ -2140,7 +2142,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getSelectPatient().setVisible(true);
 			vf.getTreatments().getSelectPatient().setBounds(0, 28, 111, 40);
 
-		} else if (checkWindowTreatment == 2) {// Buscar
+		}  if (checkWindowTreatment == 2) {// Buscar
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 220);
 
 			vf.getTreatments().getInfoName().setVisible(true);
@@ -2160,7 +2162,7 @@ public class Controller implements ActionListener {
 
 			// vf.getTreatments().getInfoName().setVisible(false);
 
-		} else if (checkWindowTreatment == 3) {// Finish
+		}  if (checkWindowTreatment == 3) {// Finish
 			vf.getTreatments().getInfoPanel().setBounds(614, 170, 130, 210);
 
 			vf.getTreatments().getSearchButton().setBounds(0, 53, 100, 35);
@@ -2171,13 +2173,15 @@ public class Controller implements ActionListener {
 
 			vf.getTreatments().getInfoStatus().setVisible(true);
 			vf.getTreatments().getInfoStatus().setBounds(0, 135, 34, 34);
-		} else if (checkWindowTreatment == 0) {
+		}  if (checkWindowTreatment == 0) {
 			vf.getTreatments().getSearchButton().setVisible(false);
 			vf.getTreatments().getInfoTreatment().setVisible(false);
 			vf.getTreatments().getInfospecialty().setVisible(false);
 			vf.getTreatments().getInfoName().setVisible(false);
 			vf.getTreatments().getInfoStatus().setVisible(false);
 			vf.getTreatments().getSelectPatient().setVisible(false);
+			//vf.getTreatments().getInfoPanel().setVisible(false);
+			
 
 		}
 
@@ -2862,7 +2866,7 @@ public class Controller implements ActionListener {
 	}
 
 	public static void panelsEmails() {
-		infoTreatment();
+
 		if (vf.getPersonMenu().getPersonPanel().isVisible()) {
 			vf.getShowOptions().getNewPersonPanel().setVisible(false);
 			vf.getPersonMenu().getPersonPanel().setVisible(false);
@@ -2920,6 +2924,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getMainPanel().setVisible(true);
 			vf.getTreatments().setVisible(false);
 			vf.getHome().setVisible(true);
+			checkWindowTreatment =0;
 			infoTreatment();
 
 		}
@@ -2928,6 +2933,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getMainPanel().setVisible(true);
 			vf.getTreatments().setVisible(false);
 			vf.getHome().setVisible(true);
+			checkWindowTreatment = 0;
 			infoTreatment();
 		}
 		if (sendEmail == 6) {
@@ -2935,6 +2941,7 @@ public class Controller implements ActionListener {
 			vf.getTreatments().getMainPanel().setVisible(true);
 			vf.getTreatments().setVisible(false);
 			vf.getHome().setVisible(true);
+			checkWindowTreatment = 0;
 			infoTreatment();
 		}
 
@@ -3346,6 +3353,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void registerTre() {
+		checkWindowTreatment=0;
 		sendEmail = 4;
 		boolean enter = true;
 		String name = vf.getTreatments().getName1().getText().toString();
@@ -3398,6 +3406,7 @@ public class Controller implements ActionListener {
 
 						sendEmail(email, subject, message);
 						infoTreatment();
+						checkWindowTreatment=1;
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3418,6 +3427,7 @@ public class Controller implements ActionListener {
 
 	public void updateTre() {
 		sendEmail = 5;
+		checkWindowTreatment=0;
 		boolean verf = true;
 		String email = null;
 		String treatment = vf.getTreatments().getTreatmentS().getText().toString();
@@ -3509,6 +3519,7 @@ public class Controller implements ActionListener {
 	}
 
 	public void finishTre() {
+		checkWindowTreatment=0;
 		sendEmail = 6;
 		boolean verf2 = true;
 		String name = null;
