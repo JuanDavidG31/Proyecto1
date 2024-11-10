@@ -675,6 +675,7 @@ public class Controller implements ActionListener {
 		case "backInitPerson":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
 			vf.getShowOptions().getPersonPanel().setVisible(false);
+			//jhjj
 			break;
 		case "backInitDoctor":
 			vf.getShowOptions().getNewPersonPanel().setVisible(true);
