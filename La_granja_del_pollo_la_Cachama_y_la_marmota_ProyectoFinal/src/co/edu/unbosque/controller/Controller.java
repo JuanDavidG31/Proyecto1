@@ -405,13 +405,13 @@ public class Controller implements ActionListener {
 				ImageIcon imageS = new ImageIcon("Images\\menuUsuarios\\ShowC.png");
 				Image scaledS = imageS.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 				vf.getUsers().getShow().setIcon(new ImageIcon(scaledS));
-				
-			}else {
+
+			} else {
 				vf.getUsers().getPassword().setEchoChar((char) 0);
 				ImageIcon imageh = new ImageIcon("Images\\menuUsuarios\\hideC.png");
 				Image scaledh = imageh.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
 				vf.getUsers().getShow().setIcon(new ImageIcon(scaledh));
-			
+
 			}
 			isPasswordVisible = !isPasswordVisible;
 
@@ -617,7 +617,7 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(false);
 			vf.getReports().setVisible(true);
 
-			setInactive();
+			// setInactive();
 			// showReports("dataa/appointment.csv");
 			break;
 		case "initNewDoctor":
@@ -4105,7 +4105,6 @@ public class Controller implements ActionListener {
 
 	public boolean nameCheckException(String name) {
 
-		
 		try {
 			ExceptionChecker.NameNotValid(name);
 		} catch (NameNotValidException e) {
