@@ -2854,7 +2854,7 @@ public class Controller implements ActionListener {
 		doctorOrderId();
 	}
 
-	public static boolean sendEmail(String email, String subject, String message) {
+	public static void sendEmail(String email, String subject, String message) {
 
 		JDialog loadingDialog = new JDialog();
 		loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -2879,14 +2879,12 @@ public class Controller implements ActionListener {
 			protected void done() {
 				panelsEmails();
 				loadingDialog.dispose();
-				// JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-
+				JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
 			}
 		};
 
 		loadingDialog.setVisible(true);
 		worker.execute();
-		return true;
 	}
 
 	public static void panelsEmails() {
@@ -3065,12 +3063,7 @@ public class Controller implements ActionListener {
 							.replace("{numeroIdentificacion}", String.valueOf(id))
 							.replace("{numeroCita}", String.valueOf(appoint)).replace("{especialidadCita}", speciality)
 							.replace("{fechaCita}", date);
-					 if ( sendEmail(email, subject, message)==true) {
-						 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-					 }else {
-						 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-									JOptionPane.ERROR_MESSAGE);
-						 }
+					sendEmail(email, subject, message);
 					break p;
 
 				} else {
@@ -3151,13 +3144,7 @@ public class Controller implements ActionListener {
 								.replace("{numeroCita}", String.valueOf(appoint))
 								.replace("{especialidadCita}", specialty).replace("{fechaCita}", date)
 								.replace("{nombreDoctor}", doctor);
-						
-						 if ( sendEmail(email, subject, message)==true) {
-							 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-						 }else {
-							 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-										JOptionPane.ERROR_MESSAGE);
-							 }
+						sendEmail(email, subject, message);
 
 						break p;
 					} else {
@@ -3236,12 +3223,7 @@ public class Controller implements ActionListener {
 									.replace("{especialidadCita}", specialty).replace("{fechaCita}", date)
 									.replace("{nombreDoctor}", doctor);
 
-							 if ( sendEmail(email, subject, message)==true) {
-								 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-							 }else {
-								 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-											JOptionPane.ERROR_MESSAGE);
-								 }
+							sendEmail(email, subject, message);
 							/*
 							 * vf.getSchedule().getSchedulePanel().setVisible(false);
 							 * vf.getSchedule().getMainPanel().setVisible(true);
@@ -3328,12 +3310,7 @@ public class Controller implements ActionListener {
 								.replace("{numeroIdentificacion}", String.valueOf(id)).replace("{correoDoctor}", email);
 
 						doctorOrderId();
-						 if ( sendEmail(email, subject, message)==true) {
-							 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-						 }else {
-							 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-										JOptionPane.ERROR_MESSAGE);
-							 }
+						sendEmail(email, subject, message);
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3389,12 +3366,7 @@ public class Controller implements ActionListener {
 				String message = body.replace("{nombrePaciente}", name)
 						.replace("{numeroIdentificacion}", String.valueOf(identi)).replace("{correo}", email);
 
-				 if ( sendEmail(email, subject, message)==true) {
-					 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-				 }else {
-					 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-								JOptionPane.ERROR_MESSAGE);
-					 }
+				sendEmail(email, subject, message);
 
 			} else {
 				JOptionPane.showMessageDialog(null, "No se pudo crear");
@@ -3454,12 +3426,7 @@ public class Controller implements ActionListener {
 						String message = body.replace("{nombrePaciente}", name).replace("{especialidad}", specialty)
 								.replace("{tratamiento}", treatment);
 
-						if ( sendEmail(email, subject, message)==true) {
-							 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-						 }else {
-							 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-										JOptionPane.ERROR_MESSAGE);
-							 }
+						sendEmail(email, subject, message);
 						infoTreatment();
 						checkWindowTreatment = 1;
 
@@ -3573,12 +3540,7 @@ public class Controller implements ActionListener {
 									.replace("{especialidad}", speciality).replace("{tratamiento}", treatment)
 									.replace("{estadoTratamiento}", status);
 
-							if ( sendEmail(email, subject, message)==true) {
-								 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-							 }else {
-								 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-											JOptionPane.ERROR_MESSAGE);
-								 }
+							sendEmail(email, subject, message);
 							infoTreatment();
 
 						} else {
@@ -3686,12 +3648,7 @@ public class Controller implements ActionListener {
 					String message = body.replace("{nombrePaciente}", name).replace("{especialidad}", speciality)
 							.replace("{tratamiento}", treatment).replace("{estadoTratamiento}", status);
 
-					if ( sendEmail(email, subject, message)==true) {
-						 JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-					 }else {
-						 JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-									JOptionPane.ERROR_MESSAGE);
-						 }
+					sendEmail(email, subject, message);
 					infoTreatment();
 
 				} else {
@@ -4159,12 +4116,7 @@ public class Controller implements ActionListener {
 				.replace("{correo}", email).replace("{especialidad}", speciality).replace("{fechaInicio}", date1)
 				.replace("{fechaFin}", date2);
 
-		if (sendEmail(email, subject, message) == true) {
-			JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-		} else {
-			JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		sendEmail(email, subject, message);
 	}
 
 	public void exchangeTurn(String email, String name1, String name2, int id, String speciality, String date1,
@@ -4179,12 +4131,7 @@ public class Controller implements ActionListener {
 				.replace("{especialidad}", speciality).replace("{fechaAntiguoTurno}", date1).replace("{nombre2}", name2)
 				.replace("{fechaNuevoTurno}", date2);
 
-		if (sendEmail(email, subject, message) == true) {
-			JOptionPane.showMessageDialog(null, "Correo enviado con éxito");
-		} else {
-			JOptionPane.showMessageDialog(null, "El correo no se ha podido enviar, contacte a soporte", "Error Mail",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		sendEmail(email, subject, message);
 	}
 
 	public static void eliminarArchivos(String folderName, String fileName) {
