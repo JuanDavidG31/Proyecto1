@@ -32,9 +32,9 @@ public class TreatmentDAOTest {
 	@Test
 	public void verificarAñadir() {
 		String name = "Tratamiento";
-		String specialty = "Cardiología";
-		String treatment = "Terapia Cardíaca";
-		String verified = "Sí";
+		String specialty = "Cardiologia";
+		String treatment = "Terapia Cardiaca";
+		String verified = "si";
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {
@@ -57,9 +57,9 @@ public class TreatmentDAOTest {
 	@Test
 	public void verificarActualizar() {
 		String name = "Tratamiento";
-		String specialty = "Cardiología";
-		String treatment = "Terapia Cardíaca";
-		String verified = "Sí";
+		String specialty = "Cardiologia";
+		String treatment = "Terapia Cardiaca";
+		String verified = "si";
 		String nameNuevo = "Nuevo Tratamiento";
 		Random rnd = new Random();
 
@@ -85,9 +85,9 @@ public class TreatmentDAOTest {
 	@Test
 	public void verificarEliminar() {
 		String name = "Tratamiento";
-		String specialty = "Cardiología";
-		String treatment = "Terapia Cardíaca";
-		String verified = "Sí";
+		String specialty = "Cardiologia";
+		String treatment = "Terapia Cardiaca";
+		String verified = "si";
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {
@@ -106,9 +106,9 @@ public class TreatmentDAOTest {
 	@Test
 	public void verificarMostrarTodo() {
 		String name = "Tratamiento";
-		String specialty = "Cardiología";
-		String treatment = "Terapia Cardíaca";
-		String verified = "Sí";
+		String specialty = "Cardiologia";
+		String treatment = "Terapia Cardiaca";
+		String verified = "si";
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {
@@ -129,9 +129,9 @@ public class TreatmentDAOTest {
 	public void verificarMostrar() {
 		boolean mostrar = false;
 		String name = "Tratamiento";
-		String specialty = "Cardiología";
-		String treatment = "Terapia Cardíaca";
-		String verified = "Sí";
+		String specialty = "Cardiologia";
+		String treatment = "Terapia Cardiaca";
+		String verified = "si";
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {

@@ -32,8 +32,8 @@ public class ShiftsDAOTest {
 	@Test
 	public void verificarAñadir() {
 		String nombre = "Turno";
-		String fecha1 = "2024-11-09";
-		String fecha2 = "2024-11-10";
+		String fecha1 = "2024/11/09";
+		String fecha2 = "2024/11/10";
 		String especialidad = "Medicina";
 		Random rnd = new Random();
 
@@ -57,11 +57,11 @@ public class ShiftsDAOTest {
 	@Test
 	public void verificarActualizar() {
 		String nombre = "Turno";
-		String fecha1 = "2024-11-09";
-		String fecha2 = "2024-11-10";
+		String fecha1 = "2024/11/09";
+		String fecha2 = "2024/11/10";
 		String especialidad = "Medicina";
 		String nombreNuevo = "Nuevo Turno";
-		String especialidadNueva = "Cirugía";
+		String especialidadNueva = "Cirugia";
 
 		Random rnd = new Random();
 		for (int i = 0; i < 7; i++) {
@@ -89,8 +89,8 @@ public class ShiftsDAOTest {
 	@Test
 	public void verificarEliminar() {
 		String nombre = "Turno";
-		String fecha1 = "2024-11-09";
-		String fecha2 = "2024-11-10";
+		String fecha1 = "2024/11/09";
+		String fecha2 = "2024/11/10";
 		String especialidad = "Medicina";
 		Random rnd = new Random();
 
@@ -111,8 +111,8 @@ public class ShiftsDAOTest {
 	@Test
 	public void verificarMostrarTodo() {
 		String nombre = "Turno";
-		String fecha1 = "2024-11-09";
-		String fecha2 = "2024-11-10";
+		String fecha1 = "2024/11/09";
+		String fecha2 = "2024/11/10";
 		String especialidad = "Medicina";
 		Random rnd = new Random();
 
@@ -135,8 +135,8 @@ public class ShiftsDAOTest {
 	public void verificarMostrar() {
 		boolean mostrar = false;
 		String nombre = "Turno";
-		String fecha1 = "2024-11-09";
-		String fecha2 = "2024-11-10";
+		String fecha1 = "2024/11/09";
+		String fecha2 = "2024/11/10";
 		String especialidad = "Medicina";
 		Random rnd = new Random();
 
