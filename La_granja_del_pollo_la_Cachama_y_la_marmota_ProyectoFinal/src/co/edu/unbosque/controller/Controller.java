@@ -79,6 +79,10 @@ public class Controller implements ActionListener {
 
 		assignReaders();
 		vf.getHome().setVisible(true);
+		vf.getHome().getReport().setEnabled(false);
+		vf.getHome().getTurn().setEnabled(false);
+		vf.getHome().getTreatment().setEnabled(false);
+
 		showScheduleInfo();
 		infoTreatment();
 
@@ -325,6 +329,21 @@ public class Controller implements ActionListener {
 
 		vf.getReports().getReport6().addActionListener(this);
 		vf.getReports().getReport6().setActionCommand("report6");
+
+		vf.getHome().getUsersButton().addActionListener(this);
+		vf.getHome().getUsersButton().setActionCommand("initMenuUser");
+
+		vf.getUsers().getReturnMenu().addActionListener(this);
+		vf.getUsers().getReturnMenu().setActionCommand("exitUser");
+
+		vf.getUsers().getLogin().addActionListener(this);
+		vf.getUsers().getLogin().setActionCommand("login");
+
+		vf.getUsers().getShow().addActionListener(this);
+		vf.getUsers().getShow().setActionCommand("show");
+
+		vf.getUsers().getHide().addActionListener(this);
+		vf.getUsers().getHide().setActionCommand("hide");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -332,6 +351,43 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 
+		case "login":
+			
+			
+			
+			
+			vf.getUsers().getUserName().setText(null);
+			vf.getUsers().getPassword().setText(null);
+			
+			vf.getHome().getReport().setEnabled(true);
+			vf.getHome().getTurn().setEnabled(true);
+			vf.getHome().getTreatment().setEnabled(true);
+			
+			break;
+		case "show":
+			vf.getUsers().getPassword().setEchoChar((char) 0);
+			
+			vf.getUsers().getShow().setVisible(false);
+			vf.getUsers().getHide().setVisible(true);
+
+			break;
+		case "hide":
+			vf.getUsers().getPassword().setEchoChar((char) 1);
+			vf.getUsers().getPassword().setEchoChar('•');
+			vf.getUsers().getHide().setVisible(false);
+			vf.getUsers().getShow().setVisible(true);
+			break;
+		case "exitUser":
+			vf.getUsers().setVisible(false);
+			vf.getHome().setVisible(true);
+			vf.getUsers().getUserName().setText(null);
+			vf.getUsers().getPassword().setText(null);
+			break;
+		case "initMenuUser":
+			vf.getHome().setVisible(false);
+			vf.getUsers().setVisible(true);
+
+			break;
 		case "report1":
 
 			eliminarArchivos(FOLDER_NAME, "reportPatient");

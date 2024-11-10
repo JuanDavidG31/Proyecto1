@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class HomeWindow extends JFrame {
 	private JPanel mainPanel;
-	private JButton schedule, exit, turn, treatment, report, theme, create;
+	private JButton schedule, exit, turn, treatment, report, theme, create,users;
 	private JLabel background1;
 
 	public HomeWindow() {
@@ -73,7 +73,7 @@ public class HomeWindow extends JFrame {
 
 		turn = new JButton();
 		turn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		turn.setBounds(263, 226, 124, 124);
+		turn.setBounds(262, 224, 124, 124);
 		turn.setBorderPainted(false);
 		turn.setToolTipText("Menú de turnos para especialistas");
 		ImageIcon image2 = new ImageIcon("Images\\menuInicial\\turnoClaro.png");
@@ -82,7 +82,7 @@ public class HomeWindow extends JFrame {
 
 		treatment = new JButton();
 		treatment.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		treatment.setBounds(416, 226, 124, 124);
+		treatment.setBounds( 416, 224, 124, 124);
 		treatment.setBorderPainted(false);
 		treatment.setToolTipText("Menú de tratamientos de pacientes");
 		ImageIcon image3 = new ImageIcon("Images\\menuInicial\\tratamientoClaro.png");
@@ -91,13 +91,22 @@ public class HomeWindow extends JFrame {
 
 		report = new JButton();
 		report.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		report.setBounds(340, 375, 124, 124);
+		report.setBounds(261, 373, 124, 124);
 		report.setBorderPainted(false);
 		report.setToolTipText("Generar reporte semanal");
 		ImageIcon image4 = new ImageIcon("Images\\menuInicial\\reporteClaro.png");
 		report.setIcon(image4);
 		mainPanel.add(report);
 
+		users = new JButton();
+		users.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		users.setBounds(414, 375, 124, 124);
+		users.setBorderPainted(false);
+		users.setToolTipText("Generar reporte semanal");
+		ImageIcon imageU = new ImageIcon("Images\\menuInicial\\inicioC.png");
+		users.setIcon(imageU);
+		mainPanel.add(users);
+		
 		theme = new JButton();
 		theme.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		theme.setBounds(41, 465, 82, 79);
@@ -190,6 +199,14 @@ public class HomeWindow extends JFrame {
 
 	public void setCreate(JButton create) {
 		this.create = create;
+	}
+
+	public JButton getUsersButton() {
+		return users;
+	}
+
+	public void setUsersButton(JButton users) {
+		this.users = users;
 	}
 
 }

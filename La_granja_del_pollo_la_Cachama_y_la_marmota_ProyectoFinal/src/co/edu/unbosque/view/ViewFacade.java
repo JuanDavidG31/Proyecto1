@@ -8,6 +8,7 @@ public class ViewFacade {
 	private ShowOptions ShowOptions;
 	private AddMenu personMenu;
 	private Reports reports;
+	private User users;
 
 	public ViewFacade() {
 		home = new HomeWindow();
@@ -17,6 +18,7 @@ public class ViewFacade {
 		ShowOptions = new ShowOptions();
 		personMenu= new AddMenu();
 		reports= new Reports();
+		users= new User();
 	}
 
 	public HomeWindow getHome() {
@@ -73,6 +75,14 @@ public class ViewFacade {
 
 	public void setReports(Reports reports) {
 		this.reports = reports;
+	}
+
+	public User getUsers() {
+		return users;
+	}
+
+	public void setUsers(User users) {
+		this.users = users;
 	}
 
 }
