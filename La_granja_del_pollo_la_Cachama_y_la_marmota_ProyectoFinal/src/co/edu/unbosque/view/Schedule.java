@@ -197,6 +197,7 @@ public class Schedule extends JFrame {
 	}
 
 	private void comboBox() {
+		
 		doctor = new JComboBox<String>();
 		doctor.setBounds(356, 332, 251, 30);
 		doctor.setCursor(new Cursor(Cursor.HAND_CURSOR));

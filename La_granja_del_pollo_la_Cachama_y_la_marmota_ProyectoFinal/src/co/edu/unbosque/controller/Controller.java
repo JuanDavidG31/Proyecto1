@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -81,9 +82,9 @@ public class Controller implements ActionListener {
 
 		assignReaders();
 		vf.getHome().setVisible(true);
-		vf.getHome().getReport().setEnabled(false);
-		vf.getHome().getTurn().setEnabled(false);
-		vf.getHome().getTreatment().setEnabled(false);
+		// vf.getHome().getReport().setEnabled(false);
+		// vf.getHome().getTurn().setEnabled(false);
+		// vf.getHome().getTreatment().setEnabled(false);
 
 		infoTreatment();
 
@@ -876,10 +877,12 @@ public class Controller implements ActionListener {
 			}
 			break;
 		case "initMakeTurns":
+			sendEmail=10;
 			vf.getShifts().getMainPanel().setVisible(false);
 			vf.getShifts().getPanelSelect().setVisible(true);
 			break;
 		case "initChangeTurn":
+			sendEmail=11;
 			vf.getShifts().getMainPanel().setVisible(false);
 			vf.getShifts().getPanelChange().setVisible(true);
 			break;
@@ -2080,7 +2083,8 @@ public class Controller implements ActionListener {
 
 			Image scaledInfoClear = vf.getSchedule().getImage12().getImage().getScaledInstance(34, 34,
 					Image.SCALE_SMOOTH);
-
+vf.getTreatments().getInfoName().setIcon(new ImageIcon());
+			
 			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoClear));
 
 			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoClear));
@@ -2135,7 +2139,6 @@ public class Controller implements ActionListener {
 			vf.getShowOptions().getHome3().setIcon(backClear);
 			vf.getShowOptions().getReturnMenu().setIcon(backClear);
 			vf.getTreatments().getHome().setIcon(homeBClear);
-			
 
 			ImageIcon doctorBackgroundClear = new ImageIcon("Images\\menuAniadir\\menuDoctorC.png");
 			vf.getShowOptions().getBackgroundMD().setIcon(doctorBackgroundClear);
@@ -2157,7 +2160,6 @@ public class Controller implements ActionListener {
 
 			ImageIcon finishTreatmentClear = new ImageIcon("Images\\menuTratamientos\\finalizarC.png");
 			vf.getTreatments().getFinishTreatment().setIcon(finishTreatmentClear);
-
 
 			vf.getTreatments().getHomeTreatments1().setIcon(home);
 
@@ -2188,13 +2190,38 @@ public class Controller implements ActionListener {
 			ImageIcon updateTreatmentClear = new ImageIcon("Images\\menuTratamientos\\actualizarC.png");
 			vf.getTreatments().getUpdateTreatment().setIcon(updateTreatmentClear);
 
-			// vf.get
+			ImageIcon menuTreatmentClear = new ImageIcon("Images\\menuTratamientos\\menuTratamientosC.png");
+			vf.getTreatments().getBackground1().setIcon(menuTreatmentClear);
+
+			ImageIcon menuTreatmentNewClear = new ImageIcon("Images\\menuTratamientos\\nuevoTratamientoC.png");
+			vf.getTreatments().getBackground2().setIcon(menuTreatmentNewClear);
+
+			ImageIcon menuTreatmentRegClear = new ImageIcon("Images\\menuTratamientos\\buscarTratamientoC.png");
+			vf.getTreatments().getBackground3().setIcon(menuTreatmentRegClear);
+
+			ImageIcon menuTreatmentFinClear = new ImageIcon("Images\\menuTratamientos\\finalizarTratamientoC.png");
+			vf.getTreatments().getBackground4().setIcon(menuTreatmentFinClear);
+			
+			vf.getTreatments().getInfoPanel().setBackground(new Color(0, 74, 173));
+
+			
+
 			darkMode = false;
 
 		} else {
 
 			infoTreatment();
 			// Home
+			ImageIcon menuTreatmentRegDark = new ImageIcon("Images\\menuTratamientos\\buscarTratamientoO.png");
+			vf.getTreatments().getBackground3().setIcon(menuTreatmentRegDark);
+			
+			vf.getTreatments().getInfoPanel().setBackground(Color.black);
+
+			ImageIcon menuTreatmentFinDark = new ImageIcon("Images\\menuTratamientos\\finalizarTratamientoO.png");
+			vf.getTreatments().getBackground4().setIcon(menuTreatmentFinDark);
+			
+			ImageIcon menuTreatmentNewDark = new ImageIcon("Images\\menuTratamientos\\nuevoTratamientoO.png");
+			vf.getTreatments().getBackground2().setIcon(menuTreatmentNewDark);
 
 			ImageIcon homeDark = new ImageIcon("Images\\menuInicial\\MenuOscuro.png");
 			vf.getHome().getBackground1().setIcon(homeDark);
@@ -2304,13 +2331,13 @@ public class Controller implements ActionListener {
 			ImageIcon loginDark = new ImageIcon("Images\\menuUsuarios\\ingresarO.png");
 			vf.getUsers().getLogin().setIcon(loginDark);
 
-			ImageIcon backDark = new ImageIcon("Images\\backButtons\\back2.png");
+			ImageIcon backDark = new ImageIcon("Images\\backButtons\\m2.png");
+
 			vf.getUsers().getReturnMenu().setIcon(backDark);
 			vf.getShowOptions().getHome().setIcon(backDark);
 			vf.getShowOptions().getHome2().setIcon(backDark);
 			vf.getShowOptions().getHome3().setIcon(backDark);
 			vf.getShowOptions().getReturnMenu().setIcon(backDark);
-		
 
 			ImageIcon doctorBackgroundDark = new ImageIcon("Images\\menuAniadir\\menuDoctorO.png");
 			vf.getShowOptions().getBackgroundMD().setIcon(doctorBackgroundDark);
@@ -2323,6 +2350,43 @@ public class Controller implements ActionListener {
 
 			ImageIcon menuPacD = new ImageIcon("Images\\menuCitas\\mPacienteO.png");
 			vf.getShowOptions().getBackgroundP().setIcon(menuPacD);
+
+			ImageIcon finishTreatmentDark = new ImageIcon("Images\\menuTratamientos\\finalizarO.png");
+			vf.getTreatments().getFinishTreatment().setIcon(finishTreatmentDark);
+
+			ImageIcon backGDark = new ImageIcon("Images\\backButtons\\m2.png");
+
+			vf.getTreatments().getHomeTreatments1().setIcon(backGDark);
+
+			vf.getTreatments().getHomeTreatments2().setIcon(backGDark);
+
+			vf.getTreatments().getHomeTreatments3().setIcon(backGDark);
+
+			ImageIcon initFinishTreatmentDark = new ImageIcon("Images\\menuTratamientos\\bFinishDark.png");
+			vf.getTreatments().getInitFinishTreatment().setIcon(initFinishTreatmentDark);
+
+			ImageIcon initSearchTreatmentDark = new ImageIcon("Images\\menuTratamientos\\bSearchDark.png");
+			vf.getTreatments().getInitSearchTreatment().setIcon(initSearchTreatmentDark);
+
+			ImageIcon initTreatmentDark = new ImageIcon("Images\\menuTratamientos\\bNewDark.png");
+			vf.getTreatments().getInitTreatment().setIcon(initTreatmentDark);
+
+			ImageIcon registerDark = new ImageIcon("Images\\menuTratamientos\\registrarO.png");
+			vf.getTreatments().getRegister().setIcon(registerDark);
+
+			ImageIcon searchButtonDark = new ImageIcon("Images\\menuTratamientos\\buscarO.png");
+			vf.getTreatments().getSearchButton().setIcon(searchButtonDark);
+
+			ImageIcon selectPatientDark = new ImageIcon("Images\\menuCitas\\selectO.png");
+			vf.getTreatments().getSelectPatient().setIcon(selectPatientDark);
+
+			vf.getTreatments().getThemeMain().setIcon(themeDark);
+
+			ImageIcon updateTreatmentDark = new ImageIcon("Images\\menuTratamientos\\actualizarO.png");
+			vf.getTreatments().getUpdateTreatment().setIcon(updateTreatmentDark);
+
+			ImageIcon menuTreatmentDark = new ImageIcon("Images\\menuTratamientos\\menuTratamientosO.png");
+			vf.getTreatments().getBackground1().setIcon(menuTreatmentDark);
 
 			darkMode = true;
 		}
@@ -3164,6 +3228,20 @@ public class Controller implements ActionListener {
 			vf.getHome().setVisible(true);
 			checkWindowTreatment = 0;
 			infoTreatment();
+		}
+		if (sendEmail==10) {
+			vf.getShifts().getPanelSelect().setVisible(false);
+			vf.getShifts().getMainPanel().setVisible(true);
+			vf.getShifts().setVisible(false);
+			vf.getHome().setVisible(true);
+		}
+		
+		if (sendEmail==11) {
+			vf.getShifts().getPanelChange().setVisible(false);
+			vf.getShifts().getMainPanel().setVisible(true);
+			vf.getShifts().setVisible(false);
+			vf.getHome().setVisible(true);
+			
 		}
 
 	}
