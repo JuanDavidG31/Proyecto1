@@ -94,16 +94,7 @@ public class User extends JFrame {
 		show.setIcon(new ImageIcon(scaledS));
 		mainPanel.add(show);
 
-		hide = new JButton();
-		hide.setVisible(false);
-		hide.setBounds(424, 78, 42, 42);
-		hide.setBorderPainted(false);
-		hide.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		hide.setToolTipText("Ocultar Contraseña");
-		ImageIcon imageh = new ImageIcon("Images\\menuUsuarios\\hideC.png");
-		Image scaledh = imageh.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
-		hide.setIcon(new ImageIcon(scaledh));
-		mainPanel.add(hide);
+		
 		
 		returnMenu = new JButton();
 		returnMenu.setBounds(334, 131, 42, 42);
@@ -170,14 +161,6 @@ public class User extends JFrame {
 
 	public void setShow(JButton show) {
 		this.show = show;
-	}
-
-	public JButton getHide() {
-		return hide;
-	}
-
-	public void setHide(JButton hide) {
-		this.hide = hide;
 	}
 
 }

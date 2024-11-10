@@ -61,6 +61,7 @@ public class Controller implements ActionListener {
 	private int person = 0;
 	private static int sendEmail = 0;
 	private boolean darkMode = false;
+	private boolean isPasswordVisible;
 	private ArrayList<DoctorDTO> doctor;
 	private ArrayList<TreatmentDTO> treat;
 	private ArrayList<PatientDTO> patient;
@@ -342,8 +343,6 @@ public class Controller implements ActionListener {
 		vf.getUsers().getShow().addActionListener(this);
 		vf.getUsers().getShow().setActionCommand("show");
 
-		vf.getUsers().getHide().addActionListener(this);
-		vf.getUsers().getHide().setActionCommand("hide");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -400,17 +399,22 @@ public class Controller implements ActionListener {
 			}
 			break;
 		case "show":
-			vf.getUsers().getPassword().setEchoChar((char) 0);
+			if (isPasswordVisible) {
+				vf.getUsers().getPassword().setEchoChar((char) 1);
+				vf.getUsers().getPassword().setEchoChar('•');
+				ImageIcon imageS = new ImageIcon("Images\\menuUsuarios\\ShowC.png");
+				Image scaledS = imageS.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
+				vf.getUsers().getShow().setIcon(new ImageIcon(scaledS));
+				
+			}else {
+				vf.getUsers().getPassword().setEchoChar((char) 0);
+				ImageIcon imageh = new ImageIcon("Images\\menuUsuarios\\hideC.png");
+				Image scaledh = imageh.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
+				vf.getUsers().getShow().setIcon(new ImageIcon(scaledh));
+			
+			}
+			isPasswordVisible = !isPasswordVisible;
 
-			vf.getUsers().getShow().setVisible(false);
-			vf.getUsers().getHide().setVisible(true);
-
-			break;
-		case "hide":
-			vf.getUsers().getPassword().setEchoChar((char) 1);
-			vf.getUsers().getPassword().setEchoChar('•');
-			vf.getUsers().getHide().setVisible(false);
-			vf.getUsers().getShow().setVisible(true);
 			break;
 		case "exitUser":
 			vf.getUsers().setVisible(false);
