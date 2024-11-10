@@ -79,6 +79,10 @@ public class Controller implements ActionListener {
 
 		assignReaders();
 		vf.getHome().setVisible(true);
+		vf.getHome().getReport().setEnabled(false);
+		vf.getHome().getTurn().setEnabled(false);
+		vf.getHome().getTreatment().setEnabled(false);
+
 		showScheduleInfo();
 		infoTreatment();
 
@@ -325,6 +329,21 @@ public class Controller implements ActionListener {
 
 		vf.getReports().getReport6().addActionListener(this);
 		vf.getReports().getReport6().setActionCommand("report6");
+
+		vf.getHome().getUsersButton().addActionListener(this);
+		vf.getHome().getUsersButton().setActionCommand("initMenuUser");
+
+		vf.getUsers().getReturnMenu().addActionListener(this);
+		vf.getUsers().getReturnMenu().setActionCommand("exitUser");
+
+		vf.getUsers().getLogin().addActionListener(this);
+		vf.getUsers().getLogin().setActionCommand("login");
+
+		vf.getUsers().getShow().addActionListener(this);
+		vf.getUsers().getShow().setActionCommand("show");
+
+		vf.getUsers().getHide().addActionListener(this);
+		vf.getUsers().getHide().setActionCommand("hide");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -332,6 +351,78 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 
+		case "login":
+			boolean enters = true;
+			String password2 = vf.getUsers().getPassword().getText().toString();
+			String user = vf.getUsers().getUserName().getText().toString().toLowerCase();
+
+			boolean checkPassword = idCheckException(password2);
+
+			boolean checkUser = nameCheckException(user);
+
+			if (checkPassword) {
+				vf.getUsers().getPassword().setText(null);
+				JOptionPane.showMessageDialog(null, "La contraseña tiene caracteres incorrectos");
+			} else if (checkUser) {
+				vf.getUsers().getUserName().setText(null);
+				JOptionPane.showMessageDialog(null, "El usuario tiene caracteres invalidos");
+			} else {
+				int password = Integer.parseInt(password2);
+				doctor = new ArrayList<>();
+				doctor = mf.getDoctor().getAll();
+
+				for (DoctorDTO dc : doctor) {
+
+					int id = dc.getId();
+					String name = dc.getName().toLowerCase();
+
+					if (id == password && name.equals(user)) {
+
+						JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+						vf.getHome().getUsersButton().setEnabled(false);
+						vf.getUsers().getUserName().setText(null);
+						vf.getUsers().getPassword().setText(null);
+						vf.getHome().getReport().setEnabled(true);
+						vf.getHome().getTurn().setEnabled(true);
+						vf.getHome().getTreatment().setEnabled(true);
+						vf.getUsers().setVisible(false);
+						vf.getHome().setVisible(true);
+						enters = false;
+						break;
+					}
+
+				}
+			}
+
+			if (enters) {
+
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+			}
+			break;
+		case "show":
+			vf.getUsers().getPassword().setEchoChar((char) 0);
+
+			vf.getUsers().getShow().setVisible(false);
+			vf.getUsers().getHide().setVisible(true);
+
+			break;
+		case "hide":
+			vf.getUsers().getPassword().setEchoChar((char) 1);
+			vf.getUsers().getPassword().setEchoChar('•');
+			vf.getUsers().getHide().setVisible(false);
+			vf.getUsers().getShow().setVisible(true);
+			break;
+		case "exitUser":
+			vf.getUsers().setVisible(false);
+			vf.getHome().setVisible(true);
+			vf.getUsers().getUserName().setText(null);
+			vf.getUsers().getPassword().setText(null);
+			break;
+		case "initMenuUser":
+			vf.getHome().setVisible(false);
+			vf.getUsers().setVisible(true);
+
+			break;
 		case "report1":
 
 			eliminarArchivos(FOLDER_NAME, "reportPatient");
@@ -4010,6 +4101,7 @@ public class Controller implements ActionListener {
 
 	public boolean nameCheckException(String name) {
 
+		
 		try {
 			ExceptionChecker.NameNotValid(name);
 		} catch (NameNotValidException e) {
