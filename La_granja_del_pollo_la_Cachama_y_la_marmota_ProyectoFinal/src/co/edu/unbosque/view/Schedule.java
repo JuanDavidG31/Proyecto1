@@ -15,15 +15,17 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 public class Schedule extends JFrame {
-	private JPanel mainPanel, schedulePanel, reSchedulePanel, cancelPanel, infoPanel;
+	private JPanel mainPanel, schedulePanel, reSchedulePanel, cancelPanel;
 	private JTextField name1, id, id2, id3, email, appointmentNumber, appointmentNumbers;
 	private JComboBox<String> doctor, specialty;
-	private JButton generate, home, selectPatient, scheduleButton, rescheduleButton, cancelButton, reGenerate, cancel,
+	private JButton generate, home, selectPatient,selectPatient2,selectPatient3, scheduleButton, rescheduleButton, cancelButton, reGenerate, cancel,
 			homeSchedule, homeReschedule, homeCancel;
 	private JButton themeMain, schTheme, reTheme, canTheme, infoName, infoEmail, infospecialty, infoDoctor, infoDate,
 			infoNDate, infoNum, infoNumCancel;
 	private JLabel background1, background2, background3, background4;
 	private JDateChooser date1, date2;
+	private ImageIcon image12;
+	private ImageIcon image13;
 
 	public Schedule() {
 		window();
@@ -36,7 +38,6 @@ public class Schedule extends JFrame {
 		backgorunds();
 
 		add(mainPanel);
-		add(infoPanel);
 		add(schedulePanel);
 		add(reSchedulePanel);
 		add(cancelPanel);
@@ -44,7 +45,7 @@ public class Schedule extends JFrame {
 		schedulePanel.setVisible(false);
 		reSchedulePanel.setVisible(false);
 		cancelPanel.setVisible(false);
-		infoPanel.setVisible(false);
+		
 	}
 
 	private void calendar() {
@@ -65,63 +66,64 @@ public class Schedule extends JFrame {
 	}
 
 	private void info() {
+		image12 = new ImageIcon("Images\\infoButtons\\1.png");
+		image13 = new ImageIcon("Images\\infoButtons\\2.png");
 		infoName = new JButton();
-		infoName.setBounds(0, 39, 34, 34);
+		infoName.setBounds(620, 208, 34, 34);
 		infoName.setBorderPainted(false);
 		infoName.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoName.setToolTipText("Nombre del paciente");
-		ImageIcon image12 = new ImageIcon("Images\\infoButtons\\1.png");
 		Image scaled12 = image12.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
 		infoName.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoName);
+		schedulePanel.add(infoName);
 
 		infoEmail = new JButton();
-		infoEmail.setBounds(0, 78, 34, 34);
+		infoEmail.setBounds(620, 247, 34, 34);
 		infoEmail.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoEmail.setBorderPainted(false);
 		infoEmail.setToolTipText("Correo del paciente al que llegara recordatorio de la cita");
 		infoEmail.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoEmail);
+		schedulePanel.add(infoEmail);
 
 		infospecialty = new JButton();
-		infospecialty.setBounds(0, 117, 34, 34);
+		infospecialty.setBounds(620, 288, 34, 34);
 		infospecialty.setBorderPainted(false);
 		infospecialty.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infospecialty.setToolTipText("Seleccionar la especialidad de la cita");
 		infospecialty.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infospecialty);
+		schedulePanel.add(infospecialty);
 
 		infoDoctor = new JButton();
-		infoDoctor.setBounds(0, 160, 34, 34);
+		infoDoctor.setBounds(620, 328, 34, 34);
 		infoDoctor.setBorderPainted(false);
 		infoDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoDoctor.setToolTipText("Seleccionar el doctor para la cita");
 		infoDoctor.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoDoctor);
+		schedulePanel.add(infoDoctor);
 
 		infoDate = new JButton();
-		infoDate.setBounds(0, 203, 34, 34);
+		infoDate.setBounds(620, 369, 34, 34);
 		infoDate.setBorderPainted(false);
 		infoDate.setToolTipText("Fecha de la cita");
 		infoDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoDate.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoDate);
+		schedulePanel.add(infoDate);
 
 		infoNDate = new JButton();
-		infoNDate.setBounds(0, 117, 34, 34);
+		infoNDate.setBounds(613, 285, 34, 34);
 		infoNDate.setBorderPainted(false);
 		infoNDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoNDate.setToolTipText("Esta es la nueva fecha de la cita del paciente");
 		infoNDate.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoNDate);
+		reSchedulePanel.add(infoNDate);
 
 		infoNum = new JButton();
-		infoNum.setBounds(0, 74, 34, 34);
+		infoNum.setBounds(613, 245, 34, 34);
 		infoNum.setBorderPainted(false);
 		infoNum.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		infoNum.setToolTipText("Este es el numero de cita del paciente");
 		infoNum.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoNum);
+		reSchedulePanel.add(infoNum);
 
 		infoNumCancel = new JButton();
 		infoNumCancel.setBounds(0, 113, 34, 34);
@@ -129,7 +131,7 @@ public class Schedule extends JFrame {
 		infoNumCancel.setBorderPainted(false);
 		infoNumCancel.setToolTipText("Este es el numero de cita del paciente a cancelar");
 		infoNumCancel.setIcon(new ImageIcon(scaled12));
-		infoPanel.add(infoNumCancel);
+		cancelPanel.add(infoNumCancel);
 
 	}
 
@@ -191,10 +193,7 @@ public class Schedule extends JFrame {
 		cancelPanel.setBounds(0, 0, 800, 600);
 		cancelPanel.setLayout(null);
 
-		infoPanel = new JPanel();
-		infoPanel.setBounds(614, 170, 123, 244);
-		infoPanel.setBackground(new Color(0, 74, 173));
-		infoPanel.setLayout(null);
+		
 	}
 
 	private void comboBox() {
@@ -406,14 +405,30 @@ public class Schedule extends JFrame {
 		cancelPanel.add(homeCancel);
 
 		selectPatient = new JButton();
-		selectPatient.setBounds(0, 0, 111, 40);
+		selectPatient.setBounds(616, 165, 111, 40);
 		selectPatient.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		selectPatient.setToolTipText("Hacer busqueda del numero de identificación");
 		selectPatient.setBorderPainted(false);
 		ImageIcon image16 = new ImageIcon("Images\\menuCitas\\selectC.png");
 		Image scaled16 = image16.getImage().getScaledInstance(111, 40, Image.SCALE_SMOOTH);
 		selectPatient.setIcon(new ImageIcon(scaled16));
-		infoPanel.add(selectPatient);
+		schedulePanel.add(selectPatient);
+		
+		selectPatient2 = new JButton();
+		selectPatient2.setBounds(616, 198, 111, 40);
+		selectPatient2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		selectPatient2.setToolTipText("Hacer busqueda del numero de identificación");
+		selectPatient2.setBorderPainted(false);
+		selectPatient2.setIcon(new ImageIcon(scaled16));
+		reSchedulePanel.add(selectPatient2);
+		
+		selectPatient3 = new JButton();
+		selectPatient3.setBounds(616, 240, 111, 40);
+		selectPatient3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		selectPatient3.setToolTipText("Hacer busqueda del numero de identificación");
+		selectPatient3.setBorderPainted(false);
+		selectPatient3.setIcon(new ImageIcon(scaled16));
+		cancelPanel.add(selectPatient3);
 	}
 
 	public JPanel getMainPanel() {
@@ -584,13 +599,6 @@ public class Schedule extends JFrame {
 		this.cancelButton = cancelButton;
 	}
 
-	public JPanel getInfoPanel() {
-		return infoPanel;
-	}
-
-	public void setInfoPanel(JPanel infoPanel) {
-		this.infoPanel = infoPanel;
-	}
 
 	public JTextField getAppointmentNumber() {
 		return appointmentNumber;
@@ -758,6 +766,38 @@ public class Schedule extends JFrame {
 
 	public void setSelectPatient(JButton selectPatient) {
 		this.selectPatient = selectPatient;
+	}
+
+	public ImageIcon getImage12() {
+		return image12;
+	}
+
+	public void setImage12(ImageIcon image12) {
+		this.image12 = image12;
+	}
+
+	public ImageIcon getImage13() {
+		return image13;
+	}
+
+	public void setImage13(ImageIcon image13) {
+		this.image13 = image13;
+	}
+
+	public JButton getSelectPatient2() {
+		return selectPatient2;
+	}
+
+	public void setSelectPatient2(JButton selectPatient2) {
+		this.selectPatient2 = selectPatient2;
+	}
+
+	public JButton getSelectPatient3() {
+		return selectPatient3;
+	}
+
+	public void setSelectPatient3(JButton selectPatient3) {
+		this.selectPatient3 = selectPatient3;
 	}
 
 }

@@ -1,10 +1,10 @@
 package co.edu.unbosque.controller;
 
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -73,6 +73,7 @@ public class Controller implements ActionListener {
 	private ArrayList<ReportMaxSpecialityDTO> reportSpe;
 	private ArrayList<ShiftsReportDTO> turnReport;
 	private String FOLDER_NAME = "data";
+	private MouseListener existingMouseListener;
 
 	public Controller() {
 		mf = new ModelFacade();
@@ -84,7 +85,6 @@ public class Controller implements ActionListener {
 		vf.getHome().getTurn().setEnabled(false);
 		vf.getHome().getTreatment().setEnabled(false);
 
-		showScheduleInfo();
 		infoTreatment();
 
 	}
@@ -122,6 +122,12 @@ public class Controller implements ActionListener {
 
 		vf.getSchedule().getSelectPatient().addActionListener(this);
 		vf.getSchedule().getSelectPatient().setActionCommand("selectPat");
+
+		vf.getSchedule().getSelectPatient2().addActionListener(this);
+		vf.getSchedule().getSelectPatient2().setActionCommand("selectPat");
+
+		vf.getSchedule().getSelectPatient3().addActionListener(this);
+		vf.getSchedule().getSelectPatient3().setActionCommand("selectPat");
 
 		vf.getSchedule().getScheduleButton().addActionListener(this);
 		vf.getSchedule().getScheduleButton().setActionCommand("scheduleMenu");
@@ -662,7 +668,6 @@ public class Controller implements ActionListener {
 
 			break;
 		case "theme":
-			showScheduleInfo();
 			infoTreatment();
 			changeTheme();
 			break;
@@ -690,7 +695,6 @@ public class Controller implements ActionListener {
 			break;
 		case "selectDate":
 			if (schedule == 2) {
-				showScheduleInfo();
 
 				if (vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString().equals("")) {
 
@@ -723,7 +727,6 @@ public class Controller implements ActionListener {
 				}
 
 			} else if (schedule == 3) {
-				showScheduleInfo();
 
 				// para llenar la info de cancelar
 				if (vf.getShowOptions().getFechasDeReagendarCita().getSelectedItem().toString().equals("")) {
@@ -764,12 +767,12 @@ public class Controller implements ActionListener {
 				vf.getShowOptions().setVisible(false);
 				vf.getSchedule().getReSchedulePanel().setVisible(true);
 				vf.getSchedule().setVisible(true);
-				showScheduleInfo();
+
 			} else if (schedule == 3) {
 				vf.getShowOptions().setVisible(false);
 				vf.getSchedule().getCancelPanel().setVisible(true);
 				vf.getSchedule().setVisible(true);
-				showScheduleInfo();
+
 			}
 			break;
 
@@ -998,11 +1001,13 @@ public class Controller implements ActionListener {
 			vf.getSchedule().getReSchedulePanel().setVisible(false);
 			vf.getSchedule().getSchedulePanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(false);
-			vf.getSchedule().getInfoPanel().setVisible(false);
+
 			break;
 		case "homeSchedule":
+			schedule = 0;
 			vf.getHome().setVisible(false);
 			vf.getSchedule().setVisible(true);
+
 			break;
 		case "homeTreatment":
 			checkWindowTreatment = 0;
@@ -1014,36 +1019,27 @@ public class Controller implements ActionListener {
 			vf.getTreatments().setVisible(true);
 			break;
 		case "scheduleMenu":
-			schedule = 1;
+
 			sendEmail = 1;
 			vf.getSchedule().getName1().setEditable(false);
 			vf.getSchedule().getEmail().setEditable(false);
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getSchedulePanel().setVisible(true);
-			vf.getSchedule().getInfoPanel().setVisible(true);
-
-			showScheduleInfo();
 
 			break;
 		case "reSchedleMenu":
-			schedule = 2;
+
 			sendEmail = 2;
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getReSchedulePanel().setVisible(true);
-			vf.getSchedule().getInfoPanel().setVisible(true);
-
-			showScheduleInfo();
 
 			break;
 		case "cancelMenu":
-			schedule = 3;
+
 			sendEmail = 3;
 
 			vf.getSchedule().getMainPanel().setVisible(false);
 			vf.getSchedule().getCancelPanel().setVisible(true);
-			vf.getSchedule().getInfoPanel().setVisible(true);
-
-			showScheduleInfo();
 
 			break;
 
@@ -2029,11 +2025,8 @@ public class Controller implements ActionListener {
 	}
 
 	public void changeTheme() {
-		showScheduleInfo();
 		infoTreatment();
 		if (darkMode) {
-			showScheduleInfo();
-			infoTreatment();
 			// Home
 
 			ImageIcon homeClear = new ImageIcon("Images\\menuInicial\\Menu.png");
@@ -2073,8 +2066,6 @@ public class Controller implements ActionListener {
 
 			vf.getSchedule().getThemeMain().setIcon(themeClear);
 
-			vf.getSchedule().getInfoPanel().setBackground(new Color(0, 74, 173));
-
 			ImageIcon homeBClear = new ImageIcon("Images\\backButtons\\1.png");
 			vf.getSchedule().getHome().setIcon(homeBClear);
 
@@ -2087,23 +2078,121 @@ public class Controller implements ActionListener {
 			ImageIcon cancelPanelClear = new ImageIcon("Images\\menuCitas\\cancelarCita.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelClear);
 
-			showScheduleInfo();
+			Image scaledInfoClear = vf.getSchedule().getImage12().getImage().getScaledInstance(34, 34,
+					Image.SCALE_SMOOTH);
 
-			ImageIcon infoClear = new ImageIcon("Images\\infoButtons\\1.png");
-			Image scaledInfoClear = infoClear.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
 			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoClear));
+
 			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoClear));
+
 			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoClear));
+
 			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoClear));
-			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoClear));
-			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoClear));
-			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoClear));
+
 			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoClear));
 
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoClear));
+
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoClear));
+
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoClear));
+
+			vf.getSchedule().getThemeMain().setIcon(themeClear);
+			vf.getSchedule().getCanTheme().setIcon(themeClear);
+			vf.getSchedule().getReTheme().setIcon(themeClear);
+			vf.getSchedule().getSchTheme().setIcon(themeClear);
+
+			ImageIcon selectPaClear = new ImageIcon("Images\\menuCitas\\selectC.png");
+			vf.getSchedule().getSelectPatient().setIcon(selectPaClear);
+			vf.getSchedule().getSelectPatient2().setIcon(selectPaClear);
+			vf.getSchedule().getSelectPatient3().setIcon(selectPaClear);
+
+			ImageIcon agendarClear = new ImageIcon("Images\\botonesCitas\\agendarClaro.png");
+			vf.getSchedule().getGenerate().setIcon(agendarClear);
+
+			ImageIcon reAgendarClear = new ImageIcon("Images\\botonesCitas\\reagendarClaro.png");
+			vf.getSchedule().getReGenerate().setIcon(reAgendarClear);
+
+			ImageIcon cancelarClear = new ImageIcon("Images\\botonesCitas\\cancelarClaro.png");
+			vf.getSchedule().getCancel().setIcon(cancelarClear);
+
+			ImageIcon home = new ImageIcon("Images\\backButtons\\m1.png");
+			Image scaledHomeClear = home.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
+			vf.getSchedule().getHomeSchedule().setIcon(new ImageIcon(scaledHomeClear));
+			vf.getSchedule().getHomeReschedule().setIcon(new ImageIcon(scaledHomeClear));
+			vf.getSchedule().getHomeCancel().setIcon(new ImageIcon(scaledHomeClear));
+
+			ImageIcon userHomeClear = new ImageIcon("Images\\menuUsuarios\\menuC.png");
+			vf.getUsers().getBackground1().setIcon(userHomeClear);
+
+			ImageIcon loginClear = new ImageIcon("Images\\menuUsuarios\\ingresarC.png");
+			vf.getUsers().getLogin().setIcon(loginClear);
+
+			ImageIcon backClear = new ImageIcon("Images\\backButtons\\back1.png");
+			vf.getUsers().getReturnMenu().setIcon(backClear);
+			vf.getShowOptions().getHome().setIcon(backClear);
+			vf.getShowOptions().getHome2().setIcon(backClear);
+			vf.getShowOptions().getHome3().setIcon(backClear);
+			vf.getShowOptions().getReturnMenu().setIcon(backClear);
+			vf.getTreatments().getHome().setIcon(homeBClear);
+			
+
+			ImageIcon doctorBackgroundClear = new ImageIcon("Images\\menuAniadir\\menuDoctorC.png");
+			vf.getShowOptions().getBackgroundMD().setIcon(doctorBackgroundClear);
+
+			ImageIcon patientBackgroundClear = new ImageIcon("Images\\menuAniadir\\menuPacienteC.png");
+			vf.getShowOptions().getBackgroundM().setIcon(patientBackgroundClear);
+
+			ImageIcon selectC = new ImageIcon("Images\\menuCitas\\sCItaC.png");
+			vf.getShowOptions().getBackgroundD().setIcon(selectC);
+
+			ImageIcon menuPacC = new ImageIcon("Images\\menuCitas\\mPacienteC.png");
+			vf.getShowOptions().getBackgroundP().setIcon(menuPacC);
+
+			ImageIcon userClear = new ImageIcon("Images\\menuInicial\\inicioC.png");
+			vf.getHome().getUsersButton().setIcon(userClear);
+
+			ImageIcon agregarClear = new ImageIcon("Images\\menuInicial\\agregarClaro.png");
+			vf.getHome().getCreate().setIcon(agregarClear);
+
+			ImageIcon finishTreatmentClear = new ImageIcon("Images\\menuTratamientos\\finalizarC.png");
+			vf.getTreatments().getFinishTreatment().setIcon(finishTreatmentClear);
+
+
+			vf.getTreatments().getHomeTreatments1().setIcon(home);
+
+			vf.getTreatments().getHomeTreatments2().setIcon(home);
+
+			vf.getTreatments().getHomeTreatments3().setIcon(home);
+
+			ImageIcon initFinishTreatmentClear = new ImageIcon("Images\\menuTratamientos\\bFinishClear.png");
+			vf.getTreatments().getInitFinishTreatment().setIcon(initFinishTreatmentClear);
+
+			ImageIcon initSearchTreatmentClear = new ImageIcon("Images\\menuTratamientos\\bSearchClear.png");
+			vf.getTreatments().getInitSearchTreatment().setIcon(initSearchTreatmentClear);
+
+			ImageIcon initTreatmentClear = new ImageIcon("Images\\menuTratamientos\\bNewClear.png");
+			vf.getTreatments().getInitTreatment().setIcon(initTreatmentClear);
+
+			ImageIcon registerClear = new ImageIcon("Images\\menuTratamientos\\registrarC.png");
+			vf.getTreatments().getRegister().setIcon(registerClear);
+
+			ImageIcon searchButtonClear = new ImageIcon("Images\\menuTratamientos\\buscarC.png");
+			vf.getTreatments().getSearchButton().setIcon(searchButtonClear);
+
+			ImageIcon selectPatientClear = new ImageIcon("Images\\menuCitas\\selectC.png");
+			vf.getTreatments().getSelectPatient().setIcon(selectPatientClear);
+
+			vf.getTreatments().getThemeMain().setIcon(themeClear);
+
+			ImageIcon updateTreatmentClear = new ImageIcon("Images\\menuTratamientos\\actualizarC.png");
+			vf.getTreatments().getUpdateTreatment().setIcon(updateTreatmentClear);
+
+			// vf.get
 			darkMode = false;
 
 		} else {
-			showScheduleInfo();
+
 			infoTreatment();
 			// Home
 
@@ -2113,8 +2202,19 @@ public class Controller implements ActionListener {
 			ImageIcon scheduleDark = new ImageIcon("Images\\menuInicial\\agendarOscuro.png");
 			vf.getHome().getSchedule().setIcon(scheduleDark);
 
+			ImageIcon userDark = new ImageIcon("Images\\menuInicial\\inicioO.png");
+			vf.getHome().getUsersButton().setIcon(userDark);
+
+			ImageIcon agregarDark = new ImageIcon("Images\\menuInicial\\agregarOscuro.png");
+			vf.getHome().getCreate().setIcon(agregarDark);
+
 			ImageIcon themeDark = new ImageIcon("Images\\CambioTema\\cambioClaro.png");
 			vf.getHome().getTheme().setIcon(themeDark);
+
+			vf.getSchedule().getThemeMain().setIcon(themeDark);
+			vf.getSchedule().getCanTheme().setIcon(themeDark);
+			vf.getSchedule().getReTheme().setIcon(themeDark);
+			vf.getSchedule().getSchTheme().setIcon(themeDark);
 
 			ImageIcon homeTreatmentDark = new ImageIcon("Images\\menuInicial\\tratamientoOscuro.png");
 			vf.getHome().getTreatment().setIcon(homeTreatmentDark);
@@ -2144,10 +2244,9 @@ public class Controller implements ActionListener {
 
 			vf.getSchedule().getThemeMain().setIcon(themeDark);
 
-			vf.getSchedule().getInfoPanel().setBackground(Color.BLACK);
-
 			ImageIcon homeBDark = new ImageIcon("Images\\backButtons\\2.png");
 			vf.getSchedule().getHome().setIcon(homeBDark);
+			vf.getTreatments().getHome().setIcon(homeBDark);
 
 			ImageIcon schedulePanelDark = new ImageIcon("Images\\menuCitas\\agendarOscuro.png");
 			vf.getSchedule().getBackground2().setIcon(schedulePanelDark);
@@ -2158,70 +2257,75 @@ public class Controller implements ActionListener {
 			ImageIcon cancelPanelDark = new ImageIcon("Images\\menuCitas\\cancelarOscuro.png");
 			vf.getSchedule().getBackground4().setIcon(cancelPanelDark);
 
-			showScheduleInfo();
+			Image scaledInfoDark = vf.getSchedule().getImage13().getImage().getScaledInstance(34, 34,
+					Image.SCALE_SMOOTH);
 
-			ImageIcon infoDark = new ImageIcon("Images\\infoButtons\\2.png");
-			Image scaledInfoDark = infoDark.getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+			vf.getSchedule().getInfoDate().removeMouseListener(existingMouseListener);
 
 			vf.getSchedule().getInfoDate().setIcon(new ImageIcon(scaledInfoDark));
+
 			vf.getSchedule().getInfoDoctor().setIcon(new ImageIcon(scaledInfoDark));
+
 			vf.getSchedule().getInfoEmail().setIcon(new ImageIcon(scaledInfoDark));
+
 			vf.getSchedule().getInfoName().setIcon(new ImageIcon(scaledInfoDark));
-			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoDark));
-			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoDark));
-			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoDark));
+
 			vf.getSchedule().getInfospecialty().setIcon(new ImageIcon(scaledInfoDark));
+
+			vf.getSchedule().getInfoNDate().setIcon(new ImageIcon(scaledInfoDark));
+
+			vf.getSchedule().getInfoNum().setIcon(new ImageIcon(scaledInfoDark));
+
+			vf.getSchedule().getInfoNumCancel().setIcon(new ImageIcon(scaledInfoDark));
+
+			ImageIcon selectPaDark = new ImageIcon("Images\\menuCitas\\selectO.png");
+			vf.getSchedule().getSelectPatient().setIcon(selectPaDark);
+			vf.getSchedule().getSelectPatient2().setIcon(selectPaDark);
+			vf.getSchedule().getSelectPatient3().setIcon(selectPaDark);
+
+			ImageIcon agendarDark = new ImageIcon("Images\\botonesCitas\\agendarOscuro.png");
+			vf.getSchedule().getGenerate().setIcon(agendarDark);
+
+			ImageIcon reAgendarDark = new ImageIcon("Images\\botonesCitas\\reagendarOscuro.png");
+			vf.getSchedule().getReGenerate().setIcon(reAgendarDark);
+
+			ImageIcon cancelarDark = new ImageIcon("Images\\botonesCitas\\cancelarOscuro.png");
+			vf.getSchedule().getCancel().setIcon(cancelarDark);
+
+			ImageIcon home = new ImageIcon("Images\\backButtons\\m2.png");
+			Image scaledHomeDark = home.getImage().getScaledInstance(42, 42, Image.SCALE_REPLICATE);
+			vf.getSchedule().getHomeSchedule().setIcon(new ImageIcon(scaledHomeDark));
+			vf.getSchedule().getHomeReschedule().setIcon(new ImageIcon(scaledHomeDark));
+			vf.getSchedule().getHomeCancel().setIcon(new ImageIcon(scaledHomeDark));
+
+			ImageIcon userHomeDark = new ImageIcon("Images\\menuUsuarios\\menuO.png");
+			vf.getUsers().getBackground1().setIcon(userHomeDark);
+
+			ImageIcon loginDark = new ImageIcon("Images\\menuUsuarios\\ingresarO.png");
+			vf.getUsers().getLogin().setIcon(loginDark);
+
+			ImageIcon backDark = new ImageIcon("Images\\backButtons\\back2.png");
+			vf.getUsers().getReturnMenu().setIcon(backDark);
+			vf.getShowOptions().getHome().setIcon(backDark);
+			vf.getShowOptions().getHome2().setIcon(backDark);
+			vf.getShowOptions().getHome3().setIcon(backDark);
+			vf.getShowOptions().getReturnMenu().setIcon(backDark);
+		
+
+			ImageIcon doctorBackgroundDark = new ImageIcon("Images\\menuAniadir\\menuDoctorO.png");
+			vf.getShowOptions().getBackgroundMD().setIcon(doctorBackgroundDark);
+
+			ImageIcon patientBackgroundDark = new ImageIcon("Images\\menuAniadir\\menuPacienteO.png");
+			vf.getShowOptions().getBackgroundM().setIcon(patientBackgroundDark);
+
+			ImageIcon selectD = new ImageIcon("Images\\menuCitas\\sCItaO.png");
+			vf.getShowOptions().getBackgroundD().setIcon(selectD);
+
+			ImageIcon menuPacD = new ImageIcon("Images\\menuCitas\\mPacienteO.png");
+			vf.getShowOptions().getBackgroundP().setIcon(menuPacD);
 
 			darkMode = true;
 		}
-	}
-
-	public void showScheduleInfo() {
-		if (schedule == 1) {
-			vf.getSchedule().getInfoNumCancel().setVisible(false);
-			vf.getSchedule().getInfoNDate().setVisible(false);
-			vf.getSchedule().getInfoNum().setVisible(false);
-
-			vf.getSchedule().getSelectPatient().setBounds(0, 0, 111, 40);
-
-			vf.getSchedule().getInfoDate().setVisible(true);
-			vf.getSchedule().getInfoDoctor().setVisible(true);
-			vf.getSchedule().getInfoEmail().setVisible(true);
-			vf.getSchedule().getInfoName().setVisible(true);
-			vf.getSchedule().getInfospecialty().setVisible(true);
-		} else if (schedule == 2) {
-			vf.getSchedule().getInfoNumCancel().setVisible(false);
-			vf.getSchedule().getInfoDate().setVisible(false);
-			vf.getSchedule().getInfoDoctor().setVisible(false);
-			vf.getSchedule().getInfoEmail().setVisible(false);
-			vf.getSchedule().getInfoName().setVisible(false);
-			vf.getSchedule().getInfospecialty().setVisible(false);
-			vf.getSchedule().getSelectPatient().setBounds(0, 27, 111, 40);
-			vf.getSchedule().getInfoNDate().setVisible(true);
-			vf.getSchedule().getInfoNum().setVisible(true);
-		} else if (schedule == 3) {
-			vf.getSchedule().getInfoNDate().setVisible(false);
-			vf.getSchedule().getInfoNum().setVisible(false);
-			vf.getSchedule().getInfoDate().setVisible(false);
-			vf.getSchedule().getInfoDoctor().setVisible(false);
-			vf.getSchedule().getInfoEmail().setVisible(false);
-			vf.getSchedule().getInfoName().setVisible(false);
-			vf.getSchedule().getInfospecialty().setVisible(false);
-
-			vf.getSchedule().getSelectPatient().setBounds(0, 70, 111, 40);
-			vf.getSchedule().getInfoNumCancel().setVisible(true);
-		} else if (schedule == 0) {
-			vf.getSchedule().getInfoNumCancel().setVisible(false);
-			vf.getSchedule().getInfoNDate().setVisible(false);
-			vf.getSchedule().getInfoNum().setVisible(false);
-			vf.getSchedule().getInfoDate().setVisible(false);
-			vf.getSchedule().getInfoDoctor().setVisible(false);
-			vf.getSchedule().getInfoEmail().setVisible(false);
-			vf.getSchedule().getInfoName().setVisible(false);
-			vf.getSchedule().getInfospecialty().setVisible(false);
-
-		}
-
 	}
 
 	public static void infoTreatment() {

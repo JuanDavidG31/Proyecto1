@@ -100,7 +100,7 @@ public class HomeWindow extends JFrame {
 
 		users = new JButton();
 		users.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		users.setBounds(414, 375, 124, 124);
+		users.setBounds(415, 373, 124, 124);
 		users.setBorderPainted(false);
 		users.setToolTipText("Generar reporte semanal");
 		ImageIcon imageU = new ImageIcon("Images\\menuInicial\\inicioC.png");
