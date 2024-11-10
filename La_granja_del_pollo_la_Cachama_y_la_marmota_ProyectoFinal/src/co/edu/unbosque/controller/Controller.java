@@ -358,7 +358,6 @@ public class Controller implements ActionListener {
 			
 			vf.getUsers().getUserName().setText(null);
 			vf.getUsers().getPassword().setText(null);
-			
 			vf.getHome().getReport().setEnabled(true);
 			vf.getHome().getTurn().setEnabled(true);
 			vf.getHome().getTreatment().setEnabled(true);
