@@ -41,7 +41,7 @@ public class PatientDAOTest {
 				email += rnd.nextInt(10);
 			}
 		}
-		PatientDTO patientDTO = new PatientDTO(nombre, email + "@example.com", 1, 30);
+		PatientDTO patientDTO = new PatientDTO(nombre, email + "@gmail.com", 1, 30);
 		patientDAO.add(patientDTO);
 
 		PatientDTO ultimoPaciente = patientDAO.getAll().get(patientDAO.getAll().size() - 1);
@@ -68,8 +68,8 @@ public class PatientDAOTest {
 			}
 		}
 
-		PatientDTO patientDTO = new PatientDTO(nombre, email + "@example.com", 1, 30);
-		PatientDTO nuevoPatientDTO = new PatientDTO(nombreNuevo, emailNuevo + "@example.com", 1, 35);
+		PatientDTO patientDTO = new PatientDTO(nombre, email + "@gmail.com", 1, 30);
+		PatientDTO nuevoPatientDTO = new PatientDTO(nombreNuevo, emailNuevo + "@gmail.com", 1, 35);
 
 		patientDAO.add(patientDTO);
 		patientDAO.update(patientDTO, nuevoPatientDTO);
@@ -94,7 +94,7 @@ public class PatientDAOTest {
 			}
 		}
 
-		PatientDTO patientDTO = new PatientDTO(nombre, email + "@example.com", 1, 30);
+		PatientDTO patientDTO = new PatientDTO(nombre, email + "@gmail.com", 1, 30);
 		patientDAO.add(patientDTO);
 
 		boolean eliminado = patientDAO.delete(patientDTO);
@@ -114,7 +114,7 @@ public class PatientDAOTest {
 			}
 		}
 
-		PatientDTO patientDTO = new PatientDTO(nombre, email + "@example.com", 1, 30);
+		PatientDTO patientDTO = new PatientDTO(nombre, email + "@gmail.com", 1, 30);
 		patientDAO.add(patientDTO);
 
 		assertTrue(!patientDAO.getAll().isEmpty());
@@ -136,7 +136,7 @@ public class PatientDAOTest {
 			}
 		}
 
-		PatientDTO patientDTO = new PatientDTO(nombre, email + "@example.com", 1, 30);
+		PatientDTO patientDTO = new PatientDTO(nombre, email + "@gmail.com", 1, 30);
 		patientDAO.add(patientDTO);
 
 		if (!patientDAO.showAll().isEmpty()) {

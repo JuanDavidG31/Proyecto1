@@ -30,41 +30,39 @@ public class AppointmentDAOTest {
 
 	@Test
 	public void verificarAñadir() {
-		// Asignación de valores
-		String doctor = "Dr. García";
-		String specialty = "Cardiología";
-		String date = "2024-11-09";
+
+		String doctor = "PEPE";
+		String specialty = "Cardiologia";
+		String date = "2024/11/09";
 		int appointmentNum = 1;
-		int id = 100; // ID ficticio para las citas
+		int id = 100;
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {
 			if (i < 4) {
-				doctor += rnd.nextInt(10); // Variar el doctor con un número aleatorio
+				doctor += rnd.nextInt(10);
 			}
 		}
 
 		AppointmentDTO appointmentDTO = new AppointmentDTO(id, doctor, specialty, date, appointmentNum);
 		appointmentDAO.add(appointmentDTO);
 
-		// Verificar que la cita añadida está en la lista
 		AppointmentDTO ultimoCita = appointmentDAO.getAll().get(appointmentDAO.getAll().size() - 1);
 		assertTrue(appointmentDTO.getDoctor().equals(ultimoCita.getDoctor())
 				&& appointmentDTO.getSpecialty().equals(ultimoCita.getSpecialty()));
 
-		// Eliminar después de la prueba
 		appointmentDAO.delete(appointmentDTO);
 	}
 
 	@Test
 	public void verificarActualizar() {
-		// Asignación de valores
-		String doctor = "Dr. García";
-		String specialty = "Cardiología";
-		String date = "2024-11-09";
+
+		String doctor = "PEPE";
+		String specialty = "Cardiologia";
+		String date = "2024-11/09";
 		int appointmentNum = 1;
 		int id = 100;
-		String doctorNuevo = "Dr. Pérez";
+		String doctorNuevo = "PEPE2";
 		Random rnd = new Random();
 
 		for (int i = 0; i < 7; i++) {
@@ -80,20 +78,18 @@ public class AppointmentDAOTest {
 		appointmentDAO.add(appointmentDTO);
 		appointmentDAO.update(appointmentDTO, nuevoAppointmentDTO);
 
-		// Verificar que la cita fue actualizada
 		AppointmentDTO citaActualizada = appointmentDAO.getAll().get(appointmentDAO.getAll().size() - 1);
 		assertTrue(nuevoAppointmentDTO.getDoctor().equals(citaActualizada.getDoctor()));
 
-		// Eliminar después de la prueba
 		appointmentDAO.delete(nuevoAppointmentDTO);
 	}
 
 	@Test
 	public void verificarEliminar() {
-		// Asignación de valores
-		String doctor = "Dr. García";
-		String specialty = "Cardiología";
-		String date = "2024-11-09";
+
+		String doctor = "PEPE";
+		String specialty = "Cardiologia";
+		String date = "2024/11/09";
 		int appointmentNum = 1;
 		int id = 100;
 		Random rnd = new Random();
@@ -107,17 +103,16 @@ public class AppointmentDAOTest {
 		AppointmentDTO appointmentDTO = new AppointmentDTO(id, doctor, specialty, date, appointmentNum);
 		appointmentDAO.add(appointmentDTO);
 
-		// Verificar eliminación
 		boolean eliminado = appointmentDAO.delete(appointmentDTO);
 		assertTrue(eliminado);
 	}
 
 	@Test
 	public void verificarMostrarTodo() {
-		// Asignación de valores
-		String doctor = "Dr. García";
-		String specialty = "Cardiología";
-		String date = "2024-11-09";
+
+		String doctor = "PEPE";
+		String specialty = "Cardiologia";
+		String date = "2024/11/09";
 		int appointmentNum = 1;
 		int id = 100;
 		Random rnd = new Random();
@@ -131,20 +126,18 @@ public class AppointmentDAOTest {
 		AppointmentDTO appointmentDTO = new AppointmentDTO(id, doctor, specialty, date, appointmentNum);
 		appointmentDAO.add(appointmentDTO);
 
-		// Verificar que la lista no está vacía
 		assertTrue(!appointmentDAO.getAll().isEmpty());
 
-		// Eliminar después de la prueba
 		appointmentDAO.delete(appointmentDTO);
 	}
 
 	@Test
 	public void verificarMostrar() {
 		boolean mostrar = false;
-		// Asignación de valores
-		String doctor = "Dr. García";
-		String specialty = "Cardiología";
-		String date = "2024-11-09";
+
+		String doctor = "PEPE";
+		String specialty = "Cardiologia";
+		String date = "2024/11/09";
 		int appointmentNum = 1;
 		int id = 100;
 		Random rnd = new Random();
@@ -158,13 +151,11 @@ public class AppointmentDAOTest {
 		AppointmentDTO appointmentDTO = new AppointmentDTO(id, doctor, specialty, date, appointmentNum);
 		appointmentDAO.add(appointmentDTO);
 
-		// Verificar que el método showAll no devuelve vacío
 		if (!appointmentDAO.showAll().isEmpty()) {
 			mostrar = true;
 		}
 		assertTrue(mostrar);
 
-		// Eliminar después de la prueba
 		appointmentDAO.delete(appointmentDTO);
 	}
 

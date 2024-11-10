@@ -31,7 +31,7 @@ public class DoctorDAOTest {
 
 	@Test
 	public void verificarAñadir() {
-		String nombre = "Dr.";
+		String nombre = "PEPE";
 		String email = "";
 		Random rnd = new Random();
 
@@ -41,7 +41,7 @@ public class DoctorDAOTest {
 				email += rnd.nextInt(10);
 			}
 		}
-		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@example.com", 1, "Cardiología", "Activo");
+		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@gmail.com", 1, "Cardiologia", "activo");
 		doctorDAO.add(doctorDTO);
 
 		DoctorDTO ultimoDoctor = doctorDAO.getAll().get(doctorDAO.getAll().size() - 1);
@@ -53,9 +53,9 @@ public class DoctorDAOTest {
 
 	@Test
 	public void verificarActualizar() {
-		String nombre = "Dr.";
+		String nombre = "PEPE";
 		String email = "";
-		String nombreNuevo = "Dr.";
+		String nombreNuevo = "";
 		String emailNuevo = "";
 
 		Random rnd = new Random();
@@ -68,8 +68,8 @@ public class DoctorDAOTest {
 			}
 		}
 
-		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@example.com", 1, "Cardiología", "Activo");
-		DoctorDTO nuevoDoctorDTO = new DoctorDTO(nombreNuevo, emailNuevo + "@example.com", 1, "Neurología", "Inactivo");
+		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@gmail.com", 1, "Cardiologia", "activo");
+		DoctorDTO nuevoDoctorDTO = new DoctorDTO(nombreNuevo, emailNuevo + "@gmail.com", 1, "Neurologia", "inactivo");
 
 		doctorDAO.add(doctorDTO);
 		doctorDAO.update(doctorDTO, nuevoDoctorDTO);
@@ -83,7 +83,7 @@ public class DoctorDAOTest {
 
 	@Test
 	public void verificarEliminar() {
-		String nombre = "Dr.";
+		String nombre = "PEPE";
 		String email = "";
 		Random rnd = new Random();
 
@@ -94,7 +94,7 @@ public class DoctorDAOTest {
 			}
 		}
 
-		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@example.com", 1, "Cardiología", "Activo");
+		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@gmail.com", 1, "Cardiologia", "activo");
 		doctorDAO.add(doctorDTO);
 
 		boolean eliminado = doctorDAO.delete(doctorDTO);
@@ -103,7 +103,7 @@ public class DoctorDAOTest {
 
 	@Test
 	public void verificarMostrarTodo() {
-		String nombre = "Dr.";
+		String nombre = "PEPE";
 		String email = "";
 		Random rnd = new Random();
 
@@ -114,7 +114,7 @@ public class DoctorDAOTest {
 			}
 		}
 
-		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@example.com", 1, "Cardiología", "Activo");
+		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@gmail.com", 1, "Cardiologia", "activo");
 		doctorDAO.add(doctorDTO);
 
 		assertTrue(!doctorDAO.getAll().isEmpty());
@@ -125,7 +125,7 @@ public class DoctorDAOTest {
 	@Test
 	public void verificarMostrar() {
 		boolean mostrar = false;
-		String nombre = "Dr.";
+		String nombre = "PEPE";
 		String email = "";
 		Random rnd = new Random();
 
@@ -136,7 +136,7 @@ public class DoctorDAOTest {
 			}
 		}
 
-		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@example.com", 1, "Cardiología", "Activo");
+		DoctorDTO doctorDTO = new DoctorDTO(nombre, email + "@gmail.com", 1, "Cardiologia", "activo");
 		doctorDAO.add(doctorDTO);
 
 		if (!doctorDAO.showAll().isEmpty()) {
